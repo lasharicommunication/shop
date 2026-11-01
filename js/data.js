@@ -941,11 +941,20 @@ const Storage = {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ products })
       });
-      if (!response.ok) throw new Error((await response.json()).error || `Server returned ${response.status}`);
+      if (!response.ok) {
+        let errMessage = `Server error ${response.status}`;
+        try {
+          const errData = await response.json();
+          if (errData && errData.error) errMessage = errData.error;
+        } catch(e) {}
+        throw new Error(errMessage);
+      }
       return true;
     } catch (error) {
       console.error("Shared product save failed:", error);
-      if (window.showToast) window.showToast("Product saved locally, but could not sync to the shared store. Check Vercel deployment and GITHUB_TOKEN.", "error");
+      if (window.showToast) {
+        window.showToast(error.message, "error");
+      }
       return false;
     }
   },
@@ -953,15 +962,32 @@ const Storage = {
     const apiUrl = window.PRODUCTS_API_URL || "/api/products";
     try {
       const response = await fetch(apiUrl, { cache: "no-store" });
-      if (!response.ok) throw new Error(`Server returned ${response.status}`);
-      const products = await response.json();
-      if (!Array.isArray(products)) throw new Error("Shared products response is invalid");
-      localStorage.setItem("lashari_products", JSON.stringify(products));
-      return products;
+      if (response.ok) {
+        const products = await response.json();
+        if (Array.isArray(products) && products.length > 0) {
+          localStorage.setItem("lashari_products", JSON.stringify(products));
+          return products;
+        }
+      }
     } catch (error) {
-      console.warn("Shared products unavailable; using local copy:", error);
-      return Storage.getProducts();
+      console.warn("Shared products API error:", error);
     }
+
+    // Direct GitHub Raw Fallback (Always live for everyone)
+    try {
+      const rawRes = await fetch(`https://raw.githubusercontent.com/lasharicommunication/shop/main/data/products.json?_t=${Date.now()}`, { cache: "no-store" });
+      if (rawRes.ok) {
+        const rawProducts = await rawRes.json();
+        if (Array.isArray(rawProducts) && rawProducts.length > 0) {
+          localStorage.setItem("lashari_products", JSON.stringify(rawProducts));
+          return rawProducts;
+        }
+      }
+    } catch (rawError) {
+      console.warn("Direct GitHub raw fallback unavailable:", rawError);
+    }
+
+    return Storage.getProducts();
   },
   getOrders: () => {
     const saved = localStorage.getItem("lashari_orders");

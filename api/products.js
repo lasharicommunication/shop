@@ -38,21 +38,48 @@ module.exports = async function handler(req, res) {
     res.status(204).end();
     return;
   }
-  if (!token) return json(res, 500, { error: "GITHUB_TOKEN environment variable is not configured" });
 
-  try {
-    const apiPath = `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${encodeURIComponent(BRANCH)}`;
+  const apiPath = `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${encodeURIComponent(BRANCH)}`;
 
-    if (req.method === "GET") {
-      const file = await githubRequest(apiPath, token, { headers: { "Cache-Control": "no-cache" } });
-      const content = Buffer.from(file.content || "", "base64").toString("utf8");
-      return json(res, 200, JSON.parse(content));
+  // GET: Return shared products (tries API, then falls back to public raw URL)
+  if (req.method === "GET") {
+    try {
+      if (token) {
+        const file = await githubRequest(apiPath, token, { headers: { "Cache-Control": "no-cache" } });
+        const content = Buffer.from(file.content || "", "base64").toString("utf8");
+        return json(res, 200, JSON.parse(content));
+      }
+    } catch (apiErr) {
+      console.warn("GitHub API GET failed, trying public raw URL:", apiErr.message);
     }
 
-    if (req.method === "POST") {
-      const products = req.body?.products;
-      if (!Array.isArray(products)) return json(res, 400, { error: "products must be an array" });
+    try {
+      const rawRes = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${FILE_PATH}?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache" }
+      });
+      if (rawRes.ok) {
+        const rawJson = await rawRes.json();
+        return json(res, 200, rawJson);
+      }
+    } catch (rawErr) {
+      console.error("Raw fallback failed:", rawErr.message);
+    }
 
+    return json(res, 200, []);
+  }
+
+  // POST: Commit product changes to GitHub repo
+  if (req.method === "POST") {
+    if (!token) {
+      return json(res, 500, {
+        error: "GITHUB_TOKEN is not configured in Vercel Environment Variables. Please add Key: GITHUB_TOKEN in Vercel Project Settings -> Environment Variables and redeploy."
+      });
+    }
+
+    const products = req.body?.products;
+    if (!Array.isArray(products)) return json(res, 400, { error: "products must be an array" });
+
+    try {
       let sha;
       try {
         sha = (await githubRequest(apiPath, token)).sha;
@@ -71,11 +98,11 @@ module.exports = async function handler(req, res) {
         })
       });
       return json(res, 200, { ok: true, products });
+    } catch (error) {
+      console.error("GitHub commit failed:", error);
+      return json(res, 500, { error: `GitHub save failed: ${error.message}` });
     }
-
-    return json(res, 405, { error: "Method not allowed" });
-  } catch (error) {
-    console.error(error);
-    return json(res, 500, { error: error.message });
   }
+
+  return json(res, 405, { error: "Method not allowed" });
 };
