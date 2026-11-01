@@ -1,5 +1,28 @@
 [
   {
+    "id": "prod-1793550616970",
+    "title": "M10",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1299,
+    "oldPrice": 1899,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 25,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://share.google/ru7COJJ3ZDrtE06R0",
+    "images": [
+      "https://share.google/ru7COJJ3ZDrtE06R0"
+    ],
+    "description": "Tghhh"
+  },
+  {
     "id": "prod-1",
     "title": "fffffffffffffffffffffffffffffff",
     "brand": "apple",
