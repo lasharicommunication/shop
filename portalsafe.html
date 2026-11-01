@@ -118,6 +118,60 @@
     }
     .portal-back-link:hover { color: #fff; }
     #adminDashboard { display: none; }
+
+    /* MOBILE RESPONSIVE STYLES FOR ADMIN PORTAL */
+    @media (max-width: 768px) {
+      .portal-card {
+        padding: 30px 20px;
+        border-radius: 18px;
+      }
+      #adminDashboard {
+        padding: 20px 12px !important;
+      }
+      .admin-tab-nav {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        gap: 8px !important;
+        scrollbar-width: none;
+      }
+      .admin-tab-nav::-webkit-scrollbar {
+        display: none;
+      }
+      .admin-nav-btn {
+        flex: none;
+        white-space: nowrap;
+        padding: 8px 14px !important;
+        font-size: 11.5px !important;
+      }
+      #adminProductForm {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .portal-title {
+        font-size: 22px;
+      }
+      .portal-desc {
+        font-size: 12px;
+        margin-bottom: 20px;
+      }
+      .portal-badge {
+        font-size: 10px;
+        padding: 4px 10px;
+      }
+      .admin-stat-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+      }
+      .admin-btn {
+        padding: 9px 12px !important;
+        font-size: 11px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -167,7 +221,7 @@
           <h2 style="font:800 24px var(--display); margin:0; color:#fff;">XCESS Store Admin</h2>
           <span style="font-size:11px; background:var(--lime); color:var(--ink); padding:2px 8px; border-radius:4px; font-weight:800;">MASTER CONTROL</span>
         </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <div class="admin-tab-nav" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
           <button type="button" class="admin-nav-btn active" data-tab="overview" onclick="AdminController.switchTab('overview')">Overview</button>
           <button type="button" class="admin-nav-btn" data-tab="orders" onclick="AdminController.switchTab('orders')">Orders</button>
           <button type="button" class="admin-nav-btn" data-tab="products" onclick="AdminController.switchTab('products')">Products</button>
@@ -185,7 +239,7 @@
 
       <!-- Tab: Overview -->
       <div class="admin-tab-section active" id="adminTab-overview">
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:32px;">
+        <div class="admin-stat-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:32px;">
           <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:20px;">
             <span style="color:#879b8a; font-size:11px; font-weight:700; text-transform:uppercase;">Total Sales</span>
             <div id="statTotalSales" style="font:800 28px var(--display); color:var(--lime); margin-top:6px;">Rs. 0</div>
