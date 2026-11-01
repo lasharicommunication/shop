@@ -1739,27 +1739,31 @@ svg {
   background: var(--paper);
   border: 1.5px solid var(--line);
   border-radius: 16px;
-  padding: 18px 10px 14px;
+  padding: 16px 10px 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   cursor: pointer;
-  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
   text-align: center;
+  opacity: 1 !important;
+  visibility: visible !important;
+  min-height: 124px;
+  justify-content: flex-start;
 }
 .brand-card:hover, .brand-card.is-active {
   transform: translateY(-5px);
   box-shadow: 0 12px 28px #1a2a1c18;
-  border-color: #b8c98a;
+  border-color: #8bab15;
 }
 .brand-card.is-active {
   background: #f4fae5;
   border-color: #8bab15;
 }
 .brand-logo {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 12px;
   background: var(--cream);
   display: grid;
@@ -1770,14 +1774,41 @@ svg {
   letter-spacing: -.04em;
   color: var(--ink);
   overflow: hidden;
+  flex-shrink: 0;
+  transition: background .2s ease;
 }
-.brand-logo svg { width: 28px; height: 28px; fill: none; stroke: var(--ink); stroke-width: 1.5; }
-.brand-name {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .04em;
+.brand-card:hover .brand-logo, .brand-card.is-active .brand-logo {
+  background: var(--lime);
   color: var(--ink);
-  text-transform: uppercase;
+}
+.brand-logo svg { width: 26px; height: 26px; fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.brand-name {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  color: var(--ink);
+  text-transform: capitalize;
+  margin: 0;
+  line-height: 1.2;
+}
+.brand-models {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6a7c6f;
+  line-height: 1.25;
+  margin-top: 1px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.brand-card:hover .brand-models {
+  color: var(--ink);
+}
+.brand-card.is-active .brand-models {
+  color: #3b5014;
+  font-weight: 700;
 }
 
 /* FOOTER */
@@ -2568,10 +2599,11 @@ svg {
   .art-root { transform: scale(.68); }
 
   /* Brand Grid */
-  .brand-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .brand-card { padding: 10px 4px 8px; border-radius: 10px; }
-  .brand-logo { width: 32px; height: 32px; border-radius: 8px; font-size: 14px; }
-  .brand-name { font-size: 8px; }
+  .brand-grid { grid-template-columns: repeat(4, 1fr); gap: 7px; }
+  .brand-card { padding: 10px 4px 8px; border-radius: 12px; min-height: 102px; }
+  .brand-logo { width: 34px; height: 34px; border-radius: 9px; font-size: 14px; }
+  .brand-name { font-size: 10px; font-weight: 800; }
+  .brand-models { font-size: 8px; line-height: 1.15; margin-top: 2px; }
 
   /* Editorial & Closing */
   .editorial-section { padding: 40px 0; }

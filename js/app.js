@@ -522,7 +522,7 @@ function updateFilterTabsActiveState() {
   });
 }
 
-// Brand Selection Grid
+// Brand Selection Grid (Always visible with real company names and models)
 function renderBrands() {
   const grid = document.getElementById("brandGrid");
   if (!grid) return;
@@ -530,30 +530,42 @@ function renderBrands() {
   const brands = [
     { id: "apple", name: "Apple", iconText: "", models: "iPhone 11 to 16 Pro Max" },
     { id: "samsung", name: "Samsung", iconText: "S", models: "Galaxy S & A Series" },
+    { id: "infinix", name: "Infinix", iconText: "In", models: "Note, Hot & Smart" },
+    { id: "tecno", name: "Tecno", iconText: "T", models: "Camon & Spark" },
     { id: "xiaomi", name: "Xiaomi", iconText: "Mi", models: "Redmi Note & Poco" },
     { id: "vivo", name: "Vivo", iconText: "V", models: "V-Series & Y-Series" },
     { id: "oppo", name: "Oppo", iconText: "O", models: "Reno & A-Series" },
-    { id: "realme", name: "Realme", iconText: "R", models: "Number & C-Series" },
-    { id: "infinix", name: "Infinix", iconText: "In", models: "Note, Hot & Smart" },
-    { id: "tecno", name: "Tecno", iconText: "T", models: "Camon & Spark" }
+    { id: "realme", name: "Realme", iconText: "R", models: "Number & C-Series" }
   ];
 
-  grid.innerHTML = brands.map(b => `
-    <div class="brand-card reveal ${AppState.activeBrand === b.id ? 'is-active' : ''}" data-brand="${b.id}">
-      <div class="brand-logo">
-        <span class="brand-logo-text">${b.iconText}</span>
+  grid.innerHTML = brands.map(b => {
+    const isActive = AppState.activeBrand === b.id;
+    return `
+      <div class="brand-card in-view ${isActive ? 'is-active' : ''}" data-brand="${b.id}" title="Filter covers for ${b.name}">
+        <div class="brand-logo">
+          <span class="brand-logo-text">${b.iconText}</span>
+        </div>
+        <div class="brand-name">${b.name}</div>
+        <div class="brand-models">${b.models}</div>
       </div>
-      <div class="brand-name">${b.name}</div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 
   grid.querySelectorAll(".brand-card").forEach(card => {
     card.addEventListener("click", () => {
       const brandId = card.dataset.brand;
-      grid.querySelectorAll(".brand-card").forEach(c => c.classList.remove("is-active"));
-      card.classList.add("is-active");
+      const isAlreadyActive = AppState.activeBrand === brandId;
 
-      AppState.activeBrand = brandId;
+      if (isAlreadyActive) {
+        // Toggle back to all
+        AppState.activeBrand = "all";
+        card.classList.remove("is-active");
+      } else {
+        grid.querySelectorAll(".brand-card").forEach(c => c.classList.remove("is-active"));
+        card.classList.add("is-active");
+        AppState.activeBrand = brandId;
+      }
+
       AppState.activeCategory = "all";
       AppState.activeFilter = "all";
 
