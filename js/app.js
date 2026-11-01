@@ -201,7 +201,16 @@ function renderStoreSettings() {
   const locTimingsEl = document.getElementById("displayLocationTimings");
   if (locTimingsEl && storeTimings) locTimingsEl.innerHTML = storeTimings;
 
-  const finalMapUrl = googleMapsUrl || "https://share.google/iiBvxUjHqCga5PFY1";
+  let finalMapUrl = (googleMapsUrl || "").trim();
+  if (finalMapUrl.includes("<iframe") || finalMapUrl.includes("src=")) {
+    const match = finalMapUrl.match(/src=["'](.*?)["']/);
+    if (match && match[1]) {
+      finalMapUrl = match[1];
+    }
+  }
+  if (!finalMapUrl) {
+    finalMapUrl = "https://share.google/iiBvxUjHqCga5PFY1";
+  }
 
   const mapIframe = document.getElementById("shopMapIframe");
   if (mapIframe) {
@@ -220,10 +229,9 @@ function renderStoreSettings() {
   if (mapFooterLink) {
     mapFooterLink.href = finalMapUrl;
   }
-  const mapOpenLink = document.querySelector(".location-open-link");
-  if (mapOpenLink) {
-    mapOpenLink.href = finalMapUrl;
-  }
+  document.querySelectorAll(".location-open-link").forEach(el => {
+    el.href = finalMapUrl;
+  });
 
   const annEl = document.getElementById("announcementCustomText");
   if (annEl && announcementText) {

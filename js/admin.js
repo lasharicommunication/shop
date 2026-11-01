@@ -179,6 +179,8 @@ const AdminController = {
     if (qPhone) qPhone.value = settings.phone || "";
     const qWhatsapp = document.getElementById("quickShopWhatsapp");
     if (qWhatsapp) qWhatsapp.value = settings.whatsapp || "";
+    const qMapUrl = document.getElementById("quickGoogleMapsUrl");
+    if (qMapUrl) qMapUrl.value = settings.googleMapsUrl || "";
 
     // Render recent orders in overview
     const recentTbody = document.getElementById("adminRecentOrdersTbody");
@@ -200,36 +202,54 @@ const AdminController = {
 
   // Save Quick Contact directly from Overview
   saveQuickContact() {
-    const address = document.getElementById("quickShopAddress").value.trim();
-    const email = document.getElementById("quickShopEmail").value.trim();
-    const phone = document.getElementById("quickShopPhone").value.trim();
-    const whatsapp = document.getElementById("quickShopWhatsapp").value.trim();
+    const address = document.getElementById("quickShopAddress")?.value.trim() || "";
+    const email = document.getElementById("quickShopEmail")?.value.trim() || "";
+    const phone = document.getElementById("quickShopPhone")?.value.trim() || "";
+    const whatsapp = document.getElementById("quickShopWhatsapp")?.value.trim() || "";
+    let mapUrl = document.getElementById("quickGoogleMapsUrl")?.value.trim() || "";
 
-    if (!address || !email || !phone || !whatsapp) {
-      showToast("Please provide all shop contact fields!", "error");
+    if (!address) {
+      showToast("Please provide the physical shop address!", "error");
       return;
+    }
+
+    // Sanitize if admin pasted an iframe embed code
+    if (mapUrl.includes("<iframe") || mapUrl.includes("src=")) {
+      const match = mapUrl.match(/src=["'](.*?)["']/);
+      if (match && match[1]) {
+        mapUrl = match[1];
+      }
     }
 
     let cleanWhatsapp = whatsapp.replace(/[^0-9]/g, "");
     if (cleanWhatsapp.startsWith("0")) {
       cleanWhatsapp = "92" + cleanWhatsapp.substring(1);
     }
+    if (!cleanWhatsapp) cleanWhatsapp = "923212920914";
 
     const current = Storage.getSettings();
     const updated = {
       ...current,
       shopAddress: address,
       googleMapsQuery: address,
-      email: email,
-      phone: phone,
+      googleMapsUrl: mapUrl || current.googleMapsUrl || "https://share.google/iiBvxUjHqCga5PFY1",
+      email: email || current.email || "thelasharicommunication@gmail.com",
+      phone: phone || current.phone || "+92 321 2920914",
       whatsapp: cleanWhatsapp
     };
 
     Storage.saveSettings(updated);
-    AppState.settings = updated;
-    renderStoreInfo();
+    if (window.AppState) AppState.settings = updated;
+    if (typeof renderStoreInfo === "function") renderStoreInfo();
+    if (typeof renderStoreSettings === "function") renderStoreSettings();
 
-    showToast("Shop Address, Email & Phone updated successfully!", "success");
+    // Sync with settings tab inputs if currently loaded in DOM
+    const setAddr = document.getElementById("setShopAddress");
+    if (setAddr) setAddr.value = address;
+    const setMap = document.getElementById("setGoogleMapsUrl");
+    if (setMap) setMap.value = updated.googleMapsUrl;
+
+    showToast("Shop Address, Google Maps link & Contact details saved successfully!", "success");
   },
 
   // Orders Tab Management & Live Filtering
@@ -1092,8 +1112,17 @@ const AdminController = {
     const announcementText = document.getElementById("setAnnouncementText")?.value.trim() || "";
     const storeTimings = document.getElementById("setShopTimings")?.value.trim() || "Monday – Sunday: 11:00 AM – 11:00 PM (Friday Break: 1:00 PM – 2:30 PM)";
     const locationHeading = document.getElementById("setLocHeading")?.value.trim() || "Find us in person.";
-    const locationDesc = document.getElementById("setLocDesc")?.value.trim() || "";
-    const googleMapsUrl = document.getElementById("setGoogleMapsUrl")?.value.trim() || "https://share.google/iiBvxUjHqCga5PFY1";
+    const current = Storage.getSettings();
+    let googleMapsUrl = document.getElementById("setGoogleMapsUrl")?.value.trim() || "";
+    if (googleMapsUrl.includes("<iframe") || googleMapsUrl.includes("src=")) {
+      const match = googleMapsUrl.match(/src=["'](.*?)["']/);
+      if (match && match[1]) {
+        googleMapsUrl = match[1];
+      }
+    }
+    if (!googleMapsUrl) {
+      googleMapsUrl = current.googleMapsUrl || "https://share.google/iiBvxUjHqCga5PFY1";
+    }
 
     let cleanWhatsapp = rawPhone.replace(/[^0-9]/g, "");
     if (cleanWhatsapp.startsWith("0")) {
@@ -1127,7 +1156,6 @@ const AdminController = {
       note: document.getElementById("setOfferNote")?.value.trim() || "⚡ Valid for all orders across Pakistan · Limited Stock"
     };
 
-    const current = Storage.getSettings();
     const updated = {
       ...current,
       brandName: brandName,
@@ -1152,6 +1180,14 @@ const AdminController = {
     if (window.AppState) AppState.settings = updated;
 
     if (typeof renderStoreSettings === "function") renderStoreSettings();
+    if (typeof renderStoreInfo === "function") renderStoreInfo();
+
+    // Also sync Overview tab fields if present
+    const qAddress = document.getElementById("quickShopAddress");
+    if (qAddress) qAddress.value = shopAddress;
+    const qMapUrl = document.getElementById("quickGoogleMapsUrl");
+    if (qMapUrl) qMapUrl.value = googleMapsUrl;
+
     this.renderOverview();
     showToast("Store, Brand, Sections, Map & Offer settings saved successfully!", "success");
   },

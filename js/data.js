@@ -892,9 +892,8 @@ const Storage = {
         parsed._pin_speed150 = true;
         changed = true;
       }
-      if (!parsed.googleMapsUrl || !parsed._map_url_share_v1) {
+      if (!parsed.googleMapsUrl) {
         parsed.googleMapsUrl = "https://share.google/iiBvxUjHqCga5PFY1";
-        parsed._map_url_share_v1 = true;
         changed = true;
       }
       if (changed) {
