@@ -1,9 +1,9 @@
 [
   {
     "id": "prod-1",
-    "title": "Luxury MagSafe Frosted Matte Armor Case",
+    "title": "fffffffffffffffffffffffffffffff",
     "brand": "apple",
-    "brandName": "Apple iPhone",
+    "brandName": "Apple",
     "compatibleModels": [
       "iPhone 16 Pro Max",
       "iPhone 15 Pro Max",
@@ -13,7 +13,7 @@
     ],
     "price": 1450,
     "oldPrice": 1999,
-    "category": "Magnetic Armor",
+    "category": "Mobile Cover",
     "rating": 4.9,
     "reviewsCount": 38,
     "stock": 25,
@@ -41,7 +41,8 @@
         "date": "1 week ago",
         "comment": "iPhone 15 Pro Max k liye mangwaya tha, fitting 100% accurate he. Highly recommended!"
       }
-    ]
+    ],
+    "isOnSale": true
   },
   {
     "id": "prod-2",
