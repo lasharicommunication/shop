@@ -1102,17 +1102,20 @@ const AdminController = {
   saveSettings(e) {
     if (e && e.preventDefault) e.preventDefault();
 
-    const brandName = document.getElementById("setBrandName")?.value.trim() || "xcess";
-    const brandDot = document.getElementById("setBrandDot")?.value ?? ".";
-    const shopAddress = document.getElementById("setShopAddress")?.value.trim() || "";
-    const email = document.getElementById("setShopEmail")?.value.trim() || "";
-    const rawPhone = document.getElementById("setShopPhone")?.value.trim() || "+92 321 2920914";
-    const deliveryFee = parseInt(document.getElementById("setDeliveryFee")?.value, 10) || 200;
-    const adminPin = document.getElementById("setAdminPin")?.value.trim() || "Speed150";
+    const current = Storage.getSettings();
+
+    const brandName = document.getElementById("setBrandName")?.value.trim() || current.brandName || "xcess";
+    const brandDot = document.getElementById("setBrandDot")?.value ?? current.brandDot ?? ".";
+    const shopAddress = document.getElementById("setShopAddress")?.value.trim() || current.shopAddress || "";
+    const email = document.getElementById("setShopEmail")?.value.trim() || current.email || "";
+    const rawPhone = document.getElementById("setShopPhone")?.value.trim() || current.phone || "+92 321 2920914";
+    const deliveryFee = parseInt(document.getElementById("setDeliveryFee")?.value, 10) || current.deliveryFee || 200;
+    const adminPin = document.getElementById("setAdminPin")?.value.trim() || current.adminPin || "Speed150";
     const announcementText = document.getElementById("setAnnouncementText")?.value.trim() || "";
     const storeTimings = document.getElementById("setShopTimings")?.value.trim() || "Monday – Sunday: 11:00 AM – 11:00 PM (Friday Break: 1:00 PM – 2:30 PM)";
     const locationHeading = document.getElementById("setLocHeading")?.value.trim() || "Find us in person.";
-    const current = Storage.getSettings();
+    const locationDesc = document.getElementById("setLocDesc")?.value.trim() || current.locationDesc || "";
+
     let googleMapsUrl = document.getElementById("setGoogleMapsUrl")?.value.trim() || "";
     if (googleMapsUrl.includes("<iframe") || googleMapsUrl.includes("src=")) {
       const match = googleMapsUrl.match(/src=["'](.*?)["']/);
@@ -1131,18 +1134,23 @@ const AdminController = {
     if (!cleanWhatsapp) cleanWhatsapp = "923212920914";
 
     // Section Visibility Checkmarks
-    const getCheck = (id) => document.getElementById(id)?.checked ?? true;
+    const getCheck = (id, fallback = true) => {
+      const el = document.getElementById(id);
+      return el ? el.checked : fallback;
+    };
+
+    const prevVis = current.sectionVisibility || {};
     const sectionVisibility = {
-      announcement: getCheck("secVisAnnouncement"),
-      hero: getCheck("secVisHero"),
-      categories: getCheck("secVisCategories"),
-      collection: getCheck("secVisCollection"),
-      reviews: getCheck("secVisReviews"),
-      offer: getCheck("secVisOffer"),
-      editorial: getCheck("secVisEditorial"),
-      closing: getCheck("secVisClosing"),
-      brands: getCheck("secVisBrands"),
-      location: getCheck("secVisLocation")
+      announcement: getCheck("secVisAnnouncement", prevVis.announcement ?? true),
+      hero: getCheck("secVisHero", prevVis.hero ?? true),
+      categories: getCheck("secVisCategories", prevVis.categories ?? true),
+      collection: getCheck("secVisCollection", prevVis.collection ?? true),
+      reviews: getCheck("secVisReviews", prevVis.reviews ?? true),
+      offer: getCheck("secVisOffer", prevVis.offer ?? true),
+      editorial: getCheck("secVisEditorial", prevVis.editorial ?? false),
+      closing: getCheck("secVisClosing", prevVis.closing ?? false),
+      brands: getCheck("secVisBrands", prevVis.brands ?? true),
+      location: getCheck("secVisLocation", prevVis.location ?? true)
     };
 
     // Special Promo Offer
