@@ -84,6 +84,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Keep an already-open storefront in sync when products are changed in another tab/window.
 function syncStorefrontProducts(products) {
   AppState.products = Array.isArray(products) ? products : Storage.getProducts();
+  if (typeof renderCategoryStrip === "function") renderCategoryStrip();
+  if (typeof renderFilterTabs === "function") renderFilterTabs();
+  if (typeof renderBrands === "function") renderBrands();
   if (typeof renderProducts === "function") renderProducts();
 }
 
