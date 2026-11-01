@@ -1,0 +1,647 @@
+[
+  {
+    "id": "prod-1",
+    "title": "Luxury MagSafe Frosted Matte Armor Case",
+    "brand": "apple",
+    "brandName": "Apple iPhone",
+    "compatibleModels": [
+      "iPhone 16 Pro Max",
+      "iPhone 15 Pro Max",
+      "iPhone 15 Pro",
+      "iPhone 14 Pro Max",
+      "iPhone 13"
+    ],
+    "price": 1450,
+    "oldPrice": 1999,
+    "category": "Magnetic Armor",
+    "rating": 4.9,
+    "reviewsCount": 38,
+    "stock": 25,
+    "isFeatured": true,
+    "badge": "Best Seller",
+    "image": "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Premium aviation-grade matte translucent magnetic case engineered for shock absorption and MagSafe charging. Scratch-resistant oleophobic coating prevents fingerprints. Raised camera bezels for total lens protection.",
+    "reviews": [
+      {
+        "name": "Hamza Tariq",
+        "city": "Lahore",
+        "rating": 5,
+        "date": "2 days ago",
+        "comment": "Bhai zabardast quality he! MagSafe magnetic grip bohot strong he. TCS se 2 din me deliver hua."
+      },
+      {
+        "name": "Bilal Ahmed",
+        "city": "Karachi",
+        "rating": 5,
+        "date": "1 week ago",
+        "comment": "iPhone 15 Pro Max k liye mangwaya tha, fitting 100% accurate he. Highly recommended!"
+      }
+    ]
+  },
+  {
+    "id": "prod-2",
+    "title": "Heavy Duty Rugged Kickstand Defense Case",
+    "brand": "samsung",
+    "brandName": "Samsung",
+    "compatibleModels": [
+      "S24 Ultra",
+      "S23 Ultra",
+      "A55 5G",
+      "A35 5G",
+      "A15"
+    ],
+    "price": 1250,
+    "oldPrice": 1750,
+    "category": "Shockproof Rugged",
+    "rating": 4.8,
+    "reviewsCount": 42,
+    "stock": 18,
+    "isFeatured": true,
+    "badge": "Top Rated",
+    "image": "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Military-grade dual-layer drop protection with built-in 360-degree rotating metal ring kickstand. Perfect for hands-free video viewing and magnetic car mount attachment.",
+    "reviews": [
+      {
+        "name": "Kamran Lashari",
+        "city": "Hyderabad",
+        "rating": 5,
+        "date": "3 days ago",
+        "comment": "S24 Ultra ka cover bohot solid he. Girne par bhi phone bilkul mehfooz rehta he."
+      },
+      {
+        "name": "Usman Ghani",
+        "city": "Islamabad",
+        "rating": 4,
+        "date": "2 weeks ago",
+        "comment": "Kickstand bohot kaam ki cheez he. Leopards parcel time pe le aya."
+      }
+    ]
+  },
+  {
+    "id": "prod-3",
+    "title": "Electroplated Camera Lens Protector Soft TPU Case",
+    "brand": "xiaomi",
+    "brandName": "Xiaomi / Redmi",
+    "compatibleModels": [
+      "Redmi Note 13 Pro",
+      "Poco X6 Pro",
+      "Redmi 13C",
+      "Xiaomi 14"
+    ],
+    "price": 899,
+    "oldPrice": 1399,
+    "category": "Slim Electroplated",
+    "rating": 4.9,
+    "reviewsCount": 29,
+    "stock": 30,
+    "isFeatured": true,
+    "badge": "Hot Deal",
+    "image": "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Ultra-slim soft flexible TPU bumper with metallic electroplated gold edges and built-in tempered camera glass protection ring. Crystal clear transparent back showcases your phone's authentic color.",
+    "reviews": [
+      {
+        "name": "Asad Raza",
+        "city": "Faisalabad",
+        "rating": 5,
+        "date": "Yesterday",
+        "comment": "Poco X6 Pro pe bohot classy lag raha he. 899 PKR me itni achi quality kamal he."
+      }
+    ]
+  },
+  {
+    "id": "prod-4",
+    "title": "Executive Luxury Vegan Leather Protective Cover",
+    "brand": "vivo",
+    "brandName": "Vivo",
+    "compatibleModels": [
+      "Vivo V30 5G",
+      "Vivo V29e",
+      "Vivo Y200",
+      "Vivo Y28"
+    ],
+    "price": 1350,
+    "oldPrice": 1850,
+    "category": "Luxury Leather",
+    "rating": 4.9,
+    "reviewsCount": 31,
+    "stock": 14,
+    "isFeatured": true,
+    "badge": "Trending",
+    "image": "https://images.unsplash.com/photo-1584006682522-dc17d6c0d9ac?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1584006682522-dc17d6c0d9ac?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Premium textured vegan PU leather with precision stitching and metallic accent logos. Provides non-slip luxury grip with comfortable hand feel and slim pocket profile.",
+    "reviews": [
+      {
+        "name": "Danish Sheikh",
+        "city": "Multan",
+        "rating": 5,
+        "date": "4 days ago",
+        "comment": "Vivo V30 ke liye perfect leather finish. Packing bohot zabardast thi."
+      }
+    ]
+  },
+  {
+    "id": "prod-5",
+    "title": "Carbon Fiber Anti-Slip Shock Absorption Bumper",
+    "brand": "oppo",
+    "brandName": "Oppo",
+    "compatibleModels": [
+      "Reno 12",
+      "Reno 11F",
+      "Oppo A78",
+      "Oppo A60"
+    ],
+    "price": 950,
+    "oldPrice": 1400,
+    "category": "Carbon Fiber",
+    "rating": 4.7,
+    "reviewsCount": 22,
+    "stock": 22,
+    "isFeatured": false,
+    "badge": "Special",
+    "image": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Brushed carbon fiber texture design engineered with corner air cushion technology to safeguard against sudden drops, scratches, and dust.",
+    "reviews": [
+      {
+        "name": "Waqas Ali",
+        "city": "Rawalpindi",
+        "rating": 5,
+        "date": "5 days ago",
+        "comment": "Grip bohot zabardast he. Haath se phisalta nahi he bilkul."
+      }
+    ]
+  },
+  {
+    "id": "prod-6",
+    "title": "Slide Camera Shutter Armor Shockproof Case",
+    "brand": "realme",
+    "brandName": "Realme",
+    "compatibleModels": [
+      "Realme 12 Pro+",
+      "Realme C67",
+      "Realme 11 5G",
+      "Realme C53"
+    ],
+    "price": 1100,
+    "oldPrice": 1600,
+    "category": "Camera Armor",
+    "rating": 4.8,
+    "reviewsCount": 26,
+    "stock": 19,
+    "isFeatured": false,
+    "badge": "Popular",
+    "image": "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Patented sliding camera cover protects lenses from scratches and prevents privacy invasion. Textured anti-slip side grips and rugged TPU bumper frame.",
+    "reviews": [
+      {
+        "name": "Zubair Lashari",
+        "city": "Sukkur",
+        "rating": 5,
+        "date": "1 week ago",
+        "comment": "Camera shutter mechanism bohot smooth he. 100% satisfied."
+      }
+    ]
+  },
+  {
+    "id": "prod-7",
+    "title": "Mecha Cyberpunk Gaming Edition Frosted Case",
+    "brand": "infinix",
+    "brandName": "Infinix",
+    "compatibleModels": [
+      "Infinix Note 40 Pro",
+      "Hot 40 Pro",
+      "Zero 30 5G",
+      "Smart 8"
+    ],
+    "price": 1199,
+    "oldPrice": 1699,
+    "category": "Gaming Cyberpunk",
+    "rating": 4.9,
+    "reviewsCount": 35,
+    "stock": 16,
+    "isFeatured": true,
+    "badge": "Gamer Choice",
+    "image": "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Futuristic mecha graphics designed with micro-matte backplate that repels sweat and heat during intense mobile gaming sessions. Compatible with magnetic wireless accessories.",
+    "reviews": [
+      {
+        "name": "Shahzaib Khan",
+        "city": "Peshawar",
+        "rating": 5,
+        "date": "3 days ago",
+        "comment": "Note 40 Pro k liye perfect match he. Wireless charging bhi smoothly kaam kar rahi he."
+      }
+    ]
+  },
+  {
+    "id": "prod-8",
+    "title": "Crystal Clear Non-Yellowing Hybrid Airbag Case",
+    "brand": "tecno",
+    "brandName": "Tecno",
+    "compatibleModels": [
+      "Camon 30 Pro",
+      "Spark 20 Pro+",
+      "Pova 6 Neo",
+      "Spark Go 2024"
+    ],
+    "price": 799,
+    "oldPrice": 1199,
+    "category": "Crystal Clear",
+    "rating": 4.7,
+    "reviewsCount": 19,
+    "stock": 28,
+    "isFeatured": false,
+    "badge": "Budget King",
+    "image": "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "German Bayer optical material provides 99.9% transparency without yellowing. 4-corner drop impact airbag cushions reduce drop shock by up to 90%.",
+    "reviews": [
+      {
+        "name": "M. Farhan",
+        "city": "Larkana",
+        "rating": 5,
+        "date": "5 days ago",
+        "comment": "Spark 20 Pro+ ka original color dikhta he, aur delivery bhi 200 PKR me 2 din me pohach gai."
+      }
+    ]
+  },
+  {
+    "id": "prod-9",
+    "title": "Ultra AMOLED Smartwatch With Bluetooth Calling & Fitness Tracker",
+    "brand": "apple",
+    "brandName": "Smartwatches",
+    "compatibleModels": [
+      "Universal iOS & Android",
+      "iPhone / Samsung / Xiaomi Compatible"
+    ],
+    "price": 3450,
+    "oldPrice": 4999,
+    "category": "Smartwatches",
+    "rating": 4.9,
+    "reviewsCount": 47,
+    "stock": 20,
+    "isFeatured": true,
+    "badge": "Hot Wearable",
+    "image": "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Crisp 2.02-inch HD AMOLED display with high-definition Bluetooth calling, heart rate & SpO2 tracking, multiple sports modes, and 5-7 days battery backup.",
+    "reviews": [
+      {
+        "name": "Adnan Malik",
+        "city": "Lahore",
+        "rating": 5,
+        "date": "2 days ago",
+        "comment": "Display quality bohot shaandaar he, calling bilkul clear he. TCS deliver fast!"
+      }
+    ]
+  },
+  {
+    "id": "prod-10",
+    "title": "Pro Active Noise Cancelling (ANC) Wireless Earbuds",
+    "brand": "apple",
+    "brandName": "Earbuds / Audio",
+    "compatibleModels": [
+      "Universal Bluetooth 5.3",
+      "All Smartphones & Laptops"
+    ],
+    "price": 2199,
+    "oldPrice": 3200,
+    "category": "Earbuds",
+    "rating": 4.8,
+    "reviewsCount": 39,
+    "stock": 25,
+    "isFeatured": true,
+    "badge": "Deep Bass",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "True wireless stereo earbuds with Active Noise Cancellation (ANC), Transparency mode, deep dynamic bass, and 28 hours playtime with charging case.",
+    "reviews": [
+      {
+        "name": "Shoaib Akhtar",
+        "city": "Islamabad",
+        "rating": 5,
+        "date": "3 days ago",
+        "comment": "Bass bohot zabardast he aur noise cancellation kaam karta he. COD safe delivery."
+      }
+    ]
+  },
+  {
+    "id": "prod-11",
+    "title": "20,000mAh 22.5W Super Fast Charge PD Power Bank with Digital Display",
+    "brand": "samsung",
+    "brandName": "Power Banks",
+    "compatibleModels": [
+      "All Type-C & iPhone",
+      "Quick Charge 3.0 & PD Fast"
+    ],
+    "price": 2650,
+    "oldPrice": 3800,
+    "category": "Power Banks",
+    "rating": 4.9,
+    "reviewsCount": 52,
+    "stock": 18,
+    "isFeatured": true,
+    "badge": "22.5W Fast",
+    "image": "https://images.unsplash.com/photo-1609592807664-07e3a388726e?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1609592807664-07e3a388726e?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "High capacity 20,000mAh polymer battery with 22.5W two-way fast charging, LED percentage indicator, and multi-device simultaneous charging.",
+    "reviews": [
+      {
+        "name": "Tariq Jameel",
+        "city": "Karachi",
+        "rating": 5,
+        "date": "4 days ago",
+        "comment": "Phone ko 4 dafa full charge kar deta he. Fast charging display accurate he."
+      }
+    ]
+  },
+  {
+    "id": "prod-12",
+    "title": "15W 3-in-1 Magnetic Fast Wireless Charger Stand",
+    "brand": "apple",
+    "brandName": "Wireless Chargers",
+    "compatibleModels": [
+      "MagSafe iPhone 12 to 16",
+      "Apple Watch & AirPods",
+      "Qi Wireless Android"
+    ],
+    "price": 2350,
+    "oldPrice": 3499,
+    "category": "Wireless Chargers",
+    "rating": 4.8,
+    "reviewsCount": 31,
+    "stock": 15,
+    "isFeatured": true,
+    "badge": "MagSafe Stand",
+    "image": "https://images.unsplash.com/photo-1622445262464-84b1456045b6?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1622445262464-84b1456045b6?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Foldable aluminum 3-in-1 desktop charging station for smartphone, smartwatch, and wireless earbuds. Intelligent heat dissipation and overcharge protection.",
+    "reviews": [
+      {
+        "name": "Rehan Siddiqui",
+        "city": "Faisalabad",
+        "rating": 5,
+        "date": "1 week ago",
+        "comment": "Desk setup bohot clean ho gaya he, wires ki tension khatam."
+      }
+    ]
+  },
+  {
+    "id": "prod-13",
+    "title": "65W GaN Super Fast Charger with 100W Braided Type-C Fast Cable",
+    "brand": "samsung",
+    "brandName": "Cables & Chargers",
+    "compatibleModels": [
+      "Samsung 45W PPS Super Fast",
+      "Xiaomi Fast Charge",
+      "iPhone 27W PD"
+    ],
+    "price": 1750,
+    "oldPrice": 2450,
+    "category": "Cables & Chargers",
+    "rating": 4.9,
+    "reviewsCount": 64,
+    "stock": 35,
+    "isFeatured": false,
+    "badge": "GaN Fast",
+    "image": "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Next-gen Gallium Nitride (GaN) fast charger with 100W heavy nylon-braided Type-C cable. Charges phone from 0% to 70% in just 30 minutes.",
+    "reviews": [
+      {
+        "name": "Khurram Shah",
+        "city": "Rawalpindi",
+        "rating": 5,
+        "date": "3 days ago",
+        "comment": "Speed zabardast he! S24 Ultra pe 'Super Fast Charging 2.0' likha ata he."
+      }
+    ]
+  },
+  {
+    "id": "prod-14",
+    "title": "Dual Port 35W PD + USB QC 3.0 Fast Travel Adapter",
+    "brand": "xiaomi",
+    "brandName": "Adapters",
+    "compatibleModels": [
+      "Universal Multi-Device",
+      "Dual Simultaneous Fast Charge"
+    ],
+    "price": 1199,
+    "oldPrice": 1750,
+    "category": "Adapters",
+    "rating": 4.7,
+    "reviewsCount": 28,
+    "stock": 22,
+    "isFeatured": false,
+    "badge": "Dual Port",
+    "image": "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Compact dual output travel adapter featuring USB-C Power Delivery and USB-A Quick Charge 3.0 with smart power distribution.",
+    "reviews": [
+      {
+        "name": "Ali Raza",
+        "city": "Peshawar",
+        "rating": 5,
+        "date": "6 days ago",
+        "comment": "Bohot compact he, travel ke liye best adapter he."
+      }
+    ]
+  },
+  {
+    "id": "prod-15",
+    "title": "IPX7 Waterproof Bass Boost Portable Bluetooth Speaker",
+    "brand": "apple",
+    "brandName": "Speakers",
+    "compatibleModels": [
+      "Universal Bluetooth 5.0",
+      "12H Playtime Battery"
+    ],
+    "price": 2250,
+    "oldPrice": 3200,
+    "category": "Speakers",
+    "rating": 4.9,
+    "reviewsCount": 43,
+    "stock": 17,
+    "isFeatured": false,
+    "badge": "Bass Boost",
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Rugged waterproof outdoor wireless speaker with 360-degree surround sound, punchy bass radiators, and built-in hands-free microphone.",
+    "reviews": [
+      {
+        "name": "Nabeel Khan",
+        "city": "Multan",
+        "rating": 5,
+        "date": "2 days ago",
+        "comment": "Sound quality bohot loud aur clear he, outdoor k liye best."
+      }
+    ]
+  },
+  {
+    "id": "prod-16",
+    "title": "12-Inch Professional LED Ring Light with 7ft Metal Tripod & Phone Mount",
+    "brand": "vivo",
+    "brandName": "LED Ring Light",
+    "compatibleModels": [
+      "All Smartphones",
+      "3 Light Color Temperatures & Dimmer"
+    ],
+    "price": 1850,
+    "oldPrice": 2650,
+    "category": "LED Ring Light",
+    "rating": 4.8,
+    "reviewsCount": 36,
+    "stock": 19,
+    "isFeatured": false,
+    "badge": "Creator Kit",
+    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "High-luminance dimmable LED ring light with warm, cool, and daylight modes. Includes heavy-duty 7-foot extendable tripod and 360-degree phone holder.",
+    "reviews": [
+      {
+        "name": "Ayesha Noor",
+        "city": "Lahore",
+        "rating": 5,
+        "date": "5 days ago",
+        "comment": "TikTok videos aur makeup tutorial ke liye best light he."
+      }
+    ]
+  },
+  {
+    "id": "prod-17",
+    "title": "360° Rotatable Heavy Metal Folding Desk Mobile & Tablet Holder",
+    "brand": "oppo",
+    "brandName": "Desk Mobile Holders",
+    "compatibleModels": [
+      "All Phones & Tablets up to 11 inch",
+      "Anti-Scratch Silicone Pads"
+    ],
+    "price": 899,
+    "oldPrice": 1350,
+    "category": "Desk Mobile Holders",
+    "rating": 4.9,
+    "reviewsCount": 58,
+    "stock": 30,
+    "isFeatured": false,
+    "badge": "Solid Metal",
+    "image": "https://images.unsplash.com/photo-1586105251261-72a756497a11?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1586105251261-72a756497a11?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Ergonomic aluminum alloy desk phone stand with double-hinge angle adjustment, weighted non-tipping base, and cable pass-through hole.",
+    "reviews": [
+      {
+        "name": "Zeeshan",
+        "city": "Karachi",
+        "rating": 5,
+        "date": "3 days ago",
+        "comment": "Heavy metal stand he, phone bilkul shake nahi hota. 899 me worth it."
+      }
+    ]
+  },
+  {
+    "id": "prod-18",
+    "title": "Auto-Lock Gravity & Magnetic Air Vent Dashboard Car Phone Mount",
+    "brand": "realme",
+    "brandName": "Car Mobile Holders",
+    "compatibleModels": [
+      "Universal 4.7 to 7.0 Inch Phones",
+      "One-Hand Quick Release"
+    ],
+    "price": 999,
+    "oldPrice": 1500,
+    "category": "Car Mobile Holders",
+    "rating": 4.8,
+    "reviewsCount": 44,
+    "stock": 24,
+    "isFeatured": false,
+    "badge": "Auto Grip",
+    "image": "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "One-second auto-clamping mechanism with triangle gravity locking and dual-mount compatibility for car AC air vents or flat dashboard.",
+    "reviews": [
+      {
+        "name": "Faraz Ahmed",
+        "city": "Islamabad",
+        "rating": 5,
+        "date": "1 week ago",
+        "comment": "Car me bumps pe bhi phone securely hold rehta he."
+      }
+    ]
+  },
+  {
+    "id": "prod-19",
+    "title": "Shockproof Waterproof 360° Motorcycle & Bicycle Handlebar Phone Mount",
+    "brand": "infinix",
+    "brandName": "Bike Mobile Holders",
+    "compatibleModels": [
+      "Universal Bike Handlebars 22-32mm",
+      "Sensitive Touch TPU Screen"
+    ],
+    "price": 1199,
+    "oldPrice": 1750,
+    "category": "Bike Mobile Holders",
+    "rating": 4.9,
+    "reviewsCount": 37,
+    "stock": 21,
+    "isFeatured": false,
+    "badge": "Waterproof",
+    "image": "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Fully sealed IPX6 waterproof bike mount case with high sensitivity touch window, sun visor hood, and internal silicone shock absorption cushions.",
+    "reviews": [
+      {
+        "name": "Bilal Butt",
+        "city": "Gujranwala",
+        "rating": 5,
+        "date": "4 days ago",
+        "comment": "Bykea / rider ke liye perfect holder he. Baarish me phone safe rehta he."
+      }
+    ]
+  }
+]

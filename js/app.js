@@ -40,11 +40,11 @@ function resetCollectionVisibleCount() {
 }
 
 // Initialize Store
-document.addEventListener("DOMContentLoaded", () => {
-  // Load data from LocalStorage
+document.addEventListener("DOMContentLoaded", async () => {
+  // Shared data is loaded from GitHub through the secure Vercel API.
   AppState.settings = Storage.getSettings();
   AppState.brands = Storage.getBrands();
-  AppState.products = Storage.getProducts();
+  AppState.products = await Storage.loadProducts();
 
   // Load cart from LocalStorage
   const savedCart = localStorage.getItem("lashari_cart");
@@ -79,6 +79,40 @@ document.addEventListener("DOMContentLoaded", () => {
   updateWishlistBadge();
   setupEventListeners();
   initScrollReveal();
+});
+
+// Keep an already-open storefront in sync when products are changed in another tab/window.
+function syncStorefrontProducts(products) {
+  AppState.products = Array.isArray(products) ? products : Storage.getProducts();
+  if (typeof renderProducts === "function") renderProducts();
+}
+
+window.addEventListener("lashari:products-updated", (event) => {
+  syncStorefrontProducts(event.detail);
+});
+
+window.addEventListener("storage", (event) => {
+  if (!event.key || event.key === "lashari_products") {
+    syncStorefrontProducts();
+  }
+
+  if (!event.key || event.key === "lashari_settings") {
+    AppState.settings = Storage.getSettings();
+    if (typeof renderStoreSettings === "function") renderStoreSettings();
+  }
+
+  if (!event.key || event.key === "lashari_brands") {
+    AppState.brands = Storage.getBrands();
+    if (typeof renderBrands === "function") renderBrands();
+  }
+});
+
+// Refresh shared products periodically and whenever the page becomes visible again.
+setInterval(async () => {
+  syncStorefrontProducts(await Storage.loadProducts());
+}, 30000);
+document.addEventListener("visibilitychange", async () => {
+  if (!document.hidden) syncStorefrontProducts(await Storage.loadProducts());
 });
 
 // Cursor Glow Follower

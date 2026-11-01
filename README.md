@@ -23,6 +23,22 @@ Modern, ultra-fast eCommerce website for mobile phone covers and tech accessorie
 
 ---
 
+## Shared Products API (GitHub-backed)
+
+Product additions and changes are stored in `data/products.json` through the secure Vercel API in `api/products.js`.
+
+Configure these environment variables in the Vercel project settings:
+
+- `GITHUB_TOKEN`: fine-grained GitHub token with read/write access to repository contents; never place this value in frontend JavaScript or HTML.
+- `GITHUB_OWNER`: repository owner (default: `lasharicommunication`).
+- `GITHUB_REPO`: repository name (default: `shop`).
+- `GITHUB_BRANCH`: repository branch (default: `main`).
+- `GITHUB_PRODUCTS_PATH`: optional JSON path (default: `data/products.json`).
+
+Redeploy after setting `GITHUB_TOKEN`. GitHub API writes commit the shared product catalog automatically, so every storefront visitor receives the same catalog.
+
+---
+
 ## 🛠️ Features
 - **Modern Tech Aesthetic**: Sleek Ink & Lime dark/light modern typography with smooth animations.
 - **Product Lineup**: Dynamic category filters, discount before-price strikethrough, auto-calculated percentage badges, and `🔥 SALE` flags.

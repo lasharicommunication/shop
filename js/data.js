@@ -922,7 +922,7 @@ const Storage = {
     }
     try {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         return parsed;
       }
       return DEFAULT_PRODUCTS;
@@ -930,8 +930,38 @@ const Storage = {
       return DEFAULT_PRODUCTS;
     }
   },
-  saveProducts: (products) => {
+  saveProducts: async (products) => {
     localStorage.setItem("lashari_products", JSON.stringify(products));
+    window.dispatchEvent(new CustomEvent("lashari:products-updated", { detail: products }));
+
+    const apiUrl = window.PRODUCTS_API_URL || "/api/products";
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ products })
+      });
+      if (!response.ok) throw new Error((await response.json()).error || `Server returned ${response.status}`);
+      return true;
+    } catch (error) {
+      console.error("Shared product save failed:", error);
+      if (window.showToast) window.showToast("Product saved locally, but could not sync to the shared store. Check Vercel deployment and GITHUB_TOKEN.", "error");
+      return false;
+    }
+  },
+  loadProducts: async () => {
+    const apiUrl = window.PRODUCTS_API_URL || "/api/products";
+    try {
+      const response = await fetch(apiUrl, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+      const products = await response.json();
+      if (!Array.isArray(products)) throw new Error("Shared products response is invalid");
+      localStorage.setItem("lashari_products", JSON.stringify(products));
+      return products;
+    } catch (error) {
+      console.warn("Shared products unavailable; using local copy:", error);
+      return Storage.getProducts();
+    }
   },
   getOrders: () => {
     const saved = localStorage.getItem("lashari_orders");

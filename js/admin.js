@@ -365,12 +365,12 @@ const AdminController = {
     this.renderProductsTable();
   },
 
-  quickAdjustStock(productId, change) {
+  async quickAdjustStock(productId, change) {
     let products = Storage.getProducts();
     const p = products.find(item => item.id === productId);
     if (!p) return;
     p.stock = Math.max(0, (p.stock || 0) + change);
-    Storage.saveProducts(products);
+    await Storage.saveProducts(products);
     if (window.AppState) AppState.products = products;
     if (typeof renderProducts === "function") renderProducts();
     this.renderProductsTable();
@@ -508,7 +508,7 @@ const AdminController = {
     if (form) form.reset();
   },
 
-  saveProduct(e) {
+  async saveProduct(e) {
     if (e && e.preventDefault) e.preventDefault();
 
     const editId = document.getElementById("editProductId")?.value.trim();
@@ -583,7 +583,7 @@ const AdminController = {
       showToast(`New product "${title}" added to store!`, "success");
     }
 
-    Storage.saveProducts(products);
+    await Storage.saveProducts(products);
     if (window.AppState) AppState.products = products;
 
     this.renderProductsTable();
@@ -591,7 +591,7 @@ const AdminController = {
     if (typeof renderProducts === "function") renderProducts();
   },
 
-  deleteProduct(productId) {
+  async deleteProduct(productId) {
     let products = Storage.getProducts();
     const prod = products.find(p => p.id === productId);
     const title = prod ? prod.title : "product";
@@ -599,7 +599,7 @@ const AdminController = {
     if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
 
     products = products.filter(p => p.id !== productId);
-    Storage.saveProducts(products);
+    await Storage.saveProducts(products);
     if (window.AppState) AppState.products = products;
 
     showToast(`Product "${title}" deleted from store`, "info");
