@@ -634,7 +634,12 @@ function renderProducts() {
   grid.innerHTML = visibleList.map(prod => {
     const currentQty = AppState.productQtyMap[prod.id] || 1;
     const isSaved = AppState.savedWishlist.includes(prod.id);
-    const artHtml = getProductArtHtml(prod);
+    const primaryImg = (Array.isArray(prod.images) && prod.images.length > 0) ? prod.images[0] : (prod.image || "");
+    const photoCount = Array.isArray(prod.images) ? prod.images.length : (prod.image ? 1 : 0);
+    const artHtml = primaryImg 
+      ? `<img src="${primaryImg}" alt="${prod.title}" class="product-real-img" loading="lazy" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+         <div class="art-fallback-box" style="display:none; width:100%; height:100%;">${getProductArtHtml(prod)}</div>`
+      : getProductArtHtml(prod);
     const categoryTag = prod.category || prod.brandName || "Accessory";
     
     // Check if on sale tag is enabled
@@ -649,6 +654,7 @@ function renderProducts() {
         <div class="product-media" onclick="openProductQuickView('${prod.id}')">
           ${isOnSale ? '<span class="sale-badge">🔥 SALE</span>' : ''}
           <span class="product-topline" style="${isOnSale ? 'top:42px;' : ''}">${categoryTag}</span>
+          ${photoCount > 1 ? `<span style="position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.72); color:#fff; font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:5px; z-index:3; display:flex; align-items:center; gap:4px;"><i class="fa-solid fa-camera"></i> ${photoCount}</span>` : ''}
           <button type="button" class="heart-button ${isSaved ? 'is-saved' : ''}" onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" title="Save to favorites">
             <svg viewBox="0 0 24 24">
               <path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/>
@@ -912,7 +918,28 @@ function openProductQuickView(prodId) {
   const buyBtn = document.getElementById("dialogBuyNowBtn");
   const addBtn = document.getElementById("dialogAddCartBtn");
 
-  if (visual) visual.innerHTML = getProductArtHtml(prod);
+  const images = (Array.isArray(prod.images) && prod.images.length > 0)
+    ? prod.images
+    : (prod.image ? [prod.image] : []);
+
+  if (visual) {
+    if (images.length > 0) {
+      visual.innerHTML = `
+        <div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+          <img id="quickViewMainImg" src="${images[0]}" alt="${prod.title}" style="max-width:85%; max-height:260px; object-fit:contain; border-radius:8px; filter:drop-shadow(0 10px 20px rgba(0,0,0,0.15)); transition:opacity 0.2s ease;">
+          ${images.length > 1 ? `
+            <div style="display:flex; gap:8px; margin-top:12px; overflow-x:auto; max-width:90%; padding:4px;">
+              ${images.map((img, idx) => `
+                <img src="${img}" alt="Photo ${idx+1}" onclick="document.getElementById('quickViewMainImg').src='${img}'; document.querySelectorAll('.qv-thumb').forEach(t=>t.style.borderColor='transparent'); this.style.borderColor='var(--lime)';" class="qv-thumb" style="width:48px; height:48px; object-fit:contain; background:#fff; border:2px solid ${idx===0 ? 'var(--lime)' : 'transparent'}; border-radius:6px; cursor:pointer; padding:2px;">
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    } else {
+      visual.innerHTML = getProductArtHtml(prod);
+    }
+  }
   if (cat) cat.textContent = prod.category ? `${prod.category} · XCESS COLLECTION` : 'XCESS COLLECTION';
   if (title) title.textContent = prod.title;
   if (price) price.textContent = `Rs. ${prod.price?.toLocaleString() || "1,450"}`;
@@ -960,6 +987,15 @@ function openOrderModalForProduct(prodId) {
   const totalEl = document.getElementById("orderTotalDisplay");
   const form = document.getElementById("orderForm");
   const success = document.getElementById("orderSuccess");
+
+  const orderImg = (Array.isArray(prod.images) && prod.images.length > 0) ? prod.images[0] : (prod.image || "");
+  if (art) {
+    if (orderImg) {
+      art.innerHTML = `<img src="${orderImg}" alt="${prod.title}" style="width:100%; height:100%; object-fit:contain; border-radius:6px;">`;
+    } else {
+      art.innerHTML = getProductArtHtml(prod);
+    }
+  }
 
   if (form) form.style.display = "flex";
   if (success) success.classList.remove("show");
@@ -1236,7 +1272,10 @@ function setupEventListeners() {
 
       if (grid) {
         grid.innerHTML = savedProds.map(prod => {
-          const artHtml = getProductArtHtml(prod);
+          const primaryImg = (Array.isArray(prod.images) && prod.images.length > 0) ? prod.images[0] : (prod.image || "");
+          const artHtml = primaryImg 
+            ? `<img src="${primaryImg}" alt="${prod.title}" class="product-real-img" loading="lazy">` 
+            : getProductArtHtml(prod);
           return `
             <article class="product-card reveal in-view" data-product-id="${prod.id}">
               <div class="product-media" onclick="openProductQuickView('${prod.id}')">

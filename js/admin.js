@@ -22,6 +22,51 @@ window.AppState = window.AppState || {
   currentReviewPage: 0
 };
 
+// Professional Toast Notification for Admin Panel
+function showToast(msg, type = "info") {
+  console.log(`[Toast ${type}]:`, msg);
+  let container = document.getElementById("toastContainer");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toastContainer";
+    container.className = "toast-container";
+    container.style.cssText = "position:fixed; top:24px; right:24px; z-index:999999; display:flex; flex-direction:column; gap:10px; max-width:400px; pointer-events:none;";
+    document.body.appendChild(container);
+  } else {
+    container.style.position = "fixed";
+    container.style.top = "24px";
+    container.style.right = "24px";
+    container.style.zIndex = "999999";
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+    container.style.gap = "10px";
+    container.style.maxWidth = "400px";
+    container.style.pointerEvents = "none";
+  }
+
+  const toast = document.createElement("div");
+  const bg = type === "success" ? "#14381e" : (type === "error" ? "#4a1919" : "#1a241c");
+  const border = type === "success" ? "#22c55e" : (type === "error" ? "#ef4444" : "#4ade80");
+  const textCol = type === "success" ? "#86efac" : (type === "error" ? "#fca5a5" : "#ffffff");
+  const icon = type === "success" ? "✓" : (type === "error" ? "⚠" : "ℹ");
+
+  toast.style.cssText = `background:${bg}; border:1px solid ${border}; color:${textCol}; padding:14px 18px; border-radius:10px; font-family:sans-serif; font-size:13px; font-weight:700; box-shadow:0 12px 30px rgba(0,0,0,0.6); display:flex; align-items:center; gap:12px; pointer-events:auto; transition:all 0.35s cubic-bezier(0.16, 1, 0.3, 1); transform:translateY(-12px); opacity:0;`;
+  toast.innerHTML = `<span style="font-size:17px; line-height:1;">${icon}</span> <span style="line-height:1.4;">${msg}</span>`;
+
+  container.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.style.transform = "translateY(0)";
+    toast.style.opacity = "1";
+  });
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateY(-10px)";
+    setTimeout(() => { if (toast.parentNode) toast.remove(); }, 350);
+  }, 4000);
+}
+window.showToast = showToast;
+
 const AdminController = {
   isAdminLoggedIn: false,
   activeTab: "overview",
@@ -456,6 +501,48 @@ const AdminController = {
     });
   },
 
+  // Dynamic Image URL Boxes Management
+  addImageUrlField(url = "") {
+    const list = document.getElementById("productImagesList");
+    if (!list) return;
+    const row = document.createElement("div");
+    row.className = "prod-image-row";
+    row.style.cssText = "display:flex; gap:8px; align-items:center;";
+    const count = list.children.length + 1;
+    row.innerHTML = `
+      <span style="font-size:11px; font-weight:700; color:#879b8a; min-width:62px;">Photo #${count}:</span>
+      <input type="url" class="prod-image-url-input" placeholder="https://example.com/cover-image.jpg" value="${(url || "").replace(/"/g, '&quot;')}" style="flex:1; background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px; font-size:12.5px;">
+      <button type="button" onclick="AdminController.removeImageUrlField(this)" title="Remove URL" style="background:#2a1c1c; border:1px solid #4a2828; color:#f87171; border-radius:8px; width:38px; height:38px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px;">&times;</button>
+    `;
+    list.appendChild(row);
+  },
+
+  removeImageUrlField(btn) {
+    const row = btn?.closest(".prod-image-row");
+    if (!row) return;
+    const list = document.getElementById("productImagesList");
+    row.remove();
+    if (list) {
+      Array.from(list.children).forEach((child, idx) => {
+        const span = child.querySelector("span");
+        if (span) span.textContent = `Photo #${idx + 1}:`;
+      });
+      if (list.children.length === 0) {
+        this.addImageUrlField("");
+      }
+    }
+  },
+
+  getProductImagesFromForm() {
+    const inputs = document.querySelectorAll("#productImagesList .prod-image-url-input");
+    const urls = [];
+    inputs.forEach(inp => {
+      const val = (inp.value || "").trim();
+      if (val) urls.push(val);
+    });
+    return urls;
+  },
+
   openProductForm(productId = null) {
     const box = document.getElementById("adminProductFormBox");
     const titleEl = document.getElementById("adminProductFormTitle");
@@ -467,10 +554,12 @@ const AdminController = {
     const formOldPrice = document.getElementById("prodFormOldPrice");
     const formIsOnSale = document.getElementById("prodFormIsOnSale");
     const formStock = document.getElementById("prodFormStock");
-    const formImage = document.getElementById("prodFormImage");
     const formDesc = document.getElementById("prodFormDescription");
+    const imgList = document.getElementById("productImagesList");
 
     if (!box) return;
+
+    if (imgList) imgList.innerHTML = "";
 
     if (productId) {
       const products = Storage.getProducts();
@@ -479,14 +568,23 @@ const AdminController = {
         if (titleEl) titleEl.textContent = `Edit Product: ${prod.title}`;
         if (editIdInput) editIdInput.value = prod.id;
         if (formTitle) formTitle.value = prod.title || "";
-        if (formCat) formCat.value = prod.category || "Smartwatch";
-        if (formBrand) formBrand.value = prod.brand || "apple";
+        if (formCat) formCat.value = prod.category || "Mobile Cover";
+        if (formBrand) formBrand.value = prod.brand || "infinix";
         if (formPrice) formPrice.value = prod.price || "";
         if (formOldPrice) formOldPrice.value = prod.oldPrice || "";
         if (formIsOnSale) formIsOnSale.checked = prod.isOnSale !== false;
         if (formStock) formStock.value = prod.stock ?? 25;
-        if (formImage) formImage.value = prod.image || "";
         if (formDesc) formDesc.value = prod.description || "";
+
+        const existingImages = Array.isArray(prod.images) && prod.images.length > 0 
+          ? prod.images 
+          : (prod.image ? [prod.image] : []);
+
+        if (existingImages.length > 0) {
+          existingImages.forEach(u => this.addImageUrlField(u));
+        } else {
+          this.addImageUrlField("");
+        }
       }
     } else {
       if (titleEl) titleEl.textContent = "Add New Product";
@@ -495,6 +593,7 @@ const AdminController = {
       if (form) form.reset();
       if (formIsOnSale) formIsOnSale.checked = true;
       if (formStock) formStock.value = 25;
+      this.addImageUrlField("");
     }
 
     box.style.display = "block";
@@ -506,6 +605,8 @@ const AdminController = {
     if (box) box.style.display = "none";
     const form = document.getElementById("adminProductForm");
     if (form) form.reset();
+    const imgList = document.getElementById("productImagesList");
+    if (imgList) imgList.innerHTML = "";
   },
 
   async saveProduct(e) {
@@ -513,14 +614,15 @@ const AdminController = {
 
     const editId = document.getElementById("editProductId")?.value.trim();
     const title = document.getElementById("prodFormTitle")?.value.trim();
-    const category = document.getElementById("prodFormCategory")?.value.trim() || "Smartwatch";
-    const brand = document.getElementById("prodFormBrand")?.value.trim() || "apple";
+    const category = document.getElementById("prodFormCategory")?.value.trim() || "Mobile Cover";
+    const brand = document.getElementById("prodFormBrand")?.value.trim() || "infinix";
     const price = parseInt(document.getElementById("prodFormPrice")?.value, 10);
     const oldPriceStr = document.getElementById("prodFormOldPrice")?.value.trim();
     const oldPrice = (oldPriceStr && parseInt(oldPriceStr, 10) > 0) ? parseInt(oldPriceStr, 10) : null;
     const isOnSale = document.getElementById("prodFormIsOnSale")?.checked ?? true;
     const stock = parseInt(document.getElementById("prodFormStock")?.value, 10) || 25;
-    const image = document.getElementById("prodFormImage")?.value.trim() || "";
+    const images = this.getProductImagesFromForm();
+    const image = images[0] || "";
     const description = document.getElementById("prodFormDescription")?.value.trim() || "";
 
     if (!title || !price || isNaN(price)) {
@@ -542,53 +644,60 @@ const AdminController = {
 
     let products = Storage.getProducts();
 
-    if (editId) {
-      const idx = products.findIndex(p => p.id === editId);
-      if (idx !== -1) {
-        products[idx] = {
-          ...products[idx],
+    try {
+      if (editId) {
+        const idx = products.findIndex(p => p.id === editId);
+        if (idx !== -1) {
+          products[idx] = {
+            ...products[idx],
+            title,
+            category,
+            brand,
+            brandName: brandMap[brand] || brand.toUpperCase(),
+            price,
+            oldPrice,
+            isOnSale,
+            stock,
+            image: image || products[idx].image || "",
+            images: images.length > 0 ? images : (products[idx].images || (image ? [image] : [])),
+            description: description || products[idx].description
+          };
+          showToast(`Product "${title}" updated successfully!`, "success");
+        }
+      } else {
+        const newProduct = {
+          id: `prod-${Date.now()}`,
           title,
           category,
           brand,
           brandName: brandMap[brand] || brand.toUpperCase(),
+          compatibleModels: ["Universal Device Compatibility"],
           price,
           oldPrice,
           isOnSale,
+          rating: 5.0,
+          reviewsCount: 1,
           stock,
-          image: image || products[idx].image,
-          description: description || products[idx].description
+          isFeatured: true,
+          badge: isOnSale ? "Sale Item" : "New Arrival",
+          image: image || "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
+          images: images.length > 0 ? images : [image || "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80"],
+          description: description || "Premium authentic tech accessory backed with official checking warranty."
         };
-        showToast(`Product "${title}" updated successfully!`, "success");
+        products.unshift(newProduct);
+        showToast(`New product "${title}" added to store!`, "success");
       }
-    } else {
-      const newProduct = {
-        id: `prod-${Date.now()}`,
-        title,
-        category,
-        brand,
-        brandName: brandMap[brand] || brand.toUpperCase(),
-        compatibleModels: ["Universal Device Compatibility"],
-        price,
-        oldPrice,
-        isOnSale,
-        rating: 5.0,
-        reviewsCount: 1,
-        stock,
-        isFeatured: true,
-        badge: isOnSale ? "Sale Item" : "New Arrival",
-        image: image || "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
-        description: description || "Premium authentic tech accessory backed with official checking warranty."
-      };
-      products.unshift(newProduct);
-      showToast(`New product "${title}" added to store!`, "success");
+
+      await Storage.saveProducts(products);
+      if (window.AppState) AppState.products = products;
+
+      this.renderProductsTable();
+      this.closeProductForm();
+      if (typeof renderProducts === "function") renderProducts();
+    } catch (err) {
+      console.error("Error saving product:", err);
+      showToast("Could not save product: " + err.message, "error");
     }
-
-    await Storage.saveProducts(products);
-    if (window.AppState) AppState.products = products;
-
-    this.renderProductsTable();
-    this.closeProductForm();
-    if (typeof renderProducts === "function") renderProducts();
   },
 
   async deleteProduct(productId) {
