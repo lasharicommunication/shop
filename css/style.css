@@ -1842,97 +1842,373 @@ svg {
 }
 
 /* FOOTER */
-.site-footer { background: #101511; color: #e7ece2; padding: 64px 0 25px; }
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  padding-bottom: 74px;
-  gap: 40px;
+/* ==========================================================================
+   SITE FOOTER (Luxury Modern Tech Redesign)
+   ========================================================================== */
+.site-footer {
+  background: #0b0f0c;
+  color: #e7ece2;
+  padding: 56px 0 28px;
+  border-top: 1px solid #1a221c;
+  position: relative;
+  overflow: hidden;
 }
-.footer-brand { font-size: 47px; color: #fff; }
-.footer-top p { color: #92a094; font-size: 13px; margin: 20px 0 0; max-width: 340px; }
-.footer-location {
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
-  margin-top: 18px;
-  color: #92a094;
-  font-size: 12px;
-  line-height: 1.7;
-}
-.footer-location-icon { flex-shrink: 0; margin-top: 2px; }
-.footer-location-icon svg {
-  width: 16px;
-  height: 16px;
-  stroke: #6a8b6e;
-  stroke-width: 1.8;
-}
-.footer-links {
+
+.footer-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px 60px;
-  font-size: 13px;
+  grid-template-columns: 1.35fr 1fr 1.15fr;
+  gap: 36px;
+  padding-bottom: 36px;
 }
-.footer-links a:hover { color: var(--lime); }
-.footer-contact {
+
+/* Col 1: Brand Info */
+.footer-col-brand {
   display: flex;
   flex-direction: column;
-  gap: 13px;
 }
-.footer-contact-heading {
-  font-size: 10px;
+
+.footer-brand {
+  font-family: var(--display);
+  font-size: clamp(24px, 3vw, 36px);
   font-weight: 800;
-  letter-spacing: .12em;
-  color: #6a8060;
-  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
-.footer-contact-link {
+
+.footer-brand-line {
+  width: 44px;
+  height: 3.5px;
+  background: #90bd00;
+  border-radius: 2px;
+  margin: 12px 0 16px;
+  box-shadow: 0 0 12px rgba(144, 189, 0, 0.45);
+}
+
+.footer-brand-desc {
+  color: #8fa093;
+  font-size: 13.5px;
+  line-height: 1.6;
+  margin: 0 0 18px;
+  max-width: 320px;
+}
+
+.footer-location-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: #8fa093;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.footer-loc-pin {
+  color: #90bd00;
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 17px;
+  height: 17px;
+  display: inline-flex;
+}
+
+.footer-loc-pin svg {
+  width: 17px;
+  height: 17px;
+}
+
+.footer-loc-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-loc-name {
+  color: #fff;
+  font-weight: 700;
+  font-size: 12.5px;
+}
+
+.footer-social-row {
   display: flex;
   align-items: center;
-  gap: 9px;
-  font-size: 12px;
-  color: #92a094;
-  transition: color .2s;
-  line-height: 1.4;
-}
-.footer-contact-link:hover { color: var(--lime); }
-.footer-contact-link svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-.footer-social {
-  display: flex;
   gap: 10px;
   margin-top: 4px;
 }
-.footer-social a {
-  width: 36px;
-  height: 36px;
+
+.footer-social-row a {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1.5px solid #2a3a2c;
-  display: grid;
-  place-items: center;
-  color: #92a094;
-  transition: border-color .2s, color .2s, background .2s;
-}
-.footer-social a:hover { border-color: var(--lime); color: var(--lime); background: #1a261b; }
-.footer-social svg {
-  width: 15px;
-  height: 15px;
-}
-.footer-bottom {
-  border-top: 1px solid #ffffff28;
+  background: #121714;
+  border: 1.5px solid #232d26;
   display: flex;
-  justify-content: space-between;
-  padding-top: 24px;
-  color: #839185;
-  font-size: 10px;
-  letter-spacing: .1em;
-  font-weight: 700;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.footer-social-row a:hover {
+  border-color: #90bd00;
+  color: #90bd00;
+  background: #172019;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(144, 189, 0, 0.25);
+}
+
+/* Col 2 & Col 3 Shared Title & Dividers */
+.footer-col-links,
+.footer-col-contact {
+  border-left: 1px solid #1a231d;
+  padding-left: 36px;
+}
+
+.footer-col-title {
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
   gap: 10px;
+  margin: 0 0 18px;
+  letter-spacing: -0.02em;
+}
+
+.footer-title-icon {
+  color: #90bd00;
+  font-size: 15px;
+  display: inline-flex;
+}
+
+/* Col 2: Quick Links */
+.footer-nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #8fa093;
+  padding: 8px 0;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.2s ease;
+}
+
+.footer-nav-item i {
+  font-size: 11px;
+  color: #4f6354;
+  transition: all 0.2s ease;
+}
+
+.footer-nav-item:hover {
+  color: #fff;
+  padding-left: 4px;
+}
+
+.footer-nav-item:hover i {
+  color: #90bd00;
+  transform: translateX(3px);
+}
+
+/* Col 3: Get in Touch */
+.footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-contact-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #111613;
+  border: 1px solid #202b23;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.footer-contact-card:hover {
+  border-color: #90bd00;
+  background: #151e17;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.contact-pill-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.wa-pill {
+  color: #25D366;
+  background: rgba(37, 211, 102, 0.12);
+  border: 1px solid rgba(37, 211, 102, 0.28);
+}
+
+.email-pill {
+  color: #90bd00;
+  background: rgba(144, 189, 0, 0.12);
+  border: 1px solid rgba(144, 189, 0, 0.28);
+}
+
+.contact-card-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.contact-sublabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #718274;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.contact-main-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer-contact-card.shop-email-link .contact-main-val {
+  white-space: normal;
+  word-break: break-all;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+/* Feature Perks Card (Middle Box) */
+.footer-perks-box {
+  background: #101512;
+  border: 1px solid #1f2a22;
+  border-radius: 16px;
+  padding: 22px 16px;
+  margin: 10px 0 22px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.footer-perk-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+}
+
+.footer-perk-item:not(:last-child) {
+  border-right: 1px solid #1c261e;
+}
+
+.perk-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(144, 189, 0, 0.08);
+  border: 1.5px solid rgba(144, 189, 0, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #90bd00;
+  margin-bottom: 10px;
+  transition: all 0.25s ease;
+}
+
+.perk-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #90bd00;
+}
+
+.footer-perk-item:hover .perk-icon {
+  transform: scale(1.08);
+  border-color: #90bd00;
+  box-shadow: 0 0 16px rgba(144, 189, 0, 0.35);
+}
+
+.perk-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #e7ece2;
+  line-height: 1.35;
+  display: block;
+}
+
+/* Delivery Banner Pill */
+.footer-delivery-pill {
+  background: #101512;
+  border: 1px solid #1f2a22;
+  border-radius: 999px;
+  padding: 13px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  text-align: center;
+  transition: border-color 0.25s ease;
+}
+
+.footer-delivery-pill:hover {
+  border-color: rgba(144, 189, 0, 0.4);
+}
+
+.delivery-pill-icon {
+  color: #90bd00;
+  font-size: 18px;
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.delivery-pill-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e7ece2;
+  letter-spacing: 0.02em;
+}
+
+.delivery-pill-price {
+  color: #90bd00;
+  font-weight: 800;
+}
+
+/* Copyright Bar */
+.footer-copyright {
+  border-top: 1px solid #1a231d;
+  padding-top: 22px;
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #718274;
+  letter-spacing: 0.03em;
 }
 
 /* QUICK VIEW DIALOG */
@@ -2663,9 +2939,52 @@ svg {
   .editorial-copy h2 { font-size: 32px; overflow-wrap: break-word; word-break: break-word; }
   .closing-section { padding-block: 60px; width: 100%; max-width: 100%; overflow: hidden; }
   .closing-section h2 { font-size: clamp(34px, 9vw, 48px); overflow-wrap: break-word; word-break: break-word; }
-  .footer-top { display: block; padding-bottom: 35px; width: 100%; max-width: 100%; }
-  .footer-links { margin-top: 35px; gap: 14px; }
-  .footer-bottom { gap: 10px; flex-direction: column; font-size: 9px; width: 100%; max-width: 100%; }
+  /* Mobile Footer Redesign */
+  .site-footer { padding: 42px 0 24px; }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding-bottom: 22px;
+  }
+  .footer-col-links,
+  .footer-col-contact {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid #1a231d;
+    padding-top: 24px;
+  }
+  .footer-brand { font-size: clamp(22px, 6.2vw, 30px); }
+  .footer-brand-line { margin: 10px 0 14px; }
+  .footer-perks-box {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 16px 8px;
+    border-radius: 14px;
+    gap: 14px 0;
+    margin: 6px 0 18px;
+  }
+  .footer-perk-item:nth-child(1),
+  .footer-perk-item:nth-child(2) {
+    border-bottom: 1px solid #1c261e;
+    padding-bottom: 14px;
+  }
+  .footer-perk-item:nth-child(even) {
+    border-right: none;
+  }
+  .footer-perk-item:nth-child(odd) {
+    border-right: 1px solid #1c261e;
+  }
+  .perk-title { font-size: 11.5px; }
+  .perk-icon { width: 38px; height: 38px; margin-bottom: 8px; }
+  .perk-icon svg { width: 19px; height: 19px; }
+  .footer-delivery-pill {
+    border-radius: 14px;
+    padding: 12px 14px;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .delivery-pill-icon { font-size: 16px; }
+  .delivery-pill-text { font-size: 11.5px; line-height: 1.45; }
+  .footer-copyright { font-size: 11px; padding-top: 18px; line-height: 1.5; }
 
   /* Dialogs & Checkout on Mobile */
   .site-dialog, .order-dialog, .bag-dialog {
