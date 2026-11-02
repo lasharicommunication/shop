@@ -153,12 +153,17 @@ svg {
 }
 .brand {
   font-family: var(--display);
-  font-size: 31px;
+  font-size: clamp(20px, 2.5vw, 30px);
   font-weight: 800;
-  letter-spacing: -.095em;
+  letter-spacing: -.035em;
   line-height: 1;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  white-space: nowrap;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
 }
 .brand-dot { color: #90bd00; }
 .desktop-nav { display: flex; align-items: center; gap: 36px; margin-left: 6%; }
@@ -2516,7 +2521,14 @@ svg {
   .topbar { font-size: 9.5px; height: 30px; letter-spacing: 0.02em; width: 100%; max-width: 100%; overflow: hidden; }
   .topbar span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100vw - 32px); }
   .header-inner { height: 60px; width: 100%; max-width: 100%; }
-  .brand { font-size: 24px; }
+  .brand {
+    font-size: clamp(14px, 4.3vw, 20px);
+    letter-spacing: -0.025em;
+    max-width: calc(100vw - 180px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .header-actions { gap: 4px; }
   .icon-button { width: 36px; height: 36px; }
   .bag-button { padding: 8px 10px; }

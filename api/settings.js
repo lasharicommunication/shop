@@ -1,0 +1,110 @@
+const OWNER = process.env.GITHUB_OWNER || "lasharicommunication";
+const REPO = process.env.GITHUB_REPO || "shop";
+const BRANCH = process.env.GITHUB_BRANCH || "main";
+const FILE_PATH = process.env.GITHUB_SETTINGS_PATH || "data/settings.json";
+
+async function githubRequest(path, token, options = {}) {
+  const response = await fetch(`https://api.github.com${path}`, {
+    ...options,
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`,
+      "X-GitHub-Api-Version": "2022-11-28",
+      ...(options.headers || {})
+    }
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`GitHub API ${response.status}: ${body}`);
+  }
+  return response.status === 204 ? null : response.json();
+}
+
+function json(res, status, body) {
+  res.status(status);
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.setHeader("Cache-Control", "no-store");
+  res.end(JSON.stringify(body));
+}
+
+module.exports = async function handler(req, res) {
+  const token = process.env.GITHUB_TOKEN;
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+
+  if (req.method === "OPTIONS") {
+    res.status(204).end();
+    return;
+  }
+
+  const apiPath = `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${encodeURIComponent(BRANCH)}`;
+
+  // GET: Return shared settings (tries API, then falls back to public raw URL)
+  if (req.method === "GET") {
+    try {
+      if (token) {
+        const file = await githubRequest(apiPath, token, { headers: { "Cache-Control": "no-cache" } });
+        const content = Buffer.from(file.content || "", "base64").toString("utf8");
+        return json(res, 200, JSON.parse(content));
+      }
+    } catch (apiErr) {
+      console.warn("GitHub API GET failed, trying public raw URL:", apiErr.message);
+    }
+
+    try {
+      const rawRes = await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${FILE_PATH}?_t=${Date.now()}`, {
+        headers: { "Cache-Control": "no-cache" }
+      });
+      if (rawRes.ok) {
+        const rawJson = await rawRes.json();
+        return json(res, 200, rawJson);
+      }
+    } catch (rawErr) {
+      console.error("Raw settings fallback failed:", rawErr.message);
+    }
+
+    return json(res, 200, {});
+  }
+
+  // POST: Commit settings changes to GitHub repo
+  if (req.method === "POST") {
+    if (!token) {
+      return json(res, 500, {
+        error: "GITHUB_TOKEN is not configured in Vercel Environment Variables. Please add Key: GITHUB_TOKEN in Vercel Project Settings -> Environment Variables and redeploy."
+      });
+    }
+
+    const settings = req.body?.settings;
+    if (!settings || typeof settings !== "object") {
+      return json(res, 400, { error: "settings must be an object" });
+    }
+
+    try {
+      let sha;
+      try {
+        sha = (await githubRequest(apiPath, token)).sha;
+      } catch (error) {
+        if (!error.message.includes("GitHub API 404")) throw error;
+      }
+
+      await githubRequest(`/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`, token, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: `Update storefront settings (${settings.brandName || "store"})`,
+          content: Buffer.from(JSON.stringify(settings, null, 2) + "\n").toString("base64"),
+          branch: BRANCH,
+          ...(sha ? { sha } : {})
+        })
+      });
+      return json(res, 200, { ok: true, settings });
+    } catch (error) {
+      console.error("GitHub settings commit failed:", error);
+      return json(res, 500, { error: `GitHub save failed: ${error.message}` });
+    }
+  }
+
+  return json(res, 405, { error: "Method not allowed" });
+};

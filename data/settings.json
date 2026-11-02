@@ -1,0 +1,72 @@
+{
+  "brandName": "Lashari Communication",
+  "brandDot": ".",
+  "storeName": "The Lashari Communication",
+  "tagline": "Premium Mobile Back Covers & Accessories Across Pakistan",
+  "email": "thelasharicommunication@gmail.com",
+  "phone": "+92 321 2920914",
+  "whatsapp": "923212920914",
+  "shopAddress": "Shop #14, Ground Floor, Lashari Mobile Plaza, Pakistan",
+  "storeTimings": "Monday – Sunday: 11:00 AM – 11:00 PM (Friday Break: 1:00 PM – 2:30 PM)",
+  "locationHeading": "Find us in person.",
+  "locationDesc": "Experience our premium tech essentials, live checking warranty, and free precision mobile cover fitting at our official outlet.",
+  "googleMapsQuery": "Shop #14, Ground Floor, Lashari Mobile Plaza, Pakistan",
+  "googleMapsUrl": "https://share.google/iiBvxUjHqCga5PFY1",
+  "socials": {
+    "instagram": "https://instagram.com/thelasharicommunication",
+    "facebook": "https://facebook.com/thelasharicommunication",
+    "tiktok": "https://tiktok.com/@thelasharicommunication"
+  },
+  "deliveryFee": 200,
+  "deliveryPartners": [
+    { "name": "TCS Express", "badge": "Express Air Delivery", "est": "1-2 Business Days" },
+    { "name": "Leopards Courier", "badge": "Nationwide COD Reach", "est": "2-3 Business Days" }
+  ],
+  "paymentAccounts": [
+    {
+      "id": "acc_1",
+      "bankName": "Meezan Bank Ltd",
+      "accountTitle": "Faizan Lashari",
+      "accountNumber": "0101-01020304050",
+      "active": true
+    },
+    {
+      "id": "acc_2",
+      "bankName": "JazzCash",
+      "accountTitle": "Faizan Lashari",
+      "accountNumber": "0300-1234567",
+      "active": true
+    },
+    {
+      "id": "acc_3",
+      "bankName": "EasyPaisa",
+      "accountTitle": "Faizan Lashari",
+      "accountNumber": "0345-9876543",
+      "active": true
+    }
+  ],
+  "announcementText": "THE EVERYDAY TECH EDIT · FLAT RS. 200 TCS & LEOPARDS DELIVERY",
+  "showAnnouncement": true,
+  "adminPin": "Speed150",
+  "specialOffer": {
+    "tag": "🔥 LIMITED TIME MEGA DROP",
+    "title": "FLAT 25% OFF · WEEKEND EDIT",
+    "desc": "Use promo code FLASH25 at checkout or claim flat Rs. 200 delivery nationwide with TCS & Leopards Express courier dispatch.",
+    "code": "FLASH25",
+    "btnText": "Shop Weekend Deals",
+    "btnLink": "#collection",
+    "note": "⚡ Valid for all orders across Pakistan · Limited Stock"
+  },
+  "sectionVisibility": {
+    "announcement": true,
+    "hero": true,
+    "categories": true,
+    "collection": true,
+    "reviews": true,
+    "offer": true,
+    "editorial": false,
+    "closing": false,
+    "brands": true,
+    "location": true
+  }
+}

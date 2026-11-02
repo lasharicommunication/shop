@@ -67,7 +67,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Render Page Components
+  // Render Page Components
+  AppState.settings = Storage.getSettings();
   renderStoreSettings();
+  Storage.loadSettings().then(sharedSettings => {
+    if (sharedSettings) {
+      AppState.settings = sharedSettings;
+      renderStoreSettings();
+    }
+  });
   initCursorGlow();
   renderCategoryStrip();
   renderFilterTabs();
@@ -94,6 +102,11 @@ window.addEventListener("lashari:products-updated", (event) => {
   syncStorefrontProducts(event.detail);
 });
 
+window.addEventListener("lashari:settings-updated", (event) => {
+  AppState.settings = event.detail || Storage.getSettings();
+  if (typeof renderStoreSettings === "function") renderStoreSettings();
+});
+
 window.addEventListener("storage", (event) => {
   if (!event.key || event.key === "lashari_products") {
     syncStorefrontProducts();
@@ -110,12 +123,24 @@ window.addEventListener("storage", (event) => {
   }
 });
 
-// Refresh shared products periodically and whenever the page becomes visible again.
+// Refresh shared products & settings periodically and whenever the page becomes visible again.
 setInterval(async () => {
   syncStorefrontProducts(await Storage.loadProducts());
+  const freshSettings = await Storage.loadSettings();
+  if (freshSettings) {
+    AppState.settings = freshSettings;
+    renderStoreSettings();
+  }
 }, 30000);
 document.addEventListener("visibilitychange", async () => {
-  if (!document.hidden) syncStorefrontProducts(await Storage.loadProducts());
+  if (!document.hidden) {
+    syncStorefrontProducts(await Storage.loadProducts());
+    const freshSettings = await Storage.loadSettings();
+    if (freshSettings) {
+      AppState.settings = freshSettings;
+      renderStoreSettings();
+    }
+  }
 });
 
 // Cursor Glow Follower
@@ -134,7 +159,6 @@ function initCursorGlow() {
     mouseY = e.clientY;
     if (!hasMoved) {
       glow.style.opacity = "1";
-      hasMoved = true;
     }
   });
 
@@ -167,7 +191,7 @@ function renderStoreSettings() {
   } = (AppState.settings || {});
 
   // Dynamic Brand Logo & Name
-  const bName = brandName || "xcess";
+  const bName = brandName || "Lashari Communication";
   const bDot = brandDot !== undefined ? brandDot : ".";
   document.querySelectorAll(".brand").forEach(el => {
     el.setAttribute("aria-label", `${bName} home`);

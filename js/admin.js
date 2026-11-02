@@ -1104,7 +1104,7 @@ const AdminController = {
 
     const current = Storage.getSettings();
 
-    const brandName = document.getElementById("setBrandName")?.value.trim() || current.brandName || "xcess";
+    const brandName = document.getElementById("setBrandName")?.value.trim() || current.brandName || "Lashari Communication";
     const brandDot = document.getElementById("setBrandDot")?.value ?? current.brandDot ?? ".";
     const shopAddress = document.getElementById("setShopAddress")?.value.trim() || current.shopAddress || "";
     const email = document.getElementById("setShopEmail")?.value.trim() || current.email || "";
@@ -1184,9 +1184,7 @@ const AdminController = {
       specialOffer: specialOffer
     };
 
-    Storage.saveSettings(updated);
     if (window.AppState) AppState.settings = updated;
-
     if (typeof renderStoreSettings === "function") renderStoreSettings();
     if (typeof renderStoreInfo === "function") renderStoreInfo();
 
@@ -1197,7 +1195,16 @@ const AdminController = {
     if (qMapUrl) qMapUrl.value = googleMapsUrl;
 
     this.renderOverview();
-    showToast("Store, Brand, Sections, Map & Offer settings saved successfully!", "success");
+
+    Storage.saveSettings(updated).then(ok => {
+      if (ok) {
+        showToast("Settings synchronized across all devices!", "success");
+      } else {
+        showToast("Settings saved locally! (Syncing globally when server connects)", "success");
+      }
+    }).catch(() => {
+      showToast("Store and brand settings saved!", "success");
+    });
   },
 
   resetStoreData() {

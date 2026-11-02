@@ -24,7 +24,7 @@ window.AppState = window.AppState || {
 };
 
 const DEFAULT_SETTINGS = {
-  brandName: "xcess",
+  brandName: "Lashari Communication",
   brandDot: ".",
   storeName: "The Lashari Communication",
   tagline: "Premium Mobile Back Covers & Accessories Across Pakistan",
@@ -855,8 +855,10 @@ const Storage = {
         parsed.paymentAccounts = DEFAULT_SETTINGS.paymentAccounts;
         changed = true;
       }
-      if (!parsed.brandName) {
-        parsed.brandName = DEFAULT_SETTINGS.brandName || "xcess";
+      if (!parsed._brand_lashari_sync_v1 || !parsed.brandName || parsed.brandName.toLowerCase() === "xcess") {
+        parsed.brandName = "Lashari Communication";
+        parsed.brandDot = ".";
+        parsed._brand_lashari_sync_v1 = true;
         changed = true;
       }
       if (parsed.brandDot === undefined) {
@@ -904,8 +906,64 @@ const Storage = {
       return DEFAULT_SETTINGS;
     }
   },
-  saveSettings: (settings) => {
+  saveSettings: async (settings) => {
     localStorage.setItem("lashari_settings", JSON.stringify(settings));
+    window.dispatchEvent(new CustomEvent("lashari:settings-updated", { detail: settings }));
+
+    const apiUrl = window.SETTINGS_API_URL || "/api/settings";
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ settings })
+      });
+      if (!response.ok) {
+        let errMessage = `Server error ${response.status}`;
+        try {
+          const errData = await response.json();
+          if (errData && errData.error) errMessage = errData.error;
+        } catch(e) {}
+        throw new Error(errMessage);
+      }
+      return true;
+    } catch (error) {
+      console.error("Shared settings save failed:", error);
+      return false;
+    }
+  },
+  loadSettings: async () => {
+    const apiUrl = window.SETTINGS_API_URL || "/api/settings";
+    try {
+      const response = await fetch(apiUrl, { cache: "no-store" });
+      if (response.ok) {
+        const data = await response.json();
+        const settings = (data && data.settings) ? data.settings : data;
+        if (settings && typeof settings === "object" && settings.brandName) {
+          localStorage.setItem("lashari_settings", JSON.stringify(settings));
+          window.dispatchEvent(new CustomEvent("lashari:settings-updated", { detail: settings }));
+          return settings;
+        }
+      }
+    } catch (error) {
+      console.warn("Shared settings API error:", error);
+    }
+
+    // Direct GitHub Raw Fallback (Always live for everyone)
+    try {
+      const rawRes = await fetch(`https://raw.githubusercontent.com/lasharicommunication/shop/main/data/settings.json?_t=${Date.now()}`, { cache: "no-store" });
+      if (rawRes.ok) {
+        const rawSettings = await rawRes.json();
+        if (rawSettings && typeof rawSettings === "object" && rawSettings.brandName) {
+          localStorage.setItem("lashari_settings", JSON.stringify(rawSettings));
+          window.dispatchEvent(new CustomEvent("lashari:settings-updated", { detail: rawSettings }));
+          return rawSettings;
+        }
+      }
+    } catch (rawError) {
+      console.warn("Direct GitHub raw settings fallback unavailable:", rawError);
+    }
+
+    return Storage.getSettings();
   },
   getBrands: () => {
     const saved = localStorage.getItem("lashari_brands");
