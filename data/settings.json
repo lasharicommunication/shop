@@ -19,8 +19,16 @@
   },
   "deliveryFee": 200,
   "deliveryPartners": [
-    { "name": "TCS Express", "badge": "Express Air Delivery", "est": "1-2 Business Days" },
-    { "name": "Leopards Courier", "badge": "Nationwide COD Reach", "est": "2-3 Business Days" }
+    {
+      "name": "TCS Express",
+      "badge": "Express Air Delivery",
+      "est": "1-2 Business Days"
+    },
+    {
+      "name": "Leopards Courier",
+      "badge": "Nationwide COD Reach",
+      "est": "2-3 Business Days"
+    }
   ],
   "paymentAccounts": [
     {
@@ -68,5 +76,9 @@
     "closing": false,
     "brands": true,
     "location": true
-  }
+  },
+  "_brand_lashari_sync_v1": true,
+  "_sec_defaults_v2": true,
+  "_phone_update_914": true,
+  "_pin_speed150": true
 }
