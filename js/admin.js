@@ -1040,7 +1040,7 @@ const AdminController = {
 
     // Brand inputs
     const bName = document.getElementById("setBrandName");
-    if (bName) bName.value = s.brandName || "xcess";
+    if (bName) bName.value = s.brandName || "Lashari Communication";
     const bDot = document.getElementById("setBrandDot");
     if (bDot) bDot.value = s.brandDot !== undefined ? s.brandDot : ".";
 
