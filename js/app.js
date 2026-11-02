@@ -744,7 +744,7 @@ function renderProducts() {
               Buy Now ↗
             </button>
             <button type="button" class="btn-add-cart" id="btnCart_${prod.id}" onclick="addProductToBag('${prod.id}')">
-              Add to Bag +
+              Add to Cart +
             </button>
           </div>
         </div>
@@ -927,15 +927,15 @@ function addProductToBag(prodId) {
 
   localStorage.setItem("lashari_cart", JSON.stringify(AppState.cart));
   updateBagCountBadge();
-  showToast(`Added ${qty} × ${prod.title} to bag!`);
+  showToast(`Added ${qty} × ${prod.title} to cart!`);
 
   const btn = document.getElementById(`btnCart_${prodId}`);
   if (btn) {
     btn.classList.add("in-cart");
-    btn.textContent = "In Bag ✓";
+    btn.textContent = "In Cart ✓";
     setTimeout(() => {
       btn.classList.remove("in-cart");
-      btn.textContent = "Add to Bag +";
+      btn.textContent = "Add to Cart +";
     }, 1800);
   }
 }
@@ -1336,7 +1336,7 @@ function setupEventListeners() {
                 </div>
                 <div class="product-actions" style="margin-top:10px;">
                   <button type="button" class="btn-buy-now" onclick="openOrderModalForProduct('${prod.id}')">Buy Now ↗</button>
-                  <button type="button" class="btn-add-cart" onclick="addProductToBag('${prod.id}')">Add to Bag +</button>
+                  <button type="button" class="btn-add-cart" onclick="addProductToBag('${prod.id}')">Add to Cart +</button>
                 </div>
               </div>
             </article>
