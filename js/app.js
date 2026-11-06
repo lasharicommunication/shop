@@ -1195,13 +1195,15 @@ function openProductQuickView(prodId) {
 
   const dialog = document.getElementById("productDialog");
   const visual = document.getElementById("dialogVisual");
-  const cat = document.getElementById("dialogCategory");
   const title = document.getElementById("dialogTitle");
   const price = document.getElementById("dialogPrice");
   const oldPrice = document.getElementById("dialogOldPrice");
   const desc = document.getElementById("dialogDescription");
   const buyBtn = document.getElementById("dialogBuyNowBtn");
   const addBtn = document.getElementById("dialogAddCartBtn");
+
+  const cat = document.getElementById("dialogCategory");
+  if (cat) cat.remove();
 
   const images = (Array.isArray(prod.images) && prod.images.length > 0)
     ? prod.images
@@ -1227,7 +1229,6 @@ function openProductQuickView(prodId) {
       visual.innerHTML = getProductArtHtml(prod);
     }
   }
-  if (cat) cat.textContent = prod.category ? `${prod.category} · XCESS COLLECTION` : 'XCESS COLLECTION';
   if (title) title.textContent = prod.title;
   if (price) price.textContent = `Rs. ${prod.price?.toLocaleString() || "1,450"}`;
   if (oldPrice) {

@@ -2373,11 +2373,11 @@ svg {
 }
 .dialog-visual .art-root { width: 90%; height: 90%; }
 .dialog-body { padding: 33px; }
-.dialog-kicker { color: #879d45; }
+.dialog-kicker, #dialogCategory { display: none !important; }
 .dialog-body h3, .bag-dialog h3 {
   font: 800 36px/1.15 var(--display);
   letter-spacing: -.06em;
-  margin: 15px 0;
+  margin: 0 0 12px;
 }
 .dialog-body p, .bag-dialog p { color: #727a70; line-height: 1.7; font-size: 14px; }
 .dialog-note {
