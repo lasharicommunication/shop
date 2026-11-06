@@ -4086,3 +4086,39 @@ html:has(dialog[open]) {
   font-weight: 700;
 }
 
+/* Order Modal Interactive Quantity Controls */
+.order-modal-qty-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.order-qty-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #5b6d52;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.order-qty-box {
+  background: #ffffff !important;
+  border-color: #c0ccb5 !important;
+  border-radius: 7px !important;
+  overflow: hidden;
+}
+.order-qty-box .qty-btn {
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 15px !important;
+  line-height: 1 !important;
+}
+.order-qty-box .qty-value {
+  min-width: 32px !important;
+  line-height: 28px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  border-color: #c0ccb5 !important;
+  background: #fdfefc !important;
+}
+
+

@@ -15,7 +15,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=5.1">
+  <link rel="stylesheet" href="css/style.css?v=5.2">
 </head>
 <body>
 
@@ -858,17 +858,30 @@
 
     <div class="order-product-strip">
       <div class="order-product-art" id="orderArt"></div>
-      <div style="flex:1;">
+      <div style="flex:1; min-width:0;">
         <div class="order-product-name" id="orderProductName">Luxury Case</div>
-        <div class="order-product-qty" id="orderProductQty">Qty: 1 · Rs. 1,450</div>
-        <div id="orderVarietyInfo" style="display:none; font-size:11px; color:#4a6310; font-weight:700; margin-top:2px;"></div>
-        <div style="font-size:11px; color:#6a8060; font-weight:700; margin-top:2px;">
+        <div id="orderProductPriceEach" style="font-size:12px; font-weight:700; color:#1a2e12; margin-top:2px;">Rs. 1,450 each</div>
+
+        <!-- Interactive Quantity in Order Modal -->
+        <div id="orderQtyControlsRow" class="order-modal-qty-row">
+          <span class="order-qty-title">Quantity:</span>
+          <div class="product-qty-row order-qty-box">
+            <button type="button" class="qty-btn" onclick="adjustOrderModalQty(-1)" aria-label="Decrease quantity">−</button>
+            <span class="qty-value" id="orderModalQtyVal">1</span>
+            <button type="button" class="qty-btn" onclick="adjustOrderModalQty(1)" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <div class="order-product-qty" id="orderProductQty" style="display:none;">Qty: 1 · Rs. 1,450</div>
+        <div id="orderVarietyInfo" style="display:none; font-size:11px; color:#4a6310; font-weight:700; margin-top:3px;"></div>
+        <div style="font-size:11px; color:#6a8060; font-weight:700; margin-top:3px;">
           + Rs. 200 Delivery Fee (TCS / Leopards)
         </div>
       </div>
-      <div style="text-align:right;">
-        <div style="font-size:10px; color:var(--muted); text-transform:uppercase; font-weight:700;">Total</div>
-        <strong id="orderTotalDisplay" style="font-family:var(--display); font-size:16px;">Rs. 1,650</strong>
+      <div style="text-align:right; flex-shrink:0;">
+        <div style="font-size:10px; color:var(--muted); text-transform:uppercase; font-weight:700;">Total Amount</div>
+        <strong id="orderTotalDisplay" style="font-family:var(--display); font-size:17px; color:var(--ink);">Rs. 1,650</strong>
+        <div id="orderSubtotalBreakdown" style="font-size:10px; color:#7f8679; margin-top:2px;">(incl. delivery)</div>
       </div>
     </div>
 
@@ -987,7 +1000,7 @@
   </dialog>
 
   <!-- STORE SCRIPTS -->
-  <script src="js/data.js?v=5.1"></script>
-  <script src="js/app.js?v=5.1"></script>
+  <script src="js/data.js?v=5.2"></script>
+  <script src="js/app.js?v=5.2"></script>
 </body>
 </html>

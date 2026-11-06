@@ -339,449 +339,329 @@ const DEFAULT_BRANDS = [
 
 const DEFAULT_PRODUCTS = [
   {
-    id: "prod-1",
-    title: "Luxury MagSafe Frosted Matte Armor Case",
-    brand: "apple",
-    brandName: "Apple iPhone",
-    compatibleModels: ["iPhone 16 Pro Max", "iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 14 Pro Max", "iPhone 13"],
-    price: 1450,
-    oldPrice: 1999,
-    category: "Magnetic Armor",
-    rating: 4.9,
-    reviewsCount: 38,
-    stock: 25,
-    isFeatured: true,
-    badge: "Best Seller",
-    image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=700&q=80",
-      "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=700&q=80",
-      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=700&q=80"
+    "id": "prod-1793905297002",
+    "title": "3G PLUS ENJOYHOME G-18 10000mAh Power Bank – 10W Fast Charging Portable External Battery with Type-C Input & LED Indicator",
+    "category": "Power Bank",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
     ],
-    description: "Premium aviation-grade matte translucent magnetic case engineered for shock absorption and MagSafe charging. Scratch-resistant oleophobic coating prevents fingerprints. Raised camera bezels for total lens protection.",
-    reviews: [
-      { name: "Hamza Tariq", city: "Lahore", rating: 5, date: "2 days ago", comment: "Bhai zabardast quality he! MagSafe magnetic grip bohot strong he. TCS se 2 din me deliver hua." },
-      { name: "Bilal Ahmed", city: "Karachi", rating: 5, date: "1 week ago", comment: "iPhone 15 Pro Max k liye mangwaya tha, fitting 100% accurate he. Highly recommended!" }
+    "price": 2749,
+    "oldPrice": 3699,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/7PJh3rLb/3g-plus-10000mah-portable-power-bank-pakistan-priceoye-4hcjg.jpg",
+    "images": [
+      "https://i.postimg.cc/7PJh3rLb/3g-plus-10000mah-portable-power-bank-pakistan-priceoye-4hcjg.jpg"
+    ],
+    "description": "Keep your smartphones and gadgets powered up throughout the day with the 3G PLUS ENJOYHOME G-18 10000mAh Power Bank. Built with high-capacity battery cells to deliver stable power supply, this compact external battery features a sleek dual-texture body design, 10W output for fast charging, and a Type-C input port. An integrated 4-LED indicator light display lets you check your remaining charge at a glance."
+  },
+  {
+    "id": "prod-1793904841319",
+    "title": "VEN-DENS 10000mAh 22.5W Fast Charging Power Bank with Built-In Cables & Digital LED Display – Portable External Battery Pack",
+    "category": "Power Bank",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 2899,
+    "oldPrice": 4599,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/0y0qYcmS/vens-dens-vd-pb061-20000-mah-power-bank-pakistan-priceoye-68prk-270x270.webp",
+    "images": [
+      "https://i.postimg.cc/0y0qYcmS/vens-dens-vd-pb061-20000-mah-power-bank-pakistan-priceoye-68prk-270x270.webp",
+      "https://i.postimg.cc/8598p389/5c6752aeb35669ba978961b952959cb1.jpg"
+    ],
+    "description": "Never worry about low battery again with the VEN-DENS 10000mAh 22.5W Fast Charging Power Bank. Designed for maximum convenience, this high-performance external battery features integrated built-in output cables (Type-C and Lightning), allowing you to charge your devices without carrying extra wires. The digital LED display screen shows exact battery percentage levels at a glance."
+  },
+  {
+    "id": "prod-1793904452863",
+    "title": "USB to Lightning Fast Charging Cable – High-Speed Data Sync Charger Wire for iPhone & iPad",
+    "category": "Cables",
+    "brand": "apple",
+    "brandName": "Apple",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 549,
+    "oldPrice": 999,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/CMQXk9QJ/download.jpg",
+    "images": [
+      "https://i.postimg.cc/CMQXk9QJ/download.jpg"
+    ],
+    "description": "Keep your devices charged and synced with this USB to Lightning Fast Charging Cable. Featuring a standard USB-A connector on one end and an 8-pin Lightning connector on the other, this cable provides reliable power delivery and fast data transfer for iPhones, iPads, and iPods. Its flexible, tangle-free design and reinforced strain relief ensure durable performance for everyday home, office, or travel use.",
+    "sizes": [
+      "1 Meter",
+      "2 Meter"
+    ],
+    "colors": [
+      "White",
+      "Black"
     ]
   },
   {
-    id: "prod-2",
-    title: "Heavy Duty Rugged Kickstand Defense Case",
-    brand: "samsung",
-    brandName: "Samsung",
-    compatibleModels: ["S24 Ultra", "S23 Ultra", "A55 5G", "A35 5G", "A15"],
-    price: 1250,
-    oldPrice: 1750,
-    category: "Shockproof Rugged",
-    rating: 4.8,
-    reviewsCount: 42,
-    stock: 18,
-    isFeatured: true,
-    badge: "Top Rated",
-    image: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=700&q=80",
-      "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?auto=format&fit=crop&w=700&q=80"
+    "id": "prod-1793904338351",
+    "title": "Apple USB-C to Lightning Cable (1m) – Fast Charging & High-Speed Data Sync Wire",
+    "category": "Cables",
+    "brand": "apple",
+    "brandName": "Apple",
+    "compatibleModels": [
+      "Universal Device Compatibility"
     ],
-    description: "Military-grade dual-layer drop protection with built-in 360-degree rotating metal ring kickstand. Perfect for hands-free video viewing and magnetic car mount attachment.",
-    reviews: [
-      { name: "Kamran Lashari", city: "Hyderabad", rating: 5, date: "3 days ago", comment: "S24 Ultra ka cover bohot solid he. Girne par bhi phone bilkul mehfooz rehta he." },
-      { name: "Usman Ghani", city: "Islamabad", rating: 4, date: "2 weeks ago", comment: "Kickstand bohot kaam ki cheez he. Leopards parcel time pe le aya." }
+    "price": 799,
+    "oldPrice": 1499,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/BZmsyhwB/iphone-e1747148396709.jpg",
+    "images": [
+      "https://i.postimg.cc/BZmsyhwB/iphone-e1747148396709.jpg"
+    ],
+    "description": "Connect your iPhone, iPad, or iPod with a Lightning connector to your USB-C or Thunderbolt 3 (USB-C) enabled Mac, iPad, or Power Adapter for seamless charging and syncing. The Apple USB-C to Lightning Cable (1m) supports Power Delivery fast charging, allowing you to quickly charge compatible iPhone models when paired with an Apple USB-C Power Adapter."
+  },
+  {
+    "id": "prod-1793904116099",
+    "title": "Type-C to Type-C Fast Charging Cable – High-Speed Data Sync & Power Delivery USB-C Wire",
+    "category": "Cables",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 499,
+    "oldPrice": 1099,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/N0nmp7vF/2948-90-758288-product-1.webp",
+    "images": [
+      "https://i.postimg.cc/N0nmp7vF/2948-90-758288-product-1.webp",
+      "https://i.postimg.cc/nr2Lwp9B/60W-USB-C-Charge-Cable-1-m.jpg"
+    ],
+    "description": "Upgrade your charging and data transfer setup with this USB Type-C to Type-C Fast Charging & Sync Cable. Designed for dual-way Type-C connectivity, this cable supports high-speed power delivery and fast data transmission across a wide variety of modern devices, including smartphones, tablets, laptops, and accessories. Built with durable TPE jacketing and reinforced connector strain reliefs to prevent fraying and ensure long-lasting daily performance."
+  },
+  {
+    "id": "prod-1793903566247",
+    "title": "Samsung 45W PD Power Adapter – Super Fast Charging Wall Charger with 5A/1.8m USB Type-C to C Cable",
+    "category": "Charger",
+    "brand": "samsung",
+    "brandName": "Samsung",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1999,
+    "oldPrice": 3849,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/QtZPvsjL/Samsung-45W-PD-Power-Adapter-Qmart-2.jpg",
+    "images": [
+      "https://i.postimg.cc/QtZPvsjL/Samsung-45W-PD-Power-Adapter-Qmart-2.jpg"
+    ],
+    "description": "Power up your devices in no time with the Samsung 45W PD Power Adapter Set. Designed with a sleek, compact profile, this super-fast wall charger features a USB-C port and comes bundled with a high-capacity 5A USB Type-C to C cable (1.8 meters) for maximum charging efficiency. Perfect for charging smartphones, tablets, and compatible USB-C laptops reliably and quickly."
+  },
+  {
+    "id": "prod-1793903332920",
+    "title": "Infinix XPOS XPOWER GO 5000mAh Power Bank – 12W Fast Charger Portable External Battery Pack",
+    "category": "Power Bank",
+    "brand": "infinix",
+    "brandName": "Infinix",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1499,
+    "oldPrice": 3499,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/W4Yz7WVR/2948-91-MZ2948200105ECAS-product-1.webp",
+    "images": [
+      "https://i.postimg.cc/W4Yz7WVR/2948-91-MZ2948200105ECAS-product-1.webp",
+      "https://i.postimg.cc/59CywSRf/17865266151127276-120826142335411483.webp",
+      "https://i.postimg.cc/7ZmZxsfc/73e24fdd341f45318dd4d946624e135a.jpg",
+      "https://i.postimg.cc/GhjcQ7Jt/JR-BP005-9.png"
+    ],
+    "description": "Stay powered up on the go with the Infinix XPOS XPOWER GO 5000mAh Power Bank. Designed with a sleek, ultra-slim profile and vibrant color options, this 12W fast-charging power bank keeps your mobile devices charged wherever you are. Features 4 LED battery indicator lights for easy status tracking."
+  },
+  {
+    "id": "prod-1793902399634",
+    "title": "GTS-2008 Portable Karaoke Bluetooth Speaker with Wireless Microphone – 4 Inch Driver & LED Light Box Speaker",
+    "category": "Speaker",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1899,
+    "oldPrice": 2599,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/4NHCS8Tr/b2d284ca43db918d6be760baa8c98c3d.jpg",
+    "images": [
+      "https://i.postimg.cc/4NHCS8Tr/b2d284ca43db918d6be760baa8c98c3d.jpg",
+      "https://i.postimg.cc/rFG6TDKD/gts-2008-karaoke-speaker-with-mics-pakistan-priceoye-adwjf.jpg"
+    ],
+    "description": "Turn any space into a party with the GTS-2008 Portable Karaoke Speaker Set. Featuring a powerful 4-inch speaker driver, built-in RGB LED lights, and a dedicated wireless microphone, this sound system is perfect for karaoke sessions, outdoor gatherings, and casual listening. Designed with an ergonomic top handle for effortless portability."
+  },
+  {
+    "id": "prod-1793902224355",
+    "title": "GTS-1941 Portable Wireless Speaker with Microphone – 3 Inch Driver, LED Light & Handle Box Speaker",
+    "category": "Speaker",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1599,
+    "oldPrice": 2149,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/bNrYNHfQ/S3636bd5757b2411f9767333aa8230367M.jpg",
+    "images": [
+      "https://i.postimg.cc/bNrYNHfQ/S3636bd5757b2411f9767333aa8230367M.jpg",
+      "https://i.postimg.cc/xj7hMKbx/images.jpg"
+    ],
+    "description": "Bring the party anywhere with the GTS-1941 Portable Wireless Speaker with Microphone set. Featuring a 3-inch speaker driver, custom front LED lighting, and an included karaoke microphone, this speaker is built for music lovers, party hosts, and outdoor activities. The sturdy carrying handle makes it easy to transport while delivering loud, clear sound."
+  },
+  {
+    "id": "prod-1793901838990",
+    "title": "M3 Mini Portable Bluetooth Speaker – Wireless Pocket-Sized Sound Box with Strong Bass & Built-In Mic",
+    "category": "Speaker",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1149,
+    "oldPrice": 1799,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/yx9PF3wm/154e97404cae36b5a781da00e5b12c82.png",
+    "images": [
+      "https://i.postimg.cc/yx9PF3wm/154e97404cae36b5a781da00e5b12c82.png",
+      "https://i.postimg.cc/wjP1d4t0/8b9ab8b89dd38c76a14fc637dd79137a.jpg"
+    ],
+    "description": "Experience big sound on the go with the M3 Mini Portable Bluetooth Speaker. Designed to fit in the palm of your hand or pocket, this compact wireless speaker delivers surprisingly loud volume and crisp audio clarity, making it perfect for travel, outdoor activities, or daily indoor use."
+  },
+  {
+    "id": "prod-1793561560126",
+    "title": "Futuristic Red Gaming Wireless Earbuds with Breathing LED Charging Case",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1749,
+    "oldPrice": 2499,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/rwDc6ptv/61v-Pt-Py4c-L-jpg-BO30-255-255-255-UF750-750-SR1910-1000-0-C-QL100.jpg",
+    "images": [
+      "https://i.postimg.cc/rwDc6ptv/61v-Pt-Py4c-L-jpg-BO30-255-255-255-UF750-750-SR1910-1000-0-C-QL100.jpg"
+    ],
+    "description": "Elevate your audio and gaming setup with these futuristic red wireless earbuds. Featuring a stylish metallic-finish charging case highlighted by a vibrant circular LED ring, this pair offers sleek modern aesthetics along with powerful dynamic sound performance.",
+    "colors": [
+      "Cyber Red",
+      "Stealth Black"
     ]
   },
   {
-    id: "prod-3",
-    title: "Electroplated Camera Lens Protector Soft TPU Case",
-    brand: "xiaomi",
-    brandName: "Xiaomi / Redmi",
-    compatibleModels: ["Redmi Note 13 Pro", "Poco X6 Pro", "Redmi 13C", "Xiaomi 14"],
-    price: 899,
-    oldPrice: 1399,
-    category: "Slim Electroplated",
-    rating: 4.9,
-    reviewsCount: 29,
-    stock: 30,
-    isFeatured: true,
-    badge: "Hot Deal",
-    image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=700&q=80"
+    "id": "prod-1793560651128",
+    "title": "Pro 2 Wireless Earphones with Active Noise Cancellation (ANC) & Charging Case",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
     ],
-    description: "Ultra-slim soft flexible TPU bumper with metallic electroplated gold edges and built-in tempered camera glass protection ring. Crystal clear transparent back showcases your phone's authentic color.",
-    reviews: [
-      { name: "Asad Raza", city: "Faisalabad", rating: 5, date: "Yesterday", comment: "Poco X6 Pro pe bohot classy lag raha he. 899 PKR me itni achi quality kamal he." }
-    ]
+    "price": 1549,
+    "oldPrice": 2199,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/7hZf8k4J/images.jpg",
+    "images": [
+      "https://i.postimg.cc/7hZf8k4J/images.jpg",
+      "https://i.postimg.cc/mg5q7Nkj/images.jpg"
+    ],
+    "description": "Experience premium sound quality and advanced Active Noise Cancellation (ANC) with the Apple AirPods Pro. This package includes the wireless earbuds, charging case, a lanyard strap, and official packaging featuring a Redingonton 12-month warranty seal.   Active Noise Cancellation (ANC): Blocks out unwanted background noise for an immersive listening experience.   Ergonomic Design: Includes customizable silicone tips for a secure, comfortable fit.Charging Case: Sleek, white MagSafe-compatible case with a built-in lanyard loop.   Warranty: Backed by a 12-month Redington warranty sticker."
   },
   {
-    id: "prod-4",
-    title: "Executive Luxury Vegan Leather Protective Cover",
-    brand: "vivo",
-    brandName: "Vivo",
-    compatibleModels: ["Vivo V30 5G", "Vivo V29e", "Vivo Y200", "Vivo Y28"],
-    price: 1350,
-    oldPrice: 1850,
-    category: "Luxury Leather",
-    rating: 4.9,
-    reviewsCount: 31,
-    stock: 14,
-    isFeatured: true,
-    badge: "Trending",
-    image: "https://images.unsplash.com/photo-1584006682522-dc17d6c0d9ac?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1584006682522-dc17d6c0d9ac?auto=format&fit=crop&w=700&q=80"
+    "id": "prod-1793611576137",
+    "title": "M10 TWS Stereo Wireless Headphones – Touch Control Sports Earbuds with Built-in Mic & Power Bank Feature",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
     ],
-    description: "Premium textured vegan PU leather with precision stitching and metallic accent logos. Provides non-slip luxury grip with comfortable hand feel and slim pocket profile.",
-    reviews: [
-      { name: "Danish Sheikh", city: "Multan", rating: 5, date: "4 days ago", comment: "Vivo V30 ke liye perfect leather finish. Packing bohot zabardast thi." }
-    ]
-  },
-  {
-    id: "prod-5",
-    title: "Carbon Fiber Anti-Slip Shock Absorption Bumper",
-    brand: "oppo",
-    brandName: "Oppo",
-    compatibleModels: ["Reno 12", "Reno 11F", "Oppo A78", "Oppo A60"],
-    price: 950,
-    oldPrice: 1400,
-    category: "Carbon Fiber",
-    rating: 4.7,
-    reviewsCount: 22,
-    stock: 22,
-    isFeatured: false,
-    badge: "Special",
-    image: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=700&q=80"
+    "price": 1199,
+    "oldPrice": 1999,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 2500,
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/7LwP89H7/images.jpg",
+    "images": [
+      "https://i.postimg.cc/7LwP89H7/images.jpg",
+      "https://i.postimg.cc/dVqQgntT/tws-m10-earbuds-bluetooth-51-earphones-3500mah-charging-box-wireless-stereo-370383.jpg",
+      "https://i.postimg.cc/dtncZFwS/images.jpg"
     ],
-    description: "Brushed carbon fiber texture design engineered with corner air cushion technology to safeguard against sudden drops, scratches, and dust.",
-    reviews: [
-      { name: "Waqas Ali", city: "Rawalpindi", rating: 5, date: "5 days ago", comment: "Grip bohot zabardast he. Haath se phisalta nahi he bilkul." }
-    ]
-  },
-  {
-    id: "prod-6",
-    title: "Slide Camera Shutter Armor Shockproof Case",
-    brand: "realme",
-    brandName: "Realme",
-    compatibleModels: ["Realme 12 Pro+", "Realme C67", "Realme 11 5G", "Realme C53"],
-    price: 1100,
-    oldPrice: 1600,
-    category: "Camera Armor",
-    rating: 4.8,
-    reviewsCount: 26,
-    stock: 19,
-    isFeatured: false,
-    badge: "Popular",
-    image: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Patented sliding camera cover protects lenses from scratches and prevents privacy invasion. Textured anti-slip side grips and rugged TPU bumper frame.",
-    reviews: [
-      { name: "Zubair Lashari", city: "Sukkur", rating: 5, date: "1 week ago", comment: "Camera shutter mechanism bohot smooth he. 100% satisfied." }
-    ]
-  },
-  {
-    id: "prod-7",
-    title: "Mecha Cyberpunk Gaming Edition Frosted Case",
-    brand: "infinix",
-    brandName: "Infinix",
-    compatibleModels: ["Infinix Note 40 Pro", "Hot 40 Pro", "Zero 30 5G", "Smart 8"],
-    price: 1199,
-    oldPrice: 1699,
-    category: "Gaming Cyberpunk",
-    rating: 4.9,
-    reviewsCount: 35,
-    stock: 16,
-    isFeatured: true,
-    badge: "Gamer Choice",
-    image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Futuristic mecha graphics designed with micro-matte backplate that repels sweat and heat during intense mobile gaming sessions. Compatible with magnetic wireless accessories.",
-    reviews: [
-      { name: "Shahzaib Khan", city: "Peshawar", rating: 5, date: "3 days ago", comment: "Note 40 Pro k liye perfect match he. Wireless charging bhi smoothly kaam kar rahi he." }
-    ]
-  },
-  {
-    id: "prod-8",
-    title: "Crystal Clear Non-Yellowing Hybrid Airbag Case",
-    brand: "tecno",
-    brandName: "Tecno",
-    compatibleModels: ["Camon 30 Pro", "Spark 20 Pro+", "Pova 6 Neo", "Spark Go 2024"],
-    price: 799,
-    oldPrice: 1199,
-    category: "Crystal Clear",
-    rating: 4.7,
-    reviewsCount: 19,
-    stock: 28,
-    isFeatured: false,
-    badge: "Budget King",
-    image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "German Bayer optical material provides 99.9% transparency without yellowing. 4-corner drop impact airbag cushions reduce drop shock by up to 90%.",
-    reviews: [
-      { name: "M. Farhan", city: "Larkana", rating: 5, date: "5 days ago", comment: "Spark 20 Pro+ ka original color dikhta he, aur delivery bhi 200 PKR me 2 din me pohach gai." }
-    ]
-  },
-  {
-    id: "prod-9",
-    title: "Ultra AMOLED Smartwatch With Bluetooth Calling & Fitness Tracker",
-    brand: "apple",
-    brandName: "Smartwatches",
-    compatibleModels: ["Universal iOS & Android", "iPhone / Samsung / Xiaomi Compatible"],
-    price: 3450,
-    oldPrice: 4999,
-    category: "Smartwatches",
-    rating: 4.9,
-    reviewsCount: 47,
-    stock: 20,
-    sizes: ["45mm", "49mm Ultra"],
-    colors: ["Space Black", "Titanium Grey", "Alpine Green", "Orange"],
-    isFeatured: true,
-    badge: "Hot Wearable",
-    image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Crisp 2.02-inch HD AMOLED display with high-definition Bluetooth calling, heart rate & SpO2 tracking, multiple sports modes, and 5-7 days battery backup.",
-    reviews: [
-      { name: "Adnan Malik", city: "Lahore", rating: 5, date: "2 days ago", comment: "Display quality bohot shaandaar he, calling bilkul clear he. TCS deliver fast!" }
-    ]
-  },
-  {
-    id: "prod-10",
-    title: "Pro Active Noise Cancelling (ANC) Wireless Earbuds",
-    brand: "apple",
-    brandName: "Earbuds / Audio",
-    compatibleModels: ["Universal Bluetooth 5.3", "All Smartphones & Laptops"],
-    price: 2199,
-    oldPrice: 3200,
-    category: "Earbuds",
-    rating: 4.8,
-    reviewsCount: 39,
-    stock: 25,
-    sizes: ["Standard Fit"],
-    colors: ["Black", "White", "Navy Blue"],
-    isFeatured: true,
-    badge: "Deep Bass",
-    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "True wireless stereo earbuds with Active Noise Cancellation (ANC), Transparency mode, deep dynamic bass, and 28 hours playtime with charging case.",
-    reviews: [
-      { name: "Shoaib Akhtar", city: "Islamabad", rating: 5, date: "3 days ago", comment: "Bass bohot zabardast he aur noise cancellation kaam karta he. COD safe delivery." }
-    ]
-  },
-  {
-    id: "prod-11",
-    title: "20,000mAh 22.5W Super Fast Charge PD Power Bank with Digital Display",
-    brand: "samsung",
-    brandName: "Power Banks",
-    compatibleModels: ["All Type-C & iPhone", "Quick Charge 3.0 & PD Fast"],
-    price: 2650,
-    oldPrice: 3800,
-    category: "Power Banks",
-    rating: 4.9,
-    reviewsCount: 52,
-    stock: 18,
-    isFeatured: true,
-    badge: "22.5W Fast",
-    image: "https://images.unsplash.com/photo-1609592807664-07e3a388726e?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1609592807664-07e3a388726e?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "High capacity 20,000mAh polymer battery with 22.5W two-way fast charging, LED percentage indicator, and multi-device simultaneous charging.",
-    reviews: [
-      { name: "Tariq Jameel", city: "Karachi", rating: 5, date: "4 days ago", comment: "Phone ko 4 dafa full charge kar deta he. Fast charging display accurate he." }
-    ]
-  },
-  {
-    id: "prod-12",
-    title: "15W 3-in-1 Magnetic Fast Wireless Charger Stand",
-    brand: "apple",
-    brandName: "Wireless Chargers",
-    compatibleModels: ["MagSafe iPhone 12 to 16", "Apple Watch & AirPods", "Qi Wireless Android"],
-    price: 2350,
-    oldPrice: 3499,
-    category: "Wireless Chargers",
-    rating: 4.8,
-    reviewsCount: 31,
-    stock: 15,
-    isFeatured: true,
-    badge: "MagSafe Stand",
-    image: "https://images.unsplash.com/photo-1622445262464-84b1456045b6?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1622445262464-84b1456045b6?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Foldable aluminum 3-in-1 desktop charging station for smartphone, smartwatch, and wireless earbuds. Intelligent heat dissipation and overcharge protection.",
-    reviews: [
-      { name: "Rehan Siddiqui", city: "Faisalabad", rating: 5, date: "1 week ago", comment: "Desk setup bohot clean ho gaya he, wires ki tension khatam." }
-    ]
-  },
-  {
-    id: "prod-13",
-    title: "65W GaN Super Fast Charger with 100W Braided Type-C Fast Cable",
-    brand: "samsung",
-    brandName: "Cables & Chargers",
-    compatibleModels: ["Samsung 45W PPS Super Fast", "Xiaomi Fast Charge", "iPhone 27W PD"],
-    price: 1750,
-    oldPrice: 2450,
-    category: "Cables & Chargers",
-    rating: 4.9,
-    reviewsCount: 64,
-    stock: 35,
-    isFeatured: false,
-    badge: "GaN Fast",
-    image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Next-gen Gallium Nitride (GaN) fast charger with 100W heavy nylon-braided Type-C cable. Charges phone from 0% to 70% in just 30 minutes.",
-    reviews: [
-      { name: "Khurram Shah", city: "Rawalpindi", rating: 5, date: "3 days ago", comment: "Speed zabardast he! S24 Ultra pe 'Super Fast Charging 2.0' likha ata he." }
-    ]
-  },
-  {
-    id: "prod-14",
-    title: "Dual Port 35W PD + USB QC 3.0 Fast Travel Adapter",
-    brand: "xiaomi",
-    brandName: "Adapters",
-    compatibleModels: ["Universal Multi-Device", "Dual Simultaneous Fast Charge"],
-    price: 1199,
-    oldPrice: 1750,
-    category: "Adapters",
-    rating: 4.7,
-    reviewsCount: 28,
-    stock: 22,
-    isFeatured: false,
-    badge: "Dual Port",
-    image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Compact dual output travel adapter featuring USB-C Power Delivery and USB-A Quick Charge 3.0 with smart power distribution.",
-    reviews: [
-      { name: "Ali Raza", city: "Peshawar", rating: 5, date: "6 days ago", comment: "Bohot compact he, travel ke liye best adapter he." }
-    ]
-  },
-  {
-    id: "prod-15",
-    title: "IPX7 Waterproof Bass Boost Portable Bluetooth Speaker",
-    brand: "apple",
-    brandName: "Speakers",
-    compatibleModels: ["Universal Bluetooth 5.0", "12H Playtime Battery"],
-    price: 2250,
-    oldPrice: 3200,
-    category: "Speakers",
-    rating: 4.9,
-    reviewsCount: 43,
-    stock: 17,
-    isFeatured: false,
-    badge: "Bass Boost",
-    image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Rugged waterproof outdoor wireless speaker with 360-degree surround sound, punchy bass radiators, and built-in hands-free microphone.",
-    reviews: [
-      { name: "Nabeel Khan", city: "Multan", rating: 5, date: "2 days ago", comment: "Sound quality bohot loud aur clear he, outdoor k liye best." }
-    ]
-  },
-  {
-    id: "prod-16",
-    title: "12-Inch Professional LED Ring Light with 7ft Metal Tripod & Phone Mount",
-    brand: "vivo",
-    brandName: "LED Ring Light",
-    compatibleModels: ["All Smartphones", "3 Light Color Temperatures & Dimmer"],
-    price: 1850,
-    oldPrice: 2650,
-    category: "LED Ring Light",
-    rating: 4.8,
-    reviewsCount: 36,
-    stock: 19,
-    isFeatured: false,
-    badge: "Creator Kit",
-    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "High-luminance dimmable LED ring light with warm, cool, and daylight modes. Includes heavy-duty 7-foot extendable tripod and 360-degree phone holder.",
-    reviews: [
-      { name: "Ayesha Noor", city: "Lahore", rating: 5, date: "5 days ago", comment: "TikTok videos aur makeup tutorial ke liye best light he." }
-    ]
-  },
-  {
-    id: "prod-17",
-    title: "360° Rotatable Heavy Metal Folding Desk Mobile & Tablet Holder",
-    brand: "oppo",
-    brandName: "Desk Mobile Holders",
-    compatibleModels: ["All Phones & Tablets up to 11 inch", "Anti-Scratch Silicone Pads"],
-    price: 899,
-    oldPrice: 1350,
-    category: "Desk Mobile Holders",
-    rating: 4.9,
-    reviewsCount: 58,
-    stock: 30,
-    isFeatured: false,
-    badge: "Solid Metal",
-    image: "https://images.unsplash.com/photo-1586105251261-72a756497a11?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1586105251261-72a756497a11?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Ergonomic aluminum alloy desk phone stand with double-hinge angle adjustment, weighted non-tipping base, and cable pass-through hole.",
-    reviews: [
-      { name: "Zeeshan", city: "Karachi", rating: 5, date: "3 days ago", comment: "Heavy metal stand he, phone bilkul shake nahi hota. 899 me worth it." }
-    ]
-  },
-  {
-    id: "prod-18",
-    title: "Auto-Lock Gravity & Magnetic Air Vent Dashboard Car Phone Mount",
-    brand: "realme",
-    brandName: "Car Mobile Holders",
-    compatibleModels: ["Universal 4.7 to 7.0 Inch Phones", "One-Hand Quick Release"],
-    price: 999,
-    oldPrice: 1500,
-    category: "Car Mobile Holders",
-    rating: 4.8,
-    reviewsCount: 44,
-    stock: 24,
-    isFeatured: false,
-    badge: "Auto Grip",
-    image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "One-second auto-clamping mechanism with triangle gravity locking and dual-mount compatibility for car AC air vents or flat dashboard.",
-    reviews: [
-      { name: "Faraz Ahmed", city: "Islamabad", rating: 5, date: "1 week ago", comment: "Car me bumps pe bhi phone securely hold rehta he." }
-    ]
-  },
-  {
-    id: "prod-19",
-    title: "Shockproof Waterproof 360° Motorcycle & Bicycle Handlebar Phone Mount",
-    brand: "infinix",
-    brandName: "Bike Mobile Holders",
-    compatibleModels: ["Universal Bike Handlebars 22-32mm", "Sensitive Touch TPU Screen"],
-    price: 1199,
-    oldPrice: 1750,
-    category: "Bike Mobile Holders",
-    rating: 4.9,
-    reviewsCount: 37,
-    stock: 21,
-    isFeatured: false,
-    badge: "Waterproof",
-    image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=700&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=700&q=80"
-    ],
-    description: "Fully sealed IPX6 waterproof bike mount case with high sensitivity touch window, sun visor hood, and internal silicone shock absorption cushions.",
-    reviews: [
-      { name: "Bilal Butt", city: "Gujranwala", rating: 5, date: "4 days ago", comment: "Bykea / rider ke liye perfect holder he. Baarish me phone safe rehta he." }
+    "description": "Elevate your daily listening with the M10 TWS Wireless Earbuds. Engineered for seamless audio quality, clear calls, and all-day comfort, the M10 features advanced Bluetooth 5.1 technology for a fast, stable, and lag-free connection.\n\nKey Features:\n\nHD Stereo Sound & Deep Bass: Premium dynamic drivers deliver clear highs and rich bass for an immersive music experience.\n\nSmart LED Digital Display: Easily check the exact remaining battery percentage of both the charging case and individual earbuds at a glance.\n\nHigh-Capacity Charging Case: The included battery case not only recharges your earbuds multiple times on the go, but also doubles as an emergency power bank for your mobile phone.\n\nIntuitive Touch Controls: Manage music playback, answer or reject calls, adjust volume, and activate your voice assistant with simple taps.\n\nErgonomic & Sweatproof: Designed for a secure, comfortable fit during workouts, running, or daily commutes, featuring IPX7 sweat and splash resistance.\n\nAutomatic Pairing: Simply remove the earbuds from the case, and they immediately connect to your paired device.\n\nWhat’s in the Box:\n\n2 x M10 Wireless Earbuds (Left & Right)\n\n1 x Smart LED Charging Case\n\n1 x USB Charging Cable\n\n3 x Pairs of Silicone Ear Tips (S / M / L)\n\n1 x User Manual",
+    "colors": [
+      "Black",
+      "White"
     ]
   }
 ];

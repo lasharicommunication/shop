@@ -85,7 +85,7 @@ function selectProductVariety(prodId, type, val, updateQuickView = false, update
   if (updateOrderModal) {
     const dialog = document.getElementById("orderDialog");
     if (dialog && dialog.open) {
-      openOrderModalForProduct(prodId);
+      openOrderModalForProduct(prodId, true);
     }
   }
 
@@ -832,15 +832,9 @@ function renderProducts() {
 
           ${varietyHtml}
 
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:4px;">
-            <div class="product-qty-row">
-              <button type="button" class="qty-btn" onclick="adjustProductQty('${prod.id}', -1)">−</button>
-              <span class="qty-value" id="qtyVal_${prod.id}">${currentQty}</span>
-              <button type="button" class="qty-btn" onclick="adjustProductQty('${prod.id}', 1)">+</button>
-            </div>
-            <span style="font-size:10px; color:#6a8060; font-weight:800; text-transform:uppercase;">
-              <i class="fa-solid fa-truck-fast"></i> TCS / LEO
-            </span>
+          <div class="product-delivery-badge" style="display:flex; align-items:center; justify-content:space-between; margin-top:6px; font-size:10.5px; color:#5b6d52; font-weight:700;">
+            <span><i class="fa-solid fa-truck-fast" style="color:#6a8060;"></i> TCS / LEO Express</span>
+            <span style="color:#2e7d32; font-size:10px; background:#e8f4e3; padding:2px 7px; border-radius:4px; font-weight:800; letter-spacing:0.02em;">IN STOCK</span>
           </div>
 
           <div class="product-actions">
@@ -977,7 +971,7 @@ function jumpToReviewPage(idx) {
   renderReviews();
 }
 
-// Adjust Quantity on Product Card
+// Adjust Quantity on Product Card (fallback)
 function adjustProductQty(prodId, delta) {
   const cur = AppState.productQtyMap[prodId] || 1;
   const next = Math.max(1, cur + delta);
@@ -985,6 +979,37 @@ function adjustProductQty(prodId, delta) {
 
   const valEl = document.getElementById(`qtyVal_${prodId}`);
   if (valEl) valEl.textContent = next;
+}
+
+// Adjust Quantity inside the Order Details Modal
+function adjustOrderModalQty(delta) {
+  const prod = AppState.currentOrderProduct;
+  if (!prod || prod.id === "cart-order") return;
+
+  const currentQty = AppState.currentOrderQty || 1;
+  const nextQty = Math.max(1, currentQty + delta);
+  AppState.currentOrderQty = nextQty;
+
+  const valEl = document.getElementById("orderModalQtyVal");
+  if (valEl) valEl.textContent = nextQty;
+
+  const priceEachEl = document.getElementById("orderProductPriceEach");
+  const subtotal = prod.price * nextQty;
+  if (priceEachEl) {
+    priceEachEl.innerHTML = nextQty > 1
+      ? `Rs. ${prod.price?.toLocaleString()} each &times; ${nextQty} = <strong>Rs. ${subtotal.toLocaleString()}</strong>`
+      : `Rs. ${prod.price?.toLocaleString()} each`;
+  }
+
+  const deliveryFee = AppState.settings.deliveryFee || 200;
+  const grandTotal = subtotal + deliveryFee;
+  const totalEl = document.getElementById("orderTotalDisplay");
+  if (totalEl) totalEl.textContent = `Rs. ${grandTotal.toLocaleString()}`;
+
+  const breakdownEl = document.getElementById("orderSubtotalBreakdown");
+  if (breakdownEl) {
+    breakdownEl.textContent = `Subtotal: Rs. ${subtotal.toLocaleString()} + Rs. ${deliveryFee} fee`;
+  }
 }
 
 // Wishlist Toggle
@@ -1015,7 +1040,7 @@ function addProductToBag(prodId) {
   const prod = AppState.products.find(p => p.id === prodId);
   if (!prod) return;
 
-  const qty = AppState.productQtyMap[prodId] || 1;
+  const qty = 1;
   const variety = getSelectedProductVariety(prod);
   const existing = AppState.cart.find(item => 
     item.id === prodId && 
@@ -1340,19 +1365,25 @@ function openProductQuickView(prodId) {
 }
 
 // Order Modal Handler
-function openOrderModalForProduct(prodId) {
+function openOrderModalForProduct(prodId, preserveQty = false) {
   const prod = AppState.products.find(p => p.id === prodId);
   if (!prod) return;
 
-  const qty = AppState.productQtyMap[prodId] || 1;
+  const currentModalProdId = AppState.currentOrderProduct ? AppState.currentOrderProduct.id : null;
+  const isSameProduct = currentModalProdId === prodId;
+  const qty = (preserveQty && isSameProduct && AppState.currentOrderQty) ? AppState.currentOrderQty : 1;
   AppState.currentOrderProduct = prod;
   AppState.currentOrderQty = qty;
 
   const dialog = document.getElementById("orderDialog");
   const art = document.getElementById("orderArt");
   const nameEl = document.getElementById("orderProductName");
+  const priceEachEl = document.getElementById("orderProductPriceEach");
+  const qtyControlsRow = document.getElementById("orderQtyControlsRow");
+  const qtyValEl = document.getElementById("orderModalQtyVal");
   const qtyEl = document.getElementById("orderProductQty");
   const totalEl = document.getElementById("orderTotalDisplay");
+  const breakdownEl = document.getElementById("orderSubtotalBreakdown");
   const form = document.getElementById("orderForm");
   const success = document.getElementById("orderSuccess");
   const varietyInfoEl = document.getElementById("orderVarietyInfo");
@@ -1435,11 +1466,27 @@ function openOrderModalForProduct(prodId) {
   }
 
   if (nameEl) nameEl.textContent = prod.title;
-  if (qtyEl) qtyEl.textContent = `Qty: ${qty} · Rs. ${prod.price?.toLocaleString()} each`;
+
+  // Set quantity controls
+  if (qtyControlsRow) qtyControlsRow.style.display = "flex";
+  if (qtyValEl) qtyValEl.textContent = qty;
+  if (qtyEl) qtyEl.style.display = "none";
+
+  const subtotal = prod.price * qty;
+  if (priceEachEl) {
+    priceEachEl.style.display = "block";
+    priceEachEl.innerHTML = qty > 1
+      ? `Rs. ${prod.price?.toLocaleString()} each &times; ${qty} = <strong>Rs. ${subtotal.toLocaleString()}</strong>`
+      : `Rs. ${prod.price?.toLocaleString()} each`;
+  }
 
   const deliveryFee = AppState.settings.deliveryFee || 200;
-  const grandTotal = (prod.price * qty) + deliveryFee;
+  const grandTotal = subtotal + deliveryFee;
   if (totalEl) totalEl.textContent = `Rs. ${grandTotal.toLocaleString()}`;
+  if (breakdownEl) {
+    breakdownEl.style.display = "block";
+    breakdownEl.textContent = `Subtotal: Rs. ${subtotal.toLocaleString()} + Rs. ${deliveryFee} fee`;
+  }
 
   if (dialog) dialog.showModal();
 }
@@ -1470,7 +1517,10 @@ function openOrderModalFromBag() {
   const art = document.getElementById("orderArt");
   const nameEl = document.getElementById("orderProductName");
   const qtyEl = document.getElementById("orderProductQty");
+  const priceEachEl = document.getElementById("orderProductPriceEach");
+  const qtyControlsRow = document.getElementById("orderQtyControlsRow");
   const totalEl = document.getElementById("orderTotalDisplay");
+  const breakdownEl = document.getElementById("orderSubtotalBreakdown");
   const form = document.getElementById("orderForm");
   const success = document.getElementById("orderSuccess");
   const varietyInfoEl = document.getElementById("orderVarietyInfo");
@@ -1493,11 +1543,21 @@ function openOrderModalFromBag() {
 
   if (art) art.innerHTML = `<span style="font-size:24px;">🛍️</span>`;
   if (nameEl) nameEl.textContent = compositeProd.title;
-  if (qtyEl) qtyEl.textContent = `Subtotal: Rs. ${cartSubtotal.toLocaleString()}`;
+
+  if (qtyControlsRow) qtyControlsRow.style.display = "none";
+  if (priceEachEl) priceEachEl.style.display = "none";
+  if (qtyEl) {
+    qtyEl.style.display = "block";
+    qtyEl.textContent = `Subtotal: Rs. ${cartSubtotal.toLocaleString()}`;
+  }
 
   const deliveryFee = AppState.settings.deliveryFee || 200;
   const grandTotal = cartSubtotal + deliveryFee;
   if (totalEl) totalEl.textContent = `Rs. ${grandTotal.toLocaleString()}`;
+  if (breakdownEl) {
+    breakdownEl.style.display = "block";
+    breakdownEl.textContent = `Bag Total + Rs. ${deliveryFee} fee`;
+  }
 
   if (dialog) dialog.showModal();
 }
