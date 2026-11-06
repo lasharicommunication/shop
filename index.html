@@ -15,7 +15,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=4.3">
+  <link rel="stylesheet" href="css/style.css?v=5.0">
 </head>
 <body>
 
@@ -303,28 +303,10 @@
           <span class="arrow" aria-hidden="true">↗</span>
         </button>
 
-        <button class="category-tile reveal in-view" data-category="deskholder">
-          <span class="category-icon" aria-hidden="true">⊥</span>
+        <button class="category-tile reveal in-view" data-category="mobileholder">
+          <span class="category-icon" aria-hidden="true">📱</span>
           <span>
-            <strong>Desk Mobile Holders</strong>
-            <small>Holders</small>
-          </span>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </button>
-
-        <button class="category-tile reveal in-view" data-category="carholder">
-          <span class="category-icon" aria-hidden="true">⌾</span>
-          <span>
-            <strong>Car Mobile Holders</strong>
-            <small>Holders</small>
-          </span>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </button>
-
-        <button class="category-tile reveal in-view" data-category="bikeholder">
-          <span class="category-icon" aria-hidden="true">⊙</span>
-          <span>
-            <strong>Bike Mobile Holders</strong>
+            <strong>Mobile Holder</strong>
             <small>Holders</small>
           </span>
           <span class="arrow" aria-hidden="true">↗</span>
@@ -834,7 +816,26 @@
         <span style="font-size: 13px; color: var(--muted); text-decoration: line-through;" id="dialogOldPrice">Rs. 1,999</span>
         <span style="font-size: 11px; background: var(--lime); color: var(--ink); padding: 2px 8px; border-radius: 4px; font-weight: 800;">Flat 200 PKR Delivery</span>
       </div>
-      <p id="dialogDescription">Product description</p>
+
+      <!-- Variety Selection (Sizes & Colors) -->
+      <div id="dialogVarietiesContainer" class="dialog-varieties-box" style="display:none;">
+        <div id="dialogSizesGroup" class="variety-picker-group" style="display:none;">
+          <span class="variety-label">Available Sizes:</span>
+          <div id="dialogSizesList" class="variety-options-row"></div>
+        </div>
+        <div id="dialogColorsGroup" class="variety-picker-group" style="display:none;">
+          <span class="variety-label">Available Colors:</span>
+          <div id="dialogColorsList" class="variety-options-row"></div>
+        </div>
+      </div>
+
+      <!-- Product Description with 3-line clamp & Show More -->
+      <div class="dialog-desc-wrap">
+        <p id="dialogDescription" class="dialog-desc-clamped">Product description</p>
+        <button type="button" id="dialogDescToggle" class="btn-desc-toggle" style="display:none;">
+          <span>Show More</span> <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
       <div class="dialog-note">
         <strong>Dispatch Partners:</strong> TCS Express &amp; Leopards Courier. Available in Cash on Delivery and Advance Payment.
       </div>
@@ -861,6 +862,7 @@
       <div style="flex:1;">
         <div class="order-product-name" id="orderProductName">Luxury Case</div>
         <div class="order-product-qty" id="orderProductQty">Qty: 1 · Rs. 1,450</div>
+        <div id="orderVarietyInfo" style="display:none; font-size:11px; color:#4a6310; font-weight:700; margin-top:2px;"></div>
         <div style="font-size:11px; color:#6a8060; font-weight:700; margin-top:2px;">
           + Rs. 200 Delivery Fee (TCS / Leopards)
         </div>
@@ -870,6 +872,9 @@
         <strong id="orderTotalDisplay" style="font-family:var(--display); font-size:16px;">Rs. 1,650</strong>
       </div>
     </div>
+
+    <!-- Modal Variety Selection / Change -->
+    <div id="orderModalVarieties" class="order-modal-varieties" style="display:none;"></div>
 
     <form class="order-form" id="orderForm" novalidate>
       <div class="order-field">
@@ -983,7 +988,7 @@
   </dialog>
 
   <!-- STORE SCRIPTS -->
-  <script src="js/data.js?v=4.3"></script>
-  <script src="js/app.js?v=4.3"></script>
+  <script src="js/data.js?v=5.0"></script>
+  <script src="js/app.js?v=5.0"></script>
 </body>
 </html>

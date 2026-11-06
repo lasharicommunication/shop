@@ -27,6 +27,82 @@ window.AppState = window.AppState || {
   currentReviewPage: 0
 };
 const AppState = window.AppState;
+AppState.productSelectedVariety = AppState.productSelectedVariety || {}; // prodId -> { size, color }
+
+function getColorHexFromName(name) {
+  if (!name) return "#3b82f6";
+  const n = String(name).toLowerCase();
+  if (n.includes("black")) return "#111111";
+  if (n.includes("white")) return "#ffffff";
+  if (n.includes("silver") || n.includes("grey") || n.includes("gray")) return "#9ca3af";
+  if (n.includes("gold") || n.includes("champagne")) return "#d4af37";
+  if (n.includes("rose")) return "#b76e79";
+  if (n.includes("blue") || n.includes("navy")) return "#1e3a8a";
+  if (n.includes("purple")) return "#581c87";
+  if (n.includes("green")) return "#15803d";
+  if (n.includes("titanium")) return "#64748b";
+  if (n.includes("red")) return "#dc2626";
+  if (n.includes("orange")) return "#ea580c";
+  if (n.includes("yellow")) return "#eab308";
+  return "#3b82f6";
+}
+
+function getSelectedProductVariety(prod) {
+  if (!prod) return { size: null, color: null };
+  const current = AppState.productSelectedVariety[prod.id] || {};
+
+  let size = current.size;
+  if (!size && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
+    size = prod.sizes[0];
+  }
+
+  let color = current.color;
+  if (!color && Array.isArray(prod.colors) && prod.colors.length > 0) {
+    const c0 = prod.colors[0];
+    color = typeof c0 === "string" ? c0 : (c0.name || "Color");
+  }
+
+  return { size: size || null, color: color || null };
+}
+
+function selectProductVariety(prodId, type, val, updateQuickView = false, updateOrderModal = false) {
+  const prod = AppState.products.find(p => p.id === prodId);
+  if (!prod) return;
+
+  const current = getSelectedProductVariety(prod);
+  AppState.productSelectedVariety[prodId] = {
+    ...current,
+    [type]: val
+  };
+
+  if (updateQuickView) {
+    const dialog = document.getElementById("productDialog");
+    if (dialog && dialog.open) {
+      openProductQuickView(prodId);
+    }
+  }
+
+  if (updateOrderModal) {
+    const dialog = document.getElementById("orderDialog");
+    if (dialog && dialog.open) {
+      openOrderModalForProduct(prodId);
+    }
+  }
+
+  // Update active states on the product card directly
+  const card = document.querySelector(`.product-card[data-product-id="${prodId}"]`);
+  if (card) {
+    if (type === "size") {
+      card.querySelectorAll(".card-size-pill").forEach(pill => {
+        pill.classList.toggle("is-active", pill.textContent.trim() === val);
+      });
+    } else if (type === "color") {
+      card.querySelectorAll(".card-color-dot").forEach(dot => {
+        dot.classList.toggle("is-active", dot.title === val);
+      });
+    }
+  }
+}
 
 // Calculate columns in product grid (4 desktop, 3 tablet, 2 mobile)
 function getGridColumnCount() {
@@ -473,9 +549,10 @@ function renderCategoryStrip() {
     adapters: "Adapter",
     speakers: "Speaker",
     ringlight: "Ring Light",
-    deskholder: "Desk",
-    carholder: "Car",
-    bikeholder: "Bike",
+    mobileholder: "Holder",
+    deskholder: "Holder",
+    carholder: "Holder",
+    bikeholder: "Holder",
     covers: "all"
   };
 
@@ -678,27 +755,52 @@ function renderProducts() {
   grid.innerHTML = visibleList.map(prod => {
     const currentQty = AppState.productQtyMap[prod.id] || 1;
     const isSaved = AppState.savedWishlist.includes(prod.id);
-    const primaryImg = (Array.isArray(prod.images) && prod.images.length > 0) ? prod.images[0] : (prod.image || "");
-    const photoCount = Array.isArray(prod.images) ? prod.images.length : (prod.image ? 1 : 0);
-    const artHtml = primaryImg 
-      ? `<img src="${primaryImg}" alt="${prod.title}" class="product-real-img" loading="lazy" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
-         <div class="art-fallback-box" style="display:none; width:100%; height:100%;">${getProductArtHtml(prod)}</div>`
-      : getProductArtHtml(prod);
-    const categoryTag = prod.category || prod.brandName || "Accessory";
-    
-    // Check if on sale tag is enabled
+    const artHtml = renderProductGallery(prod);
     const isOnSale = prod.isOnSale !== false;
     
     // Check if valid before / old price exists
     const hasDiscount = prod.oldPrice && Number(prod.oldPrice) > Number(prod.price);
     const discountPercent = hasDiscount ? Math.round(((prod.oldPrice - prod.price) / prod.oldPrice) * 100) : 0;
 
+    const selectedVariety = getSelectedProductVariety(prod);
+    const hasSizes = Array.isArray(prod.sizes) && prod.sizes.length > 0;
+    const hasColors = Array.isArray(prod.colors) && prod.colors.length > 0;
+
+    let varietyHtml = "";
+    if (hasSizes || hasColors) {
+      varietyHtml = `<div class="product-card-varieties">`;
+      if (hasSizes) {
+        varietyHtml += `
+          <div class="card-variety-row" title="Available Sizes">
+            ${prod.sizes.map(s => `
+              <span class="card-size-pill ${selectedVariety.size === s ? 'is-active' : ''}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}')">
+                ${s}
+              </span>
+            `).join("")}
+          </div>
+        `;
+      }
+      if (hasColors) {
+        varietyHtml += `
+          <div class="card-variety-row" title="Available Colors">
+            ${prod.colors.map(c => {
+              const colName = typeof c === 'string' ? c : (c.name || 'Color');
+              const colHex = typeof c === 'string' ? getColorHexFromName(c) : (c.hex || '#3b82f6');
+              const isActive = selectedVariety.color === colName;
+              return `
+                <span class="card-color-dot ${isActive ? 'is-active' : ''}" style="background:${colHex};" title="${colName}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}')"></span>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+      varietyHtml += `</div>`;
+    }
+
     return `
       <article class="product-card reveal in-view" data-product-id="${prod.id}">
         <div class="product-media" onclick="openProductQuickView('${prod.id}')">
           ${isOnSale ? '<span class="sale-badge">🔥 SALE</span>' : ''}
-          <span class="product-topline" style="${isOnSale ? 'top:42px;' : ''}">${categoryTag}</span>
-          ${photoCount > 1 ? `<span style="position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.72); color:#fff; font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:5px; z-index:3; display:flex; align-items:center; gap:4px;"><i class="fa-solid fa-camera"></i> ${photoCount}</span>` : ''}
           <button type="button" class="heart-button ${isSaved ? 'is-saved' : ''}" onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" title="Save to favorites">
             <svg viewBox="0 0 24 24">
               <path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/>
@@ -728,6 +830,8 @@ function renderProducts() {
             <span class="stars-count">${prod.rating || 4.9} (${prod.reviewsCount || 38})</span>
           </div>
 
+          ${varietyHtml}
+
           <div style="display:flex; align-items:center; justify-content:space-between; margin-top:4px;">
             <div class="product-qty-row">
               <button type="button" class="qty-btn" onclick="adjustProductQty('${prod.id}', -1)">−</button>
@@ -751,6 +855,8 @@ function renderProducts() {
       </article>
     `;
   }).join("");
+
+  bindProductSliders(grid);
 
   // Update Show More Button State
   if (loadMoreBox && btnLoadMore) {
@@ -910,7 +1016,12 @@ function addProductToBag(prodId) {
   if (!prod) return;
 
   const qty = AppState.productQtyMap[prodId] || 1;
-  const existing = AppState.cart.find(item => item.id === prodId);
+  const variety = getSelectedProductVariety(prod);
+  const existing = AppState.cart.find(item => 
+    item.id === prodId && 
+    item.size === variety.size && 
+    item.color === variety.color
+  );
 
   if (existing) {
     existing.qty += qty;
@@ -919,15 +1030,18 @@ function addProductToBag(prodId) {
       id: prod.id,
       title: prod.title,
       price: prod.price,
-      image: prod.image,
+      image: (Array.isArray(prod.images) && prod.images.length > 0) ? prod.images[0] : (prod.image || ""),
       category: prod.category,
-      qty: qty
+      qty: qty,
+      size: variety.size || null,
+      color: variety.color || null
     });
   }
 
   localStorage.setItem("lashari_cart", JSON.stringify(AppState.cart));
   updateBagCountBadge();
-  showToast(`Added ${qty} × ${prod.title} to cart!`);
+  const vNotes = [variety.size ? `Size: ${variety.size}` : '', variety.color ? `Color: ${variety.color}` : ''].filter(Boolean).join(", ");
+  showToast(`Added ${qty} × ${prod.title}${vNotes ? ` (${vNotes})` : ''} to cart!`);
 
   const btn = document.getElementById(`btnCart_${prodId}`);
   if (btn) {
@@ -945,6 +1059,133 @@ function updateBagCountBadge() {
   document.querySelectorAll(".bag-count, #headerBagCount").forEach(el => {
     el.textContent = totalItems;
   });
+}
+
+function escapeAttr(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;");
+}
+
+function getProductImages(prod) {
+  if (Array.isArray(prod.images) && prod.images.length > 0) {
+    return prod.images.filter(Boolean);
+  }
+  return prod.image ? [prod.image] : [];
+}
+
+function renderProductGallery(prod) {
+  const images = getProductImages(prod);
+  const title = escapeAttr(prod.title);
+  if (images.length === 0) return getProductArtHtml(prod);
+  if (images.length === 1) {
+    return `<img src="${escapeAttr(images[0])}" alt="${title}" class="product-real-img" loading="lazy">`;
+  }
+  return `
+    <div class="product-slider" data-index="0">
+      <div class="product-slider-track">
+        ${images.map((src, idx) => `
+          <div class="product-slide">
+            <img src="${escapeAttr(src)}" alt="${title} photo ${idx + 1}" class="product-real-img" loading="${idx === 0 ? "eager" : "lazy"}">
+          </div>
+        `).join("")}
+      </div>
+      <button type="button" class="product-slider-btn prev" onclick="event.stopPropagation(); moveProductSlide(this, -1)" aria-label="Previous photo">‹</button>
+      <button type="button" class="product-slider-btn next" onclick="event.stopPropagation(); moveProductSlide(this, 1)" aria-label="Next photo">›</button>
+      <div class="product-slider-dots">
+        ${images.map((_, idx) => `<button type="button" class="product-slider-dot ${idx === 0 ? "is-active" : ""}" onclick="event.stopPropagation(); goProductSlide(this, ${idx})" aria-label="Photo ${idx + 1}"></button>`).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function setProductSlide(slider, index) {
+  const count = slider.querySelectorAll(".product-slide").length;
+  if (!count) return;
+  const next = (index + count) % count;
+  slider.dataset.index = String(next);
+  const track = slider.querySelector(".product-slider-track");
+  if (track) track.style.transform = `translateX(-${next * 100}%)`;
+  slider.querySelectorAll(".product-slider-dot").forEach((dot, idx) => {
+    dot.classList.toggle("is-active", idx === next);
+  });
+}
+
+function moveProductSlide(btn, delta) {
+  const slider = btn.closest(".product-slider");
+  if (!slider) return;
+  setProductSlide(slider, Number(slider.dataset.index || 0) + delta);
+}
+
+function goProductSlide(dot, index) {
+  const slider = dot.closest(".product-slider");
+  if (!slider) return;
+  setProductSlide(slider, index);
+}
+
+function bindProductSliders(root) {
+  if (!root) return;
+  root.querySelectorAll(".product-slider").forEach(slider => {
+    if (slider.dataset.bound === "1") return;
+    slider.dataset.bound = "1";
+    let startX = 0;
+    slider.addEventListener("touchstart", (event) => {
+      startX = event.changedTouches[0].clientX;
+    }, { passive: true });
+    slider.addEventListener("touchend", (event) => {
+      const dx = event.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) < 36) return;
+      slider.dataset.swiped = "1";
+      setProductSlide(slider, Number(slider.dataset.index || 0) + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+    slider.addEventListener("click", (event) => {
+      if (slider.dataset.swiped !== "1") return;
+      slider.dataset.swiped = "0";
+      event.stopPropagation();
+      event.preventDefault();
+    });
+  });
+}
+
+let quickViewImages = [];
+
+function goQuickView(index) {
+  const gallery = document.querySelector("#dialogVisual .qv-gallery");
+  const img = document.getElementById("quickViewMainImg");
+  if (!gallery || !img || !quickViewImages.length) return;
+  const next = (index + quickViewImages.length) % quickViewImages.length;
+  gallery.dataset.index = String(next);
+  img.src = quickViewImages[next];
+  gallery.querySelectorAll(".product-slider-dot").forEach((dot, idx) => {
+    dot.classList.toggle("is-active", idx === next);
+  });
+}
+
+function moveQuickView(delta) {
+  const gallery = document.querySelector("#dialogVisual .qv-gallery");
+  const current = Number(gallery?.dataset.index || 0);
+  goQuickView(current + delta);
+}
+
+function renderQuickViewGallery(images, title) {
+  if (!images.length) return "";
+  return `
+    <div class="qv-gallery" data-index="0">
+      <div class="qv-stage">
+        <img id="quickViewMainImg" src="${escapeAttr(images[0])}" alt="${escapeAttr(title)}">
+        ${images.length > 1 ? `
+          <button type="button" class="product-slider-btn prev" onclick="moveQuickView(-1)" aria-label="Previous photo">‹</button>
+          <button type="button" class="product-slider-btn next" onclick="moveQuickView(1)" aria-label="Next photo">›</button>
+        ` : ""}
+      </div>
+      ${images.length > 1 ? `
+        <div class="qv-dots">
+          ${images.map((_, idx) => `<button type="button" class="product-slider-dot ${idx === 0 ? "is-active" : ""}" onclick="goQuickView(${idx})" aria-label="Photo ${idx + 1}"></button>`).join("")}
+        </div>
+      ` : ""}
+    </div>
+  `;
 }
 
 // Quick View Product Modal
@@ -966,20 +1207,22 @@ function openProductQuickView(prodId) {
     ? prod.images
     : (prod.image ? [prod.image] : []);
 
+  quickViewImages = images;
   if (visual) {
     if (images.length > 0) {
-      visual.innerHTML = `
-        <div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
-          <img id="quickViewMainImg" src="${images[0]}" alt="${prod.title}" style="max-width:85%; max-height:260px; object-fit:contain; border-radius:8px; filter:drop-shadow(0 10px 20px rgba(0,0,0,0.15)); transition:opacity 0.2s ease;">
-          ${images.length > 1 ? `
-            <div style="display:flex; gap:8px; margin-top:12px; overflow-x:auto; max-width:90%; padding:4px;">
-              ${images.map((img, idx) => `
-                <img src="${img}" alt="Photo ${idx+1}" onclick="document.getElementById('quickViewMainImg').src='${img}'; document.querySelectorAll('.qv-thumb').forEach(t=>t.style.borderColor='transparent'); this.style.borderColor='var(--lime)';" class="qv-thumb" style="width:48px; height:48px; object-fit:contain; background:#fff; border:2px solid ${idx===0 ? 'var(--lime)' : 'transparent'}; border-radius:6px; cursor:pointer; padding:2px;">
-              `).join('')}
-            </div>
-          ` : ''}
-        </div>
-      `;
+      visual.innerHTML = renderQuickViewGallery(images, prod.title);
+      const gallery = visual.querySelector(".qv-gallery");
+      if (gallery && images.length > 1) {
+        let startX = 0;
+        gallery.addEventListener("touchstart", (event) => {
+          startX = event.changedTouches[0].clientX;
+        }, { passive: true });
+        gallery.addEventListener("touchend", (event) => {
+          const dx = event.changedTouches[0].clientX - startX;
+          if (Math.abs(dx) < 36) return;
+          moveQuickView(dx < 0 ? 1 : -1);
+        }, { passive: true });
+      }
     } else {
       visual.innerHTML = getProductArtHtml(prod);
     }
@@ -996,7 +1239,87 @@ function openProductQuickView(prodId) {
       oldPrice.style.display = "none";
     }
   }
-  if (desc) desc.textContent = prod.description || "Precision engineered tech accessory crafted with ultra-durable materials, sleek ergonomic design, and premium finish.";
+
+  // Variety Picker (Sizes & Colors) in Quick View
+  const varContainer = document.getElementById("dialogVarietiesContainer");
+  const sizesGroup = document.getElementById("dialogSizesGroup");
+  const sizesList = document.getElementById("dialogSizesList");
+  const colorsGroup = document.getElementById("dialogColorsGroup");
+  const colorsList = document.getElementById("dialogColorsList");
+
+  const hasSizes = Array.isArray(prod.sizes) && prod.sizes.length > 0;
+  const hasColors = Array.isArray(prod.colors) && prod.colors.length > 0;
+
+  if (varContainer) {
+    if (hasSizes || hasColors) {
+      varContainer.style.display = "block";
+      const currentVariety = getSelectedProductVariety(prod);
+
+      if (sizesGroup && sizesList) {
+        if (hasSizes) {
+          sizesGroup.style.display = "block";
+          sizesList.innerHTML = prod.sizes.map(s => `
+            <button type="button" class="variety-size-btn ${currentVariety.size === s ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}', true)">
+              ${s}
+            </button>
+          `).join("");
+        } else {
+          sizesGroup.style.display = "none";
+        }
+      }
+
+      if (colorsGroup && colorsList) {
+        if (hasColors) {
+          colorsGroup.style.display = "block";
+          colorsList.innerHTML = prod.colors.map(c => {
+            const colName = typeof c === 'string' ? c : (c.name || 'Color');
+            const colHex = typeof c === 'string' ? getColorHexFromName(c) : (c.hex || '#3b82f6');
+            const isSel = currentVariety.color === colName;
+            return `
+              <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', true)">
+                <span class="variety-swatch-circle" style="background:${colHex};"></span>
+                <span>${colName}</span>
+              </button>
+            `;
+          }).join("");
+        } else {
+          colorsGroup.style.display = "none";
+        }
+      }
+    } else {
+      varContainer.style.display = "none";
+    }
+  }
+
+  // 3-Line Description Clamping & Show More Toggle Button
+  if (desc) {
+    const fullDesc = prod.description || "Precision engineered tech accessory crafted with ultra-durable materials, sleek ergonomic design, and premium finish.";
+    desc.textContent = fullDesc;
+    desc.classList.remove("dialog-desc-expanded");
+    desc.classList.add("dialog-desc-clamped");
+
+    const toggleBtn = document.getElementById("dialogDescToggle");
+    if (toggleBtn) {
+      if (fullDesc.length > 110) {
+        toggleBtn.style.display = "inline-flex";
+        toggleBtn.innerHTML = `<span>Show More</span> <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i>`;
+        toggleBtn.onclick = () => {
+          const isExpanded = desc.classList.contains("dialog-desc-expanded");
+          if (isExpanded) {
+            desc.classList.remove("dialog-desc-expanded");
+            desc.classList.add("dialog-desc-clamped");
+            toggleBtn.innerHTML = `<span>Show More</span> <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i>`;
+          } else {
+            desc.classList.remove("dialog-desc-clamped");
+            desc.classList.add("dialog-desc-expanded");
+            toggleBtn.innerHTML = `<span>Show Less</span> <i class="fa-solid fa-chevron-up" style="font-size:10px;"></i>`;
+          }
+        };
+      } else {
+        toggleBtn.style.display = "none";
+      }
+    }
+  }
 
   if (buyBtn) {
     buyBtn.onclick = () => {
@@ -1031,6 +1354,8 @@ function openOrderModalForProduct(prodId) {
   const totalEl = document.getElementById("orderTotalDisplay");
   const form = document.getElementById("orderForm");
   const success = document.getElementById("orderSuccess");
+  const varietyInfoEl = document.getElementById("orderVarietyInfo");
+  const modalVarietiesEl = document.getElementById("orderModalVarieties");
 
   const orderImg = (Array.isArray(prod.images) && prod.images.length > 0) ? prod.images[0] : (prod.image || "");
   if (art) {
@@ -1050,7 +1375,64 @@ function openOrderModalForProduct(prodId) {
   togglePaymentBox("advance");
   renderCustomerPaymentAccounts();
 
-  if (art) art.innerHTML = getProductArtHtml(prod);
+  // Show selected variety
+  const selectedVariety = getSelectedProductVariety(prod);
+  let varietyText = [];
+  if (selectedVariety.size) varietyText.push(`Size: ${selectedVariety.size}`);
+  if (selectedVariety.color) varietyText.push(`Color: ${selectedVariety.color}`);
+
+  if (varietyInfoEl) {
+    if (varietyText.length > 0) {
+      varietyInfoEl.textContent = `Variety: ${varietyText.join(" · ")}`;
+      varietyInfoEl.style.display = "block";
+    } else {
+      varietyInfoEl.style.display = "none";
+    }
+  }
+
+  // Interactive Variety switcher inside Order Modal
+  if (modalVarietiesEl) {
+    const hasSizes = Array.isArray(prod.sizes) && prod.sizes.length > 0;
+    const hasColors = Array.isArray(prod.colors) && prod.colors.length > 0;
+    if (hasSizes || hasColors) {
+      modalVarietiesEl.style.display = "flex";
+      modalVarietiesEl.innerHTML = `
+        <div style="font-size:10.5px; font-weight:800; color:#3b4d32; text-transform:uppercase; letter-spacing:0.04em;">
+          Confirm Available Variety:
+        </div>
+        ${hasSizes ? `
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <span style="font-size:11px; font-weight:700; color:#5b6d52; min-width:40px;">Size:</span>
+            ${prod.sizes.map(s => `
+              <button type="button" class="card-size-pill ${selectedVariety.size === s ? 'is-active' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}', false, true)" style="font-size:11px; padding:3px 9px;">
+                ${s}
+              </button>
+            `).join("")}
+          </div>
+        ` : ''}
+        ${hasColors ? `
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <span style="font-size:11px; font-weight:700; color:#5b6d52; min-width:40px;">Color:</span>
+            ${prod.colors.map(c => {
+              const colName = typeof c === 'string' ? c : (c.name || 'Color');
+              const colHex = typeof c === 'string' ? getColorHexFromName(c) : (c.hex || '#3b82f6');
+              const isSel = selectedVariety.color === colName;
+              return `
+                <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', false, true)" style="font-size:11px; padding:3px 8px;">
+                  <span class="variety-swatch-circle" style="background:${colHex}; width:11px; height:11px;"></span>
+                  <span>${colName}</span>
+                </button>
+              `;
+            }).join("")}
+          </div>
+        ` : ''}
+      `;
+    } else {
+      modalVarietiesEl.style.display = "none";
+      modalVarietiesEl.innerHTML = "";
+    }
+  }
+
   if (nameEl) nameEl.textContent = prod.title;
   if (qtyEl) qtyEl.textContent = `Qty: ${qty} · Rs. ${prod.price?.toLocaleString()} each`;
 
@@ -1090,6 +1472,14 @@ function openOrderModalFromBag() {
   const totalEl = document.getElementById("orderTotalDisplay");
   const form = document.getElementById("orderForm");
   const success = document.getElementById("orderSuccess");
+  const varietyInfoEl = document.getElementById("orderVarietyInfo");
+  const modalVarietiesEl = document.getElementById("orderModalVarieties");
+
+  if (varietyInfoEl) varietyInfoEl.style.display = "none";
+  if (modalVarietiesEl) {
+    modalVarietiesEl.style.display = "none";
+    modalVarietiesEl.innerHTML = "";
+  }
 
   if (form) form.style.display = "flex";
   if (success) success.classList.remove("show");
@@ -1144,13 +1534,18 @@ function handleOrderFormSubmit(e) {
   const subtotal = prod ? (prod.price * qty) : 0;
   const total = subtotal + deliveryFee;
 
+  const selectedVariety = prod && prod.id !== "cart-order" ? getSelectedProductVariety(prod) : {};
+  const orderItems = prod.id === "cart-order" 
+    ? AppState.cart.map(c => ({ title: c.title, qty: c.qty, price: c.price, size: c.size || null, color: c.color || null }))
+    : [{ title: prod.title, qty: qty, price: prod.price, size: selectedVariety.size || null, color: selectedVariety.color || null }];
+
   const newOrder = {
     id: `ORD-${Date.now().toString().slice(-6)}`,
     customerName: name,
     phone: phone,
     email: email,
     address: address,
-    items: prod.id === "cart-order" ? AppState.cart : [{ title: prod.title, qty: qty, price: prod.price }],
+    items: orderItems,
     subtotal: subtotal,
     deliveryFee: deliveryFee,
     total: total,
@@ -1173,7 +1568,47 @@ function handleOrderFormSubmit(e) {
   const form = document.getElementById("orderForm");
   const success = document.getElementById("orderSuccess");
   if (form) form.style.display = "none";
-  if (success) success.classList.add("show");
+  if (success) {
+    const wa = AppState.settings.whatsapp || "923212920914";
+    const cleanWa = wa.replace(/[^0-9]/g, "");
+
+    const itemLines = orderItems.map(i => {
+      let v = [];
+      if (i.size) v.push(`Size: ${i.size}`);
+      if (i.color) v.push(`Color: ${i.color}`);
+      return `• ${i.title} (${i.qty}x) ${v.length ? `[${v.join(", ")}]` : ""} - Rs. ${(i.price * i.qty).toLocaleString()}`;
+    }).join("\n");
+
+    const msg = `Salam! Naya Order Confirm karna hai:\n\n*Order ID:* #${newOrder.id}\n*Customer:* ${name}\n*Phone:* ${phone}\n*Address:* ${address}\n*Payment Method:* ${payment}\n\n*Items:*\n${itemLines}\n\n*Delivery Fee:* Rs. ${deliveryFee}\n*Total Amount:* Rs. ${total.toLocaleString()}`;
+    const waUrl = `https://wa.me/${cleanWa}?text=${encodeURIComponent(msg)}`;
+
+    success.innerHTML = `
+      <div class="order-success-icon">✓</div>
+      <h3>Order Placed!</h3>
+      <p style="margin-bottom:12px;">Shukriya ${name}! Aapka order receive ho gaya hai.</p>
+      <div style="background:#f4f6ee; border:1px solid #dbe2cc; border-radius:10px; padding:12px; margin-bottom:16px; text-align:left; font-size:12px; color:#2d3a27;">
+        <div><strong>Total Payable:</strong> Rs. ${total.toLocaleString()} (${payment})</div>
+        <div style="margin-top:4px; color:#607358;">Items: ${orderItems.map(i => `${i.qty}x ${i.title}${i.size ? ` (${i.size})` : ''}${i.color ? ` (${i.color})` : ''}`).join(", ")}</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <a href="${waUrl}" target="_blank" class="button button-lime" style="justify-content:center; text-decoration:none;">
+          <i class="fa-brands fa-whatsapp" style="font-size:16px;"></i> Send Order on WhatsApp
+        </a>
+        <button type="button" class="button button-dark" data-close-order style="justify-content:center;">
+          Keep exploring <span>↗</span>
+        </button>
+      </div>
+    `;
+
+    success.querySelectorAll("[data-close-order]").forEach(b => {
+      b.onclick = () => {
+        const d = document.getElementById("orderDialog");
+        if (d) d.close();
+      };
+    });
+
+    success.classList.add("show");
+  }
 
   showToast("Order placed successfully! We will contact you soon.");
 }
@@ -1214,6 +1649,7 @@ function openShoppingBag() {
           </div>
           <div class="bag-item-info">
             <h4>${item.title}</h4>
+            ${(item.size || item.color) ? `<small style="color:#6a8060; font-size:11px; font-weight:700; display:block; margin:2px 0 3px;">${[item.size ? `Size: ${item.size}` : '', item.color ? `Color: ${item.color}` : ''].filter(Boolean).join(' · ')}</small>` : ''}
             <p>Rs. ${item.price?.toLocaleString()} × ${item.qty}</p>
           </div>
           <button type="button" class="bag-item-del" onclick="removeBagItem(${idx})" title="Remove">×</button>
@@ -1316,14 +1752,10 @@ function setupEventListeners() {
 
       if (grid) {
         grid.innerHTML = savedProds.map(prod => {
-          const primaryImg = (Array.isArray(prod.images) && prod.images.length > 0) ? prod.images[0] : (prod.image || "");
-          const artHtml = primaryImg 
-            ? `<img src="${primaryImg}" alt="${prod.title}" class="product-real-img" loading="lazy">` 
-            : getProductArtHtml(prod);
+          const artHtml = renderProductGallery(prod);
           return `
             <article class="product-card reveal in-view" data-product-id="${prod.id}">
               <div class="product-media" onclick="openProductQuickView('${prod.id}')">
-                <span class="product-topline">SAVED ITEM</span>
                 <button type="button" class="heart-button is-saved" onclick="event.stopPropagation(); toggleWishlist('${prod.id}')">
                   <svg viewBox="0 0 24 24"><path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/></svg>
                 </button>
@@ -1342,6 +1774,7 @@ function setupEventListeners() {
             </article>
           `;
         }).join("");
+        bindProductSliders(grid);
       }
       if (emptyState) emptyState.hidden = savedProds.length > 0;
 

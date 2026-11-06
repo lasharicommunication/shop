@@ -313,7 +313,11 @@ const AdminController = {
           <br><small style="color:#879b8a; font-size:11px;">${order.city || "Pakistan"}</small>
         </td>
         <td style="padding:12px 10px; color:#adb5a8; font-size:12px;">
-          ${(order.items || []).map(i => `<span style="color:#fff; font-weight:600;">${i.qty}x</span> ${i.title}`).join("<br>")}
+          ${(order.items || []).map(i => `
+            <span style="color:#fff; font-weight:600;">${i.qty}x</span> ${i.title}
+            ${i.size ? `<span style="background:#1e291e; color:var(--lime); padding:1px 5px; border-radius:4px; font-size:10px; font-weight:700; margin-left:3px;">Size: ${i.size}</span>` : ''}
+            ${i.color ? `<span style="background:#1e291e; color:#7dd3fc; padding:1px 5px; border-radius:4px; font-size:10px; font-weight:700; margin-left:3px;">Color: ${i.color}</span>` : ''}
+          `).join("<br>")}
         </td>
         <td style="padding:12px 10px; font-weight:800; color:var(--lime);">
           Rs. ${(order.total || 0).toLocaleString()}
@@ -485,6 +489,7 @@ const AdminController = {
             <div>
               <strong style="color:#fff; font-size:13px;">${prod.title}</strong>
               <br><small style="color:#879b8a; font-size:11px;">${prod.brandName || prod.brand || "Accessory"}</small>
+              ${(prod.sizes && prod.sizes.length) || (prod.colors && prod.colors.length) ? `<br><small style="color:var(--lime); font-size:10px; font-weight:700;">Varieties: ${prod.sizes?.length || 0} size(s) · ${prod.colors?.length || 0} color(s)</small>` : ''}
             </div>
           </div>
         </td>
@@ -563,12 +568,178 @@ const AdminController = {
     return urls;
   },
 
+  handleCategoryChange(value) {
+    const customBox = document.getElementById("customCategoryBox");
+    const customInput = document.getElementById("prodFormCustomCategory");
+    if (!customBox) return;
+    if (value === "__custom__") {
+      customBox.style.display = "block";
+      if (customInput) customInput.focus();
+    } else {
+      customBox.style.display = "none";
+      if (customInput) customInput.value = "";
+    }
+  },
+
+  renderAdminVarieties(selectedSizes = [], selectedColors = []) {
+    const sizesContainer = document.getElementById("adminSizesContainer");
+    const colorsContainer = document.getElementById("adminColorsContainer");
+
+    const defaultSizes = ["Small", "Medium", "Large", "XL", "XXL", "Free Size", "38/40mm", "41/42mm", "44/45mm", "49mm Ultra", "1 Meter", "2 Meter", "3 Meter"];
+    const defaultColors = [
+      { name: "Black", hex: "#111111" },
+      { name: "White", hex: "#ffffff" },
+      { name: "Silver / Grey", hex: "#9ca3af" },
+      { name: "Gold / Champagne", hex: "#d4af37" },
+      { name: "Rose Gold", hex: "#b76e79" },
+      { name: "Navy Blue", hex: "#1e3a8a" },
+      { name: "Deep Purple", hex: "#581c87" },
+      { name: "Alpine Green", hex: "#15803d" },
+      { name: "Titanium Grey", hex: "#64748b" },
+      { name: "Red", hex: "#dc2626" },
+      { name: "Orange", hex: "#ea580c" }
+    ];
+
+    // Combine default sizes with any saved sizes
+    const activeSizeSet = new Set((selectedSizes || []).map(s => String(s).trim()));
+    const allSizes = [...defaultSizes];
+    activeSizeSet.forEach(s => {
+      if (s && !allSizes.includes(s)) allSizes.push(s);
+    });
+
+    if (sizesContainer) {
+      sizesContainer.innerHTML = allSizes.map(size => {
+        const isChecked = activeSizeSet.has(size);
+        return `
+          <label class="variety-check-chip ${isChecked ? 'is-checked' : ''}">
+            <input type="checkbox" class="admin-size-checkbox" value="${size.replace(/"/g, '&quot;')}" ${isChecked ? 'checked' : ''} onchange="this.parentElement.classList.toggle('is-checked', this.checked)">
+            <span>${size}</span>
+          </label>
+        `;
+      }).join("");
+    }
+
+    // Combine default colors with any saved colors
+    const activeColorNames = new Set();
+    const savedColorMap = {};
+    (selectedColors || []).forEach(c => {
+      if (typeof c === "string") {
+        activeColorNames.add(c.trim());
+        savedColorMap[c.trim()] = "#3b82f6";
+      } else if (c && c.name) {
+        activeColorNames.add(c.name.trim());
+        savedColorMap[c.name.trim()] = c.hex || "#3b82f6";
+      }
+    });
+
+    const allColors = [...defaultColors];
+    activeColorNames.forEach(name => {
+      if (!allColors.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+        allColors.push({ name: name, hex: savedColorMap[name] || "#3b82f6" });
+      }
+    });
+
+    if (colorsContainer) {
+      colorsContainer.innerHTML = allColors.map(col => {
+        const isChecked = activeColorNames.has(col.name);
+        return `
+          <label class="variety-check-chip ${isChecked ? 'is-checked' : ''}">
+            <input type="checkbox" class="admin-color-checkbox" value="${col.name.replace(/"/g, '&quot;')}" data-hex="${col.hex}" ${isChecked ? 'checked' : ''} onchange="this.parentElement.classList.toggle('is-checked', this.checked)">
+            <span class="variety-color-dot" style="background:${col.hex};"></span>
+            <span>${col.name}</span>
+          </label>
+        `;
+      }).join("");
+    }
+  },
+
+  addCustomSize() {
+    const input = document.getElementById("customSizeInput");
+    const container = document.getElementById("adminSizesContainer");
+    if (!input || !container) return;
+    const val = input.value.trim();
+    if (!val) {
+      showToast("Please type a size name first!", "error");
+      return;
+    }
+
+    const existing = Array.from(container.querySelectorAll(".admin-size-checkbox")).find(inp => inp.value.toLowerCase() === val.toLowerCase());
+    if (existing) {
+      existing.checked = true;
+      existing.parentElement.classList.add("is-checked");
+      showToast(`Size "${val}" is now selected!`, "info");
+      input.value = "";
+      return;
+    }
+
+    const label = document.createElement("label");
+    label.className = "variety-check-chip is-checked";
+    label.innerHTML = `
+      <input type="checkbox" class="admin-size-checkbox" value="${val.replace(/"/g, '&quot;')}" checked onchange="this.parentElement.classList.toggle('is-checked', this.checked)">
+      <span>${val}</span>
+    `;
+    container.appendChild(label);
+    input.value = "";
+    showToast(`Added size "${val}"`, "success");
+  },
+
+  addCustomColor() {
+    const nameInput = document.getElementById("customColorInput");
+    const picker = document.getElementById("customColorPicker");
+    const container = document.getElementById("adminColorsContainer");
+    if (!nameInput || !container) return;
+    const name = nameInput.value.trim();
+    const hex = picker?.value || "#3b82f6";
+    if (!name) {
+      showToast("Please type a color name first!", "error");
+      return;
+    }
+
+    const existing = Array.from(container.querySelectorAll(".admin-color-checkbox")).find(inp => inp.value.toLowerCase() === name.toLowerCase());
+    if (existing) {
+      existing.checked = true;
+      existing.dataset.hex = hex;
+      existing.parentElement.classList.add("is-checked");
+      const dot = existing.parentElement.querySelector(".variety-color-dot");
+      if (dot) dot.style.background = hex;
+      showToast(`Color "${name}" is now selected!`, "info");
+      nameInput.value = "";
+      return;
+    }
+
+    const label = document.createElement("label");
+    label.className = "variety-check-chip is-checked";
+    label.innerHTML = `
+      <input type="checkbox" class="admin-color-checkbox" value="${name.replace(/"/g, '&quot;')}" data-hex="${hex}" checked onchange="this.parentElement.classList.toggle('is-checked', this.checked)">
+      <span class="variety-color-dot" style="background:${hex};"></span>
+      <span>${name}</span>
+    `;
+    container.appendChild(label);
+    nameInput.value = "";
+    showToast(`Added color "${name}"`, "success");
+  },
+
+  getSelectedSizesFromForm() {
+    const checked = document.querySelectorAll("#adminSizesContainer .admin-size-checkbox:checked");
+    return Array.from(checked).map(inp => inp.value.trim()).filter(Boolean);
+  },
+
+  getSelectedColorsFromForm() {
+    const checked = document.querySelectorAll("#adminColorsContainer .admin-color-checkbox:checked");
+    return Array.from(checked).map(inp => ({
+      name: inp.value.trim(),
+      hex: inp.dataset.hex || "#111111"
+    })).filter(c => c.name);
+  },
+
   openProductForm(productId = null) {
     const box = document.getElementById("adminProductFormBox");
     const titleEl = document.getElementById("adminProductFormTitle");
     const editIdInput = document.getElementById("editProductId");
     const formTitle = document.getElementById("prodFormTitle");
     const formCat = document.getElementById("prodFormCategory");
+    const customBox = document.getElementById("customCategoryBox");
+    const customInput = document.getElementById("prodFormCustomCategory");
     const formBrand = document.getElementById("prodFormBrand");
     const formPrice = document.getElementById("prodFormPrice");
     const formOldPrice = document.getElementById("prodFormOldPrice");
@@ -581,20 +752,53 @@ const AdminController = {
 
     if (imgList) imgList.innerHTML = "";
 
+    // Sync categories into dropdown including any existing custom categories
+    const products = Storage.getProducts();
+    const standardCategories = ["Smartwatch", "Earbuds", "Power Bank", "Charger", "Speaker", "Mobile Cover", "Cables", "Holders"];
+    const allCategories = new Set(standardCategories);
+    products.forEach(p => {
+      if (p.category && typeof p.category === "string" && p.category.trim()) {
+        allCategories.add(p.category.trim());
+      }
+    });
+
+    if (formCat) {
+      const currentSelected = formCat.value;
+      formCat.innerHTML = Array.from(allCategories).map(cat => {
+        return `<option value="${cat.replace(/"/g, '&quot;')}">${cat}</option>`;
+      }).join("") + `<option value="__custom__">➕ + Custom Category / Add New...</option>`;
+    }
+
     if (productId) {
-      const products = Storage.getProducts();
       const prod = products.find(p => p.id === productId);
       if (prod) {
         if (titleEl) titleEl.textContent = `Edit Product: ${prod.title}`;
         if (editIdInput) editIdInput.value = prod.id;
         if (formTitle) formTitle.value = prod.title || "";
-        if (formCat) formCat.value = prod.category || "Mobile Cover";
+
+        // Handle category selection
+        if (formCat) {
+          const hasOption = Array.from(formCat.options).some(o => o.value.toLowerCase() === (prod.category || "").toLowerCase());
+          if (hasOption) {
+            formCat.value = prod.category;
+            if (customBox) customBox.style.display = "none";
+            if (customInput) customInput.value = "";
+          } else {
+            formCat.value = "__custom__";
+            if (customBox) customBox.style.display = "block";
+            if (customInput) customInput.value = prod.category || "";
+          }
+        }
+
         if (formBrand) formBrand.value = prod.brand || "infinix";
         if (formPrice) formPrice.value = prod.price || "";
         if (formOldPrice) formOldPrice.value = prod.oldPrice || "";
         if (formIsOnSale) formIsOnSale.checked = prod.isOnSale !== false;
         if (formStock) formStock.value = prod.stock ?? 25;
         if (formDesc) formDesc.value = prod.description || "";
+
+        // Render saved varieties (sizes & colors)
+        this.renderAdminVarieties(prod.sizes || [], prod.colors || []);
 
         const existingImages = Array.isArray(prod.images) && prod.images.length > 0 
           ? prod.images 
@@ -611,9 +815,13 @@ const AdminController = {
       if (editIdInput) editIdInput.value = "";
       const form = document.getElementById("adminProductForm");
       if (form) form.reset();
+      if (formCat) formCat.value = "Smartwatch";
+      if (customBox) customBox.style.display = "none";
+      if (customInput) customInput.value = "";
       if (formIsOnSale) formIsOnSale.checked = true;
       if (formStock) formStock.value = 25;
       this.addImageUrlField("");
+      this.renderAdminVarieties([], []);
     }
 
     box.style.display = "block";
@@ -627,6 +835,8 @@ const AdminController = {
     if (form) form.reset();
     const imgList = document.getElementById("productImagesList");
     if (imgList) imgList.innerHTML = "";
+    const customBox = document.getElementById("customCategoryBox");
+    if (customBox) customBox.style.display = "none";
   },
 
   async saveProduct(e) {
@@ -634,7 +844,20 @@ const AdminController = {
 
     const editId = document.getElementById("editProductId")?.value.trim();
     const title = document.getElementById("prodFormTitle")?.value.trim();
-    const category = document.getElementById("prodFormCategory")?.value.trim() || "Mobile Cover";
+    const formCat = document.getElementById("prodFormCategory");
+    let category = formCat ? formCat.value.trim() : "Mobile Cover";
+
+    // Custom category check
+    if (category === "__custom__") {
+      const customCategoryVal = document.getElementById("prodFormCustomCategory")?.value.trim();
+      if (!customCategoryVal) {
+        showToast("Please enter a custom category name!", "error");
+        document.getElementById("prodFormCustomCategory")?.focus();
+        return;
+      }
+      category = customCategoryVal;
+    }
+
     const brand = document.getElementById("prodFormBrand")?.value.trim() || "infinix";
     const price = parseInt(document.getElementById("prodFormPrice")?.value, 10);
     const oldPriceStr = document.getElementById("prodFormOldPrice")?.value.trim();
@@ -644,6 +867,10 @@ const AdminController = {
     const images = this.getProductImagesFromForm();
     const image = images[0] || "";
     const description = document.getElementById("prodFormDescription")?.value.trim() || "";
+
+    // Variety selections (Sizes & Colors)
+    const sizes = this.getSelectedSizesFromForm();
+    const colors = this.getSelectedColorsFromForm();
 
     if (!title || !price || isNaN(price)) {
       showToast("Please provide product title and valid selling price!", "error");
@@ -678,6 +905,8 @@ const AdminController = {
             oldPrice,
             isOnSale,
             stock,
+            sizes,
+            colors,
             image: image || products[idx].image || "",
             images: images.length > 0 ? images : (products[idx].images || (image ? [image] : [])),
             description: description || products[idx].description
@@ -698,6 +927,8 @@ const AdminController = {
           rating: 5.0,
           reviewsCount: 1,
           stock,
+          sizes,
+          colors,
           isFeatured: true,
           badge: isOnSale ? "Sale Item" : "New Arrival",
           image: image || "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",

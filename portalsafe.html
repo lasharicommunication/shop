@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4.3">
+  <link rel="stylesheet" href="css/style.css?v=5.0">
   <style>
     html {
       overflow-x: hidden;
@@ -382,7 +382,7 @@
               </div>
               <div class="order-field">
                 <label style="color:#879b8a; font-size:11px; font-weight:700;">Category *</label>
-                <select id="prodFormCategory" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <select id="prodFormCategory" onchange="AdminController.handleCategoryChange(this.value)" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
                   <option value="Smartwatch">Smartwatches</option>
                   <option value="Earbuds">Earbuds &amp; Audio</option>
                   <option value="Power Bank">Power Banks</option>
@@ -391,7 +391,11 @@
                   <option value="Mobile Cover">Mobile Covers</option>
                   <option value="Cables">Cables &amp; Adapters</option>
                   <option value="Holders">Mounts &amp; Holders</option>
+                  <option value="__custom__">➕ + Custom Category / Add New...</option>
                 </select>
+                <div id="customCategoryBox" style="display:none; margin-top:8px;">
+                  <input type="text" id="prodFormCustomCategory" placeholder="Type new custom category name..." style="background:#19201a; border:1px solid #36493b; color:var(--lime); font-weight:700; border-radius:8px; padding:9px; font-size:12px; width:100%; box-sizing:border-box;">
+                </div>
               </div>
               <div class="order-field">
                 <label style="color:#879b8a; font-size:11px; font-weight:700;">Brand *</label>
@@ -426,6 +430,7 @@
                 <label style="color:#879b8a; font-size:11px; font-weight:700;">Stock Available *</label>
                 <input type="number" id="prodFormStock" value="25" min="0" required style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
               </div>
+
               <div class="order-field" style="grid-column: 1 / -1;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
                   <label style="color:#879b8a; font-size:11px; font-weight:700;">
@@ -442,6 +447,51 @@
                   💡 Pehli image card par main photo ke taur par nazar aayegi. Har box me direct picture link paste karein (e.g. ImgBB, Unsplash, Google direct link).
                 </small>
               </div>
+              <!-- Product Varieties: Sizes & Colors -->
+              <div class="order-field" style="grid-column: 1 / -1; background:#151b16; border:1px solid #28372b; border-radius:10px; padding:16px;">
+                <div style="margin-bottom:12px;">
+                  <h5 style="margin:0; font-size:13px; font-weight:800; color:var(--lime); display:flex; align-items:center; gap:6px;">
+                    <i class="fa-solid fa-layer-group"></i> Product Varieties (Sizes &amp; Colors)
+                  </h5>
+                  <p style="margin:3px 0 0; font-size:11px; color:#879b8a;">
+                    Jo <strong>Size</strong> aur <strong>Color</strong> is product ke available hon sirf unko <strong>tick (check)</strong> karein. Jo tick karenge sirf wohi bahir user ko show honge. Ager tick na karein to user ko show nahi honge.
+                  </p>
+                </div>
+
+                <!-- Sizes Box -->
+                <div style="margin-bottom:14px; background:#101411; border:1px solid #222d24; border-radius:8px; padding:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                    <span style="font-size:11.5px; font-weight:700; color:#c6d6c2;">
+                      📏 Available Sizes (Tick box):
+                    </span>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                      <input type="text" id="customSizeInput" placeholder="New size (e.g. 128GB, XXL, 45mm)" style="background:#19201a; border:1px solid #36493b; color:#fff; border-radius:6px; padding:6px 10px; font-size:11px; width:180px;">
+                      <button type="button" onclick="AdminController.addCustomSize()" style="padding:6px 10px; font-size:11px; font-weight:700; border-radius:6px; background:#1e2720; border:1px solid #36493b; color:var(--lime); cursor:pointer;">+ Add Size</button>
+                    </div>
+                  </div>
+                  <div id="adminSizesContainer" style="display:flex; flex-wrap:wrap; gap:8px;">
+                    <!-- Predefined size checkboxes will be rendered here -->
+                  </div>
+                </div>
+
+                <!-- Colors Box -->
+                <div style="background:#101411; border:1px solid #222d24; border-radius:8px; padding:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                    <span style="font-size:11.5px; font-weight:700; color:#c6d6c2;">
+                      🎨 Available Colors (Tick box):
+                    </span>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                      <input type="text" id="customColorInput" placeholder="Color name (e.g. Sierra Blue)" style="background:#19201a; border:1px solid #36493b; color:#fff; border-radius:6px; padding:6px 10px; font-size:11px; width:160px;">
+                      <input type="color" id="customColorPicker" value="#3b82f6" title="Pick color" style="width:30px; height:30px; border:none; border-radius:6px; cursor:pointer; background:none;">
+                      <button type="button" onclick="AdminController.addCustomColor()" style="padding:6px 10px; font-size:11px; font-weight:700; border-radius:6px; background:#1e2720; border:1px solid #36493b; color:var(--lime); cursor:pointer;">+ Add Color</button>
+                    </div>
+                  </div>
+                  <div id="adminColorsContainer" style="display:flex; flex-wrap:wrap; gap:8px;">
+                    <!-- Predefined color checkboxes will be rendered here -->
+                  </div>
+                </div>
+              </div>
+
               <div class="order-field" style="grid-column: 1 / -1;">
                 <label style="color:#879b8a; font-size:11px; font-weight:700;">Product Description</label>
                 <textarea id="prodFormDescription" rows="2" placeholder="Brief technical and checking warranty details..." style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;"></textarea>
@@ -764,8 +814,8 @@
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <!-- CORE SCRIPTS -->
-  <script src="js/data.js?v=4.3"></script>
-  <script src="js/admin.js?v=4.3"></script>
+  <script src="js/data.js?v=5.0"></script>
+  <script src="js/admin.js?v=5.0"></script>
   <script>
     // Cryptographic SHA-256 Authentication Gatekeeper
     const PortalAuth = {
