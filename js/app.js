@@ -788,7 +788,7 @@ function renderProducts() {
               const colName = typeof c === 'string' ? c : (c.name || 'Color');
               const isActive = selectedVariety.color === colName;
               return `
-                <span class="card-color-pill ${isActive ? 'is-active' : ''}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}')">
+                <span class="card-color-pill ${isActive ? 'is-active' : ''}" style="background:#ffffff !important;" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}')">
                   ${colName}
                 </span>
               `;
@@ -1337,7 +1337,7 @@ function openProductQuickView(prodId, event) {
             const colName = typeof c === 'string' ? c : (c.name || 'Color');
             const isSel = currentVariety.color === colName;
             return `
-              <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', true)">
+              <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" style="background:#ffffff !important;" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', true)">
                 <span>${colName}</span>
               </button>
             `;
@@ -1505,7 +1505,7 @@ function openOrderModalForProduct(prodId, preserveQty = false) {
               const colName = typeof c === 'string' ? c : (c.name || 'Color');
               const isSel = selectedVariety.color === colName;
               return `
-                <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', false, true)" style="font-size:11px; padding:4px 10px;">
+                <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" style="background:#ffffff !important; font-size:11px; padding:4px 10px;" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', false, true)">
                   <span>${colName}</span>
                 </button>
               `;
