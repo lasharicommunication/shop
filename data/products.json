@@ -171,7 +171,22 @@
       "https://i.postimg.cc/7ZmZxsfc/73e24fdd341f45318dd4d946624e135a.jpg",
       "https://i.postimg.cc/GhjcQ7Jt/JR-BP005-9.png"
     ],
-    "description": "Stay powered up on the go with the Infinix XPOS XPOWER GO 5000mAh Power Bank. Designed with a sleek, ultra-slim profile and vibrant color options, this 12W fast-charging power bank keeps your mobile devices charged wherever you are. Features 4 LED battery indicator lights for easy status tracking."
+    "description": "Stay powered up on the go with the Infinix XPOS XPOWER GO 5000mAh Power Bank. Designed with a sleek, ultra-slim profile and vibrant color options, this 12W fast-charging power bank keeps your mobile devices charged wherever you are. Features 4 LED battery indicator lights for easy status tracking.",
+    "sizes": [],
+    "colors": [
+      {
+        "name": "Yellow",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Blue",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Light Purple",
+        "hex": "#3b82f6"
+      }
+    ]
   },
   {
     "id": "prod-1793902399634",
