@@ -1,5 +1,52 @@
 [
   {
+    "id": "prod-1794070609966",
+    "title": "P9 Wireless Bluetooth Over-Ear Headphones – Premium Deep Bass Stereo Headset with Built-in Mic, Soft Cushion Earpads & SD Card Slot",
+    "category": "Headphones",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1549,
+    "oldPrice": 2699,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 250,
+    "sizes": [],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "White",
+        "hex": "#ffffff"
+      },
+      {
+        "name": "Pink",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Blue",
+        "hex": "#3b82f6"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/zBFpWf0r/images.jpg",
+    "images": [
+      "https://i.postimg.cc/zBFpWf0r/images.jpg",
+      "https://i.postimg.cc/fy0LpVFp/images.jpg",
+      "https://i.postimg.cc/4NVvhydD/images.jpg",
+      "https://i.postimg.cc/LsCjMZCB/images.jpg",
+      "https://i.postimg.cc/qR66VD6L/images.jpg",
+      "https://i.postimg.cc/ZKtpZmcw/images.jpg"
+    ],
+    "description": "Premium authentic tech accessory backed with official checking warranty."
+  },
+  {
     "id": "prod-1793905297002",
     "title": "3G PLUS ENJOYHOME G-18 10000mAh Power Bank – 10W Fast Charging Portable External Battery with Type-C Input & LED Indicator",
     "category": "Power Bank",
