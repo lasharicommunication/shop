@@ -1185,6 +1185,9 @@ function goQuickView(index) {
   gallery.querySelectorAll(".product-slider-dot").forEach((dot, idx) => {
     dot.classList.toggle("is-active", idx === next);
   });
+  gallery.querySelectorAll(".qv-thumb-btn").forEach((thumb, idx) => {
+    thumb.classList.toggle("is-active", idx === next);
+  });
 }
 
 function moveQuickView(delta) {
@@ -1193,20 +1196,34 @@ function moveQuickView(delta) {
   goQuickView(current + delta);
 }
 
-function renderQuickViewGallery(images, title) {
+function renderQuickViewGallery(images, title, prod) {
   if (!images.length) return "";
+  const hasDiscount = prod && prod.oldPrice && Number(prod.oldPrice) > Number(prod.price);
+  const discountPercent = hasDiscount ? Math.round(((prod.oldPrice - prod.price) / prod.oldPrice) * 100) : 0;
+  const isSaved = prod && AppState.savedWishlist && AppState.savedWishlist.includes(prod.id);
+
   return `
     <div class="qv-gallery" data-index="0">
+      ${hasDiscount ? `<div class="dialog-floating-badge">🔥 -${discountPercent}% OFF</div>` : (prod?.badge ? `<div class="dialog-floating-badge" style="background:#162413;">★ ${escapeAttr(prod.badge)}</div>` : '')}
+      ${prod ? `
+        <button type="button" class="heart-button ${isSaved ? 'is-saved' : ''} dialog-heart-btn" onclick="event.stopPropagation(); toggleWishlist('${prod.id}'); this.classList.toggle('is-saved');" title="Save to favorites">
+          <svg viewBox="0 0 24 24"><path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/></svg>
+        </button>
+      ` : ''}
       <div class="qv-stage">
         <img id="quickViewMainImg" src="${escapeAttr(images[0])}" alt="${escapeAttr(title)}">
         ${images.length > 1 ? `
-          <button type="button" class="product-slider-btn prev" onclick="moveQuickView(-1)" aria-label="Previous photo">‹</button>
-          <button type="button" class="product-slider-btn next" onclick="moveQuickView(1)" aria-label="Next photo">›</button>
+          <button type="button" class="qv-nav-btn prev" onclick="moveQuickView(-1)" aria-label="Previous photo">‹</button>
+          <button type="button" class="qv-nav-btn next" onclick="moveQuickView(1)" aria-label="Next photo">›</button>
         ` : ""}
       </div>
       ${images.length > 1 ? `
-        <div class="qv-dots">
-          ${images.map((_, idx) => `<button type="button" class="product-slider-dot ${idx === 0 ? "is-active" : ""}" onclick="goQuickView(${idx})" aria-label="Photo ${idx + 1}"></button>`).join("")}
+        <div class="qv-thumbs-strip">
+          ${images.map((img, idx) => `
+            <button type="button" class="qv-thumb-btn ${idx === 0 ? "is-active" : ""}" onclick="goQuickView(${idx})" aria-label="Photo ${idx + 1}">
+              <img src="${escapeAttr(img)}" alt="thumb ${idx + 1}">
+            </button>
+          `).join("")}
         </div>
       ` : ""}
     </div>
@@ -1237,7 +1254,7 @@ function openProductQuickView(prodId) {
   quickViewImages = images;
   if (visual) {
     if (images.length > 0) {
-      visual.innerHTML = renderQuickViewGallery(images, prod.title);
+      visual.innerHTML = renderQuickViewGallery(images, prod.title, prod);
       const gallery = visual.querySelector(".qv-gallery");
       if (gallery && images.length > 1) {
         let startX = 0;
@@ -1266,6 +1283,11 @@ function openProductQuickView(prodId) {
     }
   }
 
+  const ratingEl = document.getElementById("dialogRatingText");
+  if (ratingEl) {
+    ratingEl.textContent = `${prod.rating || 4.9} (${prod.reviewsCount || 38} reviews)`;
+  }
+
   // Variety Picker (Sizes & Colors) in Quick View
   const varContainer = document.getElementById("dialogVarietiesContainer");
   const sizesGroup = document.getElementById("dialogSizesGroup");
@@ -1280,6 +1302,11 @@ function openProductQuickView(prodId) {
     if (hasSizes || hasColors) {
       varContainer.style.display = "block";
       const currentVariety = getSelectedProductVariety(prod);
+
+      const sizeHint = document.getElementById("dialogSelectedSizeHint");
+      const colorHint = document.getElementById("dialogSelectedColorHint");
+      if (sizeHint) sizeHint.textContent = currentVariety.size ? `· ${currentVariety.size}` : "";
+      if (colorHint) colorHint.textContent = currentVariety.color ? `· ${currentVariety.color}` : "";
 
       if (sizesGroup && sizesList) {
         if (hasSizes) {
@@ -1361,7 +1388,12 @@ function openProductQuickView(prodId) {
     };
   }
 
-  if (dialog) dialog.showModal();
+  if (dialog) {
+    dialog.onclick = (e) => {
+      if (e.target === dialog) dialog.close();
+    };
+    dialog.showModal();
+  }
 }
 
 // Order Modal Handler

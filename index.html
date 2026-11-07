@@ -15,7 +15,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=5.2">
+  <link rel="stylesheet" href="css/style.css?v=5.3">
 </head>
 <body>
 
@@ -805,46 +805,99 @@
   </footer>
 
   <!-- PRODUCT QUICK VIEW DIALOG -->
-  <dialog id="productDialog" class="site-dialog">
+  <dialog id="productDialog" class="site-dialog product-quick-dialog">
     <button class="dialog-close" data-close-dialog aria-label="Close details">&times;</button>
-    <div id="dialogVisual" class="dialog-visual"></div>
-    <div class="dialog-body">
-      <h3 id="dialogTitle">Product Title</h3>
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-        <span style="font: 800 22px var(--display);" id="dialogPrice">Rs. 1,450</span>
-        <span style="font-size: 13px; color: var(--muted); text-decoration: line-through;" id="dialogOldPrice">Rs. 1,999</span>
-        <span style="font-size: 11px; background: var(--lime); color: var(--ink); padding: 2px 8px; border-radius: 4px; font-weight: 800;">Flat 200 PKR Delivery</span>
-      </div>
+    <div class="dialog-layout">
+      <!-- LEFT: VISUAL GALLERY STAGE -->
+      <div id="dialogVisual" class="dialog-visual"></div>
 
-      <!-- Variety Selection (Sizes & Colors) -->
-      <div id="dialogVarietiesContainer" class="dialog-varieties-box" style="display:none;">
-        <div id="dialogSizesGroup" class="variety-picker-group" style="display:none;">
-          <span class="variety-label">Available Sizes:</span>
-          <div id="dialogSizesList" class="variety-options-row"></div>
+      <!-- RIGHT: PRODUCT DETAILS -->
+      <div class="dialog-body">
+        <div class="dialog-meta-strip">
+          <span class="dialog-pill-badge"><i class="fa-solid fa-circle-check"></i> 100% Genuine Quality</span>
+          <span class="dialog-stock-badge"><i class="fa-solid fa-bolt"></i> In Stock · Ready to Dispatch</span>
         </div>
-        <div id="dialogColorsGroup" class="variety-picker-group" style="display:none;">
-          <span class="variety-label">Available Colors:</span>
-          <div id="dialogColorsList" class="variety-options-row"></div>
-        </div>
-      </div>
 
-      <!-- Product Description with 3-line clamp & Show More -->
-      <div class="dialog-desc-wrap">
-        <p id="dialogDescription" class="dialog-desc-clamped">Product description</p>
-        <button type="button" id="dialogDescToggle" class="btn-desc-toggle" style="display:none;">
-          <span>Show More</span> <i class="fa-solid fa-chevron-down"></i>
-        </button>
-      </div>
-      <div class="dialog-note">
-        <strong>Dispatch Partners:</strong> TCS Express &amp; Leopards Courier. Available in Cash on Delivery and Advance Payment.
-      </div>
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
-        <button id="dialogBuyNowBtn" class="button button-dark" style="justify-content:center;">
-          Buy Now <span>↗</span>
-        </button>
-        <button id="dialogAddCartBtn" class="button button-lime" style="justify-content:center;">
-          Add to Cart <span>+</span>
-        </button>
+        <h3 id="dialogTitle" class="dialog-product-title">Product Title</h3>
+
+        <div class="dialog-rating-row">
+          <div class="dialog-stars">★★★★★</div>
+          <span class="dialog-rating-text" id="dialogRatingText">4.9 (38 verified reviews)</span>
+          <span class="dialog-rating-dot">·</span>
+          <span class="dialog-dispatch-text"><i class="fa-solid fa-truck-fast"></i> TCS / Leopards</span>
+        </div>
+
+        <div class="dialog-price-strip">
+          <span class="dialog-main-price" id="dialogPrice">Rs. 1,450</span>
+          <span class="dialog-old-price" id="dialogOldPrice">Rs. 1,999</span>
+          <span class="dialog-delivery-pill"><i class="fa-solid fa-truck-fast"></i> Flat 200 PKR Delivery</span>
+        </div>
+
+        <!-- Variety Selection (Sizes & Colors) -->
+        <div id="dialogVarietiesContainer" class="dialog-varieties-box" style="display:none;">
+          <div id="dialogSizesGroup" class="variety-picker-group" style="display:none;">
+            <div class="variety-header-line">
+              <span class="variety-label">Available Sizes:</span>
+              <span class="variety-selected-hint" id="dialogSelectedSizeHint"></span>
+            </div>
+            <div id="dialogSizesList" class="variety-options-row"></div>
+          </div>
+          <div id="dialogColorsGroup" class="variety-picker-group" style="display:none;">
+            <div class="variety-header-line">
+              <span class="variety-label">Available Colors:</span>
+              <span class="variety-selected-hint" id="dialogSelectedColorHint"></span>
+            </div>
+            <div id="dialogColorsList" class="variety-options-row"></div>
+          </div>
+        </div>
+
+        <!-- Product Description with 3-line clamp & Show More -->
+        <div class="dialog-desc-section">
+          <div class="dialog-desc-label">Product Overview</div>
+          <div class="dialog-desc-wrap">
+            <p id="dialogDescription" class="dialog-desc-clamped">Product description</p>
+            <button type="button" id="dialogDescToggle" class="btn-desc-toggle" style="display:none;">
+              <span>Show More</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Trust Badges & Guarantee Grid -->
+        <div class="dialog-perks-grid">
+          <div class="dialog-perk-item">
+            <div class="perk-icon-wrap"><i class="fa-solid fa-box-open"></i></div>
+            <div class="perk-copy">
+              <strong>Open Parcel Check</strong>
+              <span>Live check before pay</span>
+            </div>
+          </div>
+          <div class="dialog-perk-item">
+            <div class="perk-icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="perk-copy">
+              <strong>Checking Warranty</strong>
+              <span>7 days replacement</span>
+            </div>
+          </div>
+          <div class="dialog-perk-item">
+            <div class="perk-icon-wrap"><i class="fa-solid fa-money-bill-wave"></i></div>
+            <div class="perk-copy">
+              <strong>Flexible Payment</strong>
+              <span>COD &amp; Advance options</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="dialog-action-buttons">
+          <button id="dialogBuyNowBtn" class="btn-dialog-buy" type="button">
+            <span>Buy Now Direct</span>
+            <span class="btn-icon">↗</span>
+          </button>
+          <button id="dialogAddCartBtn" class="btn-dialog-cart" type="button">
+            <span>Add to Cart</span>
+            <span class="btn-icon">+</span>
+          </button>
+        </div>
       </div>
     </div>
   </dialog>
@@ -1000,7 +1053,7 @@
   </dialog>
 
   <!-- STORE SCRIPTS -->
-  <script src="js/data.js?v=5.2"></script>
-  <script src="js/app.js?v=5.2"></script>
+  <script src="js/data.js?v=5.3"></script>
+  <script src="js/app.js?v=5.3"></script>
 </body>
 </html>
