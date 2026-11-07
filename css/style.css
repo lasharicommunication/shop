@@ -3382,6 +3382,9 @@ html:has(dialog.order-dialog[open]) {
   .payment-option label .pay-title { font-size: 12px; }
   .payment-option label .pay-sub { font-size: 10px; }
   .advance-acc-num { font-size: 10.5px; word-break: break-all; }
+  .order-qty-row-card { padding: 10px 16px; }
+  .order-qty-box .qty-btn { width: 30px !important; height: 30px !important; }
+  .order-qty-box .qty-value { min-width: 34px !important; line-height: 30px !important; font-size: 13px !important; }
 }
 
 /* ─── SMALL MOBILE / iPhone SE (xxs) ────────────────────────────────────── */
@@ -4021,20 +4024,35 @@ html:has(dialog.order-dialog[open]) {
   color: #fff;
   border-color: #171a18;
 }
-.card-color-dot {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  border: 1.5px solid #fff;
-  box-shadow: 0 0 0 1px #cbd5c1;
+.card-color-pill {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2.5px 7px;
+  border-radius: 5px;
+  background: #ffffff !important;
+  color: #1c261e;
+  border: 1.5px solid #dcdfd5;
   cursor: pointer;
-  flex-shrink: 0;
-  transition: transform 0.15s, box-shadow 0.15s;
+  line-height: 1.25;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
 }
-.card-color-dot:hover,
-.card-color-dot.is-active {
-  transform: scale(1.25);
-  box-shadow: 0 0 0 2px #759a11;
+.card-color-pill:hover {
+  border-color: #8bab15;
+  background: #ffffff !important;
+  color: #111412;
+}
+.card-color-pill.is-active {
+  background: #ffffff !important;
+  color: #111412;
+  border-color: #111412;
+  box-shadow: 0 0 0 1px #111412;
+  font-weight: 800;
+}
+.card-color-dot {
+  display: none !important;
 }
 
 /* Quick View Dialog Varieties */
@@ -4089,36 +4107,34 @@ html:has(dialog.order-dialog[open]) {
   border-color: #171a18;
 }
 .variety-color-btn {
-  background: #fff;
+  background: #ffffff !important;
   border: 1.5px solid #d4ded0;
-  border-radius: 7px;
-  padding: 5px 10px;
-  font-size: 11.5px;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 12px;
   font-weight: 700;
   color: #1c261e;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
+  user-select: none;
 }
 .variety-color-btn:hover {
   border-color: #8bab15;
-  background: #fafdf6;
+  background: #ffffff !important;
+  color: #111412;
 }
 .variety-color-btn.is-selected {
-  background: #202b1f;
-  color: #fff;
-  border-color: #202b1f;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  background: #ffffff !important;
+  color: #111412;
+  border-color: #111412;
+  box-shadow: 0 0 0 1.5px #111412;
+  font-weight: 800;
 }
 .variety-swatch-circle {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1px solid rgba(0,0,0,0.2);
-  display: inline-block;
-  flex-shrink: 0;
+  display: none !important;
 }
 
 /* Order Modal Varieties */
@@ -4165,12 +4181,77 @@ html:has(dialog.order-dialog[open]) {
   font-weight: 700;
 }
 
-/* Order Modal Interactive Quantity Controls */
+/* Order Modal Dedicated Quantity Row Card */
+.order-qty-row-card {
+  padding: 12px 24px;
+  background: #f7f9f3;
+  border-bottom: 1.5px solid #e0e6d6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.order-qty-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.order-qty-main-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #3b4d32;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.order-qty-sub {
+  font-size: 11px;
+  color: #74856b;
+  font-weight: 600;
+}
+.order-qty-box {
+  background: #ffffff !important;
+  border: 1.5px solid #c5d2be !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+.order-qty-box .qty-btn {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  background: #ffffff !important;
+  border: none !important;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  transition: background 0.15s;
+}
+.order-qty-box .qty-btn:hover {
+  background: #eef4e4 !important;
+}
+.order-qty-box .qty-value {
+  min-width: 36px !important;
+  line-height: 32px !important;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  text-align: center;
+  border-left: 1.5px solid #c5d2be !important;
+  border-right: 1.5px solid #c5d2be !important;
+  background: #ffffff !important;
+  color: var(--ink);
+}
 .order-modal-qty-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 6px;
 }
 .order-qty-title {
   font-size: 11px;
@@ -4178,26 +4259,6 @@ html:has(dialog.order-dialog[open]) {
   color: #5b6d52;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-}
-.order-qty-box {
-  background: #ffffff !important;
-  border-color: #c0ccb5 !important;
-  border-radius: 7px !important;
-  overflow: hidden;
-}
-.order-qty-box .qty-btn {
-  width: 28px !important;
-  height: 28px !important;
-  font-size: 15px !important;
-  line-height: 1 !important;
-}
-.order-qty-box .qty-value {
-  min-width: 32px !important;
-  line-height: 28px !important;
-  font-size: 13px !important;
-  font-weight: 800 !important;
-  border-color: #c0ccb5 !important;
-  background: #fdfefc !important;
 }
 
 /* ==========================================================================

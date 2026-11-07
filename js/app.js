@@ -97,8 +97,9 @@ function selectProductVariety(prodId, type, val, updateQuickView = false, update
         pill.classList.toggle("is-active", pill.textContent.trim() === val);
       });
     } else if (type === "color") {
-      card.querySelectorAll(".card-color-dot").forEach(dot => {
-        dot.classList.toggle("is-active", dot.title === val);
+      card.querySelectorAll(".card-color-pill, .card-color-dot").forEach(pill => {
+        const titleOrText = (pill.textContent || pill.title || "").trim();
+        pill.classList.toggle("is-active", titleOrText === val);
       });
     }
   }
@@ -785,10 +786,11 @@ function renderProducts() {
           <div class="card-variety-row" title="Available Colors">
             ${prod.colors.map(c => {
               const colName = typeof c === 'string' ? c : (c.name || 'Color');
-              const colHex = typeof c === 'string' ? getColorHexFromName(c) : (c.hex || '#3b82f6');
               const isActive = selectedVariety.color === colName;
               return `
-                <span class="card-color-dot ${isActive ? 'is-active' : ''}" style="background:${colHex};" title="${colName}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}')"></span>
+                <span class="card-color-pill ${isActive ? 'is-active' : ''}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}')">
+                  ${colName}
+                </span>
               `;
             }).join("")}
           </div>
@@ -987,6 +989,11 @@ function adjustOrderModalQty(delta) {
 
   const valEl = document.getElementById("orderModalQtyVal");
   if (valEl) valEl.textContent = nextQty;
+
+  const qtySub = document.getElementById("orderQtySub");
+  if (qtySub) {
+    qtySub.textContent = nextQty === 1 ? "1 item selected" : `${nextQty} items selected`;
+  }
 
   const priceEachEl = document.getElementById("orderProductPriceEach");
   const subtotal = prod.price * nextQty;
@@ -1328,11 +1335,9 @@ function openProductQuickView(prodId, event) {
           colorsGroup.style.display = "block";
           colorsList.innerHTML = prod.colors.map(c => {
             const colName = typeof c === 'string' ? c : (c.name || 'Color');
-            const colHex = typeof c === 'string' ? getColorHexFromName(c) : (c.hex || '#3b82f6');
             const isSel = currentVariety.color === colName;
             return `
               <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', true)">
-                <span class="variety-swatch-circle" style="background:${colHex};"></span>
                 <span>${colName}</span>
               </button>
             `;
@@ -1498,11 +1503,9 @@ function openOrderModalForProduct(prodId, preserveQty = false) {
             <span style="font-size:11px; font-weight:700; color:#5b6d52; min-width:40px;">Color:</span>
             ${prod.colors.map(c => {
               const colName = typeof c === 'string' ? c : (c.name || 'Color');
-              const colHex = typeof c === 'string' ? getColorHexFromName(c) : (c.hex || '#3b82f6');
               const isSel = selectedVariety.color === colName;
               return `
-                <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', false, true)" style="font-size:11px; padding:3px 8px;">
-                  <span class="variety-swatch-circle" style="background:${colHex}; width:11px; height:11px;"></span>
+                <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', false, true)" style="font-size:11px; padding:4px 10px;">
                   <span>${colName}</span>
                 </button>
               `;
@@ -1522,6 +1525,10 @@ function openOrderModalForProduct(prodId, preserveQty = false) {
   if (qtyControlsRow) qtyControlsRow.style.display = "flex";
   if (qtyValEl) qtyValEl.textContent = qty;
   if (qtyEl) qtyEl.style.display = "none";
+  const qtySub = document.getElementById("orderQtySub");
+  if (qtySub) {
+    qtySub.textContent = qty === 1 ? "1 item selected" : `${qty} items selected`;
+  }
 
   const subtotal = prod.price * qty;
   if (priceEachEl) {

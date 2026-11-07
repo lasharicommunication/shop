@@ -15,7 +15,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=5.5">
+  <link rel="stylesheet" href="css/style.css?v=5.6">
 </head>
 <body>
 
@@ -907,21 +907,10 @@
       <div class="order-product-art" id="orderArt"></div>
       <div style="flex:1; min-width:0;">
         <div class="order-product-name" id="orderProductName">Luxury Case</div>
-        <div id="orderProductPriceEach" style="font-size:12px; font-weight:700; color:#4a6310; margin-top:3px;">Rs. 1,450 each</div>
-
-        <!-- Interactive Quantity in Order Modal -->
-        <div id="orderQtyControlsRow" class="order-modal-qty-row">
-          <span class="order-qty-title">Qty:</span>
-          <div class="product-qty-row order-qty-box">
-            <button type="button" class="qty-btn" onclick="adjustOrderModalQty(-1)" aria-label="Decrease quantity">−</button>
-            <span class="qty-value" id="orderModalQtyVal">1</span>
-            <button type="button" class="qty-btn" onclick="adjustOrderModalQty(1)" aria-label="Increase quantity">+</button>
-          </div>
-        </div>
-
+        <div id="orderProductPriceEach" style="font-size:13px; font-weight:800; color:#3e5414; margin-top:3px;">Rs. 1,450 each</div>
         <div class="order-product-qty" id="orderProductQty" style="display:none;">Qty: 1 · Rs. 1,450</div>
         <div id="orderVarietyInfo" style="display:none; font-size:11px; color:#4a6310; font-weight:700; margin-top:3px;"></div>
-        <div style="font-size:11px; color:#6a8060; font-weight:600; margin-top:4px;">📦 + Rs. 200 Delivery (TCS / Leopards)</div>
+        <div style="font-size:11px; color:#6a8060; font-weight:600; margin-top:4px;">📦 + Rs. 200 Delivery Fee (TCS / Leopards)</div>
       </div>
       <div class="order-total-box">
         <div class="order-total-label">Total</div>
@@ -932,6 +921,19 @@
 
     <!-- Modal Variety Selection / Change -->
     <div id="orderModalVarieties" class="order-modal-varieties" style="display:none;"></div>
+
+    <!-- Dedicated Clean Quantity Bar -->
+    <div id="orderQtyControlsRow" class="order-qty-row-card">
+      <div class="order-qty-label-group">
+        <span class="order-qty-main-label">Quantity:</span>
+        <span class="order-qty-sub" id="orderQtySub">1 item selected</span>
+      </div>
+      <div class="product-qty-row order-qty-box">
+        <button type="button" class="qty-btn" onclick="adjustOrderModalQty(-1)" aria-label="Decrease quantity">−</button>
+        <span class="qty-value" id="orderModalQtyVal">1</span>
+        <button type="button" class="qty-btn" onclick="adjustOrderModalQty(1)" aria-label="Increase quantity">+</button>
+      </div>
+    </div>
 
     <form class="order-form" id="orderForm" novalidate>
       <div class="order-fields-row">
