@@ -2411,7 +2411,7 @@ svg {
   display: flex;
   flex-direction: column;
 }
-html:has(dialog[open]) {
+html:has(dialog.order-dialog[open]) {
   overflow: hidden;
 }
 .order-dialog::backdrop { background: #0d1612b9; backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
@@ -4125,6 +4125,9 @@ html:has(dialog[open]) {
    UPGRADED PRODUCT QUICK VIEW DIALOG (Luxury 2-Column Responsive Modal)
    ========================================================================== */
 .product-quick-dialog {
+  position: fixed !important;
+  inset: 0 !important;
+  margin: auto !important;
   border: 1px solid rgba(0, 0, 0, 0.08) !important;
   padding: 0 !important;
   border-radius: 22px !important;
@@ -4135,8 +4138,7 @@ html:has(dialog[open]) {
   max-width: 880px !important;
   max-height: min(92vh, 760px) !important;
   overflow: hidden !important;
-  margin: auto !important;
-  position: relative !important;
+  z-index: 99999 !important;
 }
 
 .product-quick-dialog[open] {
@@ -4626,11 +4628,15 @@ html:has(dialog[open]) {
    ========================================================================== */
 @media (max-width: 819px) {
   .product-quick-dialog {
+    position: fixed !important;
+    inset: 0 !important;
+    margin: auto !important;
     width: calc(100% - 18px) !important;
     max-width: 480px !important;
     max-height: 92dvh !important;
     border-radius: 18px !important;
     overflow-y: auto !important;
+    z-index: 99999 !important;
   }
   .product-quick-dialog .dialog-layout {
     display: flex !important;

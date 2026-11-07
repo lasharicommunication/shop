@@ -799,7 +799,7 @@ function renderProducts() {
 
     return `
       <article class="product-card reveal in-view" data-product-id="${prod.id}">
-        <div class="product-media" onclick="openProductQuickView('${prod.id}')">
+        <div class="product-media" onclick="openProductQuickView('${prod.id}', event)">
           ${isOnSale ? '<span class="sale-badge">🔥 SALE</span>' : ''}
           <button type="button" class="heart-button ${isSaved ? 'is-saved' : ''}" onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" title="Save to favorites">
             <svg viewBox="0 0 24 24">
@@ -811,7 +811,7 @@ function renderProducts() {
 
         <div class="product-info-block">
           <div class="product-info-top">
-            <h3 class="product-name" onclick="openProductQuickView('${prod.id}')">${prod.title}</h3>
+            <h3 class="product-name" onclick="openProductQuickView('${prod.id}', event)">${prod.title}</h3>
             <div class="product-pricing-wrap">
               <div class="product-price-row">
                 <span class="product-price-tag">Rs. ${prod.price?.toLocaleString()}</span>
@@ -831,11 +831,6 @@ function renderProducts() {
           </div>
 
           ${varietyHtml}
-
-          <div class="product-delivery-badge" style="display:flex; align-items:center; justify-content:space-between; margin-top:6px; font-size:10.5px; color:#5b6d52; font-weight:700;">
-            <span><i class="fa-solid fa-truck-fast" style="color:#6a8060;"></i> TCS / LEO Express</span>
-            <span style="color:#2e7d32; font-size:10px; background:#e8f4e3; padding:2px 7px; border-radius:4px; font-weight:800; letter-spacing:0.02em;">IN STOCK</span>
-          </div>
 
           <div class="product-actions">
             <button type="button" class="btn-buy-now" onclick="openOrderModalForProduct('${prod.id}')">
@@ -1231,9 +1226,16 @@ function renderQuickViewGallery(images, title, prod) {
 }
 
 // Quick View Product Modal
-function openProductQuickView(prodId) {
+function openProductQuickView(prodId, event) {
+  if (event) {
+    if (typeof event.preventDefault === "function") event.preventDefault();
+    if (typeof event.stopPropagation === "function") event.stopPropagation();
+  }
+
   const prod = AppState.products.find(p => p.id === prodId);
   if (!prod) return;
+
+  const currentScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
 
   const dialog = document.getElementById("productDialog");
   const visual = document.getElementById("dialogVisual");
@@ -1392,7 +1394,24 @@ function openProductQuickView(prodId) {
     dialog.onclick = (e) => {
       if (e.target === dialog) dialog.close();
     };
+
+    // Show modal without scrolling the background window
     dialog.showModal();
+
+    // Preserve exact scroll position
+    window.scrollTo({
+      top: currentScrollY,
+      left: 0,
+      behavior: "instant"
+    });
+
+    dialog.onclose = () => {
+      window.scrollTo({
+        top: currentScrollY,
+        left: 0,
+        behavior: "instant"
+      });
+    };
   }
 }
 
@@ -1848,7 +1867,7 @@ function setupEventListeners() {
           const artHtml = renderProductGallery(prod);
           return `
             <article class="product-card reveal in-view" data-product-id="${prod.id}">
-              <div class="product-media" onclick="openProductQuickView('${prod.id}')">
+              <div class="product-media" onclick="openProductQuickView('${prod.id}', event)">
                 <button type="button" class="heart-button is-saved" onclick="event.stopPropagation(); toggleWishlist('${prod.id}')">
                   <svg viewBox="0 0 24 24"><path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/></svg>
                 </button>
@@ -1856,7 +1875,7 @@ function setupEventListeners() {
               </div>
               <div class="product-info-block">
                 <div class="product-info-top">
-                  <h3 class="product-name" onclick="openProductQuickView('${prod.id}')">${prod.title}</h3>
+                  <h3 class="product-name" onclick="openProductQuickView('${prod.id}', event)">${prod.title}</h3>
                   <span class="product-price-tag">Rs. ${prod.price?.toLocaleString()}</span>
                 </div>
                 <div class="product-actions" style="margin-top:10px;">
