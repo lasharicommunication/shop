@@ -448,14 +448,16 @@ function renderCustomerPaymentAccounts() {
 
   container.innerHTML = accounts.map(acc => `
     <div class="advance-acc-card">
-      <div class="advance-acc-head">
+      <div class="advance-acc-main">
         <span class="advance-acc-bank">${acc.bankName}</span>
+        <span class="advance-acc-num">${acc.accountNumber}</span>
+      </div>
+      <div class="advance-acc-mid">
         <span class="advance-acc-title">Title: <strong>${acc.accountTitle}</strong></span>
       </div>
-      <div class="advance-acc-num-row">
-        <span class="advance-acc-num">${acc.accountNumber}</span>
-        <button type="button" class="advance-copy-btn" onclick="copyAccountNumber('${acc.accountNumber}', this)">Copy</button>
-      </div>
+      <button type="button" class="advance-copy-btn" onclick="copyAccountNumber('${acc.accountNumber}', this)">
+        <i class="fa-regular fa-copy"></i> Copy
+      </button>
     </div>
   `).join("");
 }
@@ -1466,31 +1468,43 @@ function openOrderModalForProduct(prodId, preserveQty = false) {
     if (hasSizes || hasColors) {
       modalVarietiesEl.style.display = "flex";
       modalVarietiesEl.innerHTML = `
-        <div style="font-size:10.5px; font-weight:800; color:#3b4d32; text-transform:uppercase; letter-spacing:0.04em;">
-          Confirm Available Variety:
+        <div class="order-variety-header">
+          <i class="fa-solid fa-palette"></i>
+          <span>CONFIRM AVAILABLE VARIETY:</span>
         </div>
         ${hasSizes ? `
-          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <span style="font-size:11px; font-weight:700; color:#5b6d52; min-width:40px;">Size:</span>
-            ${prod.sizes.map(s => `
-              <button type="button" class="card-size-pill ${selectedVariety.size === s ? 'is-active' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}', false, true)" style="font-size:11px; padding:3px 9px;">
-                ${s}
-              </button>
-            `).join("")}
+          <div class="order-variety-row-item">
+            <span class="order-variety-row-label">Size:</span>
+            <div class="order-variety-pills-wrap">
+              ${prod.sizes.map(s => {
+                const isSel = selectedVariety.size === s;
+                return `
+                  <button type="button" class="variety-size-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}', false, true)">
+                    <span>${s}</span>
+                    ${isSel ? '<span class="variety-check-badge"><i class="fa-solid fa-check"></i></span>' : ''}
+                  </button>
+                `;
+              }).join("")}
+            </div>
           </div>
         ` : ''}
         ${hasColors ? `
-          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <span style="font-size:11px; font-weight:700; color:#5b6d52; min-width:40px;">Color:</span>
-            ${prod.colors.map(c => {
-              const colName = typeof c === 'string' ? c : (c.name || 'Color');
-              const isSel = selectedVariety.color === colName;
-              return `
-                <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" style="background:#ffffff !important; font-size:11px; padding:4px 10px;" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', false, true)">
-                  <span>${colName}</span>
-                </button>
-              `;
-            }).join("")}
+          <div class="order-variety-row-item">
+            <span class="order-variety-row-label">Color:</span>
+            <div class="order-variety-pills-wrap">
+              ${prod.colors.map(c => {
+                const colName = typeof c === 'string' ? c : (c.name || 'Color');
+                const colHex = typeof c === 'string' ? getColorHexFromName(c) : (c.hex || '#3b82f6');
+                const isSel = selectedVariety.color === colName;
+                return `
+                  <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', false, true)">
+                    <span class="variety-dot-circle" style="background:${colHex};"></span>
+                    <span>${colName}</span>
+                    ${isSel ? '<span class="variety-check-badge"><i class="fa-solid fa-check"></i></span>' : ''}
+                  </button>
+                `;
+              }).join("")}
+            </div>
           </div>
         ` : ''}
       `;

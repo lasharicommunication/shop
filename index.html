@@ -15,7 +15,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=6.1">
+  <link rel="stylesheet" href="css/style.css?v=6.5">
 </head>
 <body>
 
@@ -896,119 +896,208 @@
     </div>
   </dialog>
 
-  <!-- ORDER MODAL -->
+  <!-- ORDER MODAL (Upgraded to match reference mockup) -->
   <dialog id="orderDialog" class="order-dialog">
-    <div class="order-header">
-      <h3>Place Your Order</h3>
-      <button class="dialog-close" data-close-order aria-label="Close">&times;</button>
-    </div>
-
-    <div class="order-product-strip">
-      <div class="order-product-art" id="orderArt"></div>
-      <div style="flex:1; min-width:0;">
-        <div class="order-product-name" id="orderProductName">Luxury Case</div>
-        <div id="orderProductPriceEach" style="font-size:13px; font-weight:800; color:#3e5414; margin-top:3px;">Rs. 1,450 each</div>
-        <div class="order-product-qty" id="orderProductQty" style="display:none;">Qty: 1 · Rs. 1,450</div>
-        <div id="orderVarietyInfo" style="display:none; font-size:11px; color:#4a6310; font-weight:700; margin-top:3px;"></div>
-        <div style="font-size:11px; color:#6a8060; font-weight:600; margin-top:4px;">📦 + Rs. 200 Delivery Fee (TCS / Leopards)</div>
-      </div>
-      <div class="order-total-box">
-        <div class="order-total-label">Total</div>
-        <div class="order-total-amount" id="orderTotalDisplay">Rs. 1,650</div>
-        <div class="order-total-breakdown" id="orderSubtotalBreakdown">incl. delivery</div>
-      </div>
-    </div>
-
-    <!-- Modal Variety Selection / Change -->
-    <div id="orderModalVarieties" class="order-modal-varieties" style="display:none;"></div>
-
-    <!-- Dedicated Clean Quantity Bar -->
-    <div id="orderQtyControlsRow" class="order-qty-row-card">
-      <div class="order-qty-label-group">
-        <span class="order-qty-main-label">Quantity:</span>
-        <span class="order-qty-sub" id="orderQtySub">1 item selected</span>
-      </div>
-      <div class="product-qty-row order-qty-box">
-        <button type="button" class="qty-btn" onclick="adjustOrderModalQty(-1)" aria-label="Decrease quantity">−</button>
-        <span class="qty-value" id="orderModalQtyVal">1</span>
-        <button type="button" class="qty-btn" onclick="adjustOrderModalQty(1)" aria-label="Increase quantity">+</button>
-      </div>
-    </div>
-
-    <form class="order-form" id="orderForm" novalidate>
-      <div class="order-fields-row">
-        <div class="order-field">
-          <label for="orderName">Your Full Name *</label>
-          <input type="text" id="orderName" placeholder="e.g. Faizan Lashari" required>
-        </div>
-        <div class="order-field">
-          <label for="orderPhone">Phone Number *</label>
-          <input type="tel" id="orderPhone" placeholder="0300-1234567" required>
-        </div>
-      </div>
-
-      <div class="order-field">
-        <label for="orderEmail">Email Address <span style="font-weight:500;text-transform:none;letter-spacing:0;color:#a0ab99;">(optional)</span></label>
-        <input type="email" id="orderEmail" placeholder="your@email.com">
-      </div>
-
-      <div class="order-field">
-        <label for="orderAddress">Delivery Address *</label>
-        <textarea id="orderAddress" placeholder="House/Flat #, Street, Area, City" required></textarea>
-      </div>
-
-      <div class="order-field">
-        <label>Payment Method</label>
-        <div class="payment-options">
-          <div class="payment-option">
-            <input type="radio" name="payment" id="payAdvance" value="Advance Payment" checked onchange="togglePaymentBox('advance')">
-            <label for="payAdvance">
-              <span class="pay-icon">💳</span>
-              <span class="pay-text">
-                <span class="pay-title">Advance Payment</span>
-                <span class="pay-sub">JazzCash / EasyPaisa / Bank Transfer</span>
-              </span>
-            </label>
+    <div class="order-modal-wrapper">
+      
+      <!-- TOP LUXURY HEADER -->
+      <div class="order-header-bar">
+        <div class="order-brand-block">
+          <div class="order-brand-icon">
+            <i class="fa-solid fa-tower-broadcast"></i>
           </div>
-          <div class="payment-option">
-            <input type="radio" name="payment" id="payCOD" value="Cash on Delivery" onchange="togglePaymentBox('cod')">
-            <label for="payCOD">
-              <span class="pay-icon">💵</span>
-              <span class="pay-text">
-                <span class="pay-title">Cash on Delivery</span>
-                <span class="pay-sub">Pay when courier delivers</span>
-              </span>
-            </label>
+          <div class="order-brand-text">
+            <strong>Lashari</strong>
+            <span>Communication</span>
           </div>
         </div>
 
-        <!-- Advance Bank Details Container -->
-        <div class="advance-bank-details show" id="advanceBankDetails">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <span style="font-weight:800; color:var(--ink); font-size:11px; text-transform:uppercase; letter-spacing:0.04em;">Official Payment Accounts</span>
-            <span style="font-size:10px; color:var(--muted); font-weight:600;">Click to copy number</span>
+        <div class="order-header-right">
+          <div class="order-trust-pill">
+            <span class="order-trust-check"><i class="fa-solid fa-circle-check"></i></span>
+            <div class="order-trust-copy">
+              <strong>Secure &amp; Trusted</strong>
+              <span>Your information is safe</span>
+            </div>
           </div>
-          <div id="advanceAccountsList" style="display:flex; flex-direction:column; gap:8px;">
-            <!-- Dynamically populated with active accounts -->
-          </div>
-          <p style="font-size:10px; color:var(--muted); margin:4px 0 0; line-height:1.5;">
-            Payment transfer karne ke baad screenshot WhatsApp (<a href="https://wa.me/923212920914" target="_blank" class="shop-whatsapp-link" style="color:var(--ink); font-weight:700;"><span class="shop-phone-text">+92 321 2920914</span></a>) par share karein.
-          </p>
+          <button class="dialog-close order-close-btn" data-close-order aria-label="Close order dialog">&times;</button>
         </div>
       </div>
 
-      <button type="submit" class="order-submit">
-        Confirm Order ↗
-      </button>
-    </form>
+      <!-- SCROLLABLE BODY CONTAINER -->
+      <div class="order-modal-body">
+        
+        <!-- CARD 1: PRODUCT SUMMARY -->
+        <div class="order-card order-card-product">
+          <div class="order-product-art-glow" id="orderArt"></div>
+          <div class="order-product-details">
+            <h3 class="order-product-title" id="orderProductName">Product Name</h3>
+            <div class="order-product-unit-price" id="orderProductPriceEach">Rs. 1,499 each</div>
+            <div class="order-product-qty" id="orderProductQty" style="display:none;">Qty: 1 · Rs. 1,499</div>
+            <div id="orderVarietyInfo" style="display:none; font-size:11px; color:#16a34a; font-weight:700; margin-top:2px;"></div>
+            <div class="order-delivery-notice">
+              <i class="fa-solid fa-truck-fast"></i> <span>+ Rs. 200 Delivery Fee (TCS / Leopards)</span>
+            </div>
+          </div>
+          <div class="order-total-block">
+            <div class="order-total-caption">TOTAL</div>
+            <div class="order-total-number" id="orderTotalDisplay">Rs. 1,699</div>
+            <div class="order-total-breakdown" id="orderSubtotalBreakdown">Subtotal: Rs. 1,499 + Rs. 200 fee</div>
+          </div>
+        </div>
 
-    <div class="order-success" id="orderSuccess">
-      <div class="order-success-icon">✓</div>
-      <h3>Order Placed!</h3>
-      <p>Shukriya! Aapka order receive ho gaya hai. Hamari team jald hi aap se contact karegi aur parcel dispatch karegi.</p>
-      <button class="button button-dark" data-close-order>
-        Keep exploring <span>↗</span>
-      </button>
+        <!-- CARD 2: VARIETY & QUANTITY CARD -->
+        <div class="order-card order-card-config">
+          <!-- Varieties (Size & Color) -->
+          <div id="orderModalVarieties" class="order-modal-varieties" style="display:none;"></div>
+
+          <!-- Quantity Stepper Row -->
+          <div id="orderQtyControlsRow" class="order-qty-stepper-row">
+            <div class="order-qty-label-wrap">
+              <span class="order-qty-headline">QUANTITY:</span>
+              <span class="order-qty-count-text" id="orderQtySub">1 item selected</span>
+            </div>
+            <div class="order-stepper-box">
+              <button type="button" class="order-stepper-btn" onclick="adjustOrderModalQty(-1)" aria-label="Decrease quantity">−</button>
+              <span class="order-stepper-val" id="orderModalQtyVal">1</span>
+              <button type="button" class="order-stepper-btn" onclick="adjustOrderModalQty(1)" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM STARTS HERE -->
+        <form class="order-form-container" id="orderForm" novalidate>
+          
+          <!-- CARD 3: CUSTOMER DETAILS -->
+          <div class="order-card order-card-customer">
+            <div class="order-fields-two-col">
+              <div class="order-field-group">
+                <label for="orderName"><i class="fa-solid fa-user"></i> YOUR FULL NAME *</label>
+                <input type="text" id="orderName" placeholder="e.g. Faizan Lashari" required autocomplete="name">
+              </div>
+              <div class="order-field-group">
+                <label for="orderPhone"><i class="fa-solid fa-phone"></i> PHONE NUMBER *</label>
+                <input type="tel" id="orderPhone" placeholder="0300-1234567" required autocomplete="tel">
+              </div>
+            </div>
+
+            <div class="order-field-group">
+              <label for="orderEmail"><i class="fa-solid fa-envelope"></i> EMAIL ADDRESS <span class="order-opt-tag">(optional)</span></label>
+              <input type="email" id="orderEmail" placeholder="your@email.com" autocomplete="email">
+            </div>
+
+            <div class="order-field-group">
+              <label for="orderAddress"><i class="fa-solid fa-location-dot"></i> DELIVERY ADDRESS *</label>
+              <div class="order-address-input-wrap">
+                <input type="text" id="orderAddress" placeholder="House/Flat #, Street, Area, City" required autocomplete="street-address">
+                <i class="fa-solid fa-location-dot order-address-pin"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4: PAYMENT METHOD -->
+          <div class="order-card order-card-payment">
+            <div class="order-payment-header-row">
+              <div class="order-payment-title"><i class="fa-solid fa-credit-card"></i> PAYMENT METHOD</div>
+              <div class="order-payment-subtitle">Choose your preferred method</div>
+            </div>
+
+            <div class="order-payment-cards-grid">
+              <!-- ADVANCE PAYMENT -->
+              <label class="order-pay-card" for="payAdvance">
+                <input type="radio" name="payment" id="payAdvance" value="Advance Payment" checked onchange="togglePaymentBox('advance')">
+                <div class="order-pay-card-inner">
+                  <div class="order-pay-card-left">
+                    <div class="order-pay-graphic card-advance-icon">
+                      <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div class="order-pay-card-info">
+                      <strong class="order-pay-name">Advance Payment</strong>
+                      <span class="order-pay-desc">JazzCash / EasyPaisa / Bank Transfer</span>
+                    </div>
+                  </div>
+                  <div class="order-pay-check-badge"><i class="fa-solid fa-check"></i></div>
+                </div>
+              </label>
+
+              <!-- CASH ON DELIVERY -->
+              <label class="order-pay-card" for="payCOD">
+                <input type="radio" name="payment" id="payCOD" value="Cash on Delivery" onchange="togglePaymentBox('cod')">
+                <div class="order-pay-card-inner">
+                  <div class="order-pay-card-left">
+                    <div class="order-pay-graphic card-cod-icon">
+                      <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                    <div class="order-pay-card-info">
+                      <strong class="order-pay-name">Cash on Delivery</strong>
+                      <span class="order-pay-desc">Pay when courier delivers</span>
+                    </div>
+                  </div>
+                  <div class="order-pay-check-badge"><i class="fa-solid fa-check"></i></div>
+                </div>
+              </label>
+            </div>
+
+            <!-- OFFICIAL PAYMENT ACCOUNTS CONTAINER -->
+            <div class="advance-bank-details show" id="advanceBankDetails">
+              <div class="advance-accounts-bar-head">
+                <div class="advance-head-left"><i class="fa-solid fa-building-columns"></i> OFFICIAL PAYMENT ACCOUNTS</div>
+                <div class="advance-head-right">Click to copy number <i class="fa-regular fa-copy"></i></div>
+              </div>
+              <div id="advanceAccountsList" class="advance-accounts-stack">
+                <!-- Dynamically populated with active bank accounts -->
+              </div>
+              <div class="order-whatsapp-notice">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Payment transfer karne ke baad screenshot WhatsApp (<a href="https://wa.me/923212920914" target="_blank" class="shop-whatsapp-link"><span class="shop-phone-text">+92 321 2920914</span></a>) par share karein.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONFIRM ORDER CTA BUTTON -->
+          <button type="submit" class="order-submit-btn-pill">
+            <span class="order-submit-circle-check"><i class="fa-solid fa-circle-check"></i></span>
+            <span>Confirm Order</span>
+            <i class="fa-solid fa-arrow-right order-submit-arrow"></i>
+          </button>
+        </form>
+
+        <!-- TRUST PERKS (3 COLUMNS) -->
+        <div class="order-trust-footer-bar">
+          <div class="order-trust-footer-item">
+            <span class="order-footer-icon-wrap"><i class="fa-solid fa-shield-halved"></i></span>
+            <div class="order-footer-text">
+              <strong>100% Secure</strong>
+              <span>Your Data Safe</span>
+            </div>
+          </div>
+          <div class="order-trust-footer-item">
+            <span class="order-footer-icon-wrap"><i class="fa-solid fa-bolt"></i></span>
+            <div class="order-footer-text">
+              <strong>Fast Delivery</strong>
+              <span>Across Pakistan</span>
+            </div>
+          </div>
+          <div class="order-trust-footer-item">
+            <span class="order-footer-icon-wrap"><i class="fa-solid fa-headset"></i></span>
+            <div class="order-footer-text">
+              <strong>24/7 Support</strong>
+              <span>We're Here to Help</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUCCESS STATE -->
+        <div class="order-success" id="orderSuccess">
+          <div class="order-success-icon">✓</div>
+          <h3>Order Placed!</h3>
+          <p>Shukriya! Aapka order receive ho gaya hai. Hamari team jald hi aap se contact karegi aur parcel dispatch karegi.</p>
+          <button class="button button-dark" data-close-order>
+            Keep exploring <span>↗</span>
+          </button>
+        </div>
+
+      </div>
     </div>
   </dialog>
 
@@ -1052,7 +1141,7 @@
   </dialog>
 
   <!-- STORE SCRIPTS -->
-  <script src="js/data.js?v=6.1"></script>
-  <script src="js/app.js?v=6.1"></script>
+  <script src="js/data.js?v=6.5"></script>
+  <script src="js/app.js?v=6.5"></script>
 </body>
 </html>
