@@ -768,35 +768,16 @@ function renderProducts() {
     const hasColors = Array.isArray(prod.colors) && prod.colors.length > 0;
 
     let varietyHtml = "";
-    if (hasSizes || hasColors) {
-      varietyHtml = `<div class="product-card-varieties">`;
-      if (hasSizes) {
-        varietyHtml += `
-          <div class="card-variety-row" title="Available Sizes">
-            ${prod.sizes.map(s => `
-              <span class="card-size-pill ${selectedVariety.size === s ? 'is-active' : ''}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}')">
-                ${s}
-              </span>
-            `).join("")}
-          </div>
-        `;
-      }
-      if (hasColors) {
-        varietyHtml += `
-          <div class="card-variety-row" title="Available Colors">
-            ${prod.colors.map(c => {
-              const colName = typeof c === 'string' ? c : (c.name || 'Color');
-              const isActive = selectedVariety.color === colName;
-              return `
-                <span class="card-color-pill ${isActive ? 'is-active' : ''}" style="background:#ffffff !important;" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}')">
-                  ${colName}
-                </span>
-              `;
-            }).join("")}
-          </div>
-        `;
-      }
-      varietyHtml += `</div>`;
+    if (hasSizes) {
+      varietyHtml = `<div class="product-card-varieties">
+        <div class="card-variety-row" title="Available Sizes">
+          ${prod.sizes.map(s => `
+            <span class="card-size-pill ${selectedVariety.size === s ? 'is-active' : ''}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}')">
+              ${s}
+            </span>
+          `).join("")}
+        </div>
+      </div>`;
     }
 
     return `
