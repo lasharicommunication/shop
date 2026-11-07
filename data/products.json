@@ -31,6 +31,10 @@
       {
         "name": "Blue",
         "hex": "#3b82f6"
+      },
+      {
+        "name": "Green",
+        "hex": "#3b82f6"
       }
     ],
     "isFeatured": true,
