@@ -330,8 +330,11 @@
     ],
     "description": "Elevate your daily listening with the M10 TWS Wireless Earbuds. Engineered for seamless audio quality, clear calls, and all-day comfort, the M10 features advanced Bluetooth 5.1 technology for a fast, stable, and lag-free connection.\n\nKey Features:\n\nHD Stereo Sound & Deep Bass: Premium dynamic drivers deliver clear highs and rich bass for an immersive music experience.\n\nSmart LED Digital Display: Easily check the exact remaining battery percentage of both the charging case and individual earbuds at a glance.\n\nHigh-Capacity Charging Case: The included battery case not only recharges your earbuds multiple times on the go, but also doubles as an emergency power bank for your mobile phone.\n\nIntuitive Touch Controls: Manage music playback, answer or reject calls, adjust volume, and activate your voice assistant with simple taps.\n\nErgonomic & Sweatproof: Designed for a secure, comfortable fit during workouts, running, or daily commutes, featuring IPX7 sweat and splash resistance.\n\nAutomatic Pairing: Simply remove the earbuds from the case, and they immediately connect to your paired device.\n\nWhat’s in the Box:\n\n2 x M10 Wireless Earbuds (Left & Right)\n\n1 x Smart LED Charging Case\n\n1 x USB Charging Cable\n\n3 x Pairs of Silicone Ear Tips (S / M / L)\n\n1 x User Manual",
     "colors": [
-      "Black",
-      "White"
-    ]
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "sizes": []
   }
 ]
