@@ -15,7 +15,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=6.6">
+  <link rel="stylesheet" href="css/style.css?v=6.7">
 </head>
 <body>
 
@@ -959,23 +959,10 @@
           </div>
         </div>
 
-        <!-- CARD 2: VARIETY & QUANTITY CARD -->
-        <div class="order-card order-card-config">
+        <!-- CARD 2: VARIETY SELECTION (Shown only if product has sizes/colors) -->
+        <div class="order-card order-card-config" id="orderConfigCard" style="display:none;">
           <!-- Varieties (Size & Color) -->
           <div id="orderModalVarieties" class="order-modal-varieties" style="display:none;"></div>
-
-          <!-- Quantity Stepper Row -->
-          <div id="orderQtyControlsRow" class="order-qty-stepper-row">
-            <div class="order-qty-label-wrap">
-              <span class="order-qty-headline">QUANTITY:</span>
-              <span class="order-qty-count-text" id="orderQtySub">1 item selected</span>
-            </div>
-            <div class="order-stepper-box">
-              <button type="button" class="order-stepper-btn" onclick="adjustOrderModalQty(-1)" aria-label="Decrease quantity">−</button>
-              <span class="order-stepper-val" id="orderModalQtyVal">1</span>
-              <button type="button" class="order-stepper-btn" onclick="adjustOrderModalQty(1)" aria-label="Increase quantity">+</button>
-            </div>
-          </div>
         </div>
 
         <!-- FORM STARTS HERE -->
@@ -1154,7 +1141,7 @@
   </dialog>
 
   <!-- STORE SCRIPTS -->
-  <script src="js/data.js?v=6.6"></script>
-  <script src="js/app.js?v=6.6"></script>
+  <script src="js/data.js?v=6.7"></script>
+  <script src="js/app.js?v=6.7"></script>
 </body>
 </html>

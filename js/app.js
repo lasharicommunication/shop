@@ -1488,10 +1488,12 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
   }
 
   // Interactive Variety switcher inside Order Modal
+  const configCard = document.getElementById("orderConfigCard");
   if (modalVarietiesEl) {
     const hasSizes = Array.isArray(prod.sizes) && prod.sizes.length > 0;
     const hasColors = Array.isArray(prod.colors) && prod.colors.length > 0;
     if (hasSizes || hasColors) {
+      if (configCard) configCard.style.display = "flex";
       modalVarietiesEl.style.display = "flex";
       modalVarietiesEl.innerHTML = `
         <div class="order-variety-header">
@@ -1535,15 +1537,18 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
         ` : ''}
       `;
     } else {
+      if (configCard) configCard.style.display = "none";
       modalVarietiesEl.style.display = "none";
       modalVarietiesEl.innerHTML = "";
     }
+  } else if (configCard) {
+    configCard.style.display = "none";
   }
 
   if (nameEl) nameEl.textContent = prod.title;
 
   // Set quantity controls
-  if (qtyControlsRow) qtyControlsRow.style.display = "flex";
+  if (qtyControlsRow) qtyControlsRow.style.display = "none";
   if (qtyValEl) qtyValEl.textContent = qty;
   if (qtyEl) qtyEl.style.display = "none";
   const qtySub = document.getElementById("orderQtySub");
@@ -1604,7 +1609,9 @@ function openOrderModalFromBag() {
   const success = document.getElementById("orderSuccess");
   const varietyInfoEl = document.getElementById("orderVarietyInfo");
   const modalVarietiesEl = document.getElementById("orderModalVarieties");
+  const configCard = document.getElementById("orderConfigCard");
 
+  if (configCard) configCard.style.display = "none";
   if (varietyInfoEl) varietyInfoEl.style.display = "none";
   if (modalVarietiesEl) {
     modalVarietiesEl.style.display = "none";
