@@ -15,7 +15,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=6.5">
+  <link rel="stylesheet" href="css/style.css?v=6.6">
 </head>
 <body>
 
@@ -833,6 +833,19 @@
           <span class="dialog-delivery-pill"><i class="fa-solid fa-truck-fast"></i> Flat 200 PKR Delivery</span>
         </div>
 
+        <!-- Quantity Selection Strip -->
+        <div class="dialog-qty-strip">
+          <div class="dialog-qty-label-group">
+            <span class="dialog-qty-main-label"><i class="fa-solid fa-cubes-stacked"></i> Quantity:</span>
+            <span class="dialog-qty-sub" id="dialogQtySub">1 item selected</span>
+          </div>
+          <div class="dialog-qty-box">
+            <button type="button" class="qty-btn" onclick="adjustQuickViewQty(-1)" aria-label="Decrease quantity">−</button>
+            <span class="qty-val" id="dialogQtyVal">1</span>
+            <button type="button" class="qty-btn" onclick="adjustQuickViewQty(1)" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
         <!-- Variety Selection (Sizes & Colors) -->
         <div id="dialogVarietiesContainer" class="dialog-varieties-box" style="display:none;">
           <div id="dialogSizesGroup" class="variety-picker-group" style="display:none;">
@@ -1141,7 +1154,7 @@
   </dialog>
 
   <!-- STORE SCRIPTS -->
-  <script src="js/data.js?v=6.5"></script>
-  <script src="js/app.js?v=6.5"></script>
+  <script src="js/data.js?v=6.6"></script>
+  <script src="js/app.js?v=6.6"></script>
 </body>
 </html>

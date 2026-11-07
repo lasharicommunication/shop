@@ -1021,11 +1021,11 @@ function updateWishlistBadge() {
 }
 
 // Add Product to Bag
-function addProductToBag(prodId) {
+function addProductToBag(prodId, customQty = 1) {
   const prod = AppState.products.find(p => p.id === prodId);
   if (!prod) return;
 
-  const qty = 1;
+  const qty = (typeof customQty === "number" && customQty > 0) ? customQty : 1;
   const variety = getSelectedProductVariety(prod);
   const existing = AppState.cart.find(item => 
     item.id === prodId && 
@@ -1239,6 +1239,13 @@ function openProductQuickView(prodId, event) {
   const cat = document.getElementById("dialogCategory");
   if (cat) cat.remove();
 
+  // Reset Quick View quantity to 1
+  AppState.quickViewQty = 1;
+  const qvQtyVal = document.getElementById("dialogQtyVal");
+  if (qvQtyVal) qvQtyVal.textContent = "1";
+  const qvQtySub = document.getElementById("dialogQtySub");
+  if (qvQtySub) qvQtySub.textContent = "1 item selected";
+
   const images = (Array.isArray(prod.images) && prod.images.length > 0)
     ? prod.images
     : (prod.image ? [prod.image] : []);
@@ -1367,13 +1374,13 @@ function openProductQuickView(prodId, event) {
   if (buyBtn) {
     buyBtn.onclick = () => {
       dialog.close();
-      openOrderModalForProduct(prod.id);
+      openOrderModalForProduct(prod.id, false, AppState.quickViewQty || 1);
     };
   }
 
   if (addBtn) {
     addBtn.onclick = () => {
-      addProductToBag(prod.id);
+      addProductToBag(prod.id, AppState.quickViewQty || 1);
       dialog.close();
     };
   }
@@ -1403,14 +1410,33 @@ function openProductQuickView(prodId, event) {
   }
 }
 
+// Quick View Quantity Adjuster
+function adjustQuickViewQty(delta) {
+  const current = AppState.quickViewQty || 1;
+  const next = Math.max(1, Math.min(99, current + delta));
+  AppState.quickViewQty = next;
+  const valEl = document.getElementById("dialogQtyVal");
+  if (valEl) valEl.textContent = next;
+  const subEl = document.getElementById("dialogQtySub");
+  if (subEl) {
+    subEl.textContent = next === 1 ? "1 item selected" : `${next} items selected`;
+  }
+}
+window.adjustQuickViewQty = adjustQuickViewQty;
+
 // Order Modal Handler
-function openOrderModalForProduct(prodId, preserveQty = false) {
+function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = null) {
   const prod = AppState.products.find(p => p.id === prodId);
   if (!prod) return;
 
   const currentModalProdId = AppState.currentOrderProduct ? AppState.currentOrderProduct.id : null;
   const isSameProduct = currentModalProdId === prodId;
-  const qty = (preserveQty && isSameProduct && AppState.currentOrderQty) ? AppState.currentOrderQty : 1;
+  let qty = 1;
+  if (explicitQty && explicitQty > 0) {
+    qty = explicitQty;
+  } else if (preserveQty && isSameProduct && AppState.currentOrderQty) {
+    qty = AppState.currentOrderQty;
+  }
   AppState.currentOrderProduct = prod;
   AppState.currentOrderQty = qty;
 

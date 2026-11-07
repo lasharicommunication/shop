@@ -5126,6 +5126,86 @@ html:has(dialog.order-dialog[open]) {
   gap: 4px;
 }
 
+/* Quick View Quantity Strip */
+.dialog-qty-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1.5px solid #dce4d3;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+.dialog-qty-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dialog-qty-main-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #3b4d32;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dialog-qty-main-label i {
+  color: #16a34a;
+  font-size: 11.5px;
+}
+.dialog-qty-sub {
+  font-size: 11.5px;
+  color: #63775b;
+  font-weight: 600;
+}
+.dialog-qty-box {
+  background: #ffffff;
+  border: 1.5px solid #c5d2be;
+  border-radius: 8px;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.dialog-qty-box .qty-btn {
+  width: 34px;
+  height: 32px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: #171a18;
+  transition: background 0.15s, color 0.15s;
+}
+.dialog-qty-box .qty-btn:hover {
+  background: #eef4e4;
+  color: #16a34a;
+}
+.dialog-qty-box .qty-btn:active {
+  background: #e1edd0;
+}
+.dialog-qty-box .qty-val {
+  min-width: 36px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+  color: #171a18;
+  border-left: 1px solid #dce4d3;
+  border-right: 1px solid #dce4d3;
+  line-height: 32px;
+  display: inline-block;
+  user-select: none;
+}
+
 /* Varieties Box */
 .product-quick-dialog .dialog-varieties-box {
   background: #ffffff !important;
