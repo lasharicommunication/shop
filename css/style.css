@@ -2390,7 +2390,9 @@ svg {
 }
 .dialog-done { width: 100%; justify-content: center; }
 
-/* ORDER MODAL */
+/* ============================================================
+   ORDER MODAL — Modern Full-Screen, Fully Responsive
+   ============================================================ */
 .order-dialog {
   position: fixed;
   inset: 0;
@@ -2402,7 +2404,7 @@ svg {
   border-radius: 0;
   border: 0;
   padding: 0;
-  background: #f7f8f3;
+  background: #f4f6f0;
   color: var(--ink);
   box-shadow: none;
   overflow: hidden;
@@ -2414,82 +2416,131 @@ svg {
 html:has(dialog.order-dialog[open]) {
   overflow: hidden;
 }
-.order-dialog::backdrop { background: #0d1612b9; backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.order-dialog::backdrop {
+  background: rgba(13, 22, 18, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ── Header ── */
 .order-header {
-  padding: 24px 30px 18px;
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: 0;
-  background: #f7f8f3;
-  z-index: 5;
+  padding: 18px 24px 16px;
+  border-bottom: 1.5px solid #e0e5d8;
+  background: #fff;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
 }
 .order-header h3 {
-  font: 800 22px/1.1 var(--display);
+  font: 800 20px/1.1 var(--display);
   letter-spacing: -.04em;
   margin: 0;
+  color: var(--ink);
 }
 .order-header .dialog-close {
   position: static;
-  background: #e9ede2;
-  width: 38px;
-  height: 38px;
-  font-size: 22px;
+  background: #edf0e8;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
   border: 0;
   border-radius: 50%;
   cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background .2s;
+  line-height: 1;
 }
+.order-header .dialog-close:hover { background: #d8e0cc; }
+
+/* ── Product Strip ── */
 .order-product-strip {
-  padding: 16px 30px;
-  background: var(--cream);
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #eef3e6 0%, #f7f9f2 100%);
   display: flex;
   align-items: center;
   gap: 14px;
-  border-bottom: 1px solid var(--line);
-  width: min(720px, 100%);
-  margin-inline: auto;
+  border-bottom: 1.5px solid #e0e5d8;
+  width: 100%;
   box-sizing: border-box;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
 }
 .order-product-strip > div { min-width: 0; }
 .order-product-art {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
   overflow: hidden;
   flex-shrink: 0;
-  background: #dde4d4;
+  background: #dde8cc;
+  border: 1.5px solid #cad8b4;
+  box-shadow: 0 4px 12px #1b280f18;
 }
 .order-product-art .art-root { transform: scale(.45); }
 .order-product-name {
-  font: 800 15px/1.2 var(--display);
-  letter-spacing: -.03em;
+  font: 800 14px/1.3 var(--display);
+  letter-spacing: -.02em;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .order-product-qty {
   font-size: 11px;
   color: #7f8679;
   margin-top: 3px;
 }
+.order-total-box {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
+}
+.order-total-label {
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.order-total-amount {
+  font: 800 20px/1 var(--display);
+  color: var(--ink);
+  letter-spacing: -.03em;
+}
+.order-total-breakdown {
+  font-size: 10px;
+  color: #7f8679;
+  margin-top: 2px;
+}
+
+/* ── Scrollable Form Body ── */
 .order-form {
-  padding: 24px 30px 30px;
+  padding: 20px 24px 28px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   flex: 1 1 auto;
   min-height: 0;
-  width: min(720px, 100%);
+  width: min(680px, 100%);
   margin-inline: auto;
   box-sizing: border-box;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
+
+/* ── Fields ── */
 .order-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 .order-field label {
   font-size: 10px;
@@ -2501,22 +2552,33 @@ html:has(dialog.order-dialog[open]) {
 .order-field input,
 .order-field textarea,
 .order-field select {
-  padding: 13px 16px;
-  border: 1.5px solid var(--line);
+  padding: 13px 15px;
+  border: 1.5px solid #d8ddd0;
   border-radius: 12px;
-  background: white;
-  font: 500 14px/1 var(--font);
+  background: #fff;
+  font: 500 14px/1.2 var(--font);
   color: var(--ink);
   outline: none;
-  transition: border-color .2s;
+  transition: border-color .2s, box-shadow .2s;
   width: 100%;
   box-sizing: border-box;
 }
 .order-field input:focus,
 .order-field textarea:focus,
-.order-field select:focus { border-color: #8bab15; }
-.order-field textarea { resize: vertical; min-height: 70px; line-height: 1.6; }
+.order-field select:focus {
+  border-color: #8bab15;
+  box-shadow: 0 0 0 3px #8bab1520;
+}
+.order-field textarea { resize: none; min-height: 72px; line-height: 1.6; }
 
+/* ── Two-column name+phone on wide screens ── */
+.order-fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ── Payment Options ── */
 .payment-options {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2533,45 +2595,49 @@ html:has(dialog.order-dialog[open]) {
 }
 .payment-option label {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 6px;
-  padding: 16px 10px;
-  border: 1.5px solid var(--line);
+  gap: 10px;
+  padding: 14px 14px;
+  border: 1.5px solid #d8ddd0;
   border-radius: 13px;
   cursor: pointer;
-  transition: border-color .2s, background .2s;
-  background: white;
-  text-align: center;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+  background: #fff;
+  text-align: left;
   font-size: 10px !important;
-  letter-spacing: .06em !important;
+  letter-spacing: .02em !important;
   color: var(--ink);
 }
-.payment-option label .pay-icon { font-size: 22px; }
+.payment-option label .pay-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.payment-option label .pay-text { display: flex; flex-direction: column; gap: 2px; }
 .payment-option label .pay-title {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: .04em;
+  letter-spacing: .02em;
   color: var(--ink);
-  text-transform: uppercase;
+  text-transform: none;
 }
 .payment-option label .pay-sub {
-  font-size: 9px;
+  font-size: 10px;
   color: #7f8679;
   font-weight: 500;
-  text-transform: none;
   letter-spacing: 0;
 }
 .payment-option input:checked + label {
   border-color: #8bab15;
   background: #f3f9e6;
+  box-shadow: 0 0 0 3px #8bab1518;
 }
 
-/* Advance Payment Bank Details Container */
+/* ── Bank Details ── */
 .advance-bank-details {
-  background: #ffffff;
-  border: 1.5px solid #dcded7;
-  border-radius: 12px;
+  background: #fff;
+  border: 1.5px solid #d8ddd0;
+  border-radius: 13px;
   padding: 14px 16px;
   display: none;
   flex-direction: column;
@@ -2739,18 +2805,25 @@ html:has(dialog.order-dialog[open]) {
 }
 
 .order-submit {
-  padding: 16px;
+  padding: 17px;
   border-radius: 14px;
   border: 0;
   background: var(--ink);
   color: #f2f5eb;
-  font: 800 14px var(--font);
-  letter-spacing: .04em;
+  font: 800 15px var(--font);
+  letter-spacing: .05em;
   cursor: pointer;
-  transition: background .2s, transform .15s;
+  transition: background .2s, transform .15s, box-shadow .2s;
   margin-top: 4px;
+  width: 100%;
+  text-transform: uppercase;
+  box-shadow: 0 4px 18px #1b280f28;
 }
-.order-submit:hover { background: #8bab15; transform: translateY(-1px); }
+.order-submit:hover {
+  background: #8bab15;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px #8bab1540;
+}
 
 .order-success {
   padding: 48px 30px;
@@ -3295,18 +3368,19 @@ html:has(dialog.order-dialog[open]) {
     box-sizing: border-box;
     overflow: hidden;
   }
-  .dialog-visual { height: min(360px, 48vh); min-height: 220px; }
-  .dialog-body { padding: 16px 14px; overflow-x: hidden; }
-  .dialog-body h3, .bag-dialog h3 { font-size: 19px; margin: 8px 0; }
-  .bag-dialog-content { padding: 24px 16px 20px; }
-  .order-header { padding: 14px; }
-  .order-product-strip { padding: 10px 14px; gap: 9px; }
-  .order-product-art { width: 42px; height: 42px; }
+  .order-header { padding: 13px 16px; }
+  .order-header h3 { font-size: 17px; }
+  .order-header .dialog-close { width: 32px; height: 32px; font-size: 18px; }
+  .order-product-strip { padding: 10px 16px; gap: 10px; }
+  .order-product-art { width: 52px; height: 52px; border-radius: 10px; }
   .order-product-name { font-size: 12.5px; }
-  .order-form { padding: 14px; gap: 11px; box-sizing: border-box; }
-  .payment-options { grid-template-columns: 1fr; gap: 7px; }
-  .payment-option label { padding: 9px 6px; }
-  .payment-option label .pay-title { font-size: 10px; }
+  .order-total-amount { font-size: 17px; }
+  .order-form { padding: 14px 16px 20px; gap: 12px; }
+  .order-fields-row { grid-template-columns: 1fr; gap: 12px; }
+  .payment-options { grid-template-columns: 1fr; gap: 8px; }
+  .payment-option label { padding: 11px 12px; gap: 10px; }
+  .payment-option label .pay-title { font-size: 12px; }
+  .payment-option label .pay-sub { font-size: 10px; }
   .advance-acc-num { font-size: 10.5px; word-break: break-all; }
 }
 
@@ -3341,6 +3415,10 @@ html:has(dialog.order-dialog[open]) {
   .offer-content h2 { font-size: clamp(20px, 7vw, 28px); }
   .location-actions .button { padding: 11px 12px; font-size: 11.5px; }
   .payment-options { grid-template-columns: 1fr; }
+  .order-product-strip { flex-wrap: wrap; }
+  .order-total-box { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; }
+  .order-total-label { font-size: 10px; }
+  .order-total-amount { font-size: 18px; }
 }
 
 /* ─── ULTRA SMALL SCREENS (≤330px) ───────────────────────────────────────── */
@@ -4045,12 +4123,13 @@ html:has(dialog.order-dialog[open]) {
 
 /* Order Modal Varieties */
 .order-modal-varieties {
-  padding: 10px 16px;
-  background: #f3f6ec;
-  border-bottom: 1px solid #dfe5d1;
+  padding: 10px 24px;
+  background: #eef3e6;
+  border-bottom: 1.5px solid #d8e2c4;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 /* Admin Variety Checkbox Chips */

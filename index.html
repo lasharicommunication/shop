@@ -15,7 +15,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=5.4">
+  <link rel="stylesheet" href="css/style.css?v=5.5">
 </head>
 <body>
 
@@ -907,11 +907,11 @@
       <div class="order-product-art" id="orderArt"></div>
       <div style="flex:1; min-width:0;">
         <div class="order-product-name" id="orderProductName">Luxury Case</div>
-        <div id="orderProductPriceEach" style="font-size:12px; font-weight:700; color:#1a2e12; margin-top:2px;">Rs. 1,450 each</div>
+        <div id="orderProductPriceEach" style="font-size:12px; font-weight:700; color:#4a6310; margin-top:3px;">Rs. 1,450 each</div>
 
         <!-- Interactive Quantity in Order Modal -->
         <div id="orderQtyControlsRow" class="order-modal-qty-row">
-          <span class="order-qty-title">Quantity:</span>
+          <span class="order-qty-title">Qty:</span>
           <div class="product-qty-row order-qty-box">
             <button type="button" class="qty-btn" onclick="adjustOrderModalQty(-1)" aria-label="Decrease quantity">−</button>
             <span class="qty-value" id="orderModalQtyVal">1</span>
@@ -921,14 +921,12 @@
 
         <div class="order-product-qty" id="orderProductQty" style="display:none;">Qty: 1 · Rs. 1,450</div>
         <div id="orderVarietyInfo" style="display:none; font-size:11px; color:#4a6310; font-weight:700; margin-top:3px;"></div>
-        <div style="font-size:11px; color:#6a8060; font-weight:700; margin-top:3px;">
-          + Rs. 200 Delivery Fee (TCS / Leopards)
-        </div>
+        <div style="font-size:11px; color:#6a8060; font-weight:600; margin-top:4px;">📦 + Rs. 200 Delivery (TCS / Leopards)</div>
       </div>
-      <div style="text-align:right; flex-shrink:0;">
-        <div style="font-size:10px; color:var(--muted); text-transform:uppercase; font-weight:700;">Total Amount</div>
-        <strong id="orderTotalDisplay" style="font-family:var(--display); font-size:17px; color:var(--ink);">Rs. 1,650</strong>
-        <div id="orderSubtotalBreakdown" style="font-size:10px; color:#7f8679; margin-top:2px;">(incl. delivery)</div>
+      <div class="order-total-box">
+        <div class="order-total-label">Total</div>
+        <div class="order-total-amount" id="orderTotalDisplay">Rs. 1,650</div>
+        <div class="order-total-breakdown" id="orderSubtotalBreakdown">incl. delivery</div>
       </div>
     </div>
 
@@ -936,18 +934,19 @@
     <div id="orderModalVarieties" class="order-modal-varieties" style="display:none;"></div>
 
     <form class="order-form" id="orderForm" novalidate>
-      <div class="order-field">
-        <label for="orderName">Your Full Name *</label>
-        <input type="text" id="orderName" placeholder="e.g. Faizan Lashari" required>
+      <div class="order-fields-row">
+        <div class="order-field">
+          <label for="orderName">Your Full Name *</label>
+          <input type="text" id="orderName" placeholder="e.g. Faizan Lashari" required>
+        </div>
+        <div class="order-field">
+          <label for="orderPhone">Phone Number *</label>
+          <input type="tel" id="orderPhone" placeholder="0300-1234567" required>
+        </div>
       </div>
 
       <div class="order-field">
-        <label for="orderPhone">Phone Number *</label>
-        <input type="tel" id="orderPhone" placeholder="0300-1234567" required>
-      </div>
-
-      <div class="order-field">
-        <label for="orderEmail">Email Address</label>
+        <label for="orderEmail">Email Address <span style="font-weight:500;text-transform:none;letter-spacing:0;color:#a0ab99;">(optional)</span></label>
         <input type="email" id="orderEmail" placeholder="your@email.com">
       </div>
 
@@ -963,16 +962,20 @@
             <input type="radio" name="payment" id="payAdvance" value="Advance Payment" checked onchange="togglePaymentBox('advance')">
             <label for="payAdvance">
               <span class="pay-icon">💳</span>
-              <span class="pay-title">Advance Payment</span>
-              <span class="pay-sub">JazzCash / EasyPaisa / Bank Transfer</span>
+              <span class="pay-text">
+                <span class="pay-title">Advance Payment</span>
+                <span class="pay-sub">JazzCash / EasyPaisa / Bank Transfer</span>
+              </span>
             </label>
           </div>
           <div class="payment-option">
             <input type="radio" name="payment" id="payCOD" value="Cash on Delivery" onchange="togglePaymentBox('cod')">
             <label for="payCOD">
               <span class="pay-icon">💵</span>
-              <span class="pay-title">Cash on Delivery</span>
-              <span class="pay-sub">Pay when courier delivers</span>
+              <span class="pay-text">
+                <span class="pay-title">Cash on Delivery</span>
+                <span class="pay-sub">Pay when courier delivers</span>
+              </span>
             </label>
           </div>
         </div>
@@ -980,13 +983,13 @@
         <!-- Advance Bank Details Container -->
         <div class="advance-bank-details show" id="advanceBankDetails">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <span style="font-weight:700; color:var(--ink); font-size:11px; text-transform:uppercase; letter-spacing:0.04em;">Official Payment Accounts</span>
+            <span style="font-weight:800; color:var(--ink); font-size:11px; text-transform:uppercase; letter-spacing:0.04em;">Official Payment Accounts</span>
             <span style="font-size:10px; color:var(--muted); font-weight:600;">Click to copy number</span>
           </div>
           <div id="advanceAccountsList" style="display:flex; flex-direction:column; gap:8px;">
             <!-- Dynamically populated with active accounts -->
           </div>
-          <p style="font-size:10px; color:var(--muted); margin:4px 0 0; line-height:1.4;">
+          <p style="font-size:10px; color:var(--muted); margin:4px 0 0; line-height:1.5;">
             Payment transfer karne ke baad screenshot WhatsApp (<a href="https://wa.me/923212920914" target="_blank" class="shop-whatsapp-link" style="color:var(--ink); font-weight:700;"><span class="shop-phone-text">+92 321 2920914</span></a>) par share karein.
           </p>
         </div>
