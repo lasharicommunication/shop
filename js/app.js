@@ -1522,11 +1522,9 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
             <div class="order-variety-pills-wrap">
               ${prod.colors.map(c => {
                 const colName = typeof c === 'string' ? c : (c.name || 'Color');
-                const colHex = typeof c === 'string' ? getColorHexFromName(c) : (c.hex || '#3b82f6');
                 const isSel = selectedVariety.color === colName;
                 return `
                   <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', false, true)">
-                    <span class="variety-dot-circle" style="background:${colHex};"></span>
                     <span>${colName}</span>
                     ${isSel ? '<span class="variety-check-badge"><i class="fa-solid fa-check"></i></span>' : ''}
                   </button>
