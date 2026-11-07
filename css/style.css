@@ -153,14 +153,14 @@ svg {
 }
 .brand {
   font-family: var(--display);
-  font-size: clamp(32px, 3.5vw, 54px);
+  font-size: clamp(28px, 2.7vw, 42px);
   font-weight: 800;
   letter-spacing: -.04em;
   line-height: 1.05;
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  max-width: 50%;
+  max-width: 46%;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 1;
@@ -816,7 +816,6 @@ svg {
   letter-spacing: .14em;
   font-weight: 800;
   text-transform: uppercase;
-  display: none !important;
 }
 .heart-button {
   position: absolute;
@@ -980,12 +979,11 @@ svg {
   grid-template-columns: 1fr 1fr;
   gap: 8px;
   margin-top: auto;
-  width: 100%;
 }
 .btn-buy-now {
-  padding: 15px 8px;
-  min-height: 46px;
-  display: flex;
+  padding: 13px 8px;
+  min-height: 40px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   background: var(--ink);
@@ -997,13 +995,12 @@ svg {
   cursor: pointer;
   transition: background .2s, transform .15s;
   text-transform: uppercase;
-  width: 100%;
 }
 .btn-buy-now:hover { background: #84a919; transform: translateY(-2px); }
 .btn-add-cart {
-  padding: 15px 8px;
-  min-height: 46px;
-  display: flex;
+  padding: 13px 8px;
+  min-height: 40px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
@@ -1015,7 +1012,6 @@ svg {
   cursor: pointer;
   transition: background .2s, color .2s, border-color .2s, transform .15s;
   text-transform: uppercase;
-  width: 100%;
 }
 .btn-add-cart:hover { background: var(--cream); transform: translateY(-2px); }
 .btn-add-cart.in-cart { background: #e8f5d0; border-color: #84a919; color: #4a7010; }
