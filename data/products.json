@@ -1,10 +1,10 @@
 [
   {
     "id": "prod-1794126572312",
-    "title": "Kingston DataTraveler 50 USB 3.0 Flash Drive (4GB, 8GB, 16GB, 32GB, 64GB, 128GB) – Metal Casing High Speed Pen Drive",
-    "category": "Usb Flash",
-    "brand": "general",
-    "brandName": "Universal Tech",
+    "title": "usb",
+    "category": "Power Bank",
+    "brand": "samsung",
+    "brandName": "Samsung",
     "compatibleModels": [
       "Universal Device Compatibility"
     ],
@@ -13,21 +13,21 @@
     "isOnSale": true,
     "rating": 5,
     "reviewsCount": 1,
-    "stock": 250,
+    "stock": 25,
     "sizes": [],
-    "colors": [],
+    "colors": [
+      {
+        "name": "Silver / Grey",
+        "hex": "#9ca3af"
+      }
+    ],
     "isFeatured": true,
     "badge": "Sale Item",
-    "image": "https://i.postimg.cc/0NDFrPSZ/F1729938-01.webp",
+    "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
     "images": [
-      "https://i.postimg.cc/0NDFrPSZ/F1729938-01.webp",
-      "https://i.postimg.cc/0NDFrPSZ/F1729938-01.webp",
-      "https://i.postimg.cc/K8gssx0c/16gbusb-4679-212873-120119075205.jpg",
-      "https://i.postimg.cc/50pPF02S/download-36.avif",
-      "https://i.postimg.cc/g2RNH40L/ac9d3850d7b2f1267fc12f910fced9ec.jpg",
-      "https://i.postimg.cc/Zn2xryt8/Kingston-usb-flash-drive-128GB-USB-3-1-800x800.jpg"
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80"
     ],
-    "description": "Store, transfer, and share your files effortlessly with the Kingston DataTraveler 50 (DT50) USB Flash Drive. Designed with a sleek, capless metal casing and a colorful accent clip, this compact and lightweight pen drive is built for daily durability and style. Featuring fast USB 3.0 performance, it allows quick transfer of photos, videos, documents, and music files across PCs, laptops, and compatible devices."
+    "description": "Premium authentic tech accessory backed with official checking warranty."
   },
   {
     "id": "prod-1794072150273",
