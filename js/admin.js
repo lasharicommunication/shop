@@ -489,7 +489,12 @@ const AdminController = {
             <div>
               <strong style="color:#fff; font-size:13px;">${prod.title}</strong>
               <br><small style="color:#879b8a; font-size:11px;">${prod.brandName || prod.brand || "Accessory"}</small>
-              ${(prod.sizes && prod.sizes.length) || (prod.colors && prod.colors.length) ? `<br><small style="color:var(--lime); font-size:10px; font-weight:700;">Varieties: ${prod.sizes?.length || 0} size(s) · ${prod.colors?.length || 0} color(s)</small>` : ''}
+              ${(prod.sizes && prod.sizes.length) || (prod.colors && prod.colors.length) ? `
+                <br><small style="color:var(--lime); font-size:10px; font-weight:700;">
+                  ${prod.sizes?.length ? `Sizes: ${prod.sizes.map(s => typeof s === 'object' ? `${s.name} (Rs. ${Number(s.price || prod.price).toLocaleString()})` : s).join(", ")}` : ''}
+                  ${prod.sizes?.length && prod.colors?.length ? ' · ' : ''}
+                  ${prod.colors?.length ? `${prod.colors.length} color(s)` : ''}
+                </small>` : ''}
             </div>
           </div>
         </td>
@@ -581,11 +586,30 @@ const AdminController = {
     }
   },
 
-  renderAdminVarieties(selectedSizes = [], selectedColors = []) {
+  renderAdminVarieties(selectedSizes = [], selectedColors = [], basePrice = 0) {
     const sizesContainer = document.getElementById("adminSizesContainer");
     const colorsContainer = document.getElementById("adminColorsContainer");
+    const currentBasePrice = basePrice || parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
 
-    const defaultSizes = ["Small", "Medium", "Large", "XL", "XXL", "Free Size", "38/40mm", "41/42mm", "44/45mm", "49mm Ultra", "1 Meter", "2 Meter", "3 Meter"];
+    // Render sizes with custom prices
+    if (sizesContainer) {
+      sizesContainer.innerHTML = "";
+      if (!Array.isArray(selectedSizes) || selectedSizes.length === 0) {
+        sizesContainer.innerHTML = `
+          <div class="empty-sizes-hint" style="color:#6f806d; font-size:11px; padding:6px 0; text-align:center; font-style:italic;">
+            Koi size add nahi hai. Product upar wali single price par bikega. Upar presets par click karke ya size aur price likh kar add karein.
+          </div>
+        `;
+      } else {
+        selectedSizes.forEach(s => {
+          const sName = typeof s === 'object' ? s.name : String(s);
+          const sPrice = (typeof s === 'object' && s.price != null && !isNaN(Number(s.price))) ? Number(s.price) : currentBasePrice;
+          this.appendSizeRow(sName, sPrice);
+        });
+      }
+    }
+
+    // Combine default colors with any saved colors
     const defaultColors = [
       { name: "Black", hex: "#111111" },
       { name: "White", hex: "#ffffff" },
@@ -600,26 +624,6 @@ const AdminController = {
       { name: "Orange", hex: "#ea580c" }
     ];
 
-    // Combine default sizes with any saved sizes
-    const activeSizeSet = new Set((selectedSizes || []).map(s => String(s).trim()));
-    const allSizes = [...defaultSizes];
-    activeSizeSet.forEach(s => {
-      if (s && !allSizes.includes(s)) allSizes.push(s);
-    });
-
-    if (sizesContainer) {
-      sizesContainer.innerHTML = allSizes.map(size => {
-        const isChecked = activeSizeSet.has(size);
-        return `
-          <label class="variety-check-chip ${isChecked ? 'is-checked' : ''}">
-            <input type="checkbox" class="admin-size-checkbox" value="${size.replace(/"/g, '&quot;')}" ${isChecked ? 'checked' : ''} onchange="this.parentElement.classList.toggle('is-checked', this.checked)">
-            <span>${size}</span>
-          </label>
-        `;
-      }).join("");
-    }
-
-    // Combine default colors with any saved colors
     const activeColorNames = new Set();
     const savedColorMap = {};
     (selectedColors || []).forEach(c => {
@@ -653,34 +657,116 @@ const AdminController = {
     }
   },
 
-  addCustomSize() {
-    const input = document.getElementById("customSizeInput");
+  appendSizeRow(sizeName, sizePrice) {
     const container = document.getElementById("adminSizesContainer");
-    if (!input || !container) return;
-    const val = input.value.trim();
-    if (!val) {
-      showToast("Please type a size name first!", "error");
-      return;
-    }
+    if (!container) return;
 
-    const existing = Array.from(container.querySelectorAll(".admin-size-checkbox")).find(inp => inp.value.toLowerCase() === val.toLowerCase());
+    const emptyHint = container.querySelector(".empty-sizes-hint");
+    if (emptyHint) emptyHint.remove();
+
+    const name = String(sizeName || "").trim();
+    if (!name) return;
+    const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
+    const price = (sizePrice != null && !isNaN(Number(sizePrice)) && Number(sizePrice) > 0) ? Number(sizePrice) : basePrice;
+
+    // Check if already exists in container
+    const existing = Array.from(container.querySelectorAll(".admin-size-row-item")).find(r => (r.dataset.sizeName || "").toLowerCase() === name.toLowerCase());
     if (existing) {
-      existing.checked = true;
-      existing.parentElement.classList.add("is-checked");
-      showToast(`Size "${val}" is now selected!`, "info");
-      input.value = "";
+      const priceInput = existing.querySelector(".admin-size-price-input");
+      if (priceInput && price > 0) priceInput.value = price;
+      showToast(`Size "${name}" already added. Price updated!`, "info");
       return;
     }
 
-    const label = document.createElement("label");
-    label.className = "variety-check-chip is-checked";
-    label.innerHTML = `
-      <input type="checkbox" class="admin-size-checkbox" value="${val.replace(/"/g, '&quot;')}" checked onchange="this.parentElement.classList.toggle('is-checked', this.checked)">
-      <span>${val}</span>
+    const row = document.createElement("div");
+    row.className = "admin-size-row-item";
+    row.dataset.sizeName = name;
+    row.innerHTML = `
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:12px; color:var(--lime, #d8ff55);"><i class="fa-solid fa-circle-check"></i></span>
+        <strong style="font-size:13px; color:#fff;">${name}</strong>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:11px; color:#879b8a; font-weight:700;">Price: Rs.</span>
+        <input type="number" class="admin-size-price-input" value="${price || ''}" placeholder="Selling Price" min="0" step="10" style="width:110px; background:#0d110e; border:1px solid #3c5440; color:#d8ff55; font-weight:800; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
+        <button type="button" onclick="AdminController.removeSizeRow(this)" style="background:#2b151a; border:1px solid #5c202a; color:#ff6b8b; width:26px; height:26px; border-radius:6px; cursor:pointer; display:grid; place-items:center; font-size:11px; line-height:1;" title="Remove size">✕</button>
+      </div>
     `;
-    container.appendChild(label);
-    input.value = "";
-    showToast(`Added size "${val}"`, "success");
+    container.appendChild(row);
+  },
+
+  addSizePreset(name) {
+    const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
+    this.appendSizeRow(name, basePrice);
+    showToast(`Added "${name}". You can adjust price!`, "success");
+    const container = document.getElementById("adminSizesContainer");
+    const row = Array.from(container?.querySelectorAll(".admin-size-row-item") || []).find(r => (r.dataset.sizeName || "").toLowerCase() === name.toLowerCase());
+    const input = row?.querySelector(".admin-size-price-input");
+    if (input) {
+      input.focus();
+      input.select();
+    }
+  },
+
+  addCustomSizeWithPrice() {
+    const nameInp = document.getElementById("customSizeInput");
+    const priceInp = document.getElementById("customSizePrice");
+    if (!nameInp) return;
+    const name = nameInp.value.trim();
+    if (!name) {
+      showToast("Please enter size name (e.g. 64 GB or 20000 mAh)!", "error");
+      nameInp.focus();
+      return;
+    }
+    const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
+    const price = (priceInp && priceInp.value && !isNaN(parseInt(priceInp.value, 10))) ? parseInt(priceInp.value, 10) : basePrice;
+
+    this.appendSizeRow(name, price);
+    nameInp.value = "";
+    if (priceInp) priceInp.value = "";
+    showToast(`Added size "${name}" (Rs. ${price.toLocaleString()})`, "success");
+  },
+
+  removeSizeRow(btn) {
+    const row = btn.closest(".admin-size-row-item");
+    if (!row) return;
+    const name = row.dataset.sizeName;
+    row.remove();
+    showToast(`Removed size "${name}"`, "info");
+
+    const container = document.getElementById("adminSizesContainer");
+    if (container && container.querySelectorAll(".admin-size-row-item").length === 0) {
+      container.innerHTML = `
+        <div class="empty-sizes-hint" style="color:#6f806d; font-size:11px; padding:6px 0; text-align:center; font-style:italic;">
+          Koi size add nahi hai. Product upar wali single price par bikega. Upar presets par click karke ya size aur price likh kar add karein.
+        </div>
+      `;
+    }
+  },
+
+  getSelectedSizesFromForm() {
+    const container = document.getElementById("adminSizesContainer");
+    if (!container) return [];
+    const rows = container.querySelectorAll(".admin-size-row-item");
+    const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
+    const sizes = [];
+    rows.forEach(r => {
+      const name = r.dataset.sizeName?.trim();
+      const pInp = r.querySelector(".admin-size-price-input");
+      const pVal = pInp ? parseInt(pInp.value, 10) : basePrice;
+      const finalPrice = (!isNaN(pVal) && pVal > 0) ? pVal : basePrice;
+      if (name) {
+        sizes.push({
+          name: name,
+          price: finalPrice
+        });
+      }
+    });
+    return sizes;
+  },
+
+  addCustomSize() {
+    this.addCustomSizeWithPrice();
   },
 
   addCustomColor() {
@@ -798,7 +884,7 @@ const AdminController = {
         if (formDesc) formDesc.value = prod.description || "";
 
         // Render saved varieties (sizes & colors)
-        this.renderAdminVarieties(prod.sizes || [], prod.colors || []);
+        this.renderAdminVarieties(prod.sizes || [], prod.colors || [], prod.price);
 
         const existingImages = Array.isArray(prod.images) && prod.images.length > 0 
           ? prod.images 

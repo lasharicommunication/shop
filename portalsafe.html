@@ -126,6 +126,42 @@
     .portal-back-link:hover { color: #fff; }
     #adminDashboard { display: none; }
 
+    .admin-preset-pill {
+      padding: 3px 8px;
+      font-size: 10.5px;
+      font-weight: 700;
+      border-radius: 5px;
+      background: #1e2820;
+      border: 1px solid #324736;
+      color: #cde4c4;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.4;
+    }
+    .admin-preset-pill:hover {
+      background: #27382a;
+      border-color: var(--lime, #d8ff55);
+      color: var(--lime, #d8ff55);
+    }
+    .admin-size-row-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #18221a;
+      border: 1px solid #2f4333;
+      border-radius: 8px;
+      padding: 8px 12px;
+      gap: 12px;
+      transition: border-color 0.15s ease;
+    }
+    .admin-size-row-item:hover {
+      border-color: #3e5a44;
+    }
+    .admin-size-price-input:focus {
+      outline: none;
+      border-color: var(--lime, #d8ff55) !important;
+    }
+
     /* MOBILE RESPONSIVE STYLES FOR ADMIN PORTAL */
     @media (max-width: 768px) {
       .portal-card {
@@ -458,20 +494,82 @@
                   </p>
                 </div>
 
-                <!-- Sizes Box -->
-                <div style="margin-bottom:14px; background:#101411; border:1px solid #222d24; border-radius:8px; padding:12px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-                    <span style="font-size:11.5px; font-weight:700; color:#c6d6c2;">
-                      📏 Available Sizes (Tick box):
-                    </span>
-                    <div style="display:flex; gap:6px; align-items:center;">
-                      <input type="text" id="customSizeInput" placeholder="New size (e.g. 128GB, XXL, 45mm)" style="background:#19201a; border:1px solid #36493b; color:#fff; border-radius:6px; padding:6px 10px; font-size:11px; width:180px;">
-                      <button type="button" onclick="AdminController.addCustomSize()" style="padding:6px 10px; font-size:11px; font-weight:700; border-radius:6px; background:#1e2720; border:1px solid #36493b; color:var(--lime); cursor:pointer;">+ Add Size</button>
+                <!-- Sizes & Custom Pricing Box -->
+                <div style="margin-bottom:16px; background:#101411; border:1.5px solid #253327; border-radius:10px; padding:14px;">
+                  
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                    <div>
+                      <div style="font-size:12.5px; font-weight:800; color:#d8ff55; display:flex; align-items:center; gap:6px;">
+                        <i class="fa-solid fa-microchip"></i> Available Sizes / Capacities &amp; Custom Prices:
+                      </div>
+                      <p style="margin:3px 0 0; font-size:11px; color:#879b8a;">
+                        USB (GB), Power Bank (mAh), ya Cables ke alag alag sizes add karein aur har size ki apni alag selling price likhein.
+                      </p>
                     </div>
                   </div>
-                  <div id="adminSizesContainer" style="display:flex; flex-wrap:wrap; gap:8px;">
-                    <!-- Predefined size checkboxes will be rendered here -->
+
+                  <!-- Quick Preset Chips -->
+                  <div style="margin-bottom:12px; background:#161d18; border:1px dashed #2d3d30; border-radius:8px; padding:10px;">
+                    <div style="font-size:10.5px; font-weight:800; color:#a3b89e; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.04em;">
+                      ⚡ Quick Presets (Click to add size):
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                      <!-- USB Presets -->
+                      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                        <span style="font-size:10px; font-weight:700; color:#879b8a; min-width:80px;">💾 USB Flash:</span>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('16 GB')">+ 16 GB</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('32 GB')">+ 32 GB</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('64 GB')">+ 64 GB</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('128 GB')">+ 128 GB</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('256 GB')">+ 256 GB</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('512 GB')">+ 512 GB</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('1 TB')">+ 1 TB</button>
+                      </div>
+                      <!-- Power Bank Presets -->
+                      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                        <span style="font-size:10px; font-weight:700; color:#879b8a; min-width:80px;">🔋 Power Bank:</span>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('5000 mAh')">+ 5000 mAh</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('10000 mAh')">+ 10000 mAh</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('20000 mAh')">+ 20000 mAh</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('30000 mAh')">+ 30000 mAh</button>
+                      </div>
+                      <!-- Cables & General Presets -->
+                      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                        <span style="font-size:10px; font-weight:700; color:#879b8a; min-width:80px;">🔌 Cable / Other:</span>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('1 Meter')">+ 1 Meter</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('2 Meter')">+ 2 Meter</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('3 Meter')">+ 3 Meter</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Small')">+ Small</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Medium')">+ Medium</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Large')">+ Large</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('45mm')">+ 45mm</button>
+                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('49mm Ultra')">+ 49mm Ultra</button>
+                      </div>
+                    </div>
                   </div>
+
+                  <!-- Custom Size & Price Input Row -->
+                  <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:14px; background:#19201a; border:1px solid #28372b; border-radius:8px; padding:10px;">
+                    <div style="flex:1; min-width:140px;">
+                      <label style="display:block; font-size:10px; font-weight:700; color:#879b8a; margin-bottom:3px;">Size / Capacity Name</label>
+                      <input type="text" id="customSizeInput" placeholder="e.g. 64 GB, 20000 mAh" style="width:100%; box-sizing:border-box; background:#101411; border:1px solid #36493b; color:#fff; border-radius:6px; padding:7px 10px; font-size:12px;">
+                    </div>
+                    <div style="width:140px;">
+                      <label style="display:block; font-size:10px; font-weight:700; color:#879b8a; margin-bottom:3px;">Selling Price (PKR)</label>
+                      <input type="number" id="customSizePrice" placeholder="e.g. 1450" min="0" step="10" style="width:100%; box-sizing:border-box; background:#101411; border:1px solid #36493b; color:#d8ff55; font-weight:700; border-radius:6px; padding:7px 10px; font-size:12px;">
+                    </div>
+                    <div style="align-self:flex-end;">
+                      <button type="button" onclick="AdminController.addCustomSizeWithPrice()" style="padding:8px 14px; font-size:12px; font-weight:800; border-radius:6px; background:var(--lime, #d8ff55); border:none; color:#111412; cursor:pointer; display:inline-flex; align-items:center; gap:5px;">
+                        <i class="fa-solid fa-plus"></i> Add Size
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Configured Sizes & Prices Dynamic Container -->
+                  <div id="adminSizesContainer" style="display:flex; flex-direction:column; gap:8px;">
+                    <!-- Dynamic size items with editable prices rendered here -->
+                  </div>
+
                 </div>
 
                 <!-- Colors Box -->
@@ -814,8 +912,8 @@
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <!-- CORE SCRIPTS -->
-  <script src="js/data.js?v=5.0"></script>
-  <script src="js/admin.js?v=5.0"></script>
+  <script src="js/data.js?v=6.0"></script>
+  <script src="js/admin.js?v=6.0"></script>
   <script>
     // Cryptographic SHA-256 Authentication Gatekeeper
     const PortalAuth = {

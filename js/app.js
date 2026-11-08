@@ -53,7 +53,8 @@ function getSelectedProductVariety(prod) {
 
   let size = current.size;
   if (!size && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
-    size = prod.sizes[0];
+    const s0 = prod.sizes[0];
+    size = typeof s0 === "object" ? s0.name : s0;
   }
 
   let color = current.color;
@@ -63,6 +64,54 @@ function getSelectedProductVariety(prod) {
   }
 
   return { size: size || null, color: color || null };
+}
+
+// Get dynamic price based on selected size / capacity (e.g. 32GB vs 64GB or 10000mAh vs 20000mAh)
+function getProductPrice(prod, selectedSizeName = null) {
+  if (!prod) return 0;
+  let targetSize = selectedSizeName;
+  if (!targetSize) {
+    const current = AppState.productSelectedVariety && AppState.productSelectedVariety[prod.id];
+    targetSize = current ? current.size : null;
+  }
+  if (!targetSize && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
+    const s0 = prod.sizes[0];
+    targetSize = typeof s0 === "object" ? s0.name : s0;
+  }
+  if (targetSize && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
+    const match = prod.sizes.find(s => {
+      const name = typeof s === "object" ? s.name : s;
+      return String(name).trim().toLowerCase() === String(targetSize).trim().toLowerCase();
+    });
+    if (match && typeof match === "object" && match.price != null && !isNaN(Number(match.price)) && Number(match.price) > 0) {
+      return Number(match.price);
+    }
+  }
+  return Number(prod.price) || 0;
+}
+
+// Get dynamic old / before price based on selected size / capacity
+function getProductOldPrice(prod, selectedSizeName = null) {
+  if (!prod) return null;
+  let targetSize = selectedSizeName;
+  if (!targetSize) {
+    const current = AppState.productSelectedVariety && AppState.productSelectedVariety[prod.id];
+    targetSize = current ? current.size : null;
+  }
+  if (!targetSize && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
+    const s0 = prod.sizes[0];
+    targetSize = typeof s0 === "object" ? s0.name : s0;
+  }
+  if (targetSize && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
+    const match = prod.sizes.find(s => {
+      const name = typeof s === "object" ? s.name : s;
+      return String(name).trim().toLowerCase() === String(targetSize).trim().toLowerCase();
+    });
+    if (match && typeof match === "object" && match.oldPrice != null && !isNaN(Number(match.oldPrice)) && Number(match.oldPrice) > 0) {
+      return Number(match.oldPrice);
+    }
+  }
+  return (prod.oldPrice != null && !isNaN(Number(prod.oldPrice))) ? Number(prod.oldPrice) : null;
 }
 
 function selectProductVariety(prodId, type, val, updateQuickView = false, updateOrderModal = false) {
@@ -96,6 +145,11 @@ function selectProductVariety(prodId, type, val, updateQuickView = false, update
       card.querySelectorAll(".card-size-pill").forEach(pill => {
         pill.classList.toggle("is-active", pill.textContent.trim() === val);
       });
+      const priceTag = card.querySelector(".product-price-tag");
+      if (priceTag) {
+        const curPrice = getProductPrice(prod, val);
+        priceTag.textContent = `Rs. ${curPrice.toLocaleString()}`;
+      }
     } else if (type === "color") {
       card.querySelectorAll(".card-color-pill, .card-color-dot").forEach(pill => {
         const titleOrText = (pill.textContent || pill.title || "").trim();
@@ -761,11 +815,14 @@ function renderProducts() {
     const artHtml = renderProductGallery(prod);
     const isOnSale = prod.isOnSale !== false;
     
-    // Check if valid before / old price exists
-    const hasDiscount = prod.oldPrice && Number(prod.oldPrice) > Number(prod.price);
-    const discountPercent = hasDiscount ? Math.round(((prod.oldPrice - prod.price) / prod.oldPrice) * 100) : 0;
-
     const selectedVariety = getSelectedProductVariety(prod);
+    const curPrice = getProductPrice(prod, selectedVariety.size);
+    const curOldPrice = getProductOldPrice(prod, selectedVariety.size);
+    
+    // Check if valid before / old price exists
+    const hasDiscount = curOldPrice && Number(curOldPrice) > Number(curPrice);
+    const discountPercent = hasDiscount ? Math.round(((curOldPrice - curPrice) / curOldPrice) * 100) : 0;
+
     const hasSizes = Array.isArray(prod.sizes) && prod.sizes.length > 0;
     const hasColors = Array.isArray(prod.colors) && prod.colors.length > 0;
 
@@ -773,11 +830,14 @@ function renderProducts() {
     if (hasSizes) {
       varietyHtml = `<div class="product-card-varieties">
         <div class="card-variety-row" title="Available Sizes">
-          ${prod.sizes.map(s => `
-            <span class="card-size-pill ${selectedVariety.size === s ? 'is-active' : ''}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}')">
-              ${s}
+          ${prod.sizes.map(s => {
+            const sName = typeof s === "object" ? s.name : s;
+            return `
+            <span class="card-size-pill ${selectedVariety.size === sName ? 'is-active' : ''}" onclick="event.stopPropagation(); selectProductVariety('${prod.id}', 'size', '${sName.replace(/'/g, "\\'")}')">
+              ${sName}
             </span>
-          `).join("")}
+            `;
+          }).join("")}
         </div>
       </div>`;
     }
@@ -799,10 +859,10 @@ function renderProducts() {
             <h3 class="product-name" onclick="openProductQuickView('${prod.id}', event)">${prod.title}</h3>
             <div class="product-pricing-wrap">
               <div class="product-price-row">
-                <span class="product-price-tag">Rs. ${prod.price?.toLocaleString()}</span>
+                <span class="product-price-tag">Rs. ${curPrice.toLocaleString()}</span>
                 ${hasDiscount ? `<span class="product-discount-tag">-${discountPercent}%</span>` : ''}
               </div>
-              ${hasDiscount ? `<span class="product-old-price">Rs. ${prod.oldPrice.toLocaleString()}</span>` : ''}
+              ${hasDiscount ? `<span class="product-old-price">Rs. ${curOldPrice.toLocaleString()}</span>` : ''}
             </div>
           </div>
 
@@ -978,12 +1038,13 @@ function adjustOrderModalQty(delta) {
     qtySub.textContent = nextQty === 1 ? "1 item selected" : `${nextQty} items selected`;
   }
 
+  const curPrice = getProductPrice(prod);
   const priceEachEl = document.getElementById("orderProductPriceEach");
-  const subtotal = prod.price * nextQty;
+  const subtotal = curPrice * nextQty;
   if (priceEachEl) {
     priceEachEl.innerHTML = nextQty > 1
-      ? `Rs. ${prod.price?.toLocaleString()} each &times; ${nextQty} = <strong>Rs. ${subtotal.toLocaleString()}</strong>`
-      : `Rs. ${prod.price?.toLocaleString()} each`;
+      ? `Rs. ${curPrice.toLocaleString()} each &times; ${nextQty} = <strong>Rs. ${subtotal.toLocaleString()}</strong>`
+      : `Rs. ${curPrice.toLocaleString()} each`;
   }
 
   const deliveryFee = AppState.settings.deliveryFee || 200;
@@ -1027,6 +1088,7 @@ function addProductToBag(prodId, customQty = 1) {
 
   const qty = (typeof customQty === "number" && customQty > 0) ? customQty : 1;
   const variety = getSelectedProductVariety(prod);
+  const curPrice = getProductPrice(prod, variety.size);
   const existing = AppState.cart.find(item => 
     item.id === prodId && 
     item.size === variety.size && 
@@ -1035,11 +1097,12 @@ function addProductToBag(prodId, customQty = 1) {
 
   if (existing) {
     existing.qty += qty;
+    existing.price = curPrice;
   } else {
     AppState.cart.push({
       id: prod.id,
       title: prod.title,
-      price: prod.price,
+      price: curPrice,
       image: (Array.isArray(prod.images) && prod.images.length > 0) ? prod.images[0] : (prod.image || ""),
       category: prod.category,
       qty: qty,
@@ -1270,12 +1333,16 @@ function openProductQuickView(prodId, event) {
       visual.innerHTML = getProductArtHtml(prod);
     }
   }
+  const currentVariety = getSelectedProductVariety(prod);
+  const curPrice = getProductPrice(prod, currentVariety.size);
+  const curOldPrice = getProductOldPrice(prod, currentVariety.size);
+
   if (title) title.textContent = prod.title;
-  if (price) price.textContent = `Rs. ${prod.price?.toLocaleString() || "1,450"}`;
+  if (price) price.textContent = `Rs. ${curPrice.toLocaleString()}`;
   if (oldPrice) {
-    if (prod.oldPrice && Number(prod.oldPrice) > Number(prod.price)) {
-      const pct = Math.round(((prod.oldPrice - prod.price) / prod.oldPrice) * 100);
-      oldPrice.innerHTML = `Rs. ${prod.oldPrice.toLocaleString()} <span style="background:#ffe4e6; color:#e11d48; font-size:11px; font-weight:800; padding:2px 6px; border-radius:4px; text-decoration:none; display:inline-block; margin-left:6px;">-${pct}% OFF</span>`;
+    if (curOldPrice && Number(curOldPrice) > Number(curPrice)) {
+      const pct = Math.round(((curOldPrice - curPrice) / curOldPrice) * 100);
+      oldPrice.innerHTML = `Rs. ${curOldPrice.toLocaleString()} <span style="background:#ffe4e6; color:#e11d48; font-size:11px; font-weight:800; padding:2px 6px; border-radius:4px; text-decoration:none; display:inline-block; margin-left:6px;">-${pct}% OFF</span>`;
       oldPrice.style.display = "inline";
     } else {
       oldPrice.style.display = "none";
@@ -1300,7 +1367,6 @@ function openProductQuickView(prodId, event) {
   if (varContainer) {
     if (hasSizes || hasColors) {
       varContainer.style.display = "block";
-      const currentVariety = getSelectedProductVariety(prod);
 
       const sizeHint = document.getElementById("dialogSelectedSizeHint");
       const colorHint = document.getElementById("dialogSelectedColorHint");
@@ -1310,11 +1376,17 @@ function openProductQuickView(prodId, event) {
       if (sizesGroup && sizesList) {
         if (hasSizes) {
           sizesGroup.style.display = "block";
-          sizesList.innerHTML = prod.sizes.map(s => `
-            <button type="button" class="variety-size-btn ${currentVariety.size === s ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}', true)">
-              ${s}
-            </button>
-          `).join("");
+          sizesList.innerHTML = prod.sizes.map(s => {
+            const sName = typeof s === "object" ? s.name : s;
+            const sPrice = typeof s === "object" && s.price ? Number(s.price) : null;
+            const isSel = currentVariety.size === sName;
+            return `
+              <button type="button" class="variety-size-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${sName.replace(/'/g, "\\'")}', true)">
+                <span>${sName}</span>
+                ${sPrice && sPrice !== prod.price ? `<span style="font-size:11px; opacity:0.8; font-weight:700; margin-left:4px;">(Rs. ${sPrice.toLocaleString()})</span>` : ''}
+              </button>
+            `;
+          }).join("");
         } else {
           sizesGroup.style.display = "none";
         }
@@ -1505,10 +1577,13 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
             <span class="order-variety-row-label">Size:</span>
             <div class="order-variety-pills-wrap">
               ${prod.sizes.map(s => {
-                const isSel = selectedVariety.size === s;
+                const sName = typeof s === "object" ? s.name : s;
+                const sPrice = typeof s === "object" && s.price ? Number(s.price) : null;
+                const isSel = selectedVariety.size === sName;
                 return `
-                  <button type="button" class="variety-size-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${s.replace(/'/g, "\\'")}', false, true)">
-                    <span>${s}</span>
+                  <button type="button" class="variety-size-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${sName.replace(/'/g, "\\'")}', false, true)">
+                    <span>${sName}</span>
+                    ${sPrice && sPrice !== prod.price ? `<span style="font-size:10.5px; opacity:0.85; font-weight:700; margin-left:3px;">(Rs. ${sPrice.toLocaleString()})</span>` : ''}
                     ${isSel ? '<span class="variety-check-badge"><i class="fa-solid fa-check"></i></span>' : ''}
                   </button>
                 `;
@@ -1554,12 +1629,13 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
     qtySub.textContent = qty === 1 ? "1 item selected" : `${qty} items selected`;
   }
 
-  const subtotal = prod.price * qty;
+  const curPrice = getProductPrice(prod, selectedVariety.size);
+  const subtotal = curPrice * qty;
   if (priceEachEl) {
     priceEachEl.style.display = "block";
     priceEachEl.innerHTML = qty > 1
-      ? `Rs. ${prod.price?.toLocaleString()} each &times; ${qty} = <strong>Rs. ${subtotal.toLocaleString()}</strong>`
-      : `Rs. ${prod.price?.toLocaleString()} each`;
+      ? `Rs. ${curPrice.toLocaleString()} each &times; ${qty} = <strong>Rs. ${subtotal.toLocaleString()}</strong>`
+      : `Rs. ${curPrice.toLocaleString()} each`;
   }
 
   const deliveryFee = AppState.settings.deliveryFee || 200;
@@ -1676,13 +1752,14 @@ function handleOrderFormSubmit(e) {
   const prod = AppState.currentOrderProduct;
   const qty = AppState.currentOrderQty || 1;
   const deliveryFee = AppState.settings.deliveryFee || 200;
-  const subtotal = prod ? (prod.price * qty) : 0;
+  const selectedVariety = prod && prod.id !== "cart-order" ? getSelectedProductVariety(prod) : {};
+  const curPrice = prod && prod.id !== "cart-order" ? getProductPrice(prod, selectedVariety.size) : (prod ? prod.price : 0);
+  const subtotal = prod ? (curPrice * qty) : 0;
   const total = subtotal + deliveryFee;
 
-  const selectedVariety = prod && prod.id !== "cart-order" ? getSelectedProductVariety(prod) : {};
   const orderItems = prod.id === "cart-order" 
     ? AppState.cart.map(c => ({ title: c.title, qty: c.qty, price: c.price, size: c.size || null, color: c.color || null }))
-    : [{ title: prod.title, qty: qty, price: prod.price, size: selectedVariety.size || null, color: selectedVariety.color || null }];
+    : [{ title: prod.title, qty: qty, price: curPrice, size: selectedVariety.size || null, color: selectedVariety.color || null }];
 
   const newOrder = {
     id: `ORD-${Date.now().toString().slice(-6)}`,
