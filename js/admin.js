@@ -999,7 +999,7 @@ const AdminController = {
 
     const brand = document.getElementById("prodFormBrand")?.value.trim() || "infinix";
     const price = parseInt(document.getElementById("prodFormPrice")?.value, 10);
-    const oldPriceStr = document.getElementById("prodFormOldPrice")?.value.trim();
+    const oldPriceStr = document.getElementById("prodFormOldPrice")?.value?.trim();
     const oldPrice = (oldPriceStr && parseInt(oldPriceStr, 10) > 0) ? parseInt(oldPriceStr, 10) : null;
     const isOnSale = document.getElementById("prodFormIsOnSale")?.checked ?? true;
     const stock = parseInt(document.getElementById("prodFormStock")?.value, 10) || 25;
