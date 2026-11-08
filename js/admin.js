@@ -603,8 +603,22 @@ const AdminController = {
       } else {
         selectedSizes.forEach(s => {
           const sName = typeof s === 'object' ? s.name : String(s);
-          const sPrice = (typeof s === 'object' && s.price != null && !isNaN(Number(s.price))) ? Number(s.price) : currentBasePrice;
-          this.appendSizeRow(sName, sPrice);
+          let sPrice = '';
+          let sSpecialPrice = '';
+          if (typeof s === 'object') {
+            if (s.specialPrice != null && Number(s.specialPrice) > 0) {
+              sSpecialPrice = Number(s.specialPrice);
+              sPrice = s.regularPrice || s.oldPrice || s.price || '';
+            } else if (s.oldPrice != null && Number(s.oldPrice) > Number(s.price)) {
+              sPrice = Number(s.oldPrice);
+              sSpecialPrice = Number(s.price);
+            } else {
+              sPrice = s.price != null ? Number(s.price) : currentBasePrice;
+            }
+          } else {
+            sPrice = currentBasePrice;
+          }
+          this.appendSizeRow(sName, sPrice, sSpecialPrice);
         });
       }
     }
@@ -657,7 +671,7 @@ const AdminController = {
     }
   },
 
-  appendSizeRow(sizeName, sizePrice) {
+  appendSizeRow(sizeName, sizePrice, sizeSpecialPrice = null) {
     const container = document.getElementById("adminSizesContainer");
     if (!container) return;
 
@@ -667,13 +681,18 @@ const AdminController = {
     const name = String(sizeName || "").trim();
     if (!name) return;
     const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
-    const price = (sizePrice != null && !isNaN(Number(sizePrice)) && Number(sizePrice) > 0) ? Number(sizePrice) : basePrice;
+    const baseOldPrice = parseInt(document.getElementById("prodFormOldPrice")?.value, 10) || null;
+
+    let price = (sizePrice != null && !isNaN(Number(sizePrice)) && Number(sizePrice) > 0) ? Number(sizePrice) : (baseOldPrice && baseOldPrice > basePrice ? baseOldPrice : basePrice);
+    let specialPrice = (sizeSpecialPrice != null && !isNaN(Number(sizeSpecialPrice)) && Number(sizeSpecialPrice) > 0) ? Number(sizeSpecialPrice) : '';
 
     // Check if already exists in container
     const existing = Array.from(container.querySelectorAll(".admin-size-row-item")).find(r => (r.dataset.sizeName || "").toLowerCase() === name.toLowerCase());
     if (existing) {
       const priceInput = existing.querySelector(".admin-size-price-input");
+      const specialInput = existing.querySelector(".admin-size-special-price-input");
       if (priceInput && price > 0) priceInput.value = price;
+      if (specialInput && specialPrice) specialInput.value = specialPrice;
       showToast(`Size "${name}" already added. Price updated!`, "info");
       return;
     }
@@ -686,9 +705,15 @@ const AdminController = {
         <span style="font-size:12px; color:var(--lime, #d8ff55);"><i class="fa-solid fa-circle-check"></i></span>
         <strong style="font-size:13px; color:#fff;">${name}</strong>
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span style="font-size:11px; color:#879b8a; font-weight:700;">Price: Rs.</span>
-        <input type="number" class="admin-size-price-input" value="${price || ''}" placeholder="Selling Price" min="0" step="10" style="width:110px; background:#0d110e; border:1px solid #3c5440; color:#d8ff55; font-weight:800; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="font-size:11px; color:#879b8a; font-weight:700;">Price: Rs.</span>
+          <input type="number" class="admin-size-price-input" value="${price || ''}" placeholder="Price" min="0" step="10" style="width:100px; background:#0d110e; border:1px solid #3c5440; color:#fff; font-weight:700; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
+        </div>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <span style="font-size:11px; color:#d8ff55; font-weight:700;">Special Price: Rs.</span>
+          <input type="number" class="admin-size-special-price-input" value="${specialPrice || ''}" placeholder="Special Price" min="0" step="10" style="width:105px; background:#0d110e; border:1px solid #3c5440; color:#d8ff55; font-weight:800; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
+        </div>
         <button type="button" onclick="AdminController.removeSizeRow(this)" style="background:#2b151a; border:1px solid #5c202a; color:#ff6b8b; width:26px; height:26px; border-radius:6px; cursor:pointer; display:grid; place-items:center; font-size:11px; line-height:1;" title="Remove size">✕</button>
       </div>
     `;
@@ -697,8 +722,13 @@ const AdminController = {
 
   addSizePreset(name) {
     const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
-    this.appendSizeRow(name, basePrice);
-    showToast(`Added "${name}". You can adjust price!`, "success");
+    const baseOldPrice = parseInt(document.getElementById("prodFormOldPrice")?.value, 10) || null;
+    if (baseOldPrice && baseOldPrice > basePrice) {
+      this.appendSizeRow(name, baseOldPrice, basePrice);
+    } else {
+      this.appendSizeRow(name, basePrice, "");
+    }
+    showToast(`Added "${name}". You can adjust price & special price!`, "success");
     const container = document.getElementById("adminSizesContainer");
     const row = Array.from(container?.querySelectorAll(".admin-size-row-item") || []).find(r => (r.dataset.sizeName || "").toLowerCase() === name.toLowerCase());
     const input = row?.querySelector(".admin-size-price-input");
@@ -711,6 +741,7 @@ const AdminController = {
   addCustomSizeWithPrice() {
     const nameInp = document.getElementById("customSizeInput");
     const priceInp = document.getElementById("customSizePrice");
+    const specialPriceInp = document.getElementById("customSizeSpecialPrice");
     if (!nameInp) return;
     const name = nameInp.value.trim();
     if (!name) {
@@ -720,11 +751,13 @@ const AdminController = {
     }
     const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
     const price = (priceInp && priceInp.value && !isNaN(parseInt(priceInp.value, 10))) ? parseInt(priceInp.value, 10) : basePrice;
+    const specialPrice = (specialPriceInp && specialPriceInp.value && !isNaN(parseInt(specialPriceInp.value, 10))) ? parseInt(specialPriceInp.value, 10) : null;
 
-    this.appendSizeRow(name, price);
+    this.appendSizeRow(name, price, specialPrice);
     nameInp.value = "";
     if (priceInp) priceInp.value = "";
-    showToast(`Added size "${name}" (Rs. ${price.toLocaleString()})`, "success");
+    if (specialPriceInp) specialPriceInp.value = "";
+    showToast(`Added size "${name}"`, "success");
   },
 
   removeSizeRow(btn) {
@@ -753,12 +786,32 @@ const AdminController = {
     rows.forEach(r => {
       const name = r.dataset.sizeName?.trim();
       const pInp = r.querySelector(".admin-size-price-input");
-      const pVal = pInp ? parseInt(pInp.value, 10) : basePrice;
-      const finalPrice = (!isNaN(pVal) && pVal > 0) ? pVal : basePrice;
+      const spInp = r.querySelector(".admin-size-special-price-input");
+
+      const pVal = pInp && pInp.value !== "" ? parseInt(pInp.value, 10) : null;
+      const spVal = spInp && spInp.value !== "" ? parseInt(spInp.value, 10) : null;
+
       if (name) {
+        let finalPrice = basePrice;
+        let finalOldPrice = null;
+        let regularPrice = pVal;
+        let specialPrice = spVal;
+
+        if (pVal != null && spVal != null && pVal > 0 && spVal > 0) {
+          finalPrice = Math.min(pVal, spVal);
+          finalOldPrice = Math.max(pVal, spVal);
+        } else if (spVal != null && spVal > 0) {
+          finalPrice = spVal;
+        } else if (pVal != null && pVal > 0) {
+          finalPrice = pVal;
+        }
+
         sizes.push({
           name: name,
-          price: finalPrice
+          price: finalPrice,
+          regularPrice: regularPrice,
+          specialPrice: specialPrice,
+          oldPrice: finalOldPrice
         });
       }
     });

@@ -91,8 +91,14 @@ function getProductPrice(prod, selectedSizeName = null) {
       const name = typeof s === "object" ? s.name : s;
       return String(name).trim().toLowerCase() === String(targetSize).trim().toLowerCase();
     });
-    if (match && typeof match === "object" && match.price != null && !isNaN(Number(match.price)) && Number(match.price) > 0) {
-      return Number(match.price);
+    if (match && typeof match === "object") {
+      const sp = Number(match.specialPrice);
+      const pr = Number(match.price);
+      if (!isNaN(sp) && sp > 0 && !isNaN(pr) && pr > 0) {
+        return Math.min(sp, pr);
+      }
+      if (!isNaN(sp) && sp > 0) return sp;
+      if (!isNaN(pr) && pr > 0) return pr;
     }
   }
   return Number(prod.price) || 0;
@@ -115,8 +121,16 @@ function getProductOldPrice(prod, selectedSizeName = null) {
       const name = typeof s === "object" ? s.name : s;
       return String(name).trim().toLowerCase() === String(targetSize).trim().toLowerCase();
     });
-    if (match && typeof match === "object" && match.oldPrice != null && !isNaN(Number(match.oldPrice)) && Number(match.oldPrice) > 0) {
-      return Number(match.oldPrice);
+    if (match && typeof match === "object") {
+      const sp = Number(match.specialPrice);
+      const pr = Number(match.price);
+      const old = Number(match.oldPrice);
+      const reg = Number(match.regularPrice);
+      if (!isNaN(sp) && sp > 0 && !isNaN(pr) && pr > 0 && sp !== pr) {
+        return Math.max(sp, pr);
+      }
+      if (!isNaN(old) && old > 0) return old;
+      if (!isNaN(reg) && reg > 0 && !isNaN(pr) && reg > pr) return reg;
     }
   }
   return (prod.oldPrice != null && !isNaN(Number(prod.oldPrice))) ? Number(prod.oldPrice) : null;
