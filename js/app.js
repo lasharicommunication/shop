@@ -51,16 +51,24 @@ function getSelectedProductVariety(prod) {
   if (!prod) return { size: null, color: null };
   const current = AppState.productSelectedVariety[prod.id] || {};
 
-  let size = current.size;
-  if (!size && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
-    const s0 = prod.sizes[0];
-    size = typeof s0 === "object" ? s0.name : s0;
+  let size = null;
+  if (Array.isArray(prod.sizes) && prod.sizes.length > 0) {
+    const validSizes = prod.sizes.map(s => typeof s === "object" ? s.name : s);
+    if (current.size && validSizes.includes(current.size)) {
+      size = current.size;
+    } else {
+      size = validSizes[0];
+    }
   }
 
-  let color = current.color;
-  if (!color && Array.isArray(prod.colors) && prod.colors.length > 0) {
-    const c0 = prod.colors[0];
-    color = typeof c0 === "string" ? c0 : (c0.name || "Color");
+  let color = null;
+  if (Array.isArray(prod.colors) && prod.colors.length > 0) {
+    const validColors = prod.colors.map(c => typeof c === "string" ? c : (c.name || "Color"));
+    if (current.color && validColors.includes(current.color)) {
+      color = current.color;
+    } else {
+      color = validColors[0];
+    }
   }
 
   return { size: size || null, color: color || null };
@@ -1373,6 +1381,17 @@ function openProductQuickView(prodId, event) {
       if (sizeHint) sizeHint.textContent = currentVariety.size ? `· ${currentVariety.size}` : "";
       if (colorHint) colorHint.textContent = currentVariety.color ? `· ${currentVariety.color}` : "";
 
+      const sizeLabelEl = document.querySelector("#dialogSizesGroup .variety-label");
+      if (sizeLabelEl) {
+        const cat = (prod.category || "").toLowerCase();
+        const tit = (prod.title || "").toLowerCase();
+        if (cat.includes("usb") || tit.includes("usb") || cat.includes("power bank") || tit.includes("power bank") || tit.includes("flash") || cat.includes("storage")) {
+          sizeLabelEl.textContent = "Available Capacity / Sizes:";
+        } else {
+          sizeLabelEl.textContent = "Available Sizes:";
+        }
+      }
+
       if (sizesGroup && sizesList) {
         if (hasSizes) {
           sizesGroup.style.display = "block";
@@ -1574,7 +1593,12 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
         </div>
         ${hasSizes ? `
           <div class="order-variety-row-item">
-            <span class="order-variety-row-label">Size:</span>
+            <span class="order-variety-row-label">${
+              ((prod.category || "").toLowerCase().includes("usb") || (prod.title || "").toLowerCase().includes("usb") ||
+               (prod.category || "").toLowerCase().includes("power bank") || (prod.title || "").toLowerCase().includes("power bank"))
+                ? "Capacity:"
+                : "Size:"
+            }</span>
             <div class="order-variety-pills-wrap">
               ${prod.sizes.map(s => {
                 const sName = typeof s === "object" ? s.name : s;
