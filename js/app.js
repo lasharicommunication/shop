@@ -1059,7 +1059,6 @@ function renderReviews() {
         <img class="review-avatar" src="${rev.avatar}" alt="${rev.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80'">
         <div class="review-user-info">
           <span class="review-name">${rev.name}</span>
-          <span class="review-city-time">${rev.city}, Pakistan · ${rev.date}</span>
         </div>
       </div>
     </div>
