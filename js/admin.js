@@ -681,18 +681,17 @@ const AdminController = {
     const name = String(sizeName || "").trim();
     if (!name) return;
     const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
-    const baseOldPrice = parseInt(document.getElementById("prodFormOldPrice")?.value, 10) || null;
 
-    let price = (sizePrice != null && !isNaN(Number(sizePrice)) && Number(sizePrice) > 0) ? Number(sizePrice) : (baseOldPrice && baseOldPrice > basePrice ? baseOldPrice : basePrice);
-    let specialPrice = (sizeSpecialPrice != null && !isNaN(Number(sizeSpecialPrice)) && Number(sizeSpecialPrice) > 0) ? Number(sizeSpecialPrice) : '';
+    let price = (sizePrice != null && sizePrice !== '' && !isNaN(Number(sizePrice)) && Number(sizePrice) > 0) ? Number(sizePrice) : (basePrice > 0 ? basePrice : '');
+    let specialPrice = (sizeSpecialPrice != null && sizeSpecialPrice !== '' && !isNaN(Number(sizeSpecialPrice)) && Number(sizeSpecialPrice) > 0) ? Number(sizeSpecialPrice) : '';
 
     // Check if already exists in container
     const existing = Array.from(container.querySelectorAll(".admin-size-row-item")).find(r => (r.dataset.sizeName || "").toLowerCase() === name.toLowerCase());
     if (existing) {
       const priceInput = existing.querySelector(".admin-size-price-input");
       const specialInput = existing.querySelector(".admin-size-special-price-input");
-      if (priceInput && price > 0) priceInput.value = price;
-      if (specialInput && specialPrice) specialInput.value = specialPrice;
+      if (priceInput && price !== '') priceInput.value = price;
+      if (specialInput && specialPrice !== '') specialInput.value = specialPrice;
       showToast(`Size "${name}" already added. Price updated!`, "info");
       return;
     }
@@ -708,11 +707,11 @@ const AdminController = {
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <div style="display:flex; align-items:center; gap:5px;">
           <span style="font-size:11px; color:#879b8a; font-weight:700;">Price: Rs.</span>
-          <input type="number" class="admin-size-price-input" value="${price || ''}" placeholder="Price" min="0" step="10" style="width:100px; background:#0d110e; border:1px solid #3c5440; color:#fff; font-weight:700; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
+          <input type="number" class="admin-size-price-input" value="${price !== '' ? price : ''}" placeholder="Selling Price" min="0" step="10" style="width:105px; background:#0d110e; border:1px solid #3c5440; color:#fff; font-weight:700; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
         </div>
         <div style="display:flex; align-items:center; gap:5px;">
           <span style="font-size:11px; color:#d8ff55; font-weight:700;">Special Price: Rs.</span>
-          <input type="number" class="admin-size-special-price-input" value="${specialPrice || ''}" placeholder="Special Price" min="0" step="10" style="width:105px; background:#0d110e; border:1px solid #3c5440; color:#d8ff55; font-weight:800; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
+          <input type="number" class="admin-size-special-price-input" value="${specialPrice !== '' ? specialPrice : ''}" placeholder="Offer Price (Opt)" min="0" step="10" style="width:115px; background:#0d110e; border:1px solid #3c5440; color:#d8ff55; font-weight:800; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
         </div>
         <button type="button" onclick="AdminController.removeSizeRow(this)" style="background:#2b151a; border:1px solid #5c202a; color:#ff6b8b; width:26px; height:26px; border-radius:6px; cursor:pointer; display:grid; place-items:center; font-size:11px; line-height:1;" title="Remove size">✕</button>
       </div>
@@ -721,14 +720,8 @@ const AdminController = {
   },
 
   addSizePreset(name) {
-    const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
-    const baseOldPrice = parseInt(document.getElementById("prodFormOldPrice")?.value, 10) || null;
-    if (baseOldPrice && baseOldPrice > basePrice) {
-      this.appendSizeRow(name, baseOldPrice, basePrice);
-    } else {
-      this.appendSizeRow(name, basePrice, "");
-    }
-    showToast(`Added "${name}". You can adjust price & special price!`, "success");
+    this.appendSizeRow(name, '', '');
+    showToast(`Added "${name}". Ab Price aur Special Price enter karein!`, "success");
     const container = document.getElementById("adminSizesContainer");
     const row = Array.from(container?.querySelectorAll(".admin-size-row-item") || []).find(r => (r.dataset.sizeName || "").toLowerCase() === name.toLowerCase());
     const input = row?.querySelector(".admin-size-price-input");
@@ -998,9 +991,8 @@ const AdminController = {
     }
 
     const brand = document.getElementById("prodFormBrand")?.value.trim() || "infinix";
-    const price = parseInt(document.getElementById("prodFormPrice")?.value, 10);
+    const priceInputVal = parseInt(document.getElementById("prodFormPrice")?.value, 10);
     const oldPriceStr = document.getElementById("prodFormOldPrice")?.value?.trim();
-    const oldPrice = (oldPriceStr && parseInt(oldPriceStr, 10) > 0) ? parseInt(oldPriceStr, 10) : null;
     const isOnSale = document.getElementById("prodFormIsOnSale")?.checked ?? true;
     const stock = parseInt(document.getElementById("prodFormStock")?.value, 10) || 25;
     const images = this.getProductImagesFromForm();
@@ -1011,9 +1003,31 @@ const AdminController = {
     const sizes = this.getSelectedSizesFromForm();
     const colors = this.getSelectedColorsFromForm();
 
-    if (!title || !price || isNaN(price)) {
-      showToast("Please provide product title and valid selling price!", "error");
+    // Determine base price: from input, from sizes, or from existing product
+    let price = (!isNaN(priceInputVal) && priceInputVal > 0) ? priceInputVal : 0;
+    if (!price && sizes.length > 0) {
+      price = sizes[0].price || sizes[0].specialPrice || sizes[0].regularPrice || 0;
+    }
+    if (!price && editId) {
+      const existingProd = Storage.getProducts().find(p => p.id === editId);
+      if (existingProd) price = existingProd.price || 0;
+    }
+
+    let oldPrice = (oldPriceStr && parseInt(oldPriceStr, 10) > 0) ? parseInt(oldPriceStr, 10) : null;
+    if (!oldPrice && sizes.length > 0 && sizes[0].oldPrice) {
+      oldPrice = sizes[0].oldPrice;
+    }
+
+    if (!title) {
+      showToast("Please provide product title!", "error");
       return;
+    }
+
+    if (!price || isNaN(price) || price <= 0) {
+      if (sizes.length === 0) {
+        showToast("Please add at least one size with a price!", "error");
+        return;
+      }
     }
 
     const brandMap = {
