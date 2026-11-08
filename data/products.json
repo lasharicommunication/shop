@@ -1,5 +1,30 @@
 [
   {
+    "id": "prod-1794126572312",
+    "title": "usb",
+    "category": "Power Bank",
+    "brand": "samsung",
+    "brandName": "Samsung",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1500,
+    "oldPrice": null,
+    "isOnSale": true,
+    "rating": 5,
+    "reviewsCount": 1,
+    "stock": 25,
+    "sizes": [],
+    "colors": [],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80"
+    ],
+    "description": "Premium authentic tech accessory backed with official checking warranty."
+  },
+  {
     "id": "prod-1794072150273",
     "title": "P47 Wireless Bluetooth Headphones – Foldable Over-Ear Stereo Headset with Built-in Mic, FM Radio & Micro SD Card Slot",
     "category": "Headphones",
