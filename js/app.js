@@ -874,10 +874,6 @@ function renderProducts() {
             </div>
           </div>
 
-          <p class="product-caption">
-            ${prod.compatibleModels ? prod.compatibleModels[0] : 'Universal Tech'} · Flat 200 PKR Delivery
-          </p>
-
           <div class="product-stars">
             <span class="stars-filled">★★★★★</span>
             <span class="stars-count">${prod.rating || 4.9} (${prod.reviewsCount || 38})</span>
