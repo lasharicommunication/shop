@@ -19,13 +19,18 @@
       {
         "name": "Silver / Grey",
         "hex": "#9ca3af"
+      },
+      {
+        "name": "Gold / Champagne",
+        "hex": "#d4af37"
       }
     ],
     "isFeatured": true,
     "badge": "Sale Item",
     "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80"
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
+      "https://i.postimg.cc/59Hnf0zP/images-(28).jpg"
     ],
     "description": "Premium authentic tech accessory backed with official checking warranty."
   },
