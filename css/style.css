@@ -932,8 +932,13 @@ svg {
 }
 .stars-filled {
   color: #e8a820;
-  font-size: 12px;
-  letter-spacing: 1px;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.stars-filled i {
+  line-height: 1;
 }
 .stars-count { font-size: 10px; color: var(--muted); font-weight: 600; }
 
@@ -5065,8 +5070,13 @@ html:has(dialog.order-dialog[open]) {
 }
 .dialog-stars {
   color: #f59e0b;
-  letter-spacing: 1px;
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.dialog-stars i {
   line-height: 1;
 }
 .dialog-rating-text {

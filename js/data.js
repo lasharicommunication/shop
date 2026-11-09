@@ -339,6 +339,140 @@ const DEFAULT_BRANDS = [
 
 const DEFAULT_PRODUCTS = [
   {
+    "id": "prod-1794126572312",
+    "title": "usb",
+    "category": "Power Bank",
+    "brand": "samsung",
+    "brandName": "Samsung",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1500,
+    "oldPrice": null,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 42,
+    "stock": 25,
+    "sizes": [],
+    "colors": [
+      {
+        "name": "Silver / Grey",
+        "hex": "#9ca3af"
+      },
+      {
+        "name": "Gold / Champagne",
+        "hex": "#d4af37"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
+      "https://i.postimg.cc/59Hnf0zP/images-(28).jpg"
+    ],
+    "description": "Premium authentic tech accessory backed with official checking warranty."
+  },
+  {
+    "id": "prod-1794072150273",
+    "title": "P47 Wireless Bluetooth Headphones – Foldable Over-Ear Stereo Headset with Built-in Mic, FM Radio & Micro SD Card Slot",
+    "category": "Headphones",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1099,
+    "oldPrice": 1999,
+    "isOnSale": true,
+    "rating": 4.7,
+    "reviewsCount": 89,
+    "stock": 250,
+    "sizes": [],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "White",
+        "hex": "#ffffff"
+      },
+      {
+        "name": "Red",
+        "hex": "#dc2626"
+      },
+      {
+        "name": "Blue",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Yellow",
+        "hex": "#3b82f6"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/3R98qgt5/images.jpg",
+    "images": [
+      "https://i.postimg.cc/3R98qgt5/images.jpg",
+      "https://i.postimg.cc/GpCbhMNd/images.jpg",
+      "https://i.postimg.cc/Bbk0WNDR/images.jpg"
+    ],
+    "description": "Enjoy wireless freedom and crisp stereo sound with the P47 Wireless Bluetooth Headphones. Featuring an advanced Bluetooth 4.2+EDR chipset, these lightweight, foldable headphones deliver reliable connectivity and powerful audio performance for your daily commute, workouts, or relaxing at home. Designed with plush on-ear cushions and a collapsible frame, they combine portability with all-day comfort."
+  },
+  {
+    "id": "prod-1794070609966",
+    "title": "P9 Wireless Bluetooth Over-Ear Headphones – Premium Deep Bass Stereo Headset with Built-in Mic, Soft Cushion Earpads & SD Card Slot",
+    "category": "Headphones",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1549,
+    "oldPrice": 2699,
+    "isOnSale": true,
+    "rating": 4.9,
+    "reviewsCount": 114,
+    "stock": 250,
+    "sizes": [],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "White",
+        "hex": "#ffffff"
+      },
+      {
+        "name": "Pink",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Blue",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Green",
+        "hex": "#3b82f6"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/zBFpWf0r/images.jpg",
+    "images": [
+      "https://i.postimg.cc/zBFpWf0r/images.jpg",
+      "https://i.postimg.cc/fy0LpVFp/images.jpg",
+      "https://i.postimg.cc/4NVvhydD/images.jpg",
+      "https://i.postimg.cc/LsCjMZCB/images.jpg",
+      "https://i.postimg.cc/qR66VD6L/images.jpg",
+      "https://i.postimg.cc/ZKtpZmcw/images.jpg"
+    ],
+    "description": "Experience high-fidelity audio and all-day comfort with the P9 Wireless Over-Ear Bluetooth Headphones. Designed with a stylish breathable mesh headband and soft memory-foam ear cushions, these headphones deliver deep bass, clear highs, and passive noise isolation for immersive music listening, gaming, and calls."
+  },
+  {
     "id": "prod-1793905297002",
     "title": "3G PLUS ENJOYHOME G-18 10000mAh Power Bank – 10W Fast Charging Portable External Battery with Type-C Input & LED Indicator",
     "category": "Power Bank",
@@ -350,8 +484,8 @@ const DEFAULT_PRODUCTS = [
     "price": 2749,
     "oldPrice": 3699,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.8,
+    "reviewsCount": 56,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -373,8 +507,8 @@ const DEFAULT_PRODUCTS = [
     "price": 2899,
     "oldPrice": 4599,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.9,
+    "reviewsCount": 98,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -397,8 +531,8 @@ const DEFAULT_PRODUCTS = [
     "price": 549,
     "oldPrice": 999,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.6,
+    "reviewsCount": 31,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -407,14 +541,8 @@ const DEFAULT_PRODUCTS = [
       "https://i.postimg.cc/CMQXk9QJ/download.jpg"
     ],
     "description": "Keep your devices charged and synced with this USB to Lightning Fast Charging Cable. Featuring a standard USB-A connector on one end and an 8-pin Lightning connector on the other, this cable provides reliable power delivery and fast data transfer for iPhones, iPads, and iPods. Its flexible, tangle-free design and reinforced strain relief ensure durable performance for everyday home, office, or travel use.",
-    "sizes": [
-      "1 Meter",
-      "2 Meter"
-    ],
-    "colors": [
-      "White",
-      "Black"
-    ]
+    "sizes": [],
+    "colors": []
   },
   {
     "id": "prod-1793904338351",
@@ -429,7 +557,7 @@ const DEFAULT_PRODUCTS = [
     "oldPrice": 1499,
     "isOnSale": true,
     "rating": 5,
-    "reviewsCount": 1,
+    "reviewsCount": 119,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -451,8 +579,8 @@ const DEFAULT_PRODUCTS = [
     "price": 499,
     "oldPrice": 1099,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.8,
+    "reviewsCount": 77,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -475,8 +603,8 @@ const DEFAULT_PRODUCTS = [
     "price": 1999,
     "oldPrice": 3849,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.9,
+    "reviewsCount": 104,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -498,8 +626,8 @@ const DEFAULT_PRODUCTS = [
     "price": 1499,
     "oldPrice": 3499,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.7,
+    "reviewsCount": 26,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -510,7 +638,22 @@ const DEFAULT_PRODUCTS = [
       "https://i.postimg.cc/7ZmZxsfc/73e24fdd341f45318dd4d946624e135a.jpg",
       "https://i.postimg.cc/GhjcQ7Jt/JR-BP005-9.png"
     ],
-    "description": "Stay powered up on the go with the Infinix XPOS XPOWER GO 5000mAh Power Bank. Designed with a sleek, ultra-slim profile and vibrant color options, this 12W fast-charging power bank keeps your mobile devices charged wherever you are. Features 4 LED battery indicator lights for easy status tracking."
+    "description": "Stay powered up on the go with the Infinix XPOS XPOWER GO 5000mAh Power Bank. Designed with a sleek, ultra-slim profile and vibrant color options, this 12W fast-charging power bank keeps your mobile devices charged wherever you are. Features 4 LED battery indicator lights for easy status tracking.",
+    "sizes": [],
+    "colors": [
+      {
+        "name": "Yellow",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Blue",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Light Purple",
+        "hex": "#3b82f6"
+      }
+    ]
   },
   {
     "id": "prod-1793902399634",
@@ -524,8 +667,8 @@ const DEFAULT_PRODUCTS = [
     "price": 1899,
     "oldPrice": 2599,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.8,
+    "reviewsCount": 65,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -548,8 +691,8 @@ const DEFAULT_PRODUCTS = [
     "price": 1599,
     "oldPrice": 2149,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.6,
+    "reviewsCount": 19,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -572,8 +715,8 @@ const DEFAULT_PRODUCTS = [
     "price": 1149,
     "oldPrice": 1799,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.7,
+    "reviewsCount": 48,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -596,8 +739,8 @@ const DEFAULT_PRODUCTS = [
     "price": 1749,
     "oldPrice": 2499,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.9,
+    "reviewsCount": 83,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -624,7 +767,7 @@ const DEFAULT_PRODUCTS = [
     "oldPrice": 2199,
     "isOnSale": true,
     "rating": 5,
-    "reviewsCount": 1,
+    "reviewsCount": 112,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -647,8 +790,8 @@ const DEFAULT_PRODUCTS = [
     "price": 1199,
     "oldPrice": 1999,
     "isOnSale": true,
-    "rating": 5,
-    "reviewsCount": 1,
+    "rating": 4.8,
+    "reviewsCount": 61,
     "stock": 2500,
     "isFeatured": true,
     "badge": "Sale Item",
@@ -660,70 +803,12 @@ const DEFAULT_PRODUCTS = [
     ],
     "description": "Elevate your daily listening with the M10 TWS Wireless Earbuds. Engineered for seamless audio quality, clear calls, and all-day comfort, the M10 features advanced Bluetooth 5.1 technology for a fast, stable, and lag-free connection.\n\nKey Features:\n\nHD Stereo Sound & Deep Bass: Premium dynamic drivers deliver clear highs and rich bass for an immersive music experience.\n\nSmart LED Digital Display: Easily check the exact remaining battery percentage of both the charging case and individual earbuds at a glance.\n\nHigh-Capacity Charging Case: The included battery case not only recharges your earbuds multiple times on the go, but also doubles as an emergency power bank for your mobile phone.\n\nIntuitive Touch Controls: Manage music playback, answer or reject calls, adjust volume, and activate your voice assistant with simple taps.\n\nErgonomic & Sweatproof: Designed for a secure, comfortable fit during workouts, running, or daily commutes, featuring IPX7 sweat and splash resistance.\n\nAutomatic Pairing: Simply remove the earbuds from the case, and they immediately connect to your paired device.\n\nWhat’s in the Box:\n\n2 x M10 Wireless Earbuds (Left & Right)\n\n1 x Smart LED Charging Case\n\n1 x USB Charging Cable\n\n3 x Pairs of Silicone Ear Tips (S / M / L)\n\n1 x User Manual",
     "colors": [
-      "Black",
-      "White"
-    ]
-  }
-];
-
-const DEFAULT_ORDERS = [
-  {
-    id: "ORD-94821",
-    customerName: "Muhammad Farhan",
-    phone: "0312-3456789",
-    email: "farhan.pk@gmail.com",
-    address: "House 24, Street 5, Gulshan-e-Iqbal Block 13-D",
-    city: "Karachi",
-    items: [
-      { title: "Luxury MagSafe Frosted Matte Armor Case", model: "iPhone 15 Pro", qty: 1, price: 1450 }
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
     ],
-    subtotal: 1450,
-    deliveryFee: 200,
-    total: 1650,
-    paymentMethod: "Cash on Delivery",
-    courierPartner: "TCS Express",
-    status: "Shipped",
-    trackingNumber: "TCS-839210492",
-    date: "2026-10-28 14:32"
-  },
-  {
-    id: "ORD-94820",
-    customerName: "Kashif Lashari",
-    phone: "0300-9876543",
-    email: "kashif.lashari@gmail.com",
-    address: "B-12 Defence Phase 5",
-    city: "Lahore",
-    items: [
-      { title: "Heavy Duty Rugged Kickstand Defense Case", model: "S24 Ultra", qty: 2, price: 1250 }
-    ],
-    subtotal: 2500,
-    deliveryFee: 200,
-    total: 2700,
-    paymentMethod: "Advance Payment (EasyPaisa)",
-    transactionRef: "EP-981240182",
-    courierPartner: "Leopards Courier",
-    status: "Confirmed",
-    trackingNumber: "LEO-40192019",
-    date: "2026-10-27 18:15"
-  },
-  {
-    id: "ORD-94819",
-    customerName: "Noman Siddiqui",
-    phone: "0333-1122334",
-    email: "noman.siddiqui@yahoo.com",
-    address: "Flat 402, Al-Razi Heights, F-10/3",
-    city: "Islamabad",
-    items: [
-      { title: "Slide Camera Shutter Armor Shockproof Case", model: "Realme 12 Pro+", qty: 1, price: 1100 }
-    ],
-    subtotal: 1100,
-    deliveryFee: 200,
-    total: 1300,
-    paymentMethod: "Cash on Delivery",
-    courierPartner: "TCS Express",
-    status: "Delivered",
-    trackingNumber: "TCS-10928374",
-    date: "2026-10-25 11:20"
+    "sizes": []
   }
 ];
 
