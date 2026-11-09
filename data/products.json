@@ -209,15 +209,15 @@
   },
   {
     "id": "prod-1793904841319",
-    "title": "VEN-DENS 10000mAh 22.5W Fast Charging Power Bank with Built-In Cables & Digital LED Display – Portable External Battery Pack",
+    "title": "VEN-DENS 10000mAh and 20000mAh 22.5W Fast Charging Power Bank with Built-In Cables & Digital LED Display – Portable External Battery Pack",
     "category": "Power Bank",
     "brand": "general",
     "brandName": "Universal Tech",
     "compatibleModels": [
       "Universal Device Compatibility"
     ],
-    "price": 2899,
-    "oldPrice": 4599,
+    "price": 2700,
+    "oldPrice": 4200,
     "isOnSale": true,
     "rating": 4.9,
     "reviewsCount": 98,
@@ -227,23 +227,35 @@
     "image": "https://i.postimg.cc/0y0qYcmS/vens-dens-vd-pb061-20000-mah-power-bank-pakistan-priceoye-68prk-270x270.webp",
     "images": [
       "https://i.postimg.cc/0y0qYcmS/vens-dens-vd-pb061-20000-mah-power-bank-pakistan-priceoye-68prk-270x270.webp",
-      "https://i.postimg.cc/8598p389/5c6752aeb35669ba978961b952959cb1.jpg"
+      "https://i.postimg.cc/8598p389/5c6752aeb35669ba978961b952959cb1.jpg",
+      "https://i.postimg.cc/0NMtyKQL/images.jpg",
+      "https://i.postimg.cc/0NwfsgXy/image-resize.webp"
     ],
     "description": "Never worry about low battery again with the VEN-DENS 10000mAh 22.5W Fast Charging Power Bank. Designed for maximum convenience, this high-performance external battery features integrated built-in output cables (Type-C and Lightning), allowing you to charge your devices without carrying extra wires. The digital LED display screen shows exact battery percentage levels at a glance.",
     "sizes": [
       {
         "name": "10000 mAh",
-        "price": 3199,
+        "price": 2700,
         "regularPrice": 4200,
-        "specialPrice": 3199,
+        "specialPrice": 2700,
         "oldPrice": 4200
       },
       {
         "name": "20000 mAh",
-        "price": 4499,
+        "price": 3300,
         "regularPrice": 5600,
-        "specialPrice": 4499,
+        "specialPrice": 3300,
         "oldPrice": 5600
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "White",
+        "hex": "#ffffff"
       }
     ]
   },
