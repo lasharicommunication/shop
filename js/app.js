@@ -1502,8 +1502,9 @@ function openProductQuickView(prodId, event) {
             const colName = typeof c === 'string' ? c : (c.name || 'Color');
             const isSel = currentVariety.color === colName;
             return `
-              <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" style="background:#ffffff !important;" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', true)">
+              <button type="button" class="variety-color-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'color', '${colName.replace(/'/g, "\\'")}', true)">
                 <span>${colName}</span>
+                ${isSel ? '<span class="variety-check-badge"><i class="fa-solid fa-check"></i></span>' : ''}
               </button>
             `;
           }).join("");

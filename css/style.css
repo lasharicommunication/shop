@@ -2699,12 +2699,12 @@ html:has(dialog.order-dialog[open]) {
 .variety-color-btn,
 .variety-size-btn {
   background: #ffffff !important;
-  border: 1.5px solid #dce3d5;
-  border-radius: 999px;
+  border: 1.5px solid #dce3d5 !important;
+  border-radius: 999px !important;
   padding: 6px 14px;
   font-size: 12px;
   font-weight: 700;
-  color: #1c261e;
+  color: #1c261e !important;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -2713,16 +2713,33 @@ html:has(dialog.order-dialog[open]) {
   user-select: none;
   line-height: 1;
 }
+.variety-color-btn span,
+.variety-size-btn span {
+  color: #1c261e !important;
+  transition: color 0.15s ease;
+}
 .variety-color-btn:hover,
 .variety-size-btn:hover {
-  border-color: #16a34a;
+  border-color: #16a34a !important;
+  background: #f7faf5 !important;
+  color: #0f3d24 !important;
+}
+.variety-color-btn:hover span,
+.variety-size-btn:hover span {
+  color: #0f3d24 !important;
 }
 .variety-color-btn.is-selected,
 .variety-size-btn.is-selected {
+  background: #f0fdf4 !important;
   border: 2px solid #16a34a !important;
-  box-shadow: 0 0 0 1px #16a34a;
-  font-weight: 800;
-  color: #0f3d24;
+  box-shadow: 0 0 0 1px #16a34a !important;
+  font-weight: 800 !important;
+  color: #14532d !important;
+}
+.variety-color-btn.is-selected span,
+.variety-size-btn.is-selected span {
+  color: #14532d !important;
+  font-weight: 800 !important;
 }
 .variety-dot-circle {
   display: none !important;
@@ -2731,14 +2748,18 @@ html:has(dialog.order-dialog[open]) {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: #16a34a;
-  color: #ffffff;
+  background: #16a34a !important;
+  color: #ffffff !important;
   font-size: 9px;
-  display: grid;
+  display: inline-grid;
   place-items: center;
   font-weight: 800;
   margin-left: 2px;
-  flex-shrink: 0;
+}
+.variety-check-badge i {
+  color: #ffffff !important;
+  font-size: 9px;
+  line-height: 1;
 }
 
 /* Quantity Stepper Row */
@@ -4597,67 +4618,6 @@ html:has(dialog.order-dialog[open]) {
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
-}
-.variety-size-btn {
-  background: #fff;
-  border: 1.5px solid #d4ded0;
-  border-radius: 7px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #1c261e;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.variety-size-btn:hover {
-  border-color: #8bab15;
-  background: #fafdf6;
-}
-.variety-size-btn.is-selected {
-  background: #171a18;
-  color: #fff;
-  border-color: #171a18;
-}
-.variety-color-btn {
-  background: #ffffff !important;
-  border: 1.5px solid #d4ded0;
-  border-radius: 8px;
-  padding: 6px 14px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #1c261e;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.15s ease;
-  user-select: none;
-}
-.variety-color-btn:hover {
-  border-color: #8bab15;
-  background: #ffffff !important;
-  color: #111412;
-}
-.variety-color-btn.is-selected {
-  background: #ffffff !important;
-  color: #111412;
-  border-color: #111412;
-  box-shadow: 0 0 0 1.5px #111412;
-  font-weight: 800;
-}
-.variety-swatch-circle {
-  display: none !important;
-}
-
-/* Order Modal Varieties */
-.order-modal-varieties {
-  padding: 10px 24px;
-  background: #eef3e6;
-  border-bottom: 1.5px solid #d8e2c4;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex-shrink: 0;
 }
 
 /* Admin Variety Checkbox Chips */
