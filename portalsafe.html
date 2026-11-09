@@ -8,12 +8,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css?v=5.0">
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
     html {
       overflow-x: hidden;
       width: 100%;
       max-width: 100%;
+      -webkit-text-size-adjust: 100%;
     }
     body {
       background: #0d100e;
@@ -25,22 +30,41 @@
       width: 100%;
       max-width: 100%;
     }
+    #adminDashboard {
+      display: none;
+      padding: 32px 20px;
+      background: #111412;
+      min-height: 100vh;
+      color: #f2f5eb;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    #adminDashboard .wrap {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    /* GATEWAY LOGIN SCREEN */
     .portal-lock-wrap {
       min-height: 100vh;
       display: grid;
       place-items: center;
-      padding: 24px;
+      padding: 24px 16px;
       background: radial-gradient(circle at center, #1b241d 0%, #0d100e 70%);
+      box-sizing: border-box;
     }
     .portal-card {
       background: #141a16;
       border: 1px solid #28362a;
       border-radius: 24px;
-      padding: 40px 34px;
+      padding: 40px 32px;
       width: 100%;
       max-width: 440px;
       box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
       text-align: center;
+      box-sizing: border-box;
     }
     .portal-badge {
       display: inline-flex;
@@ -101,6 +125,7 @@
       cursor: pointer;
       transition: transform .2s, background .2s;
       font-family: inherit;
+      box-sizing: border-box;
     }
     .portal-submit-btn:hover {
       transform: translateY(-2px);
@@ -124,11 +149,349 @@
       transition: color .2s;
     }
     .portal-back-link:hover { color: #fff; }
-    #adminDashboard { display: none; }
 
-    .admin-preset-pill {
-      padding: 3px 8px;
+    /* ADMIN DASHBOARD HEADER & BRAND */
+    .admin-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #232c25;
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .admin-brand-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .admin-brand-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .admin-title {
+      font: 800 24px var(--display, 'Manrope', sans-serif);
+      margin: 0;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .admin-master-badge {
       font-size: 10.5px;
+      background: var(--lime, #d8ff55);
+      color: #111412;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .admin-subtitle {
+      color: #7d8f80;
+      font-size: 12px;
+      margin: 0;
+    }
+    .admin-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* TOP TAB NAVIGATION */
+    .admin-nav-bar-container {
+      margin-bottom: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 35;
+      background: rgba(17, 20, 18, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(40, 54, 43, 0.4);
+    }
+    .admin-tab-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 4px 2px;
+    }
+    .admin-tab-nav::-webkit-scrollbar {
+      display: none;
+    }
+    .admin-nav-btn {
+      flex: none;
+      white-space: nowrap;
+      background: #19201a;
+      border: 1px solid #28332a;
+      color: #adb5a8;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+    .admin-nav-btn:hover {
+      background: #232c25;
+      color: #fff;
+      border-color: #3b493e;
+    }
+    .admin-nav-btn.active {
+      background: var(--lime, #d8ff55) !important;
+      color: #111412 !important;
+      border-color: var(--lime, #d8ff55) !important;
+      box-shadow: 0 4px 12px rgba(216, 255, 85, 0.22);
+    }
+
+    /* CARD PANELS */
+    .admin-card-panel {
+      background: #19201a;
+      border: 1px solid #263328;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .admin-panel-head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .admin-panel-title {
+      font: 800 18px var(--display, 'Manrope', sans-serif);
+      margin: 0;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+    .admin-panel-desc {
+      color: #879b8a;
+      font-size: 12px;
+      margin: 4px 0 0;
+      line-height: 1.4;
+    }
+
+    /* STAT CARDS */
+    .admin-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .admin-stat-card {
+      background: #19201a;
+      border: 1px solid #263328;
+      border-radius: 18px;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease;
+    }
+    .admin-stat-card:hover {
+      border-color: #364839;
+    }
+    .admin-stat-label {
+      color: #879b8a;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: block;
+    }
+    .admin-stat-val {
+      font: 800 28px var(--display, 'Manrope', sans-serif);
+      color: #fff;
+      margin-top: 6px;
+      line-height: 1.15;
+    }
+    .admin-stat-lime { color: var(--lime, #d8ff55); }
+    .admin-stat-amber { color: #f59e0b; }
+
+    /* SEARCH & FILTERS */
+    .admin-search-filter-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .admin-search-input,
+    .admin-filter-select {
+      background: #111412;
+      border: 1px solid #28332a;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      box-sizing: border-box;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .admin-search-input:focus,
+    .admin-filter-select:focus {
+      border-color: var(--lime, #d8ff55);
+    }
+    .admin-input {
+      background: #111412;
+      border: 1px solid #28332a;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 13px;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .admin-input:focus {
+      border-color: var(--lime, #d8ff55);
+    }
+    .admin-field-label {
+      color: #879b8a;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .admin-field-hint {
+      color: #6a8060;
+      font-size: 11px;
+      margin-top: 4px;
+      display: block;
+      line-height: 1.4;
+    }
+
+    /* FORMS & POPUP CARDS */
+    .admin-form-popup-card {
+      background: #111412;
+      border: 1px solid #2d3b2f;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 24px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .admin-popup-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .admin-popup-title {
+      font: 800 16px var(--display, 'Manrope', sans-serif);
+      color: var(--lime, #d8ff55);
+      margin: 0;
+    }
+    .admin-close-btn {
+      background: none;
+      border: none;
+      color: #879b8a;
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+    }
+    .admin-close-btn:hover { color: #fff; }
+
+    /* FORM GRIDS */
+    .admin-form-grid-4col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .admin-form-grid-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+    .admin-form-grid-coupons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .admin-form-grid-accounts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .admin-settings-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 680px;
+      width: 100%;
+    }
+    .settings-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .settings-grid-brand {
+      display: grid;
+      grid-template-columns: 1fr 120px;
+      gap: 12px;
+    }
+    .settings-grid-sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+    }
+    .admin-form-actions-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* PRESETS & SIZES */
+    .admin-presets-container {
+      margin-bottom: 12px;
+      background: #161d18;
+      border: 1px dashed #2d3d30;
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .admin-presets-rows-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .admin-preset-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .admin-preset-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #879b8a;
+      min-width: 84px;
+    }
+    .admin-preset-chips {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .admin-preset-pill {
+      padding: 4px 9px;
+      font-size: 11px;
       font-weight: 700;
       border-radius: 5px;
       background: #1e2820;
@@ -136,12 +499,36 @@
       color: #cde4c4;
       cursor: pointer;
       transition: all 0.15s ease;
-      line-height: 1.4;
+      line-height: 1.3;
     }
     .admin-preset-pill:hover {
       background: #27382a;
       border-color: var(--lime, #d8ff55);
       color: var(--lime, #d8ff55);
+    }
+
+    /* CUSTOM SIZE ADD ROW */
+    .admin-size-add-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      background: #19201a;
+      border: 1px solid #28372b;
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .admin-size-input-field {
+      flex: 1;
+      min-width: 140px;
+    }
+    .admin-size-price-field {
+      width: 140px;
+    }
+    .admin-size-btn-field {
+      align-self: flex-end;
     }
     .admin-size-row-item {
       display: flex;
@@ -154,6 +541,7 @@
       gap: 12px;
       transition: border-color 0.15s ease;
       flex-wrap: wrap;
+      box-sizing: border-box;
     }
     .admin-size-row-item:hover {
       border-color: #3e5a44;
@@ -163,58 +551,297 @@
       outline: none;
       border-color: var(--lime, #d8ff55) !important;
     }
+    .admin-pill-btn {
+      padding: 6px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 6px;
+      background: #1e2720;
+      border: 1px solid #36493b;
+      color: var(--lime, #d8ff55);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+    .admin-pill-btn:hover {
+      background: #253328;
+      border-color: var(--lime, #d8ff55);
+    }
+    .admin-color-add-bar {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .admin-color-picker {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: none;
+      padding: 0;
+    }
+    .admin-flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-    /* MOBILE RESPONSIVE STYLES FOR ADMIN PORTAL */
+    /* RESPONSIVE TABLE WRAPPER */
+    .admin-table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: #2e3e31 #111412;
+      box-sizing: border-box;
+      margin-top: 4px;
+    }
+    .admin-table-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    .admin-table-container::-webkit-scrollbar-track {
+      background: #111412;
+      border-radius: 4px;
+    }
+    .admin-table-container::-webkit-scrollbar-thumb {
+      background: #2e3e31;
+      border-radius: 4px;
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    .admin-table th {
+      padding: 10px;
+      border-bottom: 1px solid #2c3a2f;
+      color: #879b8a;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .admin-table td {
+      padding: 10px;
+    }
+    .admin-table-overview { min-width: 580px; }
+    .admin-table-orders { min-width: 820px; }
+    .admin-table-products { min-width: 780px; }
+    .admin-table-coupons { min-width: 540px; }
+    .admin-table-accounts { min-width: 620px; }
+
+    /* ========================================================
+       MEDIA QUERIES - FULLY RESPONSIVE FOR ALL SCREEN SIZES
+       ======================================================== */
+
+    /* LAPTOP & TABLET LANDSCAPE (< 1024px) */
+    @media (max-width: 1024px) {
+      .admin-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* TABLET PORTRAIT (< 768px) */
     @media (max-width: 768px) {
+      #adminDashboard {
+        padding: 20px 12px !important;
+      }
+      .admin-card-panel {
+        padding: 18px 14px;
+        border-radius: 14px;
+      }
       .portal-card {
         padding: 30px 20px;
         border-radius: 18px;
       }
-      #adminDashboard {
-        padding: 20px 12px !important;
+      .admin-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .admin-header-actions {
+        width: 100%;
+        justify-content: flex-start;
       }
       .admin-tab-nav {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 8px;
-        gap: 8px !important;
-        scrollbar-width: none;
-      }
-      .admin-tab-nav::-webkit-scrollbar {
-        display: none;
+        gap: 6px;
       }
       .admin-nav-btn {
-        flex: none;
-        white-space: nowrap;
-        padding: 8px 14px !important;
-        font-size: 11.5px !important;
+        padding: 8px 13px;
+        font-size: 12px;
       }
-      #adminProductForm {
+      .admin-form-grid-products {
         grid-template-columns: 1fr !important;
+      }
+      .admin-form-grid-coupons {
+        grid-template-columns: 1fr !important;
+      }
+      .admin-form-grid-accounts {
+        grid-template-columns: 1fr !important;
+      }
+      .admin-form-grid-4col {
+        grid-template-columns: 1fr !important;
+      }
+      .settings-grid-2col {
+        grid-template-columns: 1fr !important;
+      }
+      .settings-grid-brand {
+        grid-template-columns: 1fr !important;
+      }
+      .settings-grid-sections {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      .admin-panel-head-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .admin-search-filter-group {
+        width: 100%;
+      }
+      .admin-search-input {
+        flex: 1;
+        width: 100%;
+      }
+      .admin-filter-select {
+        flex: 1;
       }
     }
 
+    /* MOBILE PHONES (< 480px) */
     @media (max-width: 480px) {
+      #adminDashboard {
+        padding: 14px 8px !important;
+      }
+      .admin-card-panel {
+        padding: 14px 10px;
+        border-radius: 12px;
+      }
+      .portal-card {
+        padding: 24px 16px;
+      }
       .portal-title {
-        font-size: 22px;
+        font-size: 21px;
       }
       .portal-desc {
         font-size: 12px;
         margin-bottom: 20px;
       }
-      .portal-badge {
-        font-size: 10px;
-        padding: 4px 10px;
+      .admin-title {
+        font-size: 20px;
+      }
+      .admin-header-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        gap: 8px;
+      }
+      .admin-header-actions .admin-btn {
+        justify-content: center;
+        padding: 8px 10px !important;
+        font-size: 11.5px !important;
       }
       .admin-stat-grid {
         grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
+        gap: 8px !important;
+        margin-bottom: 20px;
       }
-      .admin-btn {
-        padding: 9px 12px !important;
-        font-size: 11px !important;
+      .admin-stat-card {
+        padding: 14px 12px;
+        border-radius: 12px;
+      }
+      .admin-stat-val {
+        font-size: 20px;
+      }
+      .admin-stat-label {
+        font-size: 10px;
+      }
+      .settings-grid-sections {
+        grid-template-columns: 1fr !important;
+      }
+      .admin-size-add-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .admin-size-input-field {
+        grid-column: 1 / -1;
+        width: 100%;
+        min-width: 0;
+      }
+      .admin-size-price-field {
+        width: 100%;
+      }
+      .admin-size-btn-field {
+        width: 100%;
+      }
+      .admin-add-size-btn {
+        width: 100%;
+        justify-content: center;
+        height: 38px;
+      }
+      .admin-size-row-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .admin-size-row-item > div:last-child {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .admin-color-add-bar {
+        width: 100%;
+      }
+      .admin-color-add-bar input[type="text"] {
+        flex: 1;
+        min-width: 0;
+      }
+      .prod-image-row {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .prod-image-row span {
+        width: 100%;
+      }
+      .prod-image-row input {
+        flex: 1;
+        min-width: 0;
+      }
+      .admin-form-actions-row {
+        flex-direction: column;
+      }
+      .admin-form-actions-row .admin-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .admin-settings-save-btn {
+        width: 100% !important;
+        text-align: center;
+      }
+      .admin-quick-save-btn {
+        width: 100%;
+      }
+    }
+
+    /* ULTRA NARROW SCREENS (< 360px) */
+    @media (max-width: 360px) {
+      .admin-stat-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .admin-preset-label {
+        min-width: 100%;
+      }
+      .admin-preset-row {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
@@ -259,112 +886,138 @@
   <!-- ==========================================================================
        AUTHENTICATED ADMIN DASHBOARD
        ========================================================================== -->
-  <div id="adminDashboard" style="padding:40px 20px; background:#111412; min-height:100vh; color:#f2f5eb;">
+  <div id="adminDashboard">
     <div class="wrap">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #232c25; padding-bottom:20px; margin-bottom:30px; flex-wrap:wrap; gap:16px;">
-        <div style="display:flex; align-items:center; gap:16px;">
-          <h2 style="font:800 24px var(--display); margin:0; color:#fff;">Lashari Store Admin</h2>
-          <span style="font-size:11px; background:var(--lime); color:var(--ink); padding:2px 8px; border-radius:4px; font-weight:800;">MASTER CONTROL</span>
+      <!-- Admin Header Bar -->
+      <div class="admin-header-row">
+        <div class="admin-brand-col">
+          <div class="admin-brand-title-wrap">
+            <h2 class="admin-title">Lashari Store Admin</h2>
+            <span class="admin-master-badge">MASTER CONTROL</span>
+          </div>
+          <p class="admin-subtitle">Live Store Management &amp; Analytics Portal</p>
         </div>
-        <div class="admin-tab-nav" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-          <button type="button" class="admin-nav-btn active" data-tab="overview" onclick="AdminController.switchTab('overview')">Overview</button>
-          <button type="button" class="admin-nav-btn" data-tab="orders" onclick="AdminController.switchTab('orders')">Orders</button>
-          <button type="button" class="admin-nav-btn" data-tab="products" onclick="AdminController.switchTab('products')">Products</button>
-          <button type="button" class="admin-nav-btn" data-tab="coupons" onclick="AdminController.switchTab('coupons')">Coupons</button>
-          <button type="button" class="admin-nav-btn" data-tab="accounts" onclick="AdminController.switchTab('accounts')">Payment Accounts</button>
-          <button type="button" class="admin-nav-btn" data-tab="settings" onclick="AdminController.switchTab('settings')">Settings</button>
-          <a href="index.html" target="_blank" class="admin-btn admin-btn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+        <div class="admin-header-actions">
+          <a href="index.html" target="_blank" class="admin-btn admin-btn-secondary" style="text-decoration:none;">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
             <span>Storefront ↗</span>
           </a>
           <button type="button" class="admin-btn admin-btn-danger" onclick="PortalAuth.logout()" style="cursor:pointer;">
-            Logout ⏻
+            <i class="fa-solid fa-power-off"></i>
+            <span>Logout ⏻</span>
           </button>
         </div>
       </div>
 
+      <!-- Admin Tab Navigation Bar (Sticky & Horizontal Touch Scrollable) -->
+      <nav class="admin-nav-bar-container" aria-label="Admin Navigation Tabs">
+        <div class="admin-tab-nav">
+          <button type="button" class="admin-nav-btn active" data-tab="overview" onclick="AdminController.switchTab('overview')">
+            <i class="fa-solid fa-chart-line"></i> Overview
+          </button>
+          <button type="button" class="admin-nav-btn" data-tab="orders" onclick="AdminController.switchTab('orders')">
+            <i class="fa-solid fa-receipt"></i> Orders
+          </button>
+          <button type="button" class="admin-nav-btn" data-tab="products" onclick="AdminController.switchTab('products')">
+            <i class="fa-solid fa-box-open"></i> Products
+          </button>
+          <button type="button" class="admin-nav-btn" data-tab="coupons" onclick="AdminController.switchTab('coupons')">
+            <i class="fa-solid fa-ticket"></i> Coupons
+          </button>
+          <button type="button" class="admin-nav-btn" data-tab="accounts" onclick="AdminController.switchTab('accounts')">
+            <i class="fa-solid fa-building-columns"></i> Payment Accounts
+          </button>
+          <button type="button" class="admin-nav-btn" data-tab="settings" onclick="AdminController.switchTab('settings')">
+            <i class="fa-solid fa-sliders"></i> Settings
+          </button>
+        </div>
+      </nav>
+
       <!-- Tab: Overview -->
       <div class="admin-tab-section active" id="adminTab-overview">
-        <div class="admin-stat-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:32px;">
-          <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:20px;">
-            <span style="color:#879b8a; font-size:11px; font-weight:700; text-transform:uppercase;">Total Sales</span>
-            <div id="statTotalSales" style="font:800 28px var(--display); color:var(--lime); margin-top:6px;">Rs. 0</div>
+        <div class="admin-stat-grid">
+          <div class="admin-stat-card">
+            <span class="admin-stat-label">Total Sales</span>
+            <div id="statTotalSales" class="admin-stat-val admin-stat-lime">Rs. 0</div>
           </div>
-          <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:20px;">
-            <span style="color:#879b8a; font-size:11px; font-weight:700; text-transform:uppercase;">Total Orders</span>
-            <div id="statTotalOrders" style="font:800 28px var(--display); color:#fff; margin-top:6px;">0</div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-label">Total Orders</span>
+            <div id="statTotalOrders" class="admin-stat-val">0</div>
           </div>
-          <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:20px;">
-            <span style="color:#879b8a; font-size:11px; font-weight:700; text-transform:uppercase;">Products in Store</span>
-            <div id="statTotalProducts" style="font:800 28px var(--display); color:#fff; margin-top:6px;">0</div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-label">Products in Store</span>
+            <div id="statTotalProducts" class="admin-stat-val">0</div>
           </div>
-          <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:20px;">
-            <span style="color:#879b8a; font-size:11px; font-weight:700; text-transform:uppercase;">Pending Orders</span>
-            <div id="statPendingOrders" style="font:800 28px var(--display); color:#f59e0b; margin-top:6px;">0</div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-label">Pending Orders</span>
+            <div id="statPendingOrders" class="admin-stat-val admin-stat-amber">0</div>
           </div>
         </div>
 
         <!-- Quick Store Info Editor Directly in Overview -->
-        <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:24px; margin-bottom:28px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+        <div class="admin-card-panel">
+          <div class="admin-panel-head-row">
             <div>
-              <h3 style="font:800 18px var(--display); margin:0; color:#fff;">Store Contact &amp; Physical Address</h3>
-              <p style="color:#879b8a; font-size:12px; margin:4px 0 0;">Yahan se shop address, email aur WhatsApp number direct edit karein.</p>
+              <h3 class="admin-panel-title">Store Contact &amp; Physical Address</h3>
+              <p class="admin-panel-desc">Yahan se shop address, email aur WhatsApp number direct edit karein.</p>
             </div>
-            <button type="button" class="button button-lime" onclick="AdminController.saveQuickContact()" style="padding:8px 18px; font-size:12px;">Save Quick Info ↗</button>
+            <button type="button" class="button button-lime admin-quick-save-btn" onclick="AdminController.saveQuickContact()">Save Quick Info ↗</button>
           </div>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+          <div class="admin-form-grid-4col">
             <div class="order-field">
-              <label style="color:#879b8a; font-size:11px; font-weight:700;">Physical Shop Address</label>
-              <input type="text" id="quickShopAddress" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+              <label class="admin-field-label">Physical Shop Address</label>
+              <input type="text" id="quickShopAddress" class="admin-input">
             </div>
             <div class="order-field">
-              <label style="color:#879b8a; font-size:11px; font-weight:700;">Customer Support Email</label>
-              <input type="email" id="quickShopEmail" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+              <label class="admin-field-label">Customer Support Email</label>
+              <input type="email" id="quickShopEmail" class="admin-input">
             </div>
             <div class="order-field">
-              <label style="color:#879b8a; font-size:11px; font-weight:700;">Phone Number</label>
-              <input type="text" id="quickShopPhone" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+              <label class="admin-field-label">Phone Number</label>
+              <input type="text" id="quickShopPhone" class="admin-input">
             </div>
             <div class="order-field">
-              <label style="color:#879b8a; font-size:11px; font-weight:700;">WhatsApp Number (Without +)</label>
-              <input type="text" id="quickShopWhatsapp" placeholder="923212920914" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+              <label class="admin-field-label">WhatsApp Number (Without +)</label>
+              <input type="text" id="quickShopWhatsapp" placeholder="923212920914" class="admin-input">
             </div>
             <div class="order-field" style="grid-column: 1 / -1;">
-              <label style="color:var(--lime); font-size:11px; font-weight:800;">📍 Google Maps Shop Location URL / Share Link</label>
-              <input type="text" id="quickGoogleMapsUrl" placeholder="https://maps.app.goo.gl/... ya https://maps.google.com/..." style="background:#111412; border:1px solid #36493b; color:#fff; border-radius:8px; padding:10px; font-size:13px;">
-              <small style="color:#6a8060; font-size:11px; margin-top:4px; display:block;">💡 Google Maps app ya browser se apni dukan ka share link (ya embed iframe code) yahan paste karein. Website par live map aur 'Get Directions' button isi se update honge.</small>
+              <label class="admin-field-label" style="color:var(--lime);">📍 Google Maps Shop Location URL / Share Link</label>
+              <input type="text" id="quickGoogleMapsUrl" placeholder="https://maps.app.goo.gl/... ya https://maps.google.com/..." class="admin-input">
+              <small class="admin-field-hint">💡 Google Maps app ya browser se apni dukan ka share link (ya embed iframe code) yahan paste karein. Website par live map aur 'Get Directions' button isi se update honge.</small>
             </div>
           </div>
         </div>
 
         <!-- Recent Orders Table Preview -->
-        <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:24px; overflow-x:auto;">
-          <h3 style="font:800 18px var(--display); margin:0 0 16px; color:#fff;">Recent Orders</h3>
-          <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
-            <thead>
-              <tr style="border-bottom:1px solid #2c3a2f; color:#879b8a; font-size:11px; text-transform:uppercase;">
-                <th style="padding:10px;">Order</th>
-                <th style="padding:10px;">Customer</th>
-                <th style="padding:10px;">Total</th>
-                <th style="padding:10px;">Status</th>
-                <th style="padding:10px;">Date</th>
-              </tr>
-            </thead>
-            <tbody id="adminRecentOrdersTbody"></tbody>
-          </table>
+        <div class="admin-card-panel">
+          <h3 class="admin-panel-title" style="margin-bottom:16px;">Recent Orders</h3>
+          <div class="admin-table-container">
+            <table class="admin-table admin-table-overview">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="adminRecentOrdersTbody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       <!-- Tab: Orders -->
       <div class="admin-tab-section" id="adminTab-orders">
-        <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:24px; overflow-x:auto;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+        <div class="admin-card-panel">
+          <div class="admin-panel-head-row">
             <div>
-              <h3 style="font:800 18px var(--display); margin:0; color:#fff;">Customer Orders</h3>
-              <p id="adminOrdersCountText" style="color:#879b8a; font-size:12px; margin:4px 0 0;">Showing 0 of 0 orders</p>
+              <h3 class="admin-panel-title">Customer Orders</h3>
+              <p id="adminOrdersCountText" class="admin-panel-desc">Showing 0 of 0 orders</p>
             </div>
-            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-              <select id="adminOrderStatusFilter" onchange="AdminController.filterOrdersByStatus(this.value)" style="background:#111412; border:1px solid #28332a; color:#fff; padding:8px 12px; border-radius:8px; font-size:12px;">
+            <div class="admin-search-filter-group">
+              <select id="adminOrderStatusFilter" onchange="AdminController.filterOrdersByStatus(this.value)" class="admin-filter-select">
                 <option value="all">All Statuses</option>
                 <option value="pending">Pending</option>
                 <option value="confirmed">Confirmed</option>
@@ -372,55 +1025,57 @@
                 <option value="delivered">Delivered</option>
                 <option value="cancelled">Cancelled</option>
               </select>
-              <input type="text" id="adminOrderSearch" oninput="AdminController.searchOrders(this.value)" placeholder="Search orders..." style="background:#111412; border:1px solid #28332a; color:#fff; padding:8px 14px; border-radius:8px; font-size:12px;">
+              <input type="text" id="adminOrderSearch" oninput="AdminController.searchOrders(this.value)" placeholder="Search orders..." class="admin-search-input">
             </div>
           </div>
-          <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
-            <thead>
-              <tr style="border-bottom:1px solid #2c3a2f; color:#879b8a; font-size:11px; text-transform:uppercase;">
-                <th style="padding:10px;">Order &amp; Courier</th>
-                <th style="padding:10px;">Customer</th>
-                <th style="padding:10px;">Items Ordered</th>
-                <th style="padding:10px;">Total</th>
-                <th style="padding:10px;">Payment Method</th>
-                <th style="padding:10px;">Status</th>
-                <th style="padding:10px; text-align:right;">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="adminOrdersTbody"></tbody>
-          </table>
+          <div class="admin-table-container">
+            <table class="admin-table admin-table-orders">
+              <thead>
+                <tr>
+                  <th>Order &amp; Courier</th>
+                  <th>Customer</th>
+                  <th>Items Ordered</th>
+                  <th>Total</th>
+                  <th>Payment Method</th>
+                  <th>Status</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminOrdersTbody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       <!-- Tab: Products -->
       <div class="admin-tab-section" id="adminTab-products">
-        <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:24px; margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+        <div class="admin-card-panel">
+          <div class="admin-panel-head-row">
             <div>
-              <h3 style="font:800 18px var(--display); margin:0; color:#fff;">Store Products &amp; Pricing</h3>
-              <p style="color:#879b8a; font-size:12px; margin:4px 0 0;">Product add karein, before &amp; current discount price set karein, aur "SALE" badge toggle karein.</p>
+              <h3 class="admin-panel-title">Store Products &amp; Pricing</h3>
+              <p class="admin-panel-desc">Product add karein, before &amp; current discount price set karein, aur "SALE" badge toggle karein.</p>
             </div>
-            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-              <input type="text" id="adminProductSearch" oninput="AdminController.searchProducts(this.value)" placeholder="Search products..." style="background:#111412; border:1px solid #28332a; color:#fff; padding:8px 14px; border-radius:8px; font-size:12px;">
+            <div class="admin-search-filter-group">
+              <input type="text" id="adminProductSearch" oninput="AdminController.searchProducts(this.value)" placeholder="Search products..." class="admin-search-input">
               <button type="button" class="admin-btn admin-btn-lime" onclick="AdminController.openProductForm()">+ Add New Product</button>
             </div>
           </div>
 
           <!-- Add / Edit Product Form Box -->
-          <div id="adminProductFormBox" style="display:none; background:#111412; border:1px solid #2d3b2f; border-radius:14px; padding:22px; margin-bottom:24px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-              <h4 id="adminProductFormTitle" style="font:800 16px var(--display); color:var(--lime); margin:0;">Add New Product</h4>
-              <button type="button" onclick="AdminController.closeProductForm()" style="background:none; border:none; color:#879b8a; font-size:20px; cursor:pointer;">&times;</button>
+          <div id="adminProductFormBox" class="admin-form-popup-card" style="display:none;">
+            <div class="admin-popup-title-row">
+              <h4 id="adminProductFormTitle" class="admin-popup-title">Add New Product</h4>
+              <button type="button" onclick="AdminController.closeProductForm()" class="admin-close-btn">&times;</button>
             </div>
-            <form id="adminProductForm" onsubmit="AdminController.saveProduct(event)" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px;">
+            <form id="adminProductForm" class="admin-form-grid-products" onsubmit="AdminController.saveProduct(event)">
               <input type="hidden" id="editProductId" value="">
               <div class="order-field" style="grid-column: 1 / -1;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Product Title *</label>
-                <input type="text" id="prodFormTitle" placeholder="e.g. Ultra Fast Qi2 Wireless Charger Stand" required style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Product Title *</label>
+                <input type="text" id="prodFormTitle" placeholder="e.g. Ultra Fast Qi2 Wireless Charger Stand" required class="admin-input">
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Category *</label>
-                <select id="prodFormCategory" onchange="AdminController.handleCategoryChange(this.value)" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Category *</label>
+                <select id="prodFormCategory" onchange="AdminController.handleCategoryChange(this.value)" class="admin-input">
                   <option value="Smartwatch">Smartwatches</option>
                   <option value="Earbuds">Earbuds &amp; Audio</option>
                   <option value="Power Bank">Power Banks</option>
@@ -432,12 +1087,12 @@
                   <option value="__custom__">➕ + Custom Category / Add New...</option>
                 </select>
                 <div id="customCategoryBox" style="display:none; margin-top:8px;">
-                  <input type="text" id="prodFormCustomCategory" placeholder="Type new custom category name..." style="background:#19201a; border:1px solid #36493b; color:var(--lime); font-weight:700; border-radius:8px; padding:9px; font-size:12px; width:100%; box-sizing:border-box;">
+                  <input type="text" id="prodFormCustomCategory" placeholder="Type new custom category name..." class="admin-input" style="color:var(--lime); font-weight:700;">
                 </div>
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Brand *</label>
-                <select id="prodFormBrand" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Brand *</label>
+                <select id="prodFormBrand" class="admin-input">
                   <option value="apple">Apple iPhone</option>
                   <option value="samsung">Samsung</option>
                   <option value="xiaomi">Xiaomi / Poco</option>
@@ -450,33 +1105,34 @@
                 </select>
               </div>
               <div class="order-field" style="display:flex; flex-direction:column; justify-content:center;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700; margin-bottom:6px;">Sale Badge Control</label>
+                <label class="admin-field-label" style="margin-bottom:6px;">Sale Badge Control</label>
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#fff; font-size:12.5px;">
                   <input type="checkbox" id="prodFormIsOnSale" checked style="width:16px; height:16px; accent-color:var(--lime);">
                   <span>Show '🔥 SALE' Badge on this product</span>
                 </label>
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Stock Available *</label>
-                <input type="number" id="prodFormStock" value="25" min="0" required style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Stock Available *</label>
+                <input type="number" id="prodFormStock" value="25" min="0" required class="admin-input">
               </div>
 
               <div class="order-field" style="grid-column: 1 / -1;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
-                  <label style="color:#879b8a; font-size:11px; font-weight:700;">
+                <div class="admin-flex-between" style="margin-bottom:8px;">
+                  <label class="admin-field-label">
                     Product Images (URLs) <span style="font-weight:400; color:#5b7060;">— Multiple photos add kar sakte hain</span>
                   </label>
-                  <button type="button" onclick="AdminController.addImageUrlField()" style="padding:6px 12px; font-size:11.5px; font-weight:700; border-radius:6px; background:#1e2720; border:1px solid #36493b; color:var(--lime); cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+                  <button type="button" onclick="AdminController.addImageUrlField()" class="admin-pill-btn">
                     <i class="fa-solid fa-plus"></i> Add Image URL Box
                   </button>
                 </div>
                 <div id="productImagesList" style="display:flex; flex-direction:column; gap:8px;">
                   <!-- Dynamic image input rows will be generated here -->
                 </div>
-                <small style="color:#607363; font-size:10.5px; display:block; margin-top:5px;">
+                <small class="admin-field-hint">
                   💡 Pehli image card par main photo ke taur par nazar aayegi. Har box me direct picture link paste karein (e.g. ImgBB, Unsplash, Google direct link).
                 </small>
               </div>
+
               <!-- Product Varieties: Sizes & Colors -->
               <div class="order-field" style="grid-column: 1 / -1; background:#151b16; border:1px solid #28372b; border-radius:10px; padding:16px;">
                 <div style="margin-bottom:12px;">
@@ -490,76 +1146,76 @@
 
                 <!-- Sizes & Custom Pricing Box -->
                 <div style="margin-bottom:16px; background:#101411; border:1.5px solid #253327; border-radius:10px; padding:14px;">
-                  
-                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
-                    <div>
-                      <div style="font-size:12.5px; font-weight:800; color:#d8ff55; display:flex; align-items:center; gap:6px;">
-                        <i class="fa-solid fa-microchip"></i> Available Sizes / Capacities &amp; Custom Prices:
-                      </div>
-                      <p style="margin:3px 0 0; font-size:11px; color:#879b8a;">
-                        USB (GB), Power Bank (mAh), ya Cables ke alag alag sizes add karein aur har size ki apni alag selling price likhein.
-                      </p>
+                  <div style="margin-bottom:12px;">
+                    <div style="font-size:12.5px; font-weight:800; color:#d8ff55; display:flex; align-items:center; gap:6px;">
+                      <i class="fa-solid fa-microchip"></i> Available Sizes / Capacities &amp; Custom Prices:
                     </div>
+                    <p style="margin:3px 0 0; font-size:11px; color:#879b8a;">
+                      USB (GB), Power Bank (mAh), ya Cables ke alag alag sizes add karein aur har size ki apni alag selling price likhein.
+                    </p>
                   </div>
 
                   <!-- Quick Preset Chips -->
-                  <div style="margin-bottom:12px; background:#161d18; border:1px dashed #2d3d30; border-radius:8px; padding:10px;">
-                    <div style="font-size:10.5px; font-weight:800; color:#a3b89e; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.04em;">
+                  <div class="admin-presets-container">
+                    <div style="font-size:10.5px; font-weight:800; color:#a3b89e; text-transform:uppercase; margin-bottom:8px; letter-spacing:0.04em;">
                       ⚡ Quick Presets (Click to add size):
                     </div>
-                    <div style="display:flex; flex-direction:column; gap:6px;">
-                      <!-- USB Presets -->
-                      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                        <span style="font-size:10px; font-weight:700; color:#879b8a; min-width:80px;">💾 USB Flash:</span>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('4 GB')">+ 4 GB</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('8 GB')">+ 8 GB</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('16 GB')">+ 16 GB</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('32 GB')">+ 32 GB</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('64 GB')">+ 64 GB</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('128 GB')">+ 128 GB</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('256 GB')">+ 256 GB</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('512 GB')">+ 512 GB</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('1 TB')">+ 1 TB</button>
+                    <div class="admin-presets-rows-wrap">
+                      <div class="admin-preset-row">
+                        <span class="admin-preset-label">💾 USB Flash:</span>
+                        <div class="admin-preset-chips">
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('4 GB')">+ 4 GB</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('8 GB')">+ 8 GB</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('16 GB')">+ 16 GB</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('32 GB')">+ 32 GB</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('64 GB')">+ 64 GB</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('128 GB')">+ 128 GB</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('256 GB')">+ 256 GB</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('512 GB')">+ 512 GB</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('1 TB')">+ 1 TB</button>
+                        </div>
                       </div>
-                      <!-- Power Bank Presets -->
-                      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                        <span style="font-size:10px; font-weight:700; color:#879b8a; min-width:80px;">🔋 Power Bank:</span>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('5000 mAh')">+ 5000 mAh</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('10000 mAh')">+ 10000 mAh</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('20000 mAh')">+ 20000 mAh</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('30000 mAh')">+ 30000 mAh</button>
+                      <div class="admin-preset-row">
+                        <span class="admin-preset-label">🔋 Power Bank:</span>
+                        <div class="admin-preset-chips">
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('5000 mAh')">+ 5000 mAh</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('10000 mAh')">+ 10000 mAh</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('20000 mAh')">+ 20000 mAh</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('30000 mAh')">+ 30000 mAh</button>
+                        </div>
                       </div>
-                      <!-- Cables & General Presets -->
-                      <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                        <span style="font-size:10px; font-weight:700; color:#879b8a; min-width:80px;">🔌 Cable / Other:</span>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('1 Meter')">+ 1 Meter</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('2 Meter')">+ 2 Meter</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('3 Meter')">+ 3 Meter</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Small')">+ Small</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Medium')">+ Medium</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Large')">+ Large</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('45mm')">+ 45mm</button>
-                        <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('49mm Ultra')">+ 49mm Ultra</button>
+                      <div class="admin-preset-row">
+                        <span class="admin-preset-label">🔌 Cable / Other:</span>
+                        <div class="admin-preset-chips">
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('1 Meter')">+ 1 Meter</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('2 Meter')">+ 2 Meter</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('3 Meter')">+ 3 Meter</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Small')">+ Small</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Medium')">+ Medium</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('Large')">+ Large</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('45mm')">+ 45mm</button>
+                          <button type="button" class="admin-preset-pill" onclick="AdminController.addSizePreset('49mm Ultra')">+ 49mm Ultra</button>
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   <!-- Custom Size & Price Input Row -->
-                  <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:14px; background:#19201a; border:1px solid #28372b; border-radius:8px; padding:10px;">
-                    <div style="flex:1; min-width:140px;">
-                      <label style="display:block; font-size:10px; font-weight:700; color:#879b8a; margin-bottom:3px;">Size / Capacity Name</label>
-                      <input type="text" id="customSizeInput" placeholder="e.g. 64 GB, 20000 mAh" style="width:100%; box-sizing:border-box; background:#101411; border:1px solid #36493b; color:#fff; border-radius:6px; padding:7px 10px; font-size:12px;">
+                  <div class="admin-size-add-row">
+                    <div class="admin-size-input-field">
+                      <label class="admin-field-label">Size / Capacity Name</label>
+                      <input type="text" id="customSizeInput" placeholder="e.g. 64 GB, 20000 mAh" class="admin-input">
                     </div>
-                    <div style="width:125px;">
-                      <label style="display:block; font-size:10px; font-weight:700; color:#879b8a; margin-bottom:3px;">Price (PKR)</label>
-                      <input type="number" id="customSizePrice" placeholder="e.g. 1850" min="0" step="10" style="width:100%; box-sizing:border-box; background:#101411; border:1px solid #36493b; color:#fff; font-weight:700; border-radius:6px; padding:7px 10px; font-size:12px;">
+                    <div class="admin-size-price-field">
+                      <label class="admin-field-label">Price (PKR)</label>
+                      <input type="number" id="customSizePrice" placeholder="e.g. 1850" min="0" step="10" class="admin-input" style="color:#fff; font-weight:700;">
                     </div>
-                    <div style="width:135px;">
-                      <label style="display:block; font-size:10px; font-weight:700; color:#d8ff55; margin-bottom:3px;">Special Price (PKR)</label>
-                      <input type="number" id="customSizeSpecialPrice" placeholder="e.g. 1450 (Optional)" min="0" step="10" style="width:100%; box-sizing:border-box; background:#101411; border:1px solid #36493b; color:#d8ff55; font-weight:800; border-radius:6px; padding:7px 10px; font-size:12px;">
+                    <div class="admin-size-special-price-field">
+                      <label class="admin-field-label" style="color:var(--lime);">Special Price (PKR)</label>
+                      <input type="number" id="customSizeSpecialPrice" placeholder="e.g. 1450 (Optional)" min="0" step="10" class="admin-input" style="color:var(--lime); font-weight:800;">
                     </div>
-                    <div style="align-self:flex-end;">
-                      <button type="button" onclick="AdminController.addCustomSizeWithPrice()" style="padding:8px 14px; font-size:12px; font-weight:800; border-radius:6px; background:var(--lime, #d8ff55); border:none; color:#111412; cursor:pointer; display:inline-flex; align-items:center; gap:5px;">
+                    <div class="admin-size-btn-field">
+                      <button type="button" onclick="AdminController.addCustomSizeWithPrice()" class="admin-btn admin-btn-lime admin-add-size-btn">
                         <i class="fa-solid fa-plus"></i> Add Size
                       </button>
                     </div>
@@ -569,19 +1225,18 @@
                   <div id="adminSizesContainer" style="display:flex; flex-direction:column; gap:8px;">
                     <!-- Dynamic size items with editable prices rendered here -->
                   </div>
-
                 </div>
 
                 <!-- Colors Box -->
                 <div style="background:#101411; border:1px solid #222d24; border-radius:8px; padding:12px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                  <div class="admin-flex-between" style="margin-bottom:10px;">
                     <span style="font-size:11.5px; font-weight:700; color:#c6d6c2;">
                       🎨 Available Colors (Tick box):
                     </span>
-                    <div style="display:flex; gap:6px; align-items:center;">
-                      <input type="text" id="customColorInput" placeholder="Color name (e.g. Sierra Blue)" style="background:#19201a; border:1px solid #36493b; color:#fff; border-radius:6px; padding:6px 10px; font-size:11px; width:160px;">
-                      <input type="color" id="customColorPicker" value="#3b82f6" title="Pick color" style="width:30px; height:30px; border:none; border-radius:6px; cursor:pointer; background:none;">
-                      <button type="button" onclick="AdminController.addCustomColor()" style="padding:6px 10px; font-size:11px; font-weight:700; border-radius:6px; background:#1e2720; border:1px solid #36493b; color:var(--lime); cursor:pointer;">+ Add Color</button>
+                    <div class="admin-color-add-bar">
+                      <input type="text" id="customColorInput" placeholder="Color name (e.g. Sierra Blue)" class="admin-input" style="font-size:11px; padding:6px 10px;">
+                      <input type="color" id="customColorPicker" value="#3b82f6" title="Pick color" class="admin-color-picker">
+                      <button type="button" onclick="AdminController.addCustomColor()" class="admin-pill-btn">+ Add Color</button>
                     </div>
                   </div>
                   <div id="adminColorsContainer" style="display:flex; flex-wrap:wrap; gap:8px;">
@@ -591,10 +1246,10 @@
               </div>
 
               <div class="order-field" style="grid-column: 1 / -1;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Product Description</label>
-                <textarea id="prodFormDescription" rows="2" placeholder="Brief technical and checking warranty details..." style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;"></textarea>
+                <label class="admin-field-label">Product Description</label>
+                <textarea id="prodFormDescription" rows="2" placeholder="Brief technical and checking warranty details..." class="admin-input"></textarea>
               </div>
-              <div style="grid-column: 1 / -1; display:flex; gap:10px; margin-top:6px;">
+              <div class="admin-form-actions-row" style="grid-column: 1 / -1;">
                 <button type="submit" class="admin-btn admin-btn-lime">Save Product</button>
                 <button type="button" class="admin-btn admin-btn-secondary" onclick="AdminController.closeProductForm()">Cancel</button>
               </div>
@@ -602,18 +1257,18 @@
           </div>
 
           <!-- Products Table -->
-          <div style="overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+          <div class="admin-table-container">
+            <table class="admin-table admin-table-products">
               <thead>
-                <tr style="border-bottom:1px solid #2c3a2f; color:#879b8a; font-size:11px; text-transform:uppercase;">
-                  <th style="padding:10px;">Product &amp; Brand</th>
-                  <th style="padding:10px;">Category</th>
-                  <th style="padding:10px;">Current Price</th>
-                  <th style="padding:10px;">Before Price</th>
-                  <th style="padding:10px;">Discount %</th>
-                  <th style="padding:10px;">Sale Tag</th>
-                  <th style="padding:10px;">Stock</th>
-                  <th style="padding:10px; text-align:right;">Actions</th>
+                <tr>
+                  <th>Product &amp; Brand</th>
+                  <th>Category</th>
+                  <th>Current Price</th>
+                  <th>Before Price</th>
+                  <th>Discount %</th>
+                  <th>Sale Tag</th>
+                  <th>Stock</th>
+                  <th style="text-align:right;">Actions</th>
                 </tr>
               </thead>
               <tbody id="adminProductsTbody"></tbody>
@@ -624,42 +1279,42 @@
 
       <!-- Tab: Coupons -->
       <div class="admin-tab-section" id="adminTab-coupons">
-        <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:24px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+        <div class="admin-card-panel">
+          <div class="admin-panel-head-row">
             <div>
-              <h3 style="font:800 18px var(--display); margin:0; color:#fff;">Promo Coupons &amp; Vouchers</h3>
-              <p style="color:#879b8a; font-size:12px; margin:4px 0 0;">Customer discount codes create karein, percentage ya flat PKR discount set karein.</p>
+              <h3 class="admin-panel-title">Promo Coupons &amp; Vouchers</h3>
+              <p class="admin-panel-desc">Customer discount codes create karein, percentage ya flat PKR discount set karein.</p>
             </div>
             <button type="button" class="admin-btn admin-btn-lime" onclick="AdminController.openCouponForm()">+ Add New Coupon</button>
           </div>
 
           <!-- Add / Edit Coupon Form Box -->
-          <div id="adminCouponFormBox" style="display:none; background:#111412; border:1px solid #2d3b2f; border-radius:14px; padding:20px; margin-bottom:24px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-              <h4 id="adminCouponFormTitle" style="font:800 15px var(--display); color:var(--lime); margin:0;">Create New Coupon</h4>
-              <button type="button" onclick="AdminController.closeCouponForm()" style="background:none; border:none; color:#879b8a; font-size:18px; cursor:pointer;">&times;</button>
+          <div id="adminCouponFormBox" class="admin-form-popup-card" style="display:none;">
+            <div class="admin-popup-title-row">
+              <h4 id="adminCouponFormTitle" class="admin-popup-title">Create New Coupon</h4>
+              <button type="button" onclick="AdminController.closeCouponForm()" class="admin-close-btn">&times;</button>
             </div>
-            <form id="adminCouponForm" onsubmit="AdminController.saveCoupon(event)" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px;">
+            <form id="adminCouponForm" class="admin-form-grid-coupons" onsubmit="AdminController.saveCoupon(event)">
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Coupon Code *</label>
-                <input type="text" id="couponFormCode" placeholder="e.g. FLASH25, SAVE500" required style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px; text-transform:uppercase;">
+                <label class="admin-field-label">Coupon Code *</label>
+                <input type="text" id="couponFormCode" placeholder="e.g. FLASH25, SAVE500" required class="admin-input" style="text-transform:uppercase;">
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Discount Type *</label>
-                <select id="couponFormType" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Discount Type *</label>
+                <select id="couponFormType" class="admin-input">
                   <option value="percent">Percentage (% OFF)</option>
                   <option value="fixed">Fixed Amount (PKR OFF)</option>
                 </select>
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Discount Value *</label>
-                <input type="number" id="couponFormValue" placeholder="e.g. 20 (for 20%) or 300 (for 300 PKR)" min="1" required style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Discount Value *</label>
+                <input type="number" id="couponFormValue" placeholder="e.g. 20 (for 20%) or 300 (for 300 PKR)" min="1" required class="admin-input">
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Coupon Description / Label</label>
-                <input type="text" id="couponFormLabel" placeholder="e.g. Weekend Flash Sale 25%" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Coupon Description / Label</label>
+                <input type="text" id="couponFormLabel" placeholder="e.g. Weekend Flash Sale 25%" class="admin-input">
               </div>
-              <div style="grid-column:1 / -1; display:flex; gap:10px; margin-top:6px;">
+              <div class="admin-form-actions-row" style="grid-column:1 / -1;">
                 <button type="submit" class="admin-btn admin-btn-lime">Save Coupon</button>
                 <button type="button" class="admin-btn admin-btn-secondary" onclick="AdminController.closeCouponForm()">Cancel</button>
               </div>
@@ -667,14 +1322,14 @@
           </div>
 
           <!-- Coupons Table -->
-          <div style="overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+          <div class="admin-table-container">
+            <table class="admin-table admin-table-coupons">
               <thead>
-                <tr style="border-bottom:1px solid #2c3a2f; color:#879b8a; font-size:11px; text-transform:uppercase;">
-                  <th style="padding:10px;">Coupon Code</th>
-                  <th style="padding:10px;">Discount Offered</th>
-                  <th style="padding:10px;">Description / Label</th>
-                  <th style="padding:10px; text-align:right;">Actions</th>
+                <tr>
+                  <th>Coupon Code</th>
+                  <th>Discount Offered</th>
+                  <th>Description / Label</th>
+                  <th style="text-align:right;">Actions</th>
                 </tr>
               </thead>
               <tbody id="adminCouponsTbody"></tbody>
@@ -685,43 +1340,43 @@
 
       <!-- Tab: Payment Accounts -->
       <div class="admin-tab-section" id="adminTab-accounts">
-        <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:24px; margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+        <div class="admin-card-panel">
+          <div class="admin-panel-head-row">
             <div>
-              <h3 style="font:800 18px var(--display); margin:0; color:#fff;">Advance Payment Accounts Control</h3>
-              <p style="color:#879b8a; font-size:12px; margin:4px 0 0;">Customer order form me kaunse accounts show honge, unko yahan se edit karein aur hide / unhide karein.</p>
+              <h3 class="admin-panel-title">Advance Payment Accounts Control</h3>
+              <p class="admin-panel-desc">Customer order form me kaunse accounts show honge, unko yahan se edit karein aur hide / unhide karein.</p>
             </div>
             <button type="button" class="admin-btn admin-btn-lime" onclick="AdminController.openAccountForm()">+ Add New Account</button>
           </div>
 
           <!-- Add / Edit Account Form Box -->
-          <div id="adminAccountFormBox" style="display:none; background:#111412; border:1px solid #2d3b2f; border-radius:14px; padding:20px; margin-bottom:24px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-              <h4 id="adminAccountFormTitle" style="font:800 15px var(--display); color:var(--lime); margin:0;">Add New Payment Account</h4>
-              <button type="button" onclick="AdminController.closeAccountForm()" style="background:none; border:none; color:#879b8a; font-size:18px; cursor:pointer;">&times;</button>
+          <div id="adminAccountFormBox" class="admin-form-popup-card" style="display:none;">
+            <div class="admin-popup-title-row">
+              <h4 id="adminAccountFormTitle" class="admin-popup-title">Add New Payment Account</h4>
+              <button type="button" onclick="AdminController.closeAccountForm()" class="admin-close-btn">&times;</button>
             </div>
-            <form id="adminAccountForm" onsubmit="AdminController.savePaymentAccount(event)" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+            <form id="adminAccountForm" class="admin-form-grid-accounts" onsubmit="AdminController.savePaymentAccount(event)">
               <input type="hidden" id="editAccountId" value="">
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Bank / Wallet Name *</label>
-                <input type="text" id="accFormBank" placeholder="e.g. Meezan Bank, JazzCash, EasyPaisa, SadaPay" required style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Bank / Wallet Name *</label>
+                <input type="text" id="accFormBank" placeholder="e.g. Meezan Bank, JazzCash, EasyPaisa, SadaPay" required class="admin-input">
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Account Title *</label>
-                <input type="text" id="accFormTitle" placeholder="e.g. Faizan Lashari" required style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Account Title *</label>
+                <input type="text" id="accFormTitle" placeholder="e.g. Faizan Lashari" required class="admin-input">
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Account / Mobile Number *</label>
-                <input type="text" id="accFormNumber" placeholder="e.g. 0300-1234567 or 0101-01020304050" required style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Account / Mobile Number *</label>
+                <input type="text" id="accFormNumber" placeholder="e.g. 0300-1234567 or 0101-01020304050" required class="admin-input">
               </div>
               <div class="order-field" style="display:flex; flex-direction:column; justify-content:center;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700; margin-bottom:8px;">Customer Visibility Status</label>
+                <label class="admin-field-label" style="margin-bottom:8px;">Customer Visibility Status</label>
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#fff; font-size:13px;">
                   <input type="checkbox" id="accFormActive" checked style="width:16px; height:16px; accent-color:var(--lime);">
                   <span>Show to Customer (Unhidden)</span>
                 </label>
               </div>
-              <div style="grid-column:1 / -1; display:flex; gap:10px; margin-top:6px;">
+              <div class="admin-form-actions-row" style="grid-column:1 / -1;">
                 <button type="submit" class="admin-btn admin-btn-lime">Save Account</button>
                 <button type="button" class="admin-btn admin-btn-secondary" onclick="AdminController.closeAccountForm()">Cancel</button>
               </div>
@@ -729,15 +1384,15 @@
           </div>
 
           <!-- Accounts Table -->
-          <div style="overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+          <div class="admin-table-container">
+            <table class="admin-table admin-table-accounts">
               <thead>
-                <tr style="border-bottom:1px solid #2c3a2f; color:#879b8a; font-size:11px; text-transform:uppercase;">
-                  <th style="padding:10px;">Bank / Wallet</th>
-                  <th style="padding:10px;">Account Title</th>
-                  <th style="padding:10px;">Account / Mobile #</th>
-                  <th style="padding:10px;">Visibility</th>
-                  <th style="padding:10px; text-align:right;">Actions</th>
+                <tr>
+                  <th>Bank / Wallet</th>
+                  <th>Account Title</th>
+                  <th>Account / Mobile #</th>
+                  <th>Visibility</th>
+                  <th style="text-align:right;">Actions</th>
                 </tr>
               </thead>
               <tbody id="adminAccountsTbody"></tbody>
@@ -748,53 +1403,53 @@
 
       <!-- Tab: Settings -->
       <div class="admin-tab-section" id="adminTab-settings">
-        <div style="background:#19201a; border:1px solid #263328; border-radius:18px; padding:24px;">
-          <h3 style="font:800 18px var(--display); margin:0 0 16px; color:#fff;">Store &amp; Brand Settings</h3>
-          <form id="adminSettingsForm" onsubmit="AdminController.saveSettings(event)" style="display:flex; flex-direction:column; gap:14px; max-width:650px;">
-            <div style="display:grid; grid-template-columns:1fr 120px; gap:12px;">
+        <div class="admin-card-panel">
+          <h3 class="admin-panel-title" style="margin-bottom:16px;">Store &amp; Brand Settings</h3>
+          <form id="adminSettingsForm" class="admin-settings-form" onsubmit="AdminController.saveSettings(event)">
+            <div class="settings-grid-brand">
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Brand Name (e.g. Lashari Communication) *</label>
-                <input type="text" id="setBrandName" placeholder="Lashari Communication" required style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Brand Name (e.g. Lashari Communication) *</label>
+                <input type="text" id="setBrandName" placeholder="Lashari Communication" required class="admin-input">
               </div>
               <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Brand Dot / Accent</label>
-                <input type="text" id="setBrandDot" placeholder="." style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px; text-align:center;">
-              </div>
-            </div>
-            <div class="order-field">
-              <label style="color:#879b8a; font-size:11px; font-weight:700;">Shop Physical Address</label>
-              <textarea id="setShopAddress" rows="2" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;"></textarea>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-              <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Email Address</label>
-                <input type="email" id="setShopEmail" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
-              </div>
-              <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">WhatsApp / Phone Number</label>
-                <input type="text" id="setShopPhone" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
-              </div>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-              <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Delivery Fee (PKR)</label>
-                <input type="number" id="setDeliveryFee" value="200" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
-              </div>
-              <div class="order-field">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Admin Master Access Password</label>
-                <input type="password" id="setAdminPin" value="Speed150" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Brand Dot / Accent</label>
+                <input type="text" id="setBrandDot" placeholder="." class="admin-input" style="text-align:center;">
               </div>
             </div>
             <div class="order-field">
-              <label style="color:#879b8a; font-size:11px; font-weight:700;">Announcement Bar Banner Text</label>
-              <input type="text" id="setAnnouncementText" style="background:#111412; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+              <label class="admin-field-label">Shop Physical Address</label>
+              <textarea id="setShopAddress" rows="2" class="admin-input"></textarea>
+            </div>
+            <div class="settings-grid-2col">
+              <div class="order-field">
+                <label class="admin-field-label">Email Address</label>
+                <input type="email" id="setShopEmail" class="admin-input">
+              </div>
+              <div class="order-field">
+                <label class="admin-field-label">WhatsApp / Phone Number</label>
+                <input type="text" id="setShopPhone" class="admin-input">
+              </div>
+            </div>
+            <div class="settings-grid-2col">
+              <div class="order-field">
+                <label class="admin-field-label">Delivery Fee (PKR)</label>
+                <input type="number" id="setDeliveryFee" value="200" class="admin-input">
+              </div>
+              <div class="order-field">
+                <label class="admin-field-label">Admin Master Access Password</label>
+                <input type="password" id="setAdminPin" value="Speed150" class="admin-input">
+              </div>
+            </div>
+            <div class="order-field">
+              <label class="admin-field-label">Announcement Bar Banner Text</label>
+              <input type="text" id="setAnnouncementText" class="admin-input">
             </div>
 
             <!-- Homepage Sections Visibility Control -->
             <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
               <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 6px;">Homepage Sections Visibility (Tick to Show, Untick to Hide)</h4>
               <p style="font-size:11px; color:#879b8a; margin:0 0 14px;">Jis section ko website ke home page par dikhana chahein uspe tick rakhein, jise chupana chahein untick kar dein.</p>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px;">
+              <div class="settings-grid-sections">
                 <label style="display:flex; align-items:center; gap:8px; font-size:12px; color:#fff; cursor:pointer;">
                   <input type="checkbox" id="secVisAnnouncement" checked style="width:16px; height:16px; accent-color:var(--lime);">
                   <span>Top Announcement Bar</span>
@@ -842,24 +1497,24 @@
             <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
               <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 6px;">Shop Location &amp; Contact Info (Editable)</h4>
               <p style="font-size:11px; color:#879b8a; margin:0 0 14px;">Store address, timings, location section heading, aur map details yahan se customize karein.</p>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+              <div class="settings-grid-2col">
                 <div class="order-field">
-                  <label style="color:#879b8a; font-size:11px; font-weight:700;">Location Heading</label>
-                  <input type="text" id="setLocHeading" placeholder="Find us in person." style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                  <label class="admin-field-label">Location Heading</label>
+                  <input type="text" id="setLocHeading" placeholder="Find us in person." class="admin-input">
                 </div>
                 <div class="order-field">
-                  <label style="color:#879b8a; font-size:11px; font-weight:700;">Store Timings</label>
-                  <input type="text" id="setShopTimings" placeholder="Monday – Sunday: 11:00 AM – 11:00 PM" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                  <label class="admin-field-label">Store Timings</label>
+                  <input type="text" id="setShopTimings" placeholder="Monday – Sunday: 11:00 AM – 11:00 PM" class="admin-input">
                 </div>
               </div>
               <div class="order-field" style="margin-top:10px;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Location Subtitle / Description</label>
-                <textarea id="setLocDesc" rows="2" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;"></textarea>
+                <label class="admin-field-label">Location Subtitle / Description</label>
+                <textarea id="setLocDesc" rows="2" class="admin-input"></textarea>
               </div>
               <div class="order-field" style="margin-top:10px;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Google Maps URL / Share Link</label>
-                <input type="url" id="setGoogleMapsUrl" placeholder="https://share.google/iiBvxUjHqCga5PFY1" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
-                <span style="font-size:11px; color:#6a8060; margin-top:4px; display:block;">Google Maps share link (e.g. <code>https://share.google/iiBvxUjHqCga5PFY1</code>). Website ke 'Get Directions', 'View Full Map', aur location buttons is link se connect honge.</span>
+                <label class="admin-field-label">Google Maps URL / Share Link</label>
+                <input type="url" id="setGoogleMapsUrl" placeholder="https://share.google/iiBvxUjHqCga5PFY1" class="admin-input">
+                <span class="admin-field-hint">Google Maps share link (e.g. <code>https://share.google/iiBvxUjHqCga5PFY1</code>). Website ke 'Get Directions', 'View Full Map', aur location buttons is link se connect honge.</span>
               </div>
             </div>
 
@@ -867,41 +1522,41 @@
             <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
               <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 6px;">Special Promo Offer Settings (Editable)</h4>
               <p style="font-size:11px; color:#879b8a; margin:0 0 14px;">Reviews ke baad jo special offer banner aata hai, uski text, heading, button, aur promo code yahan se edit karein.</p>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+              <div class="settings-grid-2col">
                 <div class="order-field">
-                  <label style="color:#879b8a; font-size:11px; font-weight:700;">Offer Tag / Badge</label>
-                  <input type="text" id="setOfferTag" placeholder="🔥 LIMITED TIME MEGA DROP" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                  <label class="admin-field-label">Offer Tag / Badge</label>
+                  <input type="text" id="setOfferTag" placeholder="🔥 LIMITED TIME MEGA DROP" class="admin-input">
                 </div>
                 <div class="order-field">
-                  <label style="color:#879b8a; font-size:11px; font-weight:700;">Promo Code</label>
-                  <input type="text" id="setOfferCode" placeholder="FLASH25" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
-                </div>
-              </div>
-              <div class="order-field" style="margin-top:10px;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Offer Main Title / Heading</label>
-                <input type="text" id="setOfferTitle" placeholder="FLAT 25% OFF · WEEKEND EDIT" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
-              </div>
-              <div class="order-field" style="margin-top:10px;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Offer Subtitle / Description</label>
-                <textarea id="setOfferDesc" rows="2" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;"></textarea>
-              </div>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
-                <div class="order-field">
-                  <label style="color:#879b8a; font-size:11px; font-weight:700;">Button Text</label>
-                  <input type="text" id="setOfferBtnText" placeholder="Shop Weekend Deals" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
-                </div>
-                <div class="order-field">
-                  <label style="color:#879b8a; font-size:11px; font-weight:700;">Button Link Anchor</label>
-                  <input type="text" id="setOfferBtnLink" placeholder="#collection" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                  <label class="admin-field-label">Promo Code</label>
+                  <input type="text" id="setOfferCode" placeholder="FLASH25" class="admin-input">
                 </div>
               </div>
               <div class="order-field" style="margin-top:10px;">
-                <label style="color:#879b8a; font-size:11px; font-weight:700;">Offer Sub-note</label>
-                <input type="text" id="setOfferNote" placeholder="⚡ Valid for all orders across Pakistan · Limited Stock" style="background:#19201a; border:1px solid #28332a; color:#fff; border-radius:8px; padding:10px;">
+                <label class="admin-field-label">Offer Main Title / Heading</label>
+                <input type="text" id="setOfferTitle" placeholder="FLAT 25% OFF · WEEKEND EDIT" class="admin-input">
+              </div>
+              <div class="order-field" style="margin-top:10px;">
+                <label class="admin-field-label">Offer Subtitle / Description</label>
+                <textarea id="setOfferDesc" rows="2" class="admin-input"></textarea>
+              </div>
+              <div class="settings-grid-2col" style="margin-top:10px;">
+                <div class="order-field">
+                  <label class="admin-field-label">Button Text</label>
+                  <input type="text" id="setOfferBtnText" placeholder="Shop Weekend Deals" class="admin-input">
+                </div>
+                <div class="order-field">
+                  <label class="admin-field-label">Button Link Anchor</label>
+                  <input type="text" id="setOfferBtnLink" placeholder="#collection" class="admin-input">
+                </div>
+              </div>
+              <div class="order-field" style="margin-top:10px;">
+                <label class="admin-field-label">Offer Sub-note</label>
+                <input type="text" id="setOfferNote" placeholder="⚡ Valid for all orders across Pakistan · Limited Stock" class="admin-input">
               </div>
             </div>
 
-            <button type="submit" class="button button-lime" style="width:fit-content; margin-top:12px;">Save Settings ↗</button>
+            <button type="submit" class="button button-lime admin-settings-save-btn" style="width:fit-content; margin-top:12px;">Save Settings ↗</button>
           </form>
         </div>
       </div>
