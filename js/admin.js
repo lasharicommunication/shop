@@ -17,7 +17,7 @@ window.AppState = window.AppState || {
   productQtyMap: {},
   currentOrderProduct: null,
   currentOrderQty: 1,
-  collectionVisibleCount: 8,
+  collectionVisibleCount: 12,
   reviews: [],
   currentReviewPage: 0
 };

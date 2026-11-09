@@ -22,7 +22,7 @@ window.AppState = window.AppState || {
   productQtyMap: {}, // prodId -> selected qty
   currentOrderProduct: null,
   currentOrderQty: 1,
-  collectionVisibleCount: 8,
+  collectionVisibleCount: 12,
   reviews: [],
   currentReviewPage: 0
 };
@@ -189,7 +189,7 @@ function getGridColumnCount() {
 }
 
 function resetCollectionVisibleCount() {
-  AppState.collectionVisibleCount = 2 * getGridColumnCount();
+  AppState.collectionVisibleCount = 3 * getGridColumnCount();
 }
 
 // Initialize Store
@@ -806,7 +806,7 @@ function getFilteredProducts() {
   return list;
 }
 
-// Render Products Grid (Shows 2 rows initially, expands by 3 rows on Show More)
+// Render Products Grid (Shows 3 rows initially, expands by 3 rows on Show More)
 function renderProducts() {
   const grid = document.getElementById("productGrid");
   const emptyState = document.getElementById("emptyState");
