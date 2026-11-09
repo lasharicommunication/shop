@@ -1,10 +1,10 @@
 [
   {
     "id": "prod-1794126572312",
-    "title": "Kingston High-Speed Metal USB Flash Drive 3.0",
+    "title": "Kingston DataTraveler 50 USB 3.0 Flash Drive (4GB, 8GB, 16GB, 32GB, 64GB, 128GB) – Metal Casing High Speed Pen Drive",
     "category": "USB Flash Drives",
-    "brand": "samsung",
-    "brandName": "Samsung",
+    "brand": "general",
+    "brandName": "Universal Tech",
     "compatibleModels": [
       "Universal Device Compatibility"
     ],
@@ -13,7 +13,7 @@
     "isOnSale": true,
     "rating": 4.8,
     "reviewsCount": 42,
-    "stock": 25,
+    "stock": 2500,
     "sizes": [
       {
         "name": "4 GB",
@@ -67,7 +67,7 @@
       "https://i.postimg.cc/Vk3622bY/f52ca03b9c6a80f593aa871649e53403.jpg",
       "https://i.postimg.cc/X7P7ytLT/510146f712b091e0ed0850c32992da1e.jpg"
     ],
-    "description": "Premium authentic tech accessory backed with official checking warranty."
+    "description": "Store, transfer, and share your files effortlessly with the Kingston DataTraveler 50 (DT50) USB Flash Drive. Designed with a sleek, capless metal casing and a colorful accent clip, this compact and lightweight pen drive is built for daily durability and style. Featuring fast USB 3.0 performance, it allows quick transfer of photos, videos, documents, and music files across PCs, laptops, and compatible devices."
   },
   {
     "id": "prod-1794072150273",
