@@ -886,7 +886,44 @@ const AdminController = {
 
     // Sync categories into dropdown including any existing custom categories
     const products = Storage.getProducts();
-    const standardCategories = ["Smartwatch", "Earbuds", "Power Bank", "Charger", "Speaker", "Mobile Cover", "Cables", "Holders"];
+    const standardCategories = [
+      "Smartwatch",
+      "Earbuds",
+      "Handsfree",
+      "Power Bank",
+      "USB Drive",
+      "Memory Card",
+      "Charger",
+      "Wireless Charger",
+      "Cables",
+      "Adapters & OTG",
+      "Speaker",
+      "Mobile Cover",
+      "Screen Protector",
+      "Holders",
+      "Ring Light & Tripod",
+      "Gaming Accessories",
+      "Smart Gadgets"
+    ];
+    const categoryLabels = {
+      "Smartwatch": "Smartwatches",
+      "Earbuds": "Earbuds & Audio",
+      "Handsfree": "Handsfree & Earphones",
+      "Power Bank": "Power Banks",
+      "USB Drive": "USB Flash Drives",
+      "Memory Card": "Memory Cards & Storage",
+      "Charger": "Fast Chargers",
+      "Wireless Charger": "Wireless Chargers",
+      "Cables": "Cables & Adapters",
+      "Adapters & OTG": "OTG & Audio Adapters",
+      "Speaker": "Bluetooth Speakers",
+      "Mobile Cover": "Mobile Covers & Cases",
+      "Screen Protector": "Screen Protectors & Glass",
+      "Holders": "Mounts & Mobile Holders",
+      "Ring Light & Tripod": "Tripods & Ring Lights",
+      "Gaming Accessories": "Mobile Gaming & Triggers",
+      "Smart Gadgets": "Smart Tech & Gadgets"
+    };
     const allCategories = new Set(standardCategories);
     products.forEach(p => {
       if (p.category && typeof p.category === "string" && p.category.trim()) {
@@ -897,7 +934,8 @@ const AdminController = {
     if (formCat) {
       const currentSelected = formCat.value;
       formCat.innerHTML = Array.from(allCategories).map(cat => {
-        return `<option value="${cat.replace(/"/g, '&quot;')}">${cat}</option>`;
+        const label = categoryLabels[cat] || cat;
+        return `<option value="${cat.replace(/"/g, '&quot;')}">${label}</option>`;
       }).join("") + `<option value="__custom__">➕ + Custom Category / Add New...</option>`;
     }
 

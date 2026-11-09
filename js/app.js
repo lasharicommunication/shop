@@ -783,11 +783,11 @@ function getFilteredProducts() {
     list = list.filter(p => {
       const cat = (p.category || "").toLowerCase();
       const title = (p.title || "").toLowerCase();
-      if (f === "cover") return cat.includes("armor") || cat.includes("case") || cat.includes("silicone") || cat.includes("leather") || cat.includes("clear") || title.includes("case") || title.includes("cover");
+      if (f === "cover") return cat.includes("armor") || cat.includes("case") || cat.includes("silicone") || cat.includes("leather") || cat.includes("clear") || cat.includes("cover") || cat.includes("protector") || title.includes("case") || title.includes("cover") || title.includes("protector");
       if (f === "watch") return cat.includes("smartwatch") || title.includes("watch");
-      if (f === "audio") return cat.includes("earbud") || cat.includes("speaker") || title.includes("earbud") || title.includes("speaker");
-      if (f === "power") return cat.includes("power") || cat.includes("charger") || cat.includes("cable") || title.includes("power bank") || title.includes("charger");
-      if (f === "holder") return cat.includes("holder") || title.includes("holder") || title.includes("mount") || cat.includes("desk") || cat.includes("car") || cat.includes("bike");
+      if (f === "audio") return cat.includes("earbud") || cat.includes("speaker") || cat.includes("handsfree") || title.includes("earbud") || title.includes("speaker") || title.includes("handsfree");
+      if (f === "power") return cat.includes("power") || cat.includes("charger") || cat.includes("cable") || cat.includes("usb") || cat.includes("memory") || cat.includes("adapter") || cat.includes("otg") || title.includes("power bank") || title.includes("charger") || title.includes("cable") || title.includes("usb");
+      if (f === "holder") return cat.includes("holder") || cat.includes("mount") || cat.includes("desk") || cat.includes("car") || cat.includes("bike") || cat.includes("tripod") || cat.includes("light") || title.includes("holder") || title.includes("mount") || title.includes("tripod") || title.includes("ring light");
       return true;
     });
   }
