@@ -1,5 +1,44 @@
 [
   {
+    "id": "prod-1794248453507",
+    "title": "Ultra Smartwatch Combo Box – Premium Smart Watch with 7 Different Straps (Silicone, Alpine Loop, Stainless Steel, Sport) & Wireless Magnetic Charger",
+    "category": "Smartwatch",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1490,
+    "oldPrice": 4200,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 88,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "smartwatch",
+        "price": 1490,
+        "regularPrice": 1490,
+        "specialPrice": 4200,
+        "oldPrice": 4200
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/Sxhj0DqP/images.jpg",
+    "images": [
+      "https://i.postimg.cc/Sxhj0DqP/images.jpg",
+      "https://i.postimg.cc/hjkcLttr/b58a854abf2d3d80fb3367a9c697d32d.png"
+    ],
+    "description": "Upgrade your wristwear versatility with the Ultra Smart Watch 7-in-1 Strap Gift Box Set. Designed for those who love options, this premium smartwatch bundle includes 7 interchangeable straps ranging from sport silicone to elegant metallic and fabric loops—allowing you to switch up your look for work, workouts, formal events, or daily casual wear in seconds."
+  },
+  {
     "id": "prod-1794126572312",
     "title": "Kingston DataTraveler 50 USB 3.0 Flash Drive (4GB, 8GB, 16GB, 32GB, 64GB, 128GB) – Metal Casing High Speed Pen Drive",
     "category": "USB Flash Drives",
