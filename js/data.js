@@ -340,20 +340,42 @@ const DEFAULT_BRANDS = [
 const DEFAULT_PRODUCTS = [
   {
     "id": "prod-1794126572312",
-    "title": "usb",
-    "category": "Power Bank",
+    "title": "Kingston High-Speed Metal USB Flash Drive 3.0",
+    "category": "USB Flash Drives",
     "brand": "samsung",
     "brandName": "Samsung",
     "compatibleModels": [
       "Universal Device Compatibility"
     ],
-    "price": 1500,
-    "oldPrice": null,
+    "price": 1200,
+    "oldPrice": 1500,
     "isOnSale": true,
     "rating": 4.8,
     "reviewsCount": 42,
     "stock": 25,
-    "sizes": [],
+    "sizes": [
+      {
+        "name": "32 GB",
+        "price": 1200,
+        "regularPrice": 1500,
+        "specialPrice": 1200,
+        "oldPrice": 1500
+      },
+      {
+        "name": "64 GB",
+        "price": 1500,
+        "regularPrice": 1900,
+        "specialPrice": 1500,
+        "oldPrice": 1900
+      },
+      {
+        "name": "128 GB",
+        "price": 2200,
+        "regularPrice": 2700,
+        "specialPrice": 2200,
+        "oldPrice": 2700
+      }
+    ],
     "colors": [
       {
         "name": "Silver / Grey",
@@ -493,7 +515,23 @@ const DEFAULT_PRODUCTS = [
     "images": [
       "https://i.postimg.cc/7PJh3rLb/3g-plus-10000mah-portable-power-bank-pakistan-priceoye-4hcjg.jpg"
     ],
-    "description": "Keep your smartphones and gadgets powered up throughout the day with the 3G PLUS ENJOYHOME G-18 10000mAh Power Bank. Built with high-capacity battery cells to deliver stable power supply, this compact external battery features a sleek dual-texture body design, 10W output for fast charging, and a Type-C input port. An integrated 4-LED indicator light display lets you check your remaining charge at a glance."
+    "description": "Keep your smartphones and gadgets powered up throughout the day with the 3G PLUS ENJOYHOME G-18 10000mAh Power Bank. Built with high-capacity battery cells to deliver stable power supply, this compact external battery features a sleek dual-texture body design, 10W output for fast charging, and a Type-C input port. An integrated 4-LED indicator light display lets you check your remaining charge at a glance.",
+    "sizes": [
+      {
+        "name": "10000 mAh",
+        "price": 2749,
+        "regularPrice": 3699,
+        "specialPrice": 2749,
+        "oldPrice": 3699
+      },
+      {
+        "name": "20000 mAh",
+        "price": 3899,
+        "regularPrice": 4999,
+        "specialPrice": 3899,
+        "oldPrice": 4999
+      }
+    ]
   },
   {
     "id": "prod-1793904841319",
@@ -517,7 +555,23 @@ const DEFAULT_PRODUCTS = [
       "https://i.postimg.cc/0y0qYcmS/vens-dens-vd-pb061-20000-mah-power-bank-pakistan-priceoye-68prk-270x270.webp",
       "https://i.postimg.cc/8598p389/5c6752aeb35669ba978961b952959cb1.jpg"
     ],
-    "description": "Never worry about low battery again with the VEN-DENS 10000mAh 22.5W Fast Charging Power Bank. Designed for maximum convenience, this high-performance external battery features integrated built-in output cables (Type-C and Lightning), allowing you to charge your devices without carrying extra wires. The digital LED display screen shows exact battery percentage levels at a glance."
+    "description": "Never worry about low battery again with the VEN-DENS 10000mAh 22.5W Fast Charging Power Bank. Designed for maximum convenience, this high-performance external battery features integrated built-in output cables (Type-C and Lightning), allowing you to charge your devices without carrying extra wires. The digital LED display screen shows exact battery percentage levels at a glance.",
+    "sizes": [
+      {
+        "name": "10000 mAh",
+        "price": 3199,
+        "regularPrice": 4200,
+        "specialPrice": 3199,
+        "oldPrice": 4200
+      },
+      {
+        "name": "20000 mAh",
+        "price": 4499,
+        "regularPrice": 5600,
+        "specialPrice": 4499,
+        "oldPrice": 5600
+      }
+    ]
   },
   {
     "id": "prod-1793904452863",
@@ -639,7 +693,22 @@ const DEFAULT_PRODUCTS = [
       "https://i.postimg.cc/GhjcQ7Jt/JR-BP005-9.png"
     ],
     "description": "Stay powered up on the go with the Infinix XPOS XPOWER GO 5000mAh Power Bank. Designed with a sleek, ultra-slim profile and vibrant color options, this 12W fast-charging power bank keeps your mobile devices charged wherever you are. Features 4 LED battery indicator lights for easy status tracking.",
-    "sizes": [],
+    "sizes": [
+      {
+        "name": "5000 mAh",
+        "price": 1499,
+        "regularPrice": 2199,
+        "specialPrice": 1499,
+        "oldPrice": 2199
+      },
+      {
+        "name": "10000 mAh",
+        "price": 2499,
+        "regularPrice": 3299,
+        "specialPrice": 2499,
+        "oldPrice": 3299
+      }
+    ],
     "colors": [
       {
         "name": "Yellow",

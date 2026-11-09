@@ -199,6 +199,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   AppState.brands = Storage.getBrands();
   AppState.products = await Storage.loadProducts();
 
+  // Sync official sizes for cached products
+  if (typeof DEFAULT_PRODUCTS !== "undefined" && Array.isArray(DEFAULT_PRODUCTS)) {
+    const defaultMap = new Map(DEFAULT_PRODUCTS.map(p => [p.id, p]));
+    (AppState.products || []).forEach(p => {
+      const def = defaultMap.get(p.id);
+      if (def && Array.isArray(def.sizes) && def.sizes.length > 0 && (!p.sizes || p.sizes.length === 0)) {
+        p.sizes = def.sizes;
+      }
+    });
+  }
+
   // Load cart from LocalStorage
   const savedCart = localStorage.getItem("lashari_cart");
   if (savedCart) {
@@ -244,7 +255,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Keep an already-open storefront in sync when products are changed in another tab/window.
 function syncStorefrontProducts(products) {
-  AppState.products = Array.isArray(products) ? products : Storage.getProducts();
+  let list = Array.isArray(products) ? products : Storage.getProducts();
+  if (typeof DEFAULT_PRODUCTS !== "undefined" && Array.isArray(DEFAULT_PRODUCTS)) {
+    const defaultMap = new Map(DEFAULT_PRODUCTS.map(p => [p.id, p]));
+    (list || []).forEach(p => {
+      const def = defaultMap.get(p.id);
+      if (def && Array.isArray(def.sizes) && def.sizes.length > 0 && (!p.sizes || p.sizes.length === 0)) {
+        p.sizes = def.sizes;
+      }
+    });
+  }
+  AppState.products = list;
   if (typeof renderCategoryStrip === "function") renderCategoryStrip();
   if (typeof renderFilterTabs === "function") renderFilterTabs();
   if (typeof renderBrands === "function") renderBrands();
@@ -1443,8 +1464,12 @@ function openProductQuickView(prodId, event) {
       if (sizeLabelEl) {
         const cat = (prod.category || "").toLowerCase();
         const tit = (prod.title || "").toLowerCase();
-        if (cat.includes("usb") || tit.includes("usb") || cat.includes("power bank") || tit.includes("power bank") || tit.includes("flash") || cat.includes("storage")) {
-          sizeLabelEl.textContent = "Available Capacity / Sizes:";
+        if (cat.includes("power bank") || tit.includes("power bank")) {
+          sizeLabelEl.textContent = "Battery Capacity (mAh):";
+        } else if (cat.includes("usb") || tit.includes("usb") || cat.includes("flash") || tit.includes("flash") || cat.includes("drive")) {
+          sizeLabelEl.textContent = "USB Storage / Capacity:";
+        } else if (cat.includes("cable") || tit.includes("cable")) {
+          sizeLabelEl.textContent = "Available Length:";
         } else {
           sizeLabelEl.textContent = "Available Sizes:";
         }
@@ -1461,6 +1486,7 @@ function openProductQuickView(prodId, event) {
               <button type="button" class="variety-size-btn ${isSel ? 'is-selected' : ''}" onclick="selectProductVariety('${prod.id}', 'size', '${sName.replace(/'/g, "\\'")}', true)">
                 <span>${sName}</span>
                 ${sPrice && sPrice !== prod.price ? `<span style="font-size:11px; opacity:0.8; font-weight:700; margin-left:4px;">(Rs. ${sPrice.toLocaleString()})</span>` : ''}
+                ${isSel ? '<span class="variety-check-badge"><i class="fa-solid fa-check"></i></span>' : ''}
               </button>
             `;
           }).join("");
@@ -1623,8 +1649,13 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
 
   // Show selected variety
   const selectedVariety = getSelectedProductVariety(prod);
+  const catLower = (prod.category || "").toLowerCase();
+  const titLower = (prod.title || "").toLowerCase();
+  const isCap = (catLower.includes("power bank") || titLower.includes("power bank") || catLower.includes("usb") || titLower.includes("usb") || catLower.includes("flash") || titLower.includes("flash") || catLower.includes("drive"));
+  const sizeLabel = isCap ? "Capacity" : "Size";
+
   let varietyText = [];
-  if (selectedVariety.size) varietyText.push(`Size: ${selectedVariety.size}`);
+  if (selectedVariety.size) varietyText.push(`${sizeLabel}: ${selectedVariety.size}`);
   if (selectedVariety.color) varietyText.push(`Color: ${selectedVariety.color}`);
 
   if (varietyInfoEl) {
@@ -1652,10 +1683,13 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
         ${hasSizes ? `
           <div class="order-variety-row-item">
             <span class="order-variety-row-label">${
-              ((prod.category || "").toLowerCase().includes("usb") || (prod.title || "").toLowerCase().includes("usb") ||
-               (prod.category || "").toLowerCase().includes("power bank") || (prod.title || "").toLowerCase().includes("power bank"))
-                ? "Capacity:"
-                : "Size:"
+              (catLower.includes("power bank") || titLower.includes("power bank"))
+                ? "Battery Capacity:"
+                : (catLower.includes("usb") || titLower.includes("usb") || catLower.includes("flash") || titLower.includes("flash") || catLower.includes("drive"))
+                  ? "USB Storage:"
+                  : (catLower.includes("cable") || titLower.includes("cable"))
+                    ? "Cable Length:"
+                    : "Size:"
             }</span>
             <div class="order-variety-pills-wrap">
               ${prod.sizes.map(s => {

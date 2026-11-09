@@ -584,6 +584,35 @@ const AdminController = {
       customBox.style.display = "none";
       if (customInput) customInput.value = "";
     }
+    this.updateSizePresetsForCategory(value === "__custom__" ? (customInput?.value || "") : value);
+  },
+
+  updateSizePresetsForCategory(category = "") {
+    const cat = String(category || "").toLowerCase();
+    const usbRow = document.getElementById("adminPresetRowUsb");
+    const pbRow = document.getElementById("adminPresetRowPowerBank");
+    const otherRow = document.getElementById("adminPresetRowOther");
+    const customInput = document.getElementById("customSizeInput");
+
+    const isPowerBank = cat.includes("power bank") || cat.includes("powerbank") || cat.includes("battery");
+    const isUsb = cat.includes("usb") || cat.includes("flash") || cat.includes("drive") || cat.includes("pendrive");
+    const isCable = cat.includes("cable") || cat.includes("charger") || cat.includes("wire");
+
+    if (usbRow) usbRow.style.display = (isUsb || (!isPowerBank && !isCable)) ? "flex" : "none";
+    if (pbRow) pbRow.style.display = (isPowerBank || (!isUsb && !isCable)) ? "flex" : "none";
+    if (otherRow) otherRow.style.display = (!isPowerBank && !isUsb) ? "flex" : "none";
+
+    if (customInput) {
+      if (isPowerBank) {
+        customInput.placeholder = "e.g. 5000 mAh, 10000 mAh, 20000 mAh";
+      } else if (isUsb) {
+        customInput.placeholder = "e.g. 32 GB, 64 GB, 128 GB, 256 GB";
+      } else if (isCable) {
+        customInput.placeholder = "e.g. 1 Meter, 2 Meter, 3 Meter";
+      } else {
+        customInput.placeholder = "e.g. 64 GB, 20000 mAh, 1 Meter";
+      }
+    }
   },
 
   renderAdminVarieties(selectedSizes = [], selectedColors = [], basePrice = 0) {
@@ -720,6 +749,22 @@ const AdminController = {
   },
 
   addSizePreset(name) {
+    const formCat = document.getElementById("prodFormCategory");
+    let cat = (formCat ? formCat.value : "").toLowerCase();
+    if (cat === "__custom__") {
+      cat = (document.getElementById("prodFormCustomCategory")?.value || "").toLowerCase();
+    }
+    const nameLower = String(name || "").toLowerCase();
+
+    if ((cat.includes("power bank") || cat.includes("battery")) && (nameLower.includes("gb") || nameLower.includes("tb"))) {
+      showToast("Power Bank mein mAh hota hai, GB nahi! Please select mAh preset.", "error");
+      return;
+    }
+    if ((cat.includes("usb") || cat.includes("flash") || cat.includes("pendrive")) && nameLower.includes("mah")) {
+      showToast("USB Flash Drive mein GB hota hai, mAh nahi! Please select GB preset.", "error");
+      return;
+    }
+
     this.appendSizeRow(name, '', '');
     showToast(`Added "${name}". Ab Price aur Special Price enter karein!`, "success");
     const container = document.getElementById("adminSizesContainer");
@@ -742,6 +787,25 @@ const AdminController = {
       nameInp.focus();
       return;
     }
+
+    const formCat = document.getElementById("prodFormCategory");
+    let cat = (formCat ? formCat.value : "").toLowerCase();
+    if (cat === "__custom__") {
+      cat = (document.getElementById("prodFormCustomCategory")?.value || "").toLowerCase();
+    }
+    const nameLower = name.toLowerCase();
+
+    if ((cat.includes("power bank") || cat.includes("battery")) && (nameLower.includes("gb") || nameLower.includes("tb"))) {
+      showToast("Power Bank mein mAh hota hai, GB nahi! e.g. 10000 mAh ya 20000 mAh likhein.", "error");
+      nameInp.focus();
+      return;
+    }
+    if ((cat.includes("usb") || cat.includes("flash") || cat.includes("pendrive")) && nameLower.includes("mah")) {
+      showToast("USB Flash Drive mein GB hota hai, mAh nahi! e.g. 64 GB ya 128 GB likhein.", "error");
+      nameInp.focus();
+      return;
+    }
+
     const basePrice = parseInt(document.getElementById("prodFormPrice")?.value, 10) || 0;
     const price = (priceInp && priceInp.value && !isNaN(parseInt(priceInp.value, 10))) ? parseInt(priceInp.value, 10) : basePrice;
     const specialPrice = (specialPriceInp && specialPriceInp.value && !isNaN(parseInt(specialPriceInp.value, 10))) ? parseInt(specialPriceInp.value, 10) : null;
@@ -849,11 +913,6 @@ const AdminController = {
     container.appendChild(label);
     nameInput.value = "";
     showToast(`Added color "${name}"`, "success");
-  },
-
-  getSelectedSizesFromForm() {
-    const checked = document.querySelectorAll("#adminSizesContainer .admin-size-checkbox:checked");
-    return Array.from(checked).map(inp => inp.value.trim()).filter(Boolean);
   },
 
   getSelectedColorsFromForm() {
@@ -993,6 +1052,8 @@ const AdminController = {
       this.addImageUrlField("");
       this.renderAdminVarieties([], []);
     }
+
+    this.updateSizePresetsForCategory(formCat?.value || "");
 
     box.style.display = "block";
     box.scrollIntoView({ behavior: "smooth", block: "nearest" });
