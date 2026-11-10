@@ -736,11 +736,11 @@ const AdminController = {
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <div style="display:flex; align-items:center; gap:5px;">
           <span style="font-size:11px; color:#879b8a; font-weight:700;">Price: Rs.</span>
-          <input type="number" class="admin-size-price-input" value="${price !== '' ? price : ''}" placeholder="Selling Price" min="0" step="10" style="width:105px; background:#0d110e; border:1px solid #3c5440; color:#fff; font-weight:700; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
+          <input type="number" class="admin-size-price-input" value="${price !== '' ? price : ''}" placeholder="Selling Price" min="0" step="1" style="width:105px; background:#0d110e; border:1px solid #3c5440; color:#fff; font-weight:700; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
         </div>
         <div style="display:flex; align-items:center; gap:5px;">
           <span style="font-size:11px; color:#d8ff55; font-weight:700;">Special Price: Rs.</span>
-          <input type="number" class="admin-size-special-price-input" value="${specialPrice !== '' ? specialPrice : ''}" placeholder="Offer Price (Opt)" min="0" step="10" style="width:115px; background:#0d110e; border:1px solid #3c5440; color:#d8ff55; font-weight:800; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
+          <input type="number" class="admin-size-special-price-input" value="${specialPrice !== '' ? specialPrice : ''}" placeholder="Offer Price (Opt)" min="0" step="1" style="width:115px; background:#0d110e; border:1px solid #3c5440; color:#d8ff55; font-weight:800; font-size:12px; padding:6px 8px; border-radius:6px; box-sizing:border-box;">
         </div>
         <button type="button" onclick="AdminController.removeSizeRow(this)" style="background:#2b151a; border:1px solid #5c202a; color:#ff6b8b; width:26px; height:26px; border-radius:6px; cursor:pointer; display:grid; place-items:center; font-size:11px; line-height:1;" title="Remove size">✕</button>
       </div>
@@ -1728,9 +1728,7 @@ const AdminController = {
     }
 
     const setForm = document.getElementById("adminSettingsForm");
-    if (setForm) {
-      setForm.addEventListener("submit", (e) => this.saveSettings(e));
-    }
+    // Form already has onsubmit="AdminController.saveSettings(event)", avoid double-submitting
 
     // Section Visibility Live Checkbox Listeners
     const visCheckboxes = [
