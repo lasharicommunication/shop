@@ -8,8 +8,8 @@
     "compatibleModels": [
       "Universal Device Compatibility"
     ],
-    "price": 1490,
-    "oldPrice": 4200,
+    "price": 1499,
+    "oldPrice": 4299,
     "isOnSale": true,
     "rating": 4.8,
     "reviewsCount": 88,
@@ -17,10 +17,10 @@
     "sizes": [
       {
         "name": "smartwatch",
-        "price": 1490,
-        "regularPrice": 1490,
-        "specialPrice": 4200,
-        "oldPrice": 4200
+        "price": 1499,
+        "regularPrice": 1499,
+        "specialPrice": 4299,
+        "oldPrice": 4299
       }
     ],
     "colors": [
