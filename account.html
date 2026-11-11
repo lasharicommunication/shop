@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Account · Lashari Communication</title>
-  <meta name="description" content="Sign In or Create an Account at Lashari Communication to track your orders and enjoy seamless shopping.">
+  <title>Customer Account &amp; Order History · Lashari Communication</title>
+  <meta name="description" content="Sign In or Create an Account at Lashari Communication to manage your profile, view order history, and track real-time delivery status.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.lasharicommunication.com/account">
+
+  <!-- Favicon & Icons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Lashari Communication">
+  <meta property="og:url" content="https://www.lasharicommunication.com/account">
+  <meta property="og:title" content="Customer Account · Lashari Communication">
+  <meta property="og:description" content="Sign in or create your customer account to view orders and track courier delivery.">
+  <meta property="og:image" content="https://www.lasharicommunication.com/images/og-image.jpg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
@@ -13,7 +31,7 @@
   <!-- Supabase Cloud SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <link rel="stylesheet" href="css/style.css?v=8.9">
+  <link rel="stylesheet" href="css/style.css?v=9.0">
 </head>
 <body class="account-page-body">
 
@@ -24,7 +42,8 @@
   <header class="account-page-header">
     <div class="account-header-inner">
       <a href="index.html" class="brand" aria-label="Lashari Communication Home">
-        Lashari Communication<span class="brand-dot">.</span>
+        <img src="images/logo.png" alt="Lashari Communication Logo" class="brand-logo" width="36" height="36" loading="eager">
+        <span>Lashari Communication<span class="brand-dot">.</span></span>
       </a>
       <a href="index.html" class="account-back-link" title="Return to store">
         <i class="fa-solid fa-arrow-left"></i> <span class="back-text">Back to Store</span>

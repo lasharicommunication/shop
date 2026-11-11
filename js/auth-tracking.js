@@ -374,7 +374,8 @@ const CustomerAuth = {
     if (activeTab === "signup") {
       container.innerHTML = `
         <div class="auth-card-brand">
-          Lashari Communication <span class="auth-card-brand-icon">📱</span>
+          <img src="images/logo.png" alt="LC" class="auth-brand-logo" width="22" height="22">
+          <span>Lashari Communication</span>
         </div>
         <h2 class="auth-card-title">Create an account</h2>
         <p class="auth-card-subtitle">Enter your username, email, and password to register.</p>
@@ -417,7 +418,8 @@ const CustomerAuth = {
     // LOG IN VIEW (MATCHING USER UPLOADED DESIGN)
     container.innerHTML = `
       <div class="auth-card-brand">
-        Lashari Communication <span class="auth-card-brand-icon">📱</span>
+        <img src="images/logo.png" alt="LC" class="auth-brand-logo" width="22" height="22">
+        <span>Lashari Communication</span>
       </div>
       <h2 class="auth-card-title">Welcome back</h2>
       <p class="auth-card-subtitle">Enter your username or email and password to log in.</p>

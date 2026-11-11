@@ -1,8 +1,10 @@
 User-agent: *
 Allow: /
+Allow: /images/
+Allow: /css/
+Allow: /js/
 Disallow: /portalsafe.html
 Disallow: /api/
 Disallow: /data/
 
 Sitemap: https://www.lasharicommunication.com/sitemap.xml
-

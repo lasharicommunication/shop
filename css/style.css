@@ -153,17 +153,39 @@ svg {
 }
 .brand {
   font-family: var(--display);
-  font-size: clamp(28px, 2.7vw, 42px);
+  font-size: clamp(22px, 2.4vw, 38px);
   font-weight: 800;
   letter-spacing: -.04em;
   line-height: 1.05;
   display: inline-flex;
   align-items: center;
+  gap: 12px;
   white-space: nowrap;
-  max-width: 46%;
+  max-width: 52%;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 1;
+}
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: block;
+}
+.footer-logo {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.auth-brand-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: cover;
+  vertical-align: middle;
+  display: inline-block;
 }
 .brand-dot { color: #90bd00; }
 .desktop-nav { display: flex; align-items: center; gap: 36px; margin-left: 6%; }
