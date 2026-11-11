@@ -70,11 +70,11 @@
           <span id="favoritesCount" class="count-badge" hidden>0</span>
         </button>
 
-        <!-- CUSTOMER ACCOUNT / SIGN IN -->
-        <button id="accountToggleBtn" class="icon-button account-button" onclick="openAuthModal()" aria-label="Sign In / My Account" title="Sign In / My Account">
+        <!-- CUSTOMER ACCOUNT / SIGN IN (DEDICATED PAGE) -->
+        <a href="account.html" id="accountToggleBtn" class="icon-button account-button" aria-label="Sign In / My Account" title="Sign In / My Account">
           <i class="fa-regular fa-user" aria-hidden="true" style="font-size:16px;"></i>
           <span id="accountLoggedInDot" class="account-active-dot" hidden></span>
-        </button>
+        </a>
 
         <!-- SHOPPING BAG -->
         <button id="bagToggle" class="bag-button" aria-label="Open shopping bag">
@@ -100,7 +100,7 @@
       <a href="#categories">Categories</a>
       <a href="#brands">Mobile Covers</a>
       <a href="javascript:void(0)" onclick="openTrackOrderModal(); document.getElementById('mobileNav').hidden=true;"><i class="fa-solid fa-truck-fast"></i> Track Order 📦</a>
-      <a href="javascript:void(0)" onclick="openAuthModal(); document.getElementById('mobileNav').hidden=true;" id="mobileAuthLink"><i class="fa-regular fa-user"></i> Sign In / Create Account 👤</a>
+      <a href="account.html" id="mobileAuthLink"><i class="fa-regular fa-user"></i> Sign In / Create Account 👤</a>
       <a href="#locationSection">Store Location</a>
       <a href="#about">Our vibe</a>
     </nav>
@@ -1184,16 +1184,6 @@
     </div>
   </dialog>
 
-  <!-- CUSTOMER AUTH MODAL (SIGN IN / CREATE ACCOUNT / PROFILE) -->
-  <dialog id="authDialog" class="auth-dialog-modal" aria-labelledby="authDialogTitle">
-    <div class="auth-clean-card">
-      <button type="button" class="auth-clean-close" onclick="closeAuthModal()" aria-label="Close modal">✕</button>
-      <div id="authModalBody">
-        <!-- Rendered dynamically by CustomerAuth.renderAuthModalContent() -->
-      </div>
-    </div>
-  </dialog>
-
   <!-- SCROLL TO TOP BUTTON (FLOATING) -->
   <button type="button" 
           id="scrollToTopBtn" 
@@ -1221,7 +1211,7 @@
 
   <!-- STORE SCRIPTS -->
   <script src="js/data.js?v=8.4"></script>
-  <script src="js/auth-tracking.js?v=8.5"></script>
+  <script src="js/auth-tracking.js?v=8.7"></script>
   <script src="js/app.js?v=8.6"></script>
 </body>
 </html>

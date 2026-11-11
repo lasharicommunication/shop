@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account · Lashari Communication</title>
+  <meta name="description" content="Sign In or Create an Account at Lashari Communication to track your orders and enjoy seamless shopping.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Supabase Cloud SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link rel="stylesheet" href="css/style.css?v=8.7">
+</head>
+<body class="account-page-body">
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- MINIMAL HEADER -->
+  <header class="account-page-header">
+    <div class="account-header-inner">
+      <a href="index.html" class="brand" aria-label="Lashari Communication Home">
+        Lashari Communication<span class="brand-dot">.</span>
+      </a>
+      <a href="index.html" class="account-back-link" title="Return to store">
+        <i class="fa-solid fa-arrow-left"></i> Back to Store
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN ACCOUNT CARD SECTION -->
+  <main class="account-page-container">
+    <div class="account-card-wrap">
+      <div class="auth-clean-card">
+        <a href="index.html" class="auth-clean-close" aria-label="Back to store" title="Back to store">✕</a>
+        <div id="authModalBody">
+          <!-- Rendered dynamically by CustomerAuth.renderAuthModalContent() -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- TRACK ORDER DIALOG (FOR ORDER DASHBOARD TRACKING) -->
+  <dialog id="trackOrderDialog" class="order-dialog track-order-dialog" aria-labelledby="trackOrderTitle">
+    <div class="order-dialog-card">
+      <div class="order-dialog-header">
+        <div>
+          <span class="order-dialog-kicker">EXPRESS COURIER TRACKING</span>
+          <h2 id="trackOrderTitle" class="order-dialog-title">Track Your Order 📦</h2>
+        </div>
+        <button type="button" class="order-dialog-close" onclick="closeTrackOrderModal()" aria-label="Close tracking modal">✕</button>
+      </div>
+
+      <div class="track-order-body">
+        <p class="track-order-intro">
+          Enter your <strong>Order ID</strong> (e.g. <code>498907</code>) or the phone number used during checkout:
+        </p>
+
+        <form onsubmit="handleTrackFormSubmit(event)" class="track-search-form">
+          <div class="track-input-wrap">
+            <i class="fa-solid fa-magnifying-glass track-search-icon"></i>
+            <input type="text" id="trackOrderIdInput" class="track-input" placeholder="e.g. 498907 or 03212920914" required autocomplete="off">
+            <button type="submit" class="button button-lime track-submit-btn">
+              Track ↗
+            </button>
+          </div>
+        </form>
+
+        <div id="trackResultContainer" class="track-result-container" style="display:none;"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- SCRIPTS -->
+  <script src="js/data.js?v=8.4"></script>
+  <script src="js/auth-tracking.js?v=8.7"></script>
+  <script>
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add("toast-show");
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove("toast-show");
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

@@ -52,12 +52,27 @@ const CustomerAuth = {
     LashariSupabase.init();
     this.updateHeaderUI();
     this.setupListeners();
+
+    // Auto-render if on dedicated account page
+    const authBody = document.getElementById("authModalBody");
+    if (authBody && !document.getElementById("authDialog")) {
+      const isSignup = window.location.hash === "#signup";
+      this.renderAuthModalContent(isSignup ? "signup" : "signin");
+    }
   },
 
   setupListeners() {
     window.addEventListener("lashari:auth-changed", () => {
       this.updateHeaderUI();
       this.renderAuthModalContent();
+    });
+
+    window.addEventListener("hashchange", () => {
+      const authBody = document.getElementById("authModalBody");
+      if (authBody && !document.getElementById("authDialog")) {
+        const isSignup = window.location.hash === "#signup";
+        this.renderAuthModalContent(isSignup ? "signup" : "signin");
+      }
     });
   },
 
@@ -427,8 +442,8 @@ const CustomerAuth = {
       </form>
 
       <p class="auth-clean-footer-text">
-        Don't have an account? 
-        <a href="javascript:void(0)" onclick="CustomerAuth.renderAuthModalContent('signup')" class="auth-clean-link">Sign up</a>
+        New to website? 
+        <a href="javascript:void(0)" onclick="CustomerAuth.renderAuthModalContent('signup')" class="auth-clean-link">Create account</a>
       </p>
     `;
   },
@@ -675,14 +690,17 @@ const OrderTracker = {
 };
 
 // Global Helpers & Modal Opener Bindings
-function openAuthModal(tab = "signup") {
+function openAuthModal(tab = "signin") {
   const dialog = document.getElementById("authDialog");
-  if (!dialog) return;
-  CustomerAuth.renderAuthModalContent(tab);
-  if (typeof dialog.showModal === "function") {
-    dialog.showModal();
+  if (dialog) {
+    CustomerAuth.renderAuthModalContent(tab);
+    if (typeof dialog.showModal === "function") {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute("open", "");
+    }
   } else {
-    dialog.setAttribute("open", "");
+    window.location.href = "account.html" + (tab === "signup" ? "#signup" : "");
   }
 }
 

@@ -6443,6 +6443,74 @@ html:has(dialog.order-dialog[open]) {
   border-color: #fca5a5;
 }
 
+/* ==========================================================================
+   DEDICATED ACCOUNT PAGE STYLES
+   ========================================================================== */
+.account-page-body {
+  background: #f6f6f1;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-page-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 16px 24px;
+}
+
+.account-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.account-page-header .brand {
+  font-family: var(--display, 'Manrope', sans-serif);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 800;
+  color: #171a18;
+  text-decoration: none;
+}
+
+.account-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #171a18;
+  text-decoration: none;
+  background: #f1f5f9;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.account-back-link:hover {
+  background: #e2e8f0;
+  transform: translateX(-2px);
+}
+
+.account-page-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+}
+
+.account-page-container .auth-clean-card {
+  max-width: 440px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
 
 
 
