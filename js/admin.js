@@ -1678,23 +1678,35 @@ const AdminController = {
   },
 
   async testSupabaseConnection(btn) {
-    const url = document.getElementById("setSupabaseUrl")?.value.trim();
-    const anonKey = document.getElementById("setSupabaseAnonKey")?.value.trim();
+    let url = document.getElementById("setSupabaseUrl")?.value.trim() || "";
+    let anonKey = document.getElementById("setSupabaseAnonKey")?.value.trim() || "";
     const statusEl = document.getElementById("supabaseTestStatus");
+
+    // Clean URL: strip quotes and trailing slashes
+    url = url.replace(/^['"]|['"]$/g, "").replace(/\/+$/, "");
+    if (url && !url.startsWith("http://") && !url.startsWith("https://")) {
+      url = "https://" + url;
+      const urlInput = document.getElementById("setSupabaseUrl");
+      if (urlInput) urlInput.value = url;
+    }
+
+    // Clean Key: strip quotes and spaces
+    anonKey = anonKey.replace(/^['"]|['"]$/g, "").replace(/\s+/g, "");
 
     if (!url || !anonKey) {
       showToast("Pehle Supabase Project URL aur Anon Key enter karein.", "warning");
-      if (statusEl) statusEl.innerHTML = '<span style="color:#facc15;">URL aur Key required hain</span>';
+      if (statusEl) statusEl.innerHTML = '<span style="color:#facc15;"><i class="fa-solid fa-circle-exclamation"></i> URL aur Key required hain</span>';
       return;
     }
 
     const originalText = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Testing...';
-    if (statusEl) statusEl.innerText = "Connecting to Supabase...";
+    if (statusEl) statusEl.innerText = "Checking Supabase connection...";
 
     try {
-      const pingUrl = `${url.replace(/\/$/, "")}/rest/v1/`;
+      // Test authentication key against PostgREST endpoint
+      const pingUrl = `${url}/rest/v1/?apikey=${encodeURIComponent(anonKey)}`;
       const res = await fetch(pingUrl, {
         headers: {
           apikey: anonKey,
@@ -1702,16 +1714,25 @@ const AdminController = {
         }
       });
 
-      if (res.ok || res.status === 200 || res.status === 404) {
+      const bodyText = await res.text().catch(() => "");
+      let bodyJson = null;
+      try { bodyJson = JSON.parse(bodyText); } catch (_) {}
+
+      if (res.ok || res.status === 200 || res.status === 204) {
         showToast("Supabase connection successful! 🎉", "success");
-        if (statusEl) statusEl.innerHTML = '<span style="color:#4ade80;"><i class="fa-solid fa-circle-check"></i> Connected successfully!</span>';
+        if (statusEl) statusEl.innerHTML = '<span style="color:#4ade80;"><i class="fa-solid fa-circle-check"></i> Connected successfully! (URL &amp; Anon Key Valid)</span>';
+      } else if (res.status === 401) {
+        showToast("Supabase 401: Anon Key ghalat hai. Settings > API se 'anon public' key copy karein.", "error");
+        if (statusEl) {
+          statusEl.innerHTML = `<span style="color:#f87171;"><i class="fa-solid fa-triangle-exclamation"></i> <b>Error 401 (Invalid Key):</b> Project URL sahi hai, lekin <b>Anon Key</b> match nahi hui. Supabase Dashboard mein <i>Project Settings &gt; API &gt; 'anon' 'public'</i> key copy karein (jo eyJ se shuru hoti hai).</span>`;
+        }
       } else {
-        showToast("Supabase response status: " + res.status, "warning");
-        if (statusEl) statusEl.innerHTML = `<span style="color:#facc15;">Response: HTTP ${res.status}</span>`;
+        showToast(`Supabase response: HTTP ${res.status}`, "warning");
+        if (statusEl) statusEl.innerHTML = `<span style="color:#facc15;">Response: HTTP ${res.status} (${bodyJson?.message || bodyText.slice(0, 80)})</span>`;
       }
     } catch (err) {
       showToast("Connection failed: " + err.message, "error");
-      if (statusEl) statusEl.innerHTML = `<span style="color:#f87171;">Error: ${err.message}</span>`;
+      if (statusEl) statusEl.innerHTML = `<span style="color:#f87171;">Connection error: ${err.message}</span>`;
     } finally {
       btn.disabled = false;
       btn.innerHTML = originalText;
