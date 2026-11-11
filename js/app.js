@@ -1957,7 +1957,7 @@ function handleOrderFormSubmit(e) {
     success.innerHTML = `
       <div class="order-success-icon">✓</div>
       <h3>Order Placed!</h3>
-      <p style="margin-bottom:12px;">Shukriya ${name}! Aapka order receive ho gaya hai.</p>
+      <p style="margin-bottom:12px;">Thank you ${name}! Your order has been placed successfully.</p>
       <div style="background:#f4f6ee; border:1px solid #dbe2cc; border-radius:10px; padding:12px; margin-bottom:16px; text-align:left; font-size:12px; color:#2d3a27;">
         <div><strong>Total Payable:</strong> Rs. ${total.toLocaleString()} (${payment})</div>
         <div style="margin-top:4px; color:#607358;">Items: ${orderItems.map(i => `${i.qty}x ${i.title}${i.size ? ` (${i.size})` : ''}${i.color ? ` (${i.color})` : ''}`).join(", ")}</div>
