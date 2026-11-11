@@ -309,14 +309,10 @@ const CustomerAuth = {
           </div>
         </div>
 
-        <div class="auth-clean-stats-row">
+        <div class="auth-clean-stats-row" style="grid-template-columns: 1fr;">
           <div class="auth-clean-stat">
             <span class="auth-clean-stat-val">${myOrders.length}</span>
             <span class="auth-clean-stat-lbl">Orders Placed</span>
-          </div>
-          <div class="auth-clean-stat">
-            <span class="auth-clean-stat-val">Rs. ${myOrders.reduce((sum, o) => sum + (o.total || 0), 0).toLocaleString()}</span>
-            <span class="auth-clean-stat-lbl">Total Spent</span>
           </div>
         </div>
 
