@@ -322,7 +322,7 @@ const CustomerAuth = {
           </h4>
           ${myOrders.length === 0 ? `
             <div style="text-align:center; padding:18px 0; color:#64748b; font-size:13px;">
-              <p style="margin:0 0 10px;">Abhi tak koi order place nahi hua.</p>
+              <p style="margin:0 0 10px;">No orders placed yet.</p>
               <button type="button" class="auth-primary-btn" style="margin:0 auto; width:fit-content; padding:8px 18px; font-size:13px;" onclick="closeAuthModal(); location.hash='#collection';">Explore Store ↗</button>
             </div>
           ` : `
@@ -541,7 +541,7 @@ const OrderTracker = {
       resultBox.innerHTML = `
         <div class="track-alert warning">
           <i class="fa-solid fa-circle-exclamation"></i>
-          <span>Order ID ya Mobile Number enter karein (maslan <b>498907</b>).</span>
+          <span>Please enter your Order ID or phone number (e.g. <b>498907</b>).</span>
         </div>
       `;
       resultBox.style.display = "block";
@@ -555,11 +555,11 @@ const OrderTracker = {
         <div class="track-alert error">
           <i class="fa-solid fa-triangle-exclamation"></i>
           <div>
-            <strong>Order nahi mila (#${escapeHtml(query)})</strong>
+            <strong>Order not found (#${escapeHtml(query)})</strong>
             <p style="margin:4px 0 0; font-size:12px; color:#cbd5e1;">
-              Barah-e-karam apna Order ID ya wo phone number check karein jo order karte waqt diya tha. Agar madad chahiye to hamare WhatsApp par rabta karein.
+              Please check your Order ID or phone number used during checkout. Contact us on WhatsApp if you need help.
             </p>
-            <a href="https://wa.me/923212920914?text=Salam!%20Mera%20Order%20${encodeURIComponent(query)}%20track%20nahi%20ho%20raha." target="_blank" class="button button-ghost button-sm" style="margin-top:10px; width:fit-content;">
+            <a href="https://wa.me/923212920914?text=Hi!%20I%20am%20trying%20to%20track%20my%20order%20${encodeURIComponent(query)}." target="_blank" class="button button-ghost button-sm" style="margin-top:10px; width:fit-content;">
               <i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> WhatsApp Support
             </a>
           </div>
@@ -602,7 +602,7 @@ const OrderTracker = {
         ${isCancelled ? `
           <div class="track-cancelled-notice">
             <i class="fa-solid fa-ban"></i>
-            <span>Yeh order cancel kiya ja chuka hai. Mazeed maloomat ke liye helpline par rabta karein.</span>
+            <span>This order has been cancelled. For further assistance, please contact our support helpline.</span>
           </div>
         ` : `
           <!-- STEP TRACKER TIMELINE -->
