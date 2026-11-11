@@ -1,5 +1,52 @@
 [
   {
+    "id": "prod-1794421222155",
+    "title": "26 cm LED Ring Light with 7 Feet Tripod Stand & Metal Mobile Holder (3 Color Shades)",
+    "category": "Ring Light & Tripod",
+    "brand": "apple",
+    "brandName": "Apple",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1389,
+    "oldPrice": 2199,
+    "isOnSale": true,
+    "rating": 4.9,
+    "reviewsCount": 44,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "7 feet long stand with ringlight",
+        "price": 1389,
+        "regularPrice": 2199,
+        "specialPrice": 1389,
+        "oldPrice": 2199
+      },
+      {
+        "name": "Ringlight",
+        "price": 599,
+        "regularPrice": 799,
+        "specialPrice": 599,
+        "oldPrice": 799
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/PxbvGhkW/images-(32).jpg",
+    "images": [
+      "https://i.postimg.cc/PxbvGhkW/images-(32).jpg",
+      "https://i.postimg.cc/MGQjDVPg/images-(31).jpg",
+      "https://i.postimg.cc/Fsr34fzn/light-26cm.webp"
+    ],
+    "description": "Elevate your lighting setup for photography, video streaming, makeup tutorials, and content creation with this 26 cm LED Ring Light Kit. Paired with an adjustable height stand and dynamic lighting options, it delivers professional-level illumination right at home."
+  },
+  {
     "id": "prod-1794414375207",
     "title": "DOLPHIN Fast Charging USB to Type-C Cable (White, 2.4A Output, Durable Design)",
     "category": "Cables",
