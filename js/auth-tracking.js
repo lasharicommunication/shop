@@ -513,7 +513,7 @@ const OrderTracker = {
 
     const orders = typeof Storage !== "undefined" ? Storage.getOrders() : [];
 
-    // Exact ID Match (#ORD-498907 or ORD-498907 or 498907)
+    // Exact ID Match (#498907 or 498907 or legacy ORD-498907)
     let found = orders.find(o => {
       if (!o || !o.id) return false;
       const oId = String(o.id).toUpperCase();
@@ -541,7 +541,7 @@ const OrderTracker = {
       resultBox.innerHTML = `
         <div class="track-alert warning">
           <i class="fa-solid fa-circle-exclamation"></i>
-          <span>Order ID ya Mobile Number enter karein (maslan <b>ORD-498907</b>).</span>
+          <span>Order ID ya Mobile Number enter karein (maslan <b>498907</b>).</span>
         </div>
       `;
       resultBox.style.display = "block";

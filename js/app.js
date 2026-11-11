@@ -1912,7 +1912,7 @@ function handleOrderFormSubmit(e) {
     : [{ title: prod.title, qty: qty, price: curPrice, size: selectedVariety.size || null, color: selectedVariety.color || null }];
 
   const newOrder = {
-    id: `ORD-${Date.now().toString().slice(-6)}`,
+    id: `${Math.floor(100000 + Math.random() * 900000)}`,
     customerName: name,
     phone: phone,
     email: email,
