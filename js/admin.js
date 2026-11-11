@@ -211,7 +211,14 @@ const AdminController = {
   },
 
   // Save Quick Contact directly from Overview
-  saveQuickContact() {
+  async saveQuickContact() {
+    const saveBtn = document.querySelector(".admin-quick-save-btn");
+    if (saveBtn) {
+      if (saveBtn.disabled) return;
+      saveBtn.disabled = true;
+      saveBtn.innerText = "Saving...";
+    }
+
     const address = document.getElementById("quickShopAddress")?.value.trim() || "";
     const email = document.getElementById("quickShopEmail")?.value.trim() || "";
     const phone = document.getElementById("quickShopPhone")?.value.trim() || "";
@@ -219,6 +226,10 @@ const AdminController = {
     let mapUrl = document.getElementById("quickGoogleMapsUrl")?.value.trim() || "";
 
     if (!address) {
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerText = "Save Quick Info ↗";
+      }
       showToast("Please provide the physical shop address!", "error");
       return;
     }
@@ -248,7 +259,6 @@ const AdminController = {
       whatsapp: cleanWhatsapp
     };
 
-    Storage.saveSettings(updated);
     if (window.AppState) AppState.settings = updated;
     if (typeof renderStoreInfo === "function") renderStoreInfo();
     if (typeof renderStoreSettings === "function") renderStoreSettings();
@@ -259,7 +269,21 @@ const AdminController = {
     const setMap = document.getElementById("setGoogleMapsUrl");
     if (setMap) setMap.value = updated.googleMapsUrl;
 
-    showToast("Shop Address, Google Maps link & Contact details saved successfully!", "success");
+    try {
+      const ok = await Storage.saveSettings(updated);
+      if (ok) {
+        showToast("Shop Address, Google Maps link & Contact details saved successfully!", "success");
+      } else {
+        showToast("Settings saved locally! (Syncing globally in background)", "info");
+      }
+    } catch (e) {
+      showToast("Settings saved locally!", "info");
+    } finally {
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerText = "Save Quick Info ↗";
+      }
+    }
   },
 
   // Orders Tab Management & Live Filtering
@@ -1616,6 +1640,13 @@ const AdminController = {
   saveSettings(e) {
     if (e && e.preventDefault) e.preventDefault();
 
+    const submitBtn = document.querySelector(".admin-settings-save-btn");
+    if (submitBtn) {
+      if (submitBtn.disabled) return;
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Saving Settings...";
+    }
+
     const current = Storage.getSettings();
 
     const brandName = document.getElementById("setBrandName")?.value.trim() || current.brandName || "Lashari Communication";
@@ -1714,10 +1745,15 @@ const AdminController = {
       if (ok) {
         showToast("Settings synchronized across all devices!", "success");
       } else {
-        showToast("Settings saved locally! (Syncing globally when server connects)", "success");
+        showToast("Settings saved locally! (Syncing globally in background)", "info");
       }
     }).catch(() => {
-      showToast("Store and brand settings saved!", "success");
+      showToast("Store and brand settings saved locally!", "info");
+    }).finally(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Save Settings ↗";
+      }
     });
   },
 

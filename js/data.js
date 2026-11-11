@@ -1005,30 +1005,36 @@ const Storage = {
       return DEFAULT_SETTINGS;
     }
   },
-  saveSettings: async (settings) => {
+  _settingsSavePromise: Promise.resolve(true),
+  saveSettings: (settings) => {
     localStorage.setItem("lashari_settings", JSON.stringify(settings));
     window.dispatchEvent(new CustomEvent("lashari:settings-updated", { detail: settings }));
 
-    const apiUrl = window.SETTINGS_API_URL || "/api/settings";
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ settings })
-      });
-      if (!response.ok) {
-        let errMessage = `Server error ${response.status}`;
+    Storage._settingsSavePromise = (Storage._settingsSavePromise || Promise.resolve(true))
+      .catch(() => {})
+      .then(async () => {
+        const apiUrl = window.SETTINGS_API_URL || "/api/settings";
         try {
-          const errData = await response.json();
-          if (errData && errData.error) errMessage = errData.error;
-        } catch(e) {}
-        throw new Error(errMessage);
-      }
-      return true;
-    } catch (error) {
-      console.error("Shared settings save failed:", error);
-      return false;
-    }
+          const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ settings })
+          });
+          if (!response.ok) {
+            let errMessage = `Server error ${response.status}`;
+            try {
+              const errData = await response.json();
+              if (errData && errData.error) errMessage = errData.error;
+            } catch(e) {}
+            throw new Error(errMessage);
+          }
+          return true;
+        } catch (error) {
+          console.warn("Shared settings sync warning:", error.message || error);
+          return false;
+        }
+      });
+    return Storage._settingsSavePromise;
   },
   loadSettings: async () => {
     const apiUrl = window.SETTINGS_API_URL || "/api/settings";

@@ -24,7 +24,7 @@ async function githubRequest(path, token, options = {}) {
 function json(res, status, body) {
   res.status(status);
   res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
   res.end(JSON.stringify(body));
 }
 
@@ -45,7 +45,7 @@ module.exports = async function handler(req, res) {
   if (req.method === "GET") {
     try {
       if (token) {
-        const file = await githubRequest(apiPath, token, { headers: { "Cache-Control": "no-cache" } });
+        const file = await githubRequest(apiPath, token, { headers: { "Cache-Control": "no-cache, no-store" } });
         const content = Buffer.from(file.content || "", "base64").toString("utf8");
         return json(res, 200, JSON.parse(content));
       }
@@ -68,7 +68,7 @@ module.exports = async function handler(req, res) {
     return json(res, 200, []);
   }
 
-  // POST: Commit product changes to GitHub repo
+  // POST: Commit product changes to GitHub repo (with auto-retry on 409 conflict)
   if (req.method === "POST") {
     if (!token) {
       return json(res, 500, {
@@ -79,28 +79,40 @@ module.exports = async function handler(req, res) {
     const products = req.body?.products;
     if (!Array.isArray(products)) return json(res, 400, { error: "products must be an array" });
 
-    try {
-      let sha;
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        sha = (await githubRequest(apiPath, token)).sha;
-      } catch (error) {
-        if (!error.message.includes("GitHub API 404")) throw error;
-      }
+        let sha;
+        try {
+          const file = await githubRequest(apiPath, token, {
+            headers: { "Cache-Control": "no-cache, no-store", "Pragma": "no-cache" }
+          });
+          sha = file.sha;
+        } catch (error) {
+          if (!error.message.includes("GitHub API 404")) throw error;
+        }
 
-      await githubRequest(`/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`, token, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: `Update storefront products (${products.length} items)`,
-          content: Buffer.from(JSON.stringify(products, null, 2) + "\n").toString("base64"),
-          branch: BRANCH,
-          ...(sha ? { sha } : {})
-        })
-      });
-      return json(res, 200, { ok: true, products });
-    } catch (error) {
-      console.error("GitHub commit failed:", error);
-      return json(res, 500, { error: `GitHub save failed: ${error.message}` });
+        await githubRequest(`/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`, token, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: `Update storefront products (${products.length} items)`,
+            content: Buffer.from(JSON.stringify(products, null, 2) + "\n").toString("base64"),
+            branch: BRANCH,
+            ...(sha ? { sha } : {})
+          })
+        });
+
+        return json(res, 200, { ok: true, products });
+      } catch (error) {
+        if (error.message.includes("409") && attempt < maxRetries) {
+          console.warn(`Products GitHub 409 conflict (attempt ${attempt}/${maxRetries}), retrying with fresh SHA...`);
+          await new Promise(r => setTimeout(r, 300 * attempt));
+          continue;
+        }
+        console.error("GitHub commit failed:", error);
+        return json(res, 500, { error: `GitHub save failed: ${error.message}` });
+      }
     }
   }
 
