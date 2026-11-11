@@ -1,5 +1,43 @@
 [
   {
+    "id": "prod-1794414373627",
+    "title": "DOLPHIN Fast Charging USB to Type-C Cable (White, 2.4A Output, Durable Design)",
+    "category": "Cables",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 299,
+    "oldPrice": 749,
+    "isOnSale": true,
+    "rating": 4.7,
+    "reviewsCount": 53,
+    "stock": 2500,
+    "sizes": [
+      {
+        "name": "1 Meter",
+        "price": 299,
+        "regularPrice": 749,
+        "specialPrice": 299,
+        "oldPrice": 749
+      }
+    ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#ffffff"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/GmMHxHhV/027770fd96f9617a2413ae14142dee7a.jpg",
+    "images": [
+      "https://i.postimg.cc/GmMHxHhV/027770fd96f9617a2413ae14142dee7a.jpg"
+    ],
+    "description": "Upgrade your daily charging experience with the DOLPHIN Fast Charging USB to Type-C Cable, manufactured by DL-HOOR. Designed for reliability, safety, and performance, this sleek white cable is built to handle your everyday power and data sync needs."
+  },
+  {
     "id": "prod-1794414372965",
     "title": "DOLPHIN Fast Charging USB to Type-C Cable (White, 2.4A Output, Durable Design)",
     "category": "Cables",
