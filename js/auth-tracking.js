@@ -102,8 +102,7 @@ const CustomerAuth = {
     email = (email || "").trim().toLowerCase();
     password = password || "";
 
-    if (!name) throw new Error("Please enter your full name.");
-    if (!phone) throw new Error("Please enter your phone number.");
+    if (!name) throw new Error("Please enter your username.");
     if (!email) throw new Error("Please enter a valid email address.");
     if (password.length < 6) throw new Error("Password must be at least 6 characters long.");
 
@@ -278,144 +277,163 @@ const CustomerAuth = {
     });
   },
 
+  togglePasswordVisibility(inputId, btn) {
+    const el = document.getElementById(inputId);
+    if (!el) return;
+    if (el.type === "password") {
+      el.type = "text";
+      if (btn) btn.textContent = "Hide password";
+    } else {
+      el.type = "password";
+      if (btn) btn.textContent = "Show password";
+    }
+  },
+
   renderAuthModalContent(activeTab = "signin") {
     const container = document.getElementById("authModalBody");
     if (!container) return;
 
     const user = this.getCurrentUser();
 
-    // If already logged in, show Account Dashboard
+    // If already logged in, show Clean Account Dashboard
     if (user) {
       const myOrders = this.getCustomerOrders();
       container.innerHTML = `
-        <div class="auth-account-view">
-          <div class="auth-account-header">
-            <div class="auth-avatar">
-              ${(user.name || "U").slice(0, 1).toUpperCase()}
-            </div>
-            <div class="auth-user-info">
-              <h3 class="auth-user-name">${user.name}</h3>
-              <p class="auth-user-email">${user.email || ""}</p>
-              ${user.phone ? `<p class="auth-user-phone"><i class="fa-solid fa-phone" style="font-size:11px;"></i> ${user.phone}</p>` : ""}
-            </div>
+        <div class="auth-clean-account-header">
+          <div class="auth-clean-avatar">
+            ${(user.name || "U").slice(0, 1).toUpperCase()}
           </div>
-
-          <div class="auth-account-stats">
-            <div class="auth-stat-box">
-              <span class="auth-stat-num">${myOrders.length}</span>
-              <span class="auth-stat-label">Total Orders</span>
-            </div>
-            <div class="auth-stat-box">
-              <span class="auth-stat-num">Rs. ${myOrders.reduce((sum, o) => sum + (o.total || 0), 0).toLocaleString()}</span>
-              <span class="auth-stat-label">Total Spent</span>
-            </div>
-          </div>
-
-          <div class="auth-orders-section">
-            <h4 class="auth-orders-title">
-              <i class="fa-solid fa-box-archive" style="color:var(--lime,#d6f32f);"></i> My Recent Orders
-            </h4>
-            ${myOrders.length === 0 ? `
-              <div class="auth-no-orders">
-                <p>Abhi tak koi order place nahi hua.</p>
-                <button type="button" class="button button-lime button-sm" onclick="closeAuthModal(); location.hash='#collection';">Start Shopping ↗</button>
-              </div>
-            ` : `
-              <div class="auth-orders-list">
-                ${myOrders.map(o => `
-                  <div class="auth-order-card">
-                    <div class="auth-order-top">
-                      <div>
-                        <strong>#${o.id}</strong>
-                        <span class="auth-order-date">${o.date || ""}</span>
-                      </div>
-                      <span class="auth-order-badge status-${(o.status || 'Pending').toLowerCase()}">${o.status || 'Pending'}</span>
-                    </div>
-                    <div class="auth-order-items">
-                      ${(o.items || []).map(i => `${i.qty}x ${i.title}`).join(", ")}
-                    </div>
-                    <div class="auth-order-footer">
-                      <span class="auth-order-total">Rs. ${(o.total || 0).toLocaleString()}</span>
-                      <button type="button" class="button-track-pill" onclick="closeAuthModal(); openTrackOrderModal('${o.id}');">
-                        Track Status 🚚
-                      </button>
-                    </div>
-                  </div>
-                `).join("")}
-              </div>
-            `}
-          </div>
-
-          <div class="auth-account-footer">
-            <button type="button" class="button button-ghost button-sm" onclick="CustomerAuth.handleSignOut()">
-              <i class="fa-solid fa-right-from-bracket"></i> Sign Out
-            </button>
+          <div>
+            <h3 class="auth-clean-user-name">${escapeHtml(user.name)}</h3>
+            <p class="auth-clean-user-sub">${escapeHtml(user.email || "")}</p>
           </div>
         </div>
+
+        <div class="auth-clean-stats-row">
+          <div class="auth-clean-stat">
+            <span class="auth-clean-stat-val">${myOrders.length}</span>
+            <span class="auth-clean-stat-lbl">Orders Placed</span>
+          </div>
+          <div class="auth-clean-stat">
+            <span class="auth-clean-stat-val">Rs. ${myOrders.reduce((sum, o) => sum + (o.total || 0), 0).toLocaleString()}</span>
+            <span class="auth-clean-stat-lbl">Total Spent</span>
+          </div>
+        </div>
+
+        <div class="auth-clean-orders-box">
+          <h4 class="auth-clean-orders-title">
+            <i class="fa-solid fa-box-archive" style="color:#2563eb;"></i> My Recent Orders
+          </h4>
+          ${myOrders.length === 0 ? `
+            <div style="text-align:center; padding:18px 0; color:#64748b; font-size:13px;">
+              <p style="margin:0 0 10px;">Abhi tak koi order place nahi hua.</p>
+              <button type="button" class="auth-primary-btn" style="margin:0 auto; width:fit-content; padding:8px 18px; font-size:13px;" onclick="closeAuthModal(); location.hash='#collection';">Explore Store ↗</button>
+            </div>
+          ` : `
+            <div class="auth-clean-orders-list">
+              ${myOrders.map(o => `
+                <div class="auth-clean-order-item">
+                  <div class="auth-clean-order-top">
+                    <span class="auth-clean-order-id">#${o.id}</span>
+                    <span class="auth-clean-order-badge">${o.status || 'Pending'}</span>
+                  </div>
+                  <div style="color:#64748b; font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    ${(o.items || []).map(i => `${i.qty}x ${i.title}`).join(", ")}
+                  </div>
+                  <div class="auth-clean-order-footer">
+                    <span style="font-weight:700; color:#0f172a;">Rs. ${(o.total || 0).toLocaleString()}</span>
+                    <button type="button" class="auth-clean-track-btn" onclick="closeAuthModal(); openTrackOrderModal('${o.id}');">
+                      Track 🚚
+                    </button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          `}
+        </div>
+
+        <button type="button" class="auth-clean-logout-btn" onclick="CustomerAuth.handleSignOut()">
+          <i class="fa-solid fa-right-from-bracket"></i> Log out
+        </button>
       `;
       return;
     }
 
-    // Tabbed Form for Sign In / Create Account
+    // CREATE AN ACCOUNT VIEW (MATCHING USER UPLOADED DESIGN)
+    if (activeTab === "signup") {
+      container.innerHTML = `
+        <div class="auth-card-brand">
+          Lashari Communication <span class="auth-card-brand-icon">📱</span>
+        </div>
+        <h2 class="auth-card-title">Create an account</h2>
+        <p class="auth-card-subtitle">Enter your username, email, and password to register.</p>
+
+        <div id="authNoticeBox" class="auth-clean-alert" style="display:none;"></div>
+
+        <form id="signUpForm" onsubmit="CustomerAuth.handleSignUpSubmit(event)" class="auth-clean-form">
+          <div class="auth-clean-field">
+            <label class="auth-clean-label">Username</label>
+            <input type="text" id="authRegName" placeholder="e.g. ali123" class="auth-clean-input" required autocomplete="username">
+            <span class="auth-clean-hint">3–24 characters, letters, numbers, and underscores only.</span>
+          </div>
+
+          <div class="auth-clean-field">
+            <label class="auth-clean-label">Email</label>
+            <input type="email" id="authRegEmail" placeholder="you@gmail.com" class="auth-clean-input" required autocomplete="email">
+            <span class="auth-clean-hint">Allowed domains: gmail.com, outlook.com, yahoo.com, hotmail.com, icloud.com</span>
+          </div>
+
+          <div class="auth-clean-field">
+            <label class="auth-clean-label">Password</label>
+            <input type="password" id="authRegPass" placeholder="••••••••" class="auth-clean-input" minlength="6" required autocomplete="new-password">
+            <span class="auth-clean-hint">At least 6 characters.</span>
+            <button type="button" class="auth-toggle-pass-btn" onclick="CustomerAuth.togglePasswordVisibility('authRegPass', this)">Show password</button>
+          </div>
+
+          <button type="submit" id="btnSignUpSubmit" class="auth-primary-btn">
+            Sign up
+          </button>
+        </form>
+
+        <p class="auth-clean-footer-text">
+          Already have an account? 
+          <a href="javascript:void(0)" onclick="CustomerAuth.renderAuthModalContent('signin')" class="auth-clean-link">Log in</a>
+        </p>
+      `;
+      return;
+    }
+
+    // LOG IN VIEW (MATCHING USER UPLOADED DESIGN)
     container.innerHTML = `
-      <div class="auth-tabs-nav">
-        <button type="button" class="auth-tab-btn ${activeTab === 'signin' ? 'active' : ''}" onclick="CustomerAuth.renderAuthModalContent('signin')">
-          Sign In
-        </button>
-        <button type="button" class="auth-tab-btn ${activeTab === 'signup' ? 'active' : ''}" onclick="CustomerAuth.renderAuthModalContent('signup')">
-          Create Account
-        </button>
+      <div class="auth-card-brand">
+        Lashari Communication <span class="auth-card-brand-icon">📱</span>
       </div>
+      <h2 class="auth-card-title">Welcome back</h2>
+      <p class="auth-card-subtitle">Enter your username or email and password to log in.</p>
 
-      <div id="authNoticeBox" class="auth-notice-box" style="display:none;"></div>
+      <div id="authNoticeBox" class="auth-clean-alert" style="display:none;"></div>
 
-      ${activeTab === 'signin' ? `
-        <!-- SIGN IN FORM -->
-        <form id="signInForm" onsubmit="CustomerAuth.handleSignInSubmit(event)" class="auth-form">
-          <div class="auth-field">
-            <label class="auth-label">Email or Phone Number</label>
-            <input type="text" id="authLoginInput" placeholder="name@example.com ya 03212920914" class="auth-input" required autocomplete="username">
-          </div>
-          <div class="auth-field">
-            <label class="auth-label">Password</label>
-            <input type="password" id="authPassInput" placeholder="Enter your password" class="auth-input" required autocomplete="current-password">
-          </div>
-          <button type="submit" id="btnSignInSubmit" class="button button-lime auth-submit-btn">
-            Sign In ↗
-          </button>
-          <p class="auth-switch-text">
-            Naye customer hain? 
-            <a href="javascript:void(0)" onclick="CustomerAuth.renderAuthModalContent('signup')" class="auth-link">Create an account here</a>
-          </p>
-        </form>
-      ` : `
-        <!-- CREATE ACCOUNT FORM -->
-        <form id="signUpForm" onsubmit="CustomerAuth.handleSignUpSubmit(event)" class="auth-form">
-          <div class="auth-field">
-            <label class="auth-label">Full Name</label>
-            <input type="text" id="authRegName" placeholder="Muhammad Ali" class="auth-input" required autocomplete="name">
-          </div>
-          <div class="auth-field">
-            <label class="auth-label">Mobile Number</label>
-            <input type="tel" id="authRegPhone" placeholder="0321-2920914" class="auth-input" required autocomplete="tel">
-          </div>
-          <div class="auth-field">
-            <label class="auth-label">Email Address</label>
-            <input type="email" id="authRegEmail" placeholder="yourname@gmail.com" class="auth-input" required autocomplete="email">
-          </div>
-          <div class="auth-field">
-            <label class="auth-label">Password (Min 6 Characters)</label>
-            <input type="password" id="authRegPass" placeholder="Create a strong password" class="auth-input" minlength="6" required autocomplete="new-password">
-          </div>
-          <button type="submit" id="btnSignUpSubmit" class="button button-lime auth-submit-btn">
-            Create Account ↗
-          </button>
-          <p class="auth-switch-text">
-            Pehle se account hai? 
-            <a href="javascript:void(0)" onclick="CustomerAuth.renderAuthModalContent('signin')" class="auth-link">Sign In karein</a>
-          </p>
-        </form>
-      `}
+      <form id="signInForm" onsubmit="CustomerAuth.handleSignInSubmit(event)" class="auth-clean-form">
+        <div class="auth-clean-field">
+          <label class="auth-clean-label">Username or Email</label>
+          <input type="text" id="authLoginInput" placeholder="e.g. ali123 or you@gmail.com" class="auth-clean-input" required autocomplete="username">
+        </div>
+
+        <div class="auth-clean-field">
+          <label class="auth-clean-label">Password</label>
+          <input type="password" id="authLoginPass" placeholder="••••••••" class="auth-clean-input" required autocomplete="current-password">
+          <button type="button" class="auth-toggle-pass-btn" onclick="CustomerAuth.togglePasswordVisibility('authLoginPass', this)">Show password</button>
+        </div>
+
+        <button type="submit" id="btnSignInSubmit" class="auth-primary-btn">
+          Log in
+        </button>
+      </form>
+
+      <p class="auth-clean-footer-text">
+        Don't have an account? 
+        <a href="javascript:void(0)" onclick="CustomerAuth.renderAuthModalContent('signup')" class="auth-clean-link">Sign up</a>
+      </p>
     `;
   },
 
@@ -424,12 +442,12 @@ const CustomerAuth = {
     const btn = document.getElementById("btnSignInSubmit");
     const notice = document.getElementById("authNoticeBox");
     const identifier = document.getElementById("authLoginInput")?.value;
-    const password = document.getElementById("authPassInput")?.value;
+    const password = document.getElementById("authLoginPass")?.value || document.getElementById("authPassInput")?.value;
 
     if (notice) notice.style.display = "none";
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing in...';
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
     }
 
     try {
@@ -439,13 +457,13 @@ const CustomerAuth = {
     } catch (err) {
       if (notice) {
         notice.style.display = "block";
-        notice.className = "auth-notice-box error";
-        notice.innerText = err.message || "Failed to sign in. Please verify your credentials.";
+        notice.className = "auth-clean-alert error";
+        notice.innerText = err.message || "Failed to log in. Please verify your credentials.";
       }
     } finally {
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = "Sign In ↗";
+        btn.innerHTML = "Log in";
       }
     }
   },
@@ -455,7 +473,7 @@ const CustomerAuth = {
     const btn = document.getElementById("btnSignUpSubmit");
     const notice = document.getElementById("authNoticeBox");
     const name = document.getElementById("authRegName")?.value;
-    const phone = document.getElementById("authRegPhone")?.value;
+    const phone = document.getElementById("authRegPhone")?.value || "";
     const email = document.getElementById("authRegEmail")?.value;
     const password = document.getElementById("authRegPass")?.value;
 
@@ -467,18 +485,18 @@ const CustomerAuth = {
 
     try {
       const user = await this.signUp({ name, phone, email, password });
-      if (typeof showToast === "function") showToast(`Account created successfully! Welcome to Lashari Communication 🎉`, "success");
+      if (typeof showToast === "function") showToast(`Account created successfully! Welcome, ${user.name} 🎉`, "success");
       this.renderAuthModalContent();
     } catch (err) {
       if (notice) {
         notice.style.display = "block";
-        notice.className = "auth-notice-box error";
+        notice.className = "auth-clean-alert error";
         notice.innerText = err.message || "Failed to create account. Please try again.";
       }
     } finally {
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = "Create Account ↗";
+        btn.innerHTML = "Sign up";
       }
     }
   },
@@ -661,7 +679,7 @@ const OrderTracker = {
 };
 
 // Global Helpers & Modal Opener Bindings
-function openAuthModal(tab = "signin") {
+function openAuthModal(tab = "signup") {
   const dialog = document.getElementById("authDialog");
   if (!dialog) return;
   CustomerAuth.renderAuthModalContent(tab);
