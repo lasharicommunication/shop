@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /portalsafe.html
+Disallow: /api/
+Disallow: /data/
+
+Sitemap: https://www.lasharicommunication.com/sitemap.xml
