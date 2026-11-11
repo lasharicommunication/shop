@@ -105,8 +105,8 @@ const DEFAULT_SETTINGS = {
     chatId: "8893027663"
   },
   supabase: {
-    enabled: false,
-    url: "",
+    enabled: true,
+    url: "https://wnsiodlajtaskdmeklyp.supabase.co",
     anonKey: "",
     ordersTable: "orders",
     profilesTable: "profiles"
@@ -1025,6 +1025,15 @@ const Storage = {
       if (!parsed.supabase) {
         parsed.supabase = DEFAULT_SETTINGS.supabase;
         changed = true;
+      } else {
+        if (!parsed.supabase.url) {
+          parsed.supabase.url = "https://wnsiodlajtaskdmeklyp.supabase.co";
+          changed = true;
+        }
+        if (parsed.supabase.enabled !== true) {
+          parsed.supabase.enabled = true;
+          changed = true;
+        }
       }
       if (changed) {
         localStorage.setItem("lashari_settings", JSON.stringify(parsed));

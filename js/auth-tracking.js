@@ -11,7 +11,7 @@ const LashariSupabase = {
     try {
       const s = typeof Storage !== "undefined" ? Storage.getSettings() : {};
       const config = s.supabase || {};
-      const url = config.url ? config.url.trim() : "";
+      const url = (config.url ? config.url.trim() : "") || "https://wnsiodlajtaskdmeklyp.supabase.co";
       const anonKey = config.anonKey ? config.anonKey.trim() : "";
 
       if (url && anonKey && window.supabase && typeof window.supabase.createClient === "function") {

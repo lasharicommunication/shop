@@ -1658,17 +1658,15 @@ const AdminController = {
     setVal("setTelegramBotToken", tg.botToken || "9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go");
     setVal("setTelegramChatId", tg.chatId || "8893027663");
 
-    // Supabase Cloud Database & Auth Settings
+    // Supabase Cloud Database & Auth Settings (Always Enabled)
     const sb = s.supabase || {
-      enabled: false,
-      url: "",
+      enabled: true,
+      url: "https://wnsiodlajtaskdmeklyp.supabase.co",
       anonKey: "",
       ordersTable: "orders",
       profilesTable: "profiles"
     };
-    const sbEnabled = document.getElementById("setSupabaseEnabled");
-    if (sbEnabled) sbEnabled.checked = sb.enabled === true;
-    setVal("setSupabaseUrl", sb.url || "");
+    setVal("setSupabaseUrl", sb.url || "https://wnsiodlajtaskdmeklyp.supabase.co");
     setVal("setSupabaseAnonKey", sb.anonKey || "");
   },
 
@@ -1872,8 +1870,8 @@ const AdminController = {
         chatId: document.getElementById("setTelegramChatId")?.value.trim() || current.telegramNotification?.chatId || "8893027663"
       },
       supabase: {
-        enabled: document.getElementById("setSupabaseEnabled") ? document.getElementById("setSupabaseEnabled").checked : (current.supabase?.enabled ?? false),
-        url: document.getElementById("setSupabaseUrl")?.value.trim() || current.supabase?.url || "",
+        enabled: true,
+        url: document.getElementById("setSupabaseUrl")?.value.trim() || current.supabase?.url || "https://wnsiodlajtaskdmeklyp.supabase.co",
         anonKey: document.getElementById("setSupabaseAnonKey")?.value.trim() || current.supabase?.anonKey || "",
         ordersTable: current.supabase?.ordersTable || "orders",
         profilesTable: current.supabase?.profilesTable || "profiles"

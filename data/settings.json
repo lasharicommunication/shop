@@ -90,8 +90,8 @@
     "chatId": "8893027663"
   },
   "supabase": {
-    "enabled": false,
-    "url": "",
+    "enabled": true,
+    "url": "https://wnsiodlajtaskdmeklyp.supabase.co",
     "anonKey": "",
     "ordersTable": "orders",
     "profilesTable": "profiles"
