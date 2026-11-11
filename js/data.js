@@ -103,6 +103,13 @@ const DEFAULT_SETTINGS = {
     enabled: true,
     botToken: "9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go",
     chatId: "8893027663"
+  },
+  supabase: {
+    enabled: false,
+    url: "",
+    anonKey: "",
+    ordersTable: "orders",
+    profilesTable: "profiles"
   }
 };
 
@@ -1015,6 +1022,10 @@ const Storage = {
         parsed.telegramNotification = DEFAULT_SETTINGS.telegramNotification;
         changed = true;
       }
+      if (!parsed.supabase) {
+        parsed.supabase = DEFAULT_SETTINGS.supabase;
+        changed = true;
+      }
       if (changed) {
         localStorage.setItem("lashari_settings", JSON.stringify(parsed));
       }
@@ -1234,6 +1245,36 @@ const Storage = {
     orders.unshift(newOrder);
     localStorage.setItem("lashari_orders", JSON.stringify(orders));
     window.dispatchEvent(new CustomEvent("lashari:orders-updated", { detail: orders }));
+
+    // Supabase Order Sync if configured
+    try {
+      if (window.LashariSupabase && typeof LashariSupabase.isConfigured === "function" && LashariSupabase.isConfigured()) {
+        const client = LashariSupabase.getClient();
+        if (client) {
+          const s = Storage.getSettings();
+          const table = s.supabase?.ordersTable || "orders";
+          client.from(table).insert([{
+            id: newOrder.id,
+            customer_name: newOrder.customerName,
+            phone: newOrder.phone,
+            email: newOrder.email || "",
+            address: newOrder.address,
+            items: newOrder.items,
+            subtotal: newOrder.subtotal,
+            delivery_fee: newOrder.deliveryFee,
+            total: newOrder.total,
+            courier_partner: newOrder.courierPartner,
+            payment_method: newOrder.paymentMethod,
+            status: newOrder.status || "Pending",
+            tracking_number: newOrder.trackingNumber || "",
+            created_at: new Date().toISOString()
+          }]).then(res => {
+            if (res && res.error) console.warn("Supabase order insert notice:", res.error.message);
+            else console.log("⚡ Order synced to Supabase:", newOrder.id);
+          }).catch(err => console.warn("Supabase insert catch:", err));
+        }
+      }
+    } catch (_) {}
 
     const apiUrl = window.ORDERS_API_URL || "/api/orders";
     try {

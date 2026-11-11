@@ -16,7 +16,10 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="css/style.css?v=7.7">
+  <!-- Supabase Cloud SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link rel="stylesheet" href="css/style.css?v=7.8">
 </head>
 <body>
 
@@ -32,6 +35,9 @@
   <div class="topbar" id="topAnnouncementBar">
     <span class="pulse"></span>
     <span id="announcementCustomText">THE EVERYDAY TECH EDIT · FLAT RS. 200 TCS &amp; LEOPARDS DELIVERY</span>
+    <button type="button" class="topbar-track-pill" onclick="openTrackOrderModal()" title="Track Your Order">
+      <i class="fa-solid fa-truck-fast"></i> Track Order 📦
+    </button>
   </div>
 
   <!-- HEADER -->
@@ -45,6 +51,7 @@
         <a href="#collection" class="is-current">Shop all</a>
         <a href="#categories">Categories</a>
         <a href="#brands">Mobile Covers</a>
+        <a href="javascript:void(0)" onclick="openTrackOrderModal()" class="nav-track-link">Track Order 📦</a>
         <a href="#locationSection">Location</a>
         <a href="#about">Our vibe</a>
       </nav>
@@ -64,6 +71,12 @@
             <path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/>
           </svg>
           <span id="favoritesCount" class="count-badge" hidden>0</span>
+        </button>
+
+        <!-- CUSTOMER ACCOUNT / SIGN IN -->
+        <button id="accountToggleBtn" class="icon-button account-button" onclick="openAuthModal()" aria-label="Sign In / My Account" title="Sign In / My Account">
+          <i class="fa-regular fa-user" aria-hidden="true" style="font-size:16px;"></i>
+          <span id="accountLoggedInDot" class="account-active-dot" hidden></span>
         </button>
 
         <!-- SHOPPING BAG -->
@@ -89,6 +102,8 @@
       <a href="#collection">Shop all</a>
       <a href="#categories">Categories</a>
       <a href="#brands">Mobile Covers</a>
+      <a href="javascript:void(0)" onclick="openTrackOrderModal(); document.getElementById('mobileNav').hidden=true;"><i class="fa-solid fa-truck-fast"></i> Track Order 📦</a>
+      <a href="javascript:void(0)" onclick="openAuthModal(); document.getElementById('mobileNav').hidden=true;" id="mobileAuthLink"><i class="fa-regular fa-user"></i> Sign In / Create Account 👤</a>
       <a href="#locationSection">Store Location</a>
       <a href="#about">Our vibe</a>
     </nav>
@@ -1141,6 +1156,54 @@
     </div>
   </dialog>
 
+  <!-- TRACK ORDER MODAL -->
+  <dialog id="trackOrderDialog" class="order-dialog track-order-dialog" aria-labelledby="trackOrderTitle">
+    <div class="order-dialog-card">
+      <div class="order-dialog-header">
+        <div>
+          <span class="order-dialog-kicker">EXPRESS COURIER TRACKING</span>
+          <h2 id="trackOrderTitle" class="order-dialog-title">Track Your Order 📦</h2>
+        </div>
+        <button type="button" class="order-dialog-close" onclick="closeTrackOrderModal()" aria-label="Close tracking modal">✕</button>
+      </div>
+
+      <div class="track-order-body">
+        <p class="track-order-intro">
+          Apna <strong>Order ID</strong> (maslan <code>ORD-498907</code>) ya wo phone number enter karein jo order karte waqt diya tha:
+        </p>
+
+        <form onsubmit="handleTrackFormSubmit(event)" class="track-search-form">
+          <div class="track-input-wrap">
+            <i class="fa-solid fa-magnifying-glass track-search-icon"></i>
+            <input type="text" id="trackOrderIdInput" class="track-input" placeholder="e.g. ORD-498907 or 03212920914" required autocomplete="off">
+            <button type="submit" class="button button-lime track-submit-btn">
+              Track ↗
+            </button>
+          </div>
+        </form>
+
+        <div id="trackResultContainer" class="track-result-container" style="display:none;"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- CUSTOMER AUTH MODAL (SIGN IN / CREATE ACCOUNT / PROFILE) -->
+  <dialog id="authDialog" class="order-dialog auth-dialog" aria-labelledby="authDialogTitle">
+    <div class="order-dialog-card">
+      <div class="order-dialog-header">
+        <div>
+          <span class="order-dialog-kicker">LASHARI MEMBER ACCESS</span>
+          <h2 id="authDialogTitle" class="order-dialog-title">Customer Account</h2>
+        </div>
+        <button type="button" class="order-dialog-close" onclick="closeAuthModal()" aria-label="Close account modal">✕</button>
+      </div>
+
+      <div id="authModalBody" class="auth-modal-body">
+        <!-- Rendered dynamically by CustomerAuth.renderAuthModalContent() -->
+      </div>
+    </div>
+  </dialog>
+
   <!-- SCROLL TO TOP BUTTON (FLOATING) -->
   <button type="button" 
           id="scrollToTopBtn" 
@@ -1167,7 +1230,8 @@
   </a>
 
   <!-- STORE SCRIPTS -->
-  <script src="js/data.js?v=7.7"></script>
-  <script src="js/app.js?v=7.7"></script>
+  <script src="js/data.js?v=7.8"></script>
+  <script src="js/auth-tracking.js?v=1.0"></script>
+  <script src="js/app.js?v=7.8"></script>
 </body>
 </html>

@@ -1657,6 +1657,65 @@ const AdminController = {
     if (tgEnabled) tgEnabled.checked = tg.enabled !== false;
     setVal("setTelegramBotToken", tg.botToken || "9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go");
     setVal("setTelegramChatId", tg.chatId || "8893027663");
+
+    // Supabase Cloud Database & Auth Settings
+    const sb = s.supabase || {
+      enabled: false,
+      url: "",
+      anonKey: "",
+      ordersTable: "orders",
+      profilesTable: "profiles"
+    };
+    const sbEnabled = document.getElementById("setSupabaseEnabled");
+    if (sbEnabled) sbEnabled.checked = sb.enabled === true;
+    setVal("setSupabaseUrl", sb.url || "");
+    setVal("setSupabaseAnonKey", sb.anonKey || "");
+  },
+
+  toggleSupabaseSchemaModal() {
+    const box = document.getElementById("supabaseSchemaBox");
+    if (box) box.style.display = box.style.display === "none" ? "block" : "none";
+  },
+
+  async testSupabaseConnection(btn) {
+    const url = document.getElementById("setSupabaseUrl")?.value.trim();
+    const anonKey = document.getElementById("setSupabaseAnonKey")?.value.trim();
+    const statusEl = document.getElementById("supabaseTestStatus");
+
+    if (!url || !anonKey) {
+      showToast("Pehle Supabase Project URL aur Anon Key enter karein.", "warning");
+      if (statusEl) statusEl.innerHTML = '<span style="color:#facc15;">URL aur Key required hain</span>';
+      return;
+    }
+
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Testing...';
+    if (statusEl) statusEl.innerText = "Connecting to Supabase...";
+
+    try {
+      const pingUrl = `${url.replace(/\/$/, "")}/rest/v1/`;
+      const res = await fetch(pingUrl, {
+        headers: {
+          apikey: anonKey,
+          Authorization: `Bearer ${anonKey}`
+        }
+      });
+
+      if (res.ok || res.status === 200 || res.status === 404) {
+        showToast("Supabase connection successful! 🎉", "success");
+        if (statusEl) statusEl.innerHTML = '<span style="color:#4ade80;"><i class="fa-solid fa-circle-check"></i> Connected successfully!</span>';
+      } else {
+        showToast("Supabase response status: " + res.status, "warning");
+        if (statusEl) statusEl.innerHTML = `<span style="color:#facc15;">Response: HTTP ${res.status}</span>`;
+      }
+    } catch (err) {
+      showToast("Connection failed: " + err.message, "error");
+      if (statusEl) statusEl.innerHTML = `<span style="color:#f87171;">Error: ${err.message}</span>`;
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
   },
 
   async testTelegramAlert(btn) {
@@ -1790,6 +1849,13 @@ const AdminController = {
         enabled: document.getElementById("setTelegramEnabled") ? document.getElementById("setTelegramEnabled").checked : (current.telegramNotification?.enabled ?? true),
         botToken: document.getElementById("setTelegramBotToken")?.value.trim() || current.telegramNotification?.botToken || "9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go",
         chatId: document.getElementById("setTelegramChatId")?.value.trim() || current.telegramNotification?.chatId || "8893027663"
+      },
+      supabase: {
+        enabled: document.getElementById("setSupabaseEnabled") ? document.getElementById("setSupabaseEnabled").checked : (current.supabase?.enabled ?? false),
+        url: document.getElementById("setSupabaseUrl")?.value.trim() || current.supabase?.url || "",
+        anonKey: document.getElementById("setSupabaseAnonKey")?.value.trim() || current.supabase?.anonKey || "",
+        ordersTable: current.supabase?.ordersTable || "orders",
+        profilesTable: current.supabase?.profilesTable || "profiles"
       }
     };
 

@@ -1790,7 +1790,10 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
     breakdownEl.textContent = `Subtotal: Rs. ${subtotal.toLocaleString()} + Rs. ${deliveryFee} fee`;
   }
 
-  if (dialog) dialog.showModal();
+  if (dialog) {
+    dialog.showModal();
+    if (typeof autofillCheckoutIfLoggedIn === "function") autofillCheckoutIfLoggedIn();
+  }
 }
 
 function openOrderModalFromBag() {
@@ -1863,7 +1866,10 @@ function openOrderModalFromBag() {
     breakdownEl.textContent = `Bag Total + Rs. ${deliveryFee} fee`;
   }
 
-  if (dialog) dialog.showModal();
+  if (dialog) {
+    dialog.showModal();
+    if (typeof autofillCheckoutIfLoggedIn === "function") autofillCheckoutIfLoggedIn();
+  }
 }
 
 // Payment Option Toggle (COD vs Advance)
@@ -1957,8 +1963,11 @@ function handleOrderFormSubmit(e) {
         <div style="margin-top:4px; color:#607358;">Items: ${orderItems.map(i => `${i.qty}x ${i.title}${i.size ? ` (${i.size})` : ''}${i.color ? ` (${i.color})` : ''}`).join(", ")}</div>
       </div>
       <div style="display:flex; flex-direction:column; gap:8px;">
-        <a href="${waUrl}" target="_blank" class="button button-lime" style="justify-content:center; text-decoration:none;">
-          <i class="fa-brands fa-whatsapp" style="font-size:16px;"></i> Send Order on WhatsApp
+        <button type="button" class="button button-lime" style="justify-content:center; text-decoration:none;" onclick="const d = document.getElementById('orderDialog'); if(d) d.close(); openTrackOrderModal('${newOrder.id}');">
+          <i class="fa-solid fa-truck-fast"></i> Track Order Status 📦
+        </button>
+        <a href="${waUrl}" target="_blank" class="button button-ghost" style="justify-content:center; text-decoration:none;">
+          <i class="fa-brands fa-whatsapp" style="font-size:16px; color:#25d366;"></i> Send Confirmation on WhatsApp
         </a>
         <button type="button" class="button button-dark" data-close-order style="justify-content:center;">
           Keep exploring <span>↗</span>

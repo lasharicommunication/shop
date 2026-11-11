@@ -89,6 +89,13 @@
     "botToken": "9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go",
     "chatId": "8893027663"
   },
+  "supabase": {
+    "enabled": false,
+    "url": "",
+    "anonKey": "",
+    "ordersTable": "orders",
+    "profilesTable": "profiles"
+  },
   "whatsappFloat": {
     "enabled": true,
     "url": "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e",

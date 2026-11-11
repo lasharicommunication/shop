@@ -1631,6 +1631,79 @@
               </div>
             </div>
 
+            <!-- Supabase Database & Auth Settings (Cloud Sync) -->
+            <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 4px; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-bolt" style="color:#22c55e; font-size:16px;"></i> Supabase Cloud Database &amp; Auth
+                  </h4>
+                  <p style="font-size:11px; color:#879b8a; margin:0;">Supabase PostgreSQL database aur Customer Authentication connect karein. (Agar blank ho to safe local storage kaam karta hai).</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <label class="switch" style="position:relative; display:inline-block; width:38px; height:20px;">
+                    <input type="checkbox" id="setSupabaseEnabled" style="opacity:0; width:0; height:0;">
+                    <span class="slider round" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#2a362c; transition:.3s; border-radius:20px;"></span>
+                  </label>
+                  <span style="font-size:11.5px; color:#c7d3c2; font-weight:700;">Enable Supabase</span>
+                </div>
+              </div>
+
+              <div class="settings-grid-2col">
+                <div class="order-field">
+                  <label class="admin-field-label">Supabase Project URL</label>
+                  <input type="text" id="setSupabaseUrl" placeholder="https://xyzcompany.supabase.co" class="admin-input">
+                </div>
+                <div class="order-field">
+                  <label class="admin-field-label">Supabase Anon Public Key</label>
+                  <input type="password" id="setSupabaseAnonKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." class="admin-input">
+                </div>
+              </div>
+
+              <div style="display:flex; gap:10px; margin-top:14px; align-items:center; flex-wrap:wrap;">
+                <button type="button" class="admin-btn admin-btn-secondary" onclick="AdminController.testSupabaseConnection(this)" style="font-size:11.5px; padding:6px 14px;">
+                  <i class="fa-solid fa-plug"></i> Test Supabase Connection
+                </button>
+                <button type="button" class="admin-btn admin-btn-secondary" onclick="AdminController.toggleSupabaseSchemaModal()" style="font-size:11.5px; padding:6px 14px;">
+                  <i class="fa-solid fa-code"></i> View SQL Schema
+                </button>
+                <span id="supabaseTestStatus" style="font-size:11px; color:#879b8a;"></span>
+              </div>
+
+              <!-- Collapsible SQL Schema Info -->
+              <div id="supabaseSchemaBox" style="display:none; margin-top:14px; background:#0c0e0d; border:1px solid #1f2721; border-radius:8px; padding:12px;">
+                <p style="font-size:11px; color:#879b8a; margin:0 0 6px;">
+                  Apne Supabase dashboard ke <b>SQL Editor</b> mein yeh code paste karke <b>Run</b> karein:
+                </p>
+                <pre style="color:#22c55e; font-size:10.5px; overflow-x:auto; margin:0; padding:8px; background:#141715; border-radius:6px;"><code>-- Orders Table
+create table if not exists orders (
+  id text primary key,
+  customer_name text,
+  phone text,
+  email text,
+  address text,
+  items jsonb,
+  subtotal numeric,
+  delivery_fee numeric,
+  total numeric,
+  courier_partner text,
+  payment_method text,
+  status text default 'Pending',
+  tracking_number text,
+  created_at timestamp with time zone default timezone('utc'::text, now())
+);
+
+-- Profiles Table (Linked to Supabase Auth)
+create table if not exists profiles (
+  id uuid references auth.users on delete cascade primary key,
+  full_name text,
+  phone text,
+  email text,
+  updated_at timestamp with time zone default timezone('utc'::text, now())
+);</code></pre>
+              </div>
+            </div>
+
             <!-- Special Offer Settings -->
             <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
               <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 6px;">Special Promo Offer Settings (Editable)</h4>
@@ -1690,8 +1763,8 @@
   </button>
 
   <!-- CORE SCRIPTS -->
-  <script src="js/data.js?v=7.7"></script>
-  <script src="js/admin.js?v=7.7"></script>
+  <script src="js/data.js?v=7.8"></script>
+  <script src="js/admin.js?v=7.8"></script>
   <script>
     // Cryptographic SHA-256 Authentication Gatekeeper
     const PortalAuth = {

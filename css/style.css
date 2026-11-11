@@ -5632,6 +5632,682 @@ html:has(dialog.order-dialog[open]) {
   }
 }
 
+/* ==========================================================================
+   TOPBAR & HEADER ACTIONS (TRACK ORDER & ACCOUNT)
+   ========================================================================== */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+}
+
+.topbar-track-pill {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-lime, #d6f32f);
+  border: 1px solid rgba(214, 243, 47, 0.3);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.topbar-track-pill:hover {
+  background: var(--color-lime, #d6f32f);
+  color: #111412;
+  transform: translateY(-1px);
+}
+
+.account-button {
+  position: relative;
+}
+
+.account-active-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-lime, #d6f32f);
+  box-shadow: 0 0 8px rgba(214, 243, 47, 0.8);
+}
+
+.account-button.is-logged-in {
+  color: var(--color-lime, #d6f32f);
+}
+
+.nav-track-link {
+  color: var(--color-lime, #d6f32f) !important;
+  font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   TRACK ORDER DIALOG & TIMELINE
+   ========================================================================== */
+.track-order-dialog,
+.auth-dialog {
+  max-width: 580px;
+  width: calc(100% - 32px);
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  background: #151816;
+  color: #f2f5eb;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+}
+
+.track-order-dialog .order-dialog-card,
+.auth-dialog .order-dialog-card {
+  padding: 24px 28px;
+  background: transparent;
+}
+
+.track-order-intro {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.track-search-form {
+  margin-bottom: 20px;
+}
+
+.track-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #1d211e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 4px 6px 4px 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.track-input-wrap:focus-within {
+  border-color: var(--color-lime, #d6f32f);
+  box-shadow: 0 0 0 3px rgba(214, 243, 47, 0.15);
+}
+
+.track-search-icon {
+  color: #879b8a;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.track-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f2f5eb;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.track-input::placeholder {
+  color: #6b7280;
+}
+
+.track-submit-btn {
+  padding: 9px 18px;
+  font-size: 13px;
+  border-radius: 9px;
+  white-space: nowrap;
+}
+
+.track-alert {
+  padding: 14px 16px;
+  border-radius: 12px;
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 14px;
+}
+
+.track-alert.warning {
+  background: rgba(234, 179, 8, 0.12);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  color: #fef08a;
+}
+
+.track-alert.error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+}
+
+.track-card {
+  background: #1b1f1c;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.track-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.track-kicker {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--color-lime, #d6f32f);
+  text-transform: uppercase;
+}
+
+.track-order-id {
+  font-size: 20px;
+  margin: 4px 0 2px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.track-date {
+  font-size: 11.5px;
+  color: #879b8a;
+}
+
+.track-status-pill {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: capitalize;
+}
+
+.track-status-pill.status-pending {
+  background: rgba(234, 179, 8, 0.16);
+  color: #facc15;
+  border: 1px solid rgba(234, 179, 8, 0.35);
+}
+
+.track-status-pill.status-confirmed {
+  background: rgba(56, 189, 248, 0.16);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.track-status-pill.status-shipped {
+  background: rgba(168, 85, 247, 0.16);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+.track-status-pill.status-delivered {
+  background: rgba(34, 197, 94, 0.16);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.track-status-pill.status-cancelled {
+  background: rgba(239, 68, 68, 0.16);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.track-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* STEP TRACKER TIMELINE */
+.track-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 18px 0;
+  position: relative;
+}
+
+.track-step {
+  text-align: center;
+  position: relative;
+}
+
+.track-step-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #252b27;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s ease;
+}
+
+.track-step.is-done .track-step-icon {
+  background: var(--color-lime, #d6f32f);
+  color: #111412;
+  border-color: var(--color-lime, #d6f32f);
+  box-shadow: 0 0 12px rgba(214, 243, 47, 0.4);
+}
+
+.track-step.is-current .track-step-icon {
+  animation: stepPulse 1.8s infinite;
+}
+
+@keyframes stepPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(214, 243, 47, 0.5); }
+  50% { transform: scale(1.1); box-shadow: 0 0 18px rgba(214, 243, 47, 0.8); }
+}
+
+.track-step-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ca3af;
+  margin-bottom: 2px;
+}
+
+.track-step.is-done .track-step-title {
+  color: #ffffff;
+}
+
+.track-step-desc {
+  display: block;
+  font-size: 9.5px;
+  color: #6b7280;
+  line-height: 1.2;
+}
+
+.track-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background: #141715;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 14px 0;
+  font-size: 12px;
+}
+
+.track-info-label {
+  display: block;
+  font-size: 10.5px;
+  color: #879b8a;
+  margin-bottom: 2px;
+}
+
+.track-info-val {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.track-items-box {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+.track-items-heading {
+  font-size: 12px;
+  color: #879b8a;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.track-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12.5px;
+  padding: 5px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.track-item-tag {
+  background: #232924;
+  color: var(--color-lime, #d6f32f);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.track-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.track-total-row strong {
+  color: var(--color-lime, #d6f32f);
+  font-size: 16px;
+}
+
+.track-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.track-wa-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   CUSTOMER AUTH & ACCOUNT DASHBOARD
+   ========================================================================== */
+.auth-tabs-nav {
+  display: flex;
+  background: #1c211e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #9ca3af;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-tab-btn.active {
+  background: #2b322e;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #879b8a;
+}
+
+.auth-input {
+  background: #1a1e1b;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-input:focus {
+  border-color: var(--color-lime, #d6f32f);
+  box-shadow: 0 0 0 3px rgba(214, 243, 47, 0.15);
+}
+
+.auth-submit-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 12px;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.auth-switch-text {
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 10px 0 0;
+}
+
+.auth-link {
+  color: var(--color-lime, #d6f32f);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.auth-notice-box {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.auth-notice-box.error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+/* ACCOUNT DASHBOARD VIEW */
+.auth-account-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.auth-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-lime, #d6f32f) 0%, #10b981 100%);
+  color: #111412;
+  font-size: 22px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(214, 243, 47, 0.3);
+}
+
+.auth-user-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.auth-user-email {
+  font-size: 12px;
+  color: #879b8a;
+  margin: 2px 0 0;
+}
+
+.auth-user-phone {
+  font-size: 11.5px;
+  color: #adb5a8;
+  margin: 2px 0 0;
+}
+
+.auth-account-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.auth-stat-box {
+  background: #1b201d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+.auth-stat-num {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-lime, #d6f32f);
+}
+
+.auth-stat-label {
+  display: block;
+  font-size: 11px;
+  color: #879b8a;
+  margin-top: 2px;
+}
+
+.auth-orders-section {
+  margin-top: 14px;
+}
+
+.auth-orders-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e5e7eb;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.auth-order-card {
+  background: #1a1e1b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.auth-order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.auth-order-date {
+  color: #6b7280;
+  font-size: 10.5px;
+  margin-left: 6px;
+}
+
+.auth-order-badge {
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.auth-order-badge.status-pending { background: rgba(234, 179, 8, 0.2); color: #facc15; }
+.auth-order-badge.status-confirmed { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+.auth-order-badge.status-shipped { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+.auth-order-badge.status-delivered { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+.auth-order-badge.status-cancelled { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+.auth-order-items {
+  font-size: 11.5px;
+  color: #9ca3af;
+  margin: 6px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.auth-order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.auth-order-total {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-lime, #d6f32f);
+}
+
+.button-track-pill {
+  background: #252b27;
+  color: #f2f5eb;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button-track-pill:hover {
+  background: var(--color-lime, #d6f32f);
+  color: #111412;
+}
+
+.auth-no-orders {
+  text-align: center;
+  padding: 20px 0;
+  color: #879b8a;
+  font-size: 12.5px;
+}
+
+.auth-account-footer {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: flex-end;
+}
+
+
 
 
 
