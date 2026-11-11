@@ -881,6 +881,67 @@ const DEFAULT_PRODUCTS = [
   }
 ];
 
+const DEFAULT_ORDERS = [
+  {
+    id: "ORD-94821",
+    customerName: "Muhammad Farhan",
+    phone: "0312-3456789",
+    email: "farhan.pk@gmail.com",
+    address: "House 24, Street 5, Gulshan-e-Iqbal Block 13-D",
+    city: "Karachi",
+    items: [
+      { title: "Luxury MagSafe Frosted Matte Armor Case", model: "iPhone 15 Pro", qty: 1, price: 1450 }
+    ],
+    subtotal: 1450,
+    deliveryFee: 200,
+    total: 1650,
+    paymentMethod: "Cash on Delivery",
+    courierPartner: "TCS Express",
+    status: "Shipped",
+    trackingNumber: "TCS-839210492",
+    date: "2026-10-28 14:32"
+  },
+  {
+    id: "ORD-94820",
+    customerName: "Kashif Lashari",
+    phone: "0300-9876543",
+    email: "kashif.lashari@gmail.com",
+    address: "B-12 Defence Phase 5",
+    city: "Lahore",
+    items: [
+      { title: "Heavy Duty Rugged Kickstand Defense Case", model: "S24 Ultra", qty: 2, price: 1250 }
+    ],
+    subtotal: 2500,
+    deliveryFee: 200,
+    total: 2700,
+    paymentMethod: "Advance Payment (EasyPaisa)",
+    transactionRef: "EP-981240182",
+    courierPartner: "Leopards Courier",
+    status: "Confirmed",
+    trackingNumber: "LEO-40192019",
+    date: "2026-10-27 18:15"
+  },
+  {
+    id: "ORD-94819",
+    customerName: "Noman Siddiqui",
+    phone: "0333-1122334",
+    email: "noman.siddiqui@yahoo.com",
+    address: "Flat 402, Al-Razi Heights, F-10/3",
+    city: "Islamabad",
+    items: [
+      { title: "Slide Camera Shutter Armor Shockproof Case", model: "Realme 12 Pro+", qty: 1, price: 1100 }
+    ],
+    subtotal: 1100,
+    deliveryFee: 200,
+    total: 1300,
+    paymentMethod: "Cash on Delivery",
+    courierPartner: "TCS Express",
+    status: "Delivered",
+    trackingNumber: "TCS-10928374",
+    date: "2026-10-25 11:20"
+  }
+];
+
 // Helper functions for LocalStorage persistence
 const Storage = {
   getSettings: () => {
@@ -1086,7 +1147,13 @@ const Storage = {
   },
   getOrders: () => {
     const saved = localStorage.getItem("lashari_orders");
-    return saved ? JSON.parse(saved) : DEFAULT_ORDERS;
+    if (!saved) return (typeof DEFAULT_ORDERS !== "undefined" && Array.isArray(DEFAULT_ORDERS)) ? DEFAULT_ORDERS : [];
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return (typeof DEFAULT_ORDERS !== "undefined" && Array.isArray(DEFAULT_ORDERS)) ? DEFAULT_ORDERS : [];
+    }
   },
   saveOrders: (orders) => {
     localStorage.setItem("lashari_orders", JSON.stringify(orders));
@@ -1099,7 +1166,13 @@ const Storage = {
   },
   getCoupons: () => {
     const saved = localStorage.getItem("lashari_coupons");
-    return saved ? JSON.parse(saved) : DEFAULT_COUPONS;
+    if (!saved) return (typeof DEFAULT_COUPONS !== "undefined" && Array.isArray(DEFAULT_COUPONS)) ? DEFAULT_COUPONS : [];
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return (typeof DEFAULT_COUPONS !== "undefined" && Array.isArray(DEFAULT_COUPONS)) ? DEFAULT_COUPONS : [];
+    }
   },
   saveCoupons: (coupons) => {
     localStorage.setItem("lashari_coupons", JSON.stringify(coupons));
