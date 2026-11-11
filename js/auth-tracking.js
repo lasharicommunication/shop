@@ -21,7 +21,6 @@ const LashariSupabase = {
             autoRefreshToken: true
           }
         });
-        console.log("⚡ [Supabase] Connected to project:", url);
         return this.client;
       }
     } catch (err) {

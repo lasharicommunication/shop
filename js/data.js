@@ -1281,10 +1281,7 @@ const Storage = {
             status: newOrder.status || "Pending",
             tracking_number: newOrder.trackingNumber || "",
             created_at: new Date().toISOString()
-          }]).then(res => {
-            if (res && res.error) console.warn("Supabase order insert notice:", res.error.message);
-            else console.log("⚡ Order synced to Supabase:", newOrder.id);
-          }).catch(err => console.warn("Supabase insert catch:", err));
+          }]).catch(() => {});
         }
       }
     } catch (_) {}
