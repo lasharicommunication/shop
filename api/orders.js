@@ -57,10 +57,15 @@ async function sendTelegramOrderAlert(order, customConfig = {}) {
       signal: controller.signal
     });
     clearTimeout(timeout);
-    return response.ok;
+    const resData = await response.json().catch(() => null);
+    if (!response.ok) {
+      console.warn("Telegram API Error:", resData);
+      return { ok: false, error: resData?.description || `HTTP ${response.status}` };
+    }
+    return { ok: true, data: resData };
   } catch (err) {
     console.warn("Telegram notification dispatch error:", err.message);
-    return false;
+    return { ok: false, error: err.message };
   }
 }
 
@@ -119,14 +124,15 @@ module.exports = async function handler(req, res) {
       date: new Date().toISOString().replace("T", " ").slice(0, 16)
     };
 
-    const ok = await sendTelegramOrderAlert(testOrder, {
+    const result = await sendTelegramOrderAlert(testOrder, {
       token: req.body.botToken || DEFAULT_TELEGRAM_TOKEN,
       chatId: req.body.chatId || DEFAULT_TELEGRAM_CHAT_ID
     });
 
     return json(res, 200, {
-      ok,
-      message: ok ? "Telegram test notification sent successfully! Check your Telegram app 📲" : "Failed to deliver Telegram message. Please check Bot Token and Chat ID."
+      ok: result.ok,
+      error: result.error,
+      message: result.ok ? "Telegram test notification sent successfully! Check your Telegram app 📲" : `Failed to deliver Telegram message: ${result.error || "Unknown error"}`
     });
   }
 
