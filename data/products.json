@@ -24,16 +24,16 @@
       },
       {
         "name": "Ringlight",
-        "price": 599,
+        "price": 699,
         "regularPrice": 799,
-        "specialPrice": 599,
+        "specialPrice": 699,
         "oldPrice": 799
       },
       {
         "name": "Only stand",
-        "price": 649,
+        "price": 749,
         "regularPrice": 849,
-        "specialPrice": 649,
+        "specialPrice": 749,
         "oldPrice": 849
       }
     ],
