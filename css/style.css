@@ -817,25 +817,10 @@ svg {
   font-weight: 800;
   text-transform: uppercase;
 }
-.heart-button {
-  position: absolute;
-  z-index: 5;
-  top: 12px;
-  right: 12px;
-  width: 37px;
-  height: 37px;
-  border: 0;
-  border-radius: 50%;
-  background: #ffffffb0;
-  display: grid;
-  place-items: center;
-  transition: transform .2s, background .2s;
-  color: var(--ink);
+.heart-button,
+.fav-button {
+  display: none !important;
 }
-.heart-button:hover { transform: scale(1.1); background: white; }
-.heart-button svg { width: 19px; height: 19px; }
-.heart-button.is-saved { background: var(--lime); }
-.heart-button.is-saved svg { fill: #171a18; }
 
 /* PRODUCT CARD - INFO BLOCK */
 .product-info-block {

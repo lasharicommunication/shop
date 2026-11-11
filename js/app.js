@@ -958,11 +958,6 @@ function renderProducts() {
       <article class="product-card reveal in-view" data-product-id="${prod.id}">
         <div class="product-media" onclick="openProductQuickView('${prod.id}', event)">
           ${isOnSale ? '<span class="sale-badge">🔥 SALE</span>' : ''}
-          <button type="button" class="heart-button ${isSaved ? 'is-saved' : ''}" onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" title="Save to favorites">
-            <svg viewBox="0 0 24 24">
-              <path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/>
-            </svg>
-          </button>
           ${artHtml}
         </div>
 
@@ -1165,28 +1160,8 @@ function adjustOrderModalQty(delta) {
   }
 }
 
-// Wishlist Toggle
-function toggleWishlist(prodId) {
-  const idx = AppState.savedWishlist.indexOf(prodId);
-  if (idx >= 0) {
-    AppState.savedWishlist.splice(idx, 1);
-    showToast("Removed from favorites");
-  } else {
-    AppState.savedWishlist.push(prodId);
-    showToast("Saved to favorites!");
-  }
-  localStorage.setItem("xcess_wishlist", JSON.stringify(AppState.savedWishlist));
-  updateWishlistBadge();
-  renderProducts();
-}
-
-function updateWishlistBadge() {
-  const badge = document.getElementById("favoritesCount");
-  if (!badge) return;
-  const count = AppState.savedWishlist.length;
-  badge.textContent = count;
-  badge.hidden = count === 0;
-}
+function toggleWishlist() {}
+function updateWishlistBadge() {}
 
 // Add Product to Bag
 function addProductToBag(prodId, customQty = 1) {
@@ -1360,11 +1335,6 @@ function renderQuickViewGallery(images, title, prod) {
   return `
     <div class="qv-gallery" data-index="0">
       ${hasDiscount ? `<div class="dialog-floating-badge">🔥 -${discountPercent}% OFF</div>` : (prod?.badge ? `<div class="dialog-floating-badge" style="background:#162413;">★ ${escapeAttr(prod.badge)}</div>` : '')}
-      ${prod ? `
-        <button type="button" class="heart-button ${isSaved ? 'is-saved' : ''} dialog-heart-btn" onclick="event.stopPropagation(); toggleWishlist('${prod.id}'); this.classList.toggle('is-saved');" title="Save to favorites">
-          <svg viewBox="0 0 24 24"><path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/></svg>
-        </button>
-      ` : ''}
       <div class="qv-stage">
         <img id="quickViewMainImg" src="${escapeAttr(images[0])}" alt="${escapeAttr(title)}">
         ${images.length > 1 ? `
@@ -2104,58 +2074,6 @@ function setupEventListeners() {
       const cols = getGridColumnCount();
       AppState.collectionVisibleCount += 3 * cols; // Exactly 3 more rows!
       renderProducts();
-    });
-  }
-
-  // Favorites / Wishlist Toggle
-  const favToggle = document.getElementById("favoritesToggle");
-  if (favToggle) {
-    favToggle.addEventListener("click", () => {
-      if (AppState.savedWishlist.length === 0) {
-        showToast("No items in wishlist yet! Click the heart on any card to save it.");
-        return;
-      }
-      // Filter collection to saved items
-      AppState.activeFilter = "all";
-      AppState.activeBrand = "all";
-      AppState.activeCategory = "all";
-      AppState.searchQuery = "";
-      
-      const grid = document.getElementById("productGrid");
-      const emptyState = document.getElementById("emptyState");
-      const savedProds = AppState.products.filter(p => AppState.savedWishlist.includes(p.id));
-
-      if (grid) {
-        grid.innerHTML = savedProds.map(prod => {
-          const artHtml = renderProductGallery(prod);
-          return `
-            <article class="product-card reveal in-view" data-product-id="${prod.id}">
-              <div class="product-media" onclick="openProductQuickView('${prod.id}', event)">
-                <button type="button" class="heart-button is-saved" onclick="event.stopPropagation(); toggleWishlist('${prod.id}')">
-                  <svg viewBox="0 0 24 24"><path d="M20.7 8.5c0 4.3-8.7 10.4-8.7 10.4S3.3 12.8 3.3 8.5A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.7 2.3Z"/></svg>
-                </button>
-                ${artHtml}
-              </div>
-              <div class="product-info-block">
-                <div class="product-info-top">
-                  <h3 class="product-name" onclick="openProductQuickView('${prod.id}', event)">${prod.title}</h3>
-                  <span class="product-price-tag">Rs. ${prod.price?.toLocaleString()}</span>
-                </div>
-                <div class="product-actions" style="margin-top:10px;">
-                  <button type="button" class="btn-buy-now" onclick="openOrderModalForProduct('${prod.id}')">Buy Now ↗</button>
-                  <button type="button" class="btn-add-cart" onclick="addProductToBag('${prod.id}')">Add to Cart +</button>
-                </div>
-              </div>
-            </article>
-          `;
-        }).join("");
-        bindProductSliders(grid);
-      }
-      if (emptyState) emptyState.hidden = savedProds.length > 0;
-
-      const col = document.getElementById("collection");
-      if (col) col.scrollIntoView({ behavior: "smooth", block: "start" });
-      showToast(`Showing ${savedProds.length} saved favorite(s)`);
     });
   }
 
