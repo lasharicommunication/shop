@@ -28,6 +28,13 @@
         "regularPrice": 799,
         "specialPrice": 599,
         "oldPrice": 799
+      },
+      {
+        "name": "Only stand",
+        "price": 649,
+        "regularPrice": 849,
+        "specialPrice": 649,
+        "oldPrice": 849
       }
     ],
     "colors": [
