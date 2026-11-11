@@ -92,7 +92,7 @@
   "supabase": {
     "enabled": true,
     "url": "https://wnsiodlajtaskdmeklyp.supabase.co",
-    "anonKey": "",
+    "anonKey": "sb_publishable__ZIM0haTjBKXxyMpdt97mw_petf88lr",
     "ordersTable": "orders",
     "profilesTable": "profiles"
   },

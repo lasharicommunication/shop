@@ -107,7 +107,7 @@ const DEFAULT_SETTINGS = {
   supabase: {
     enabled: true,
     url: "https://wnsiodlajtaskdmeklyp.supabase.co",
-    anonKey: "",
+    anonKey: "sb_publishable__ZIM0haTjBKXxyMpdt97mw_petf88lr",
     ordersTable: "orders",
     profilesTable: "profiles"
   }
@@ -1028,6 +1028,10 @@ const Storage = {
       } else {
         if (!parsed.supabase.url) {
           parsed.supabase.url = "https://wnsiodlajtaskdmeklyp.supabase.co";
+          changed = true;
+        }
+        if (!parsed.supabase.anonKey) {
+          parsed.supabase.anonKey = "sb_publishable__ZIM0haTjBKXxyMpdt97mw_petf88lr";
           changed = true;
         }
         if (parsed.supabase.enabled !== true) {

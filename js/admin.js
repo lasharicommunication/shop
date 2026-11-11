@@ -1703,30 +1703,53 @@ const AdminController = {
     if (statusEl) statusEl.innerText = "Checking Supabase connection...";
 
     try {
-      // Test authentication key against PostgREST endpoint
-      const pingUrl = `${url}/rest/v1/?apikey=${encodeURIComponent(anonKey)}`;
-      const res = await fetch(pingUrl, {
+      // 1. Test Auth Settings with Publishable / Anon API key
+      const authRes = await fetch(`${url}/auth/v1/settings`, {
         headers: {
           apikey: anonKey,
           Authorization: `Bearer ${anonKey}`
         }
       });
 
-      const bodyText = await res.text().catch(() => "");
-      let bodyJson = null;
-      try { bodyJson = JSON.parse(bodyText); } catch (_) {}
+      if (!authRes.ok) {
+        if (authRes.status === 401) {
+          showToast("Supabase 401: Invalid API Key. Check your Publishable / Anon Key.", "error");
+          if (statusEl) {
+            statusEl.innerHTML = `<span style="color:#f87171;"><i class="fa-solid fa-triangle-exclamation"></i> <b>Error 401 (Unauthorized):</b> Key invalid hai. Supabase Dashboard > Project Settings > API se 'anon public' key copy karein.</span>`;
+          }
+        } else {
+          showToast(`Supabase returned HTTP ${authRes.status}`, "warning");
+          if (statusEl) statusEl.innerHTML = `<span style="color:#facc15;">Response: HTTP ${authRes.status}</span>`;
+        }
+        return;
+      }
 
-      if (res.ok || res.status === 200 || res.status === 204) {
-        showToast("Supabase connection successful! 🎉", "success");
-        if (statusEl) statusEl.innerHTML = '<span style="color:#4ade80;"><i class="fa-solid fa-circle-check"></i> Connected successfully! (URL &amp; Anon Key Valid)</span>';
-      } else if (res.status === 401) {
-        showToast("Supabase 401: Anon Key ghalat hai. Settings > API se 'anon public' key copy karein.", "error");
+      // 2. Auth is verified (200 OK)! Now check if orders table exists
+      let tableStatus = "checking";
+      try {
+        const tableRes = await fetch(`${url}/rest/v1/orders?select=*&limit=1`, {
+          headers: {
+            apikey: anonKey,
+            Authorization: `Bearer ${anonKey}`
+          }
+        });
+        if (tableRes.ok || tableRes.status === 200) {
+          tableStatus = "ready";
+        } else if (tableRes.status === 404) {
+          tableStatus = "missing_tables";
+        }
+      } catch (_) {}
+
+      showToast("Supabase Connected Successfully! 🎉", "success");
+
+      if (tableStatus === "ready") {
         if (statusEl) {
-          statusEl.innerHTML = `<span style="color:#f87171;"><i class="fa-solid fa-triangle-exclamation"></i> <b>Error 401 (Invalid Key):</b> Project URL sahi hai, lekin <b>Anon Key</b> match nahi hui. Supabase Dashboard mein <i>Project Settings &gt; API &gt; 'anon' 'public'</i> key copy karein (jo eyJ se shuru hoti hai).</span>`;
+          statusEl.innerHTML = '<span style="color:#4ade80;"><i class="fa-solid fa-circle-check"></i> <b>Connected Successfully!</b> Supabase Auth aur Tables 100% active hain.</span>';
         }
       } else {
-        showToast(`Supabase response: HTTP ${res.status}`, "warning");
-        if (statusEl) statusEl.innerHTML = `<span style="color:#facc15;">Response: HTTP ${res.status} (${bodyJson?.message || bodyText.slice(0, 80)})</span>`;
+        if (statusEl) {
+          statusEl.innerHTML = '<span style="color:#4ade80;"><i class="fa-solid fa-circle-check"></i> <b>Connection Successful!</b> Auth &amp; Key bilkul sahi hain. <span style="color:#facc15;">(Tip: "View SQL Schema" par click karke SQL copy karein aur Supabase SQL Editor mein run karein taake tables create ho jayein).</span></span>';
+        }
       }
     } catch (err) {
       showToast("Connection failed: " + err.message, "error");
