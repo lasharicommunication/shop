@@ -1934,7 +1934,7 @@ function handleOrderFormSubmit(e) {
       </div>
       <div style="display:flex; flex-direction:column; gap:8px;">
         <button type="button" class="button button-lime" style="justify-content:center; text-decoration:none;" onclick="const d = document.getElementById('orderDialog'); if(d) d.close(); openTrackOrderModal('${newOrder.id}');">
-          <i class="fa-solid fa-truck-fast"></i> Track Order Status 📦
+          <i class="fa-solid fa-truck-fast"></i> Track Order Status
         </button>
         <a href="${waUrl}" target="_blank" class="button button-ghost" style="justify-content:center; text-decoration:none;">
           <i class="fa-brands fa-whatsapp" style="font-size:16px; color:#25d366;"></i> Send Confirmation on WhatsApp
