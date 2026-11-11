@@ -5706,8 +5706,11 @@ html:has(dialog.order-dialog[open]) {
 }
 
 .nav-track-link {
-  color: var(--color-lime, #d6f32f) !important;
+  color: var(--ink, #171a18) !important;
   font-weight: 700 !important;
+}
+.nav-track-link:hover {
+  color: #000000 !important;
 }
 
 /* ==========================================================================
