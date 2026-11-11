@@ -124,14 +124,33 @@ module.exports = async function handler(req, res) {
       date: new Date().toISOString().replace("T", " ").slice(0, 16)
     };
 
+    const activeToken = req.body.botToken || DEFAULT_TELEGRAM_TOKEN;
+    const activeChatId = req.body.chatId || DEFAULT_TELEGRAM_CHAT_ID;
+
     const result = await sendTelegramOrderAlert(testOrder, {
-      token: req.body.botToken || DEFAULT_TELEGRAM_TOKEN,
-      chatId: req.body.chatId || DEFAULT_TELEGRAM_CHAT_ID
+      token: activeToken,
+      chatId: activeChatId
     });
+
+    let botInfo = null;
+    let recentUpdates = null;
+    if (!result.ok) {
+      try {
+        const [meRes, upRes] = await Promise.all([
+          fetch(`https://api.telegram.org/bot${activeToken}/getMe`).then(r => r.json()).catch(() => null),
+          fetch(`https://api.telegram.org/bot${activeToken}/getUpdates?limit=5`).then(r => r.json()).catch(() => null)
+        ]);
+        botInfo = meRes?.result || null;
+        recentUpdates = upRes?.result || [];
+      } catch (_) {}
+    }
 
     return json(res, 200, {
       ok: result.ok,
       error: result.error,
+      botUsername: botInfo?.username,
+      botName: botInfo?.first_name,
+      recentUpdates,
       message: result.ok ? "Telegram test notification sent successfully! Check your Telegram app 📲" : `Failed to deliver Telegram message: ${result.error || "Unknown error"}`
     });
   }
