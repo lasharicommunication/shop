@@ -1017,6 +1017,9 @@
               <p id="adminOrdersCountText" class="admin-panel-desc">Showing 0 of 0 orders</p>
             </div>
             <div class="admin-search-filter-group">
+              <button type="button" class="admin-btn admin-btn-sm" onclick="AdminController.refreshOrders(this)" title="Sync latest orders from server" style="white-space:nowrap; display:inline-flex; align-items:center; gap:6px; padding:6px 14px; background:var(--surface-raised,#1f2420); border:1px solid var(--border-color,#333c35); color:var(--text,#fff); border-radius:8px; cursor:pointer; font-size:12px; font-weight:600;">
+                <i class="fa-solid fa-arrows-rotate"></i> Sync Orders
+              </button>
               <select id="adminOrderStatusFilter" onchange="AdminController.filterOrdersByStatus(this.value)" class="admin-filter-select">
                 <option value="all">All Statuses</option>
                 <option value="pending">Pending</option>
@@ -1576,8 +1579,8 @@
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <!-- CORE SCRIPTS -->
-  <script src="js/data.js?v=7.2"></script>
-  <script src="js/admin.js?v=7.2"></script>
+  <script src="js/data.js?v=7.3"></script>
+  <script src="js/admin.js?v=7.3"></script>
   <script>
     // Cryptographic SHA-256 Authentication Gatekeeper
     const PortalAuth = {
@@ -1627,6 +1630,7 @@
         if (dash) {
           dash.style.display = "block";
           AdminController.isAdminLoggedIn = true;
+          if (typeof Storage !== "undefined" && typeof Storage.loadOrders === "function") Storage.loadOrders();
           AdminController.switchTab("overview");
         }
       },

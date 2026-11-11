@@ -141,8 +141,18 @@ const AdminController = {
       sec.style.display = isActive ? "block" : "none";
     });
 
-    if (tabName === "overview") this.renderOverview();
-    if (tabName === "orders") this.renderOrdersTable();
+    if (tabName === "overview") {
+      this.renderOverview();
+      if (typeof Storage.loadOrders === "function") {
+        Storage.loadOrders().then(() => this.renderOverview()).catch(() => {});
+      }
+    }
+    if (tabName === "orders") {
+      this.renderOrdersTable();
+      if (typeof Storage.loadOrders === "function") {
+        Storage.loadOrders().then(() => this.renderOrdersTable()).catch(() => {});
+      }
+    }
     if (tabName === "products") this.renderProductsTable();
     if (tabName === "coupons") this.renderCouponsTab();
     if (tabName === "accounts") this.renderAccountsTab();
@@ -356,26 +366,47 @@ const AdminController = {
     });
   },
 
-  updateOrderStatus(orderId, newStatus) {
+  async updateOrderStatus(orderId, newStatus) {
     const orders = Storage.getOrders();
     const order = orders.find(o => o.id === orderId);
     if (order) {
       order.status = newStatus;
-      Storage.saveOrders(orders);
+      await Storage.saveOrders(orders);
       showToast(`Order #${orderId} marked as ${newStatus}`, "success");
       this.renderOverview();
       this.renderOrdersTable();
     }
   },
 
-  deleteOrder(orderId) {
+  async deleteOrder(orderId) {
     if (!confirm(`Are you sure you want to delete Order #${orderId}?`)) return;
     let orders = Storage.getOrders();
     orders = orders.filter(o => o.id !== orderId);
-    Storage.saveOrders(orders);
+    await Storage.saveOrders(orders);
     showToast(`Order #${orderId} deleted successfully`, "info");
     this.renderOrdersTable();
     this.renderOverview();
+  },
+
+  async refreshOrders(btn) {
+    const originalHtml = btn ? btn.innerHTML : "";
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Syncing...';
+    }
+    try {
+      const orders = await Storage.loadOrders();
+      this.renderOrdersTable();
+      this.renderOverview();
+      showToast(`Synced ${orders.length} orders from server`, "success");
+    } catch (e) {
+      showToast("Orders sync error: " + e.message, "error");
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
+    }
   },
 
   viewOrderInvoice(orderId) {
@@ -1764,4 +1795,12 @@ const AdminController = {
 // Initialize Admin Controller
 document.addEventListener("DOMContentLoaded", () => {
   AdminController.init();
+});
+
+
+window.addEventListener("lashari:orders-updated", () => {
+  if (window.AdminController && AdminController.isAdminLoggedIn) {
+    if (AdminController.activeTab === "overview") AdminController.renderOverview();
+    if (AdminController.activeTab === "orders") AdminController.renderOrdersTable();
+  }
 });

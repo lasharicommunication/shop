@@ -1155,13 +1155,79 @@ const Storage = {
       return (typeof DEFAULT_ORDERS !== "undefined" && Array.isArray(DEFAULT_ORDERS)) ? DEFAULT_ORDERS : [];
     }
   },
-  saveOrders: (orders) => {
-    localStorage.setItem("lashari_orders", JSON.stringify(orders));
+  loadOrders: async () => {
+    const apiUrl = window.ORDERS_API_URL || "/api/orders";
+    try {
+      const response = await fetch(apiUrl, { cache: "no-store" });
+      if (response.ok) {
+        const orders = await response.json();
+        if (Array.isArray(orders)) {
+          localStorage.setItem("lashari_orders", JSON.stringify(orders));
+          window.dispatchEvent(new CustomEvent("lashari:orders-updated", { detail: orders }));
+          return orders;
+        }
+      }
+    } catch (error) {
+      console.warn("Shared orders API error:", error);
+    }
+
+    // Direct GitHub Raw Fallback (Always live for everyone)
+    try {
+      const rawRes = await fetch(`https://raw.githubusercontent.com/lasharicommunication/shop/main/data/orders.json?_t=${Date.now()}`, { cache: "no-store" });
+      if (rawRes.ok) {
+        const rawOrders = await rawRes.json();
+        if (Array.isArray(rawOrders)) {
+          localStorage.setItem("lashari_orders", JSON.stringify(rawOrders));
+          window.dispatchEvent(new CustomEvent("lashari:orders-updated", { detail: rawOrders }));
+          return rawOrders;
+        }
+      }
+    } catch (rawError) {
+      console.warn("Direct GitHub raw orders fallback unavailable:", rawError);
+    }
+
+    return Storage.getOrders();
   },
-  addOrder: (newOrder) => {
+  saveOrders: async (orders) => {
+    localStorage.setItem("lashari_orders", JSON.stringify(orders));
+    window.dispatchEvent(new CustomEvent("lashari:orders-updated", { detail: orders }));
+
+    const apiUrl = window.ORDERS_API_URL || "/api/orders";
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orders })
+      });
+      return response.ok;
+    } catch (error) {
+      console.error("Shared orders save failed:", error);
+      return false;
+    }
+  },
+  addOrder: async (newOrder) => {
     const orders = Storage.getOrders();
     orders.unshift(newOrder);
-    Storage.saveOrders(orders);
+    localStorage.setItem("lashari_orders", JSON.stringify(orders));
+    window.dispatchEvent(new CustomEvent("lashari:orders-updated", { detail: orders }));
+
+    const apiUrl = window.ORDERS_API_URL || "/api/orders";
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order: newOrder })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data && Array.isArray(data.orders)) {
+          localStorage.setItem("lashari_orders", JSON.stringify(data.orders));
+          return data.orders;
+        }
+      }
+    } catch (error) {
+      console.error("Failed to commit order to database:", error);
+    }
     return orders;
   },
   getCoupons: () => {
