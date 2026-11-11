@@ -85,27 +85,36 @@ module.exports = async function handler(req, res) {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         let sha;
+        let existingSettings = {};
         try {
           const file = await githubRequest(apiPath, token, {
             headers: { "Cache-Control": "no-cache, no-store", "Pragma": "no-cache" }
           });
           sha = file.sha;
+          if (file && file.content) {
+            try {
+              const raw = Buffer.from(file.content, "base64").toString("utf8");
+              existingSettings = JSON.parse(raw) || {};
+            } catch (e) {}
+          }
         } catch (error) {
           if (!error.message.includes("GitHub API 404")) throw error;
         }
+
+        const mergedSettings = { ...existingSettings, ...settings };
 
         await githubRequest(`/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`, token, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            message: `Update storefront settings (${settings.brandName || "store"})`,
-            content: Buffer.from(JSON.stringify(settings, null, 2) + "\n").toString("base64"),
+            message: `Update storefront settings (${mergedSettings.brandName || "store"})`,
+            content: Buffer.from(JSON.stringify(mergedSettings, null, 2) + "\n").toString("base64"),
             branch: BRANCH,
             ...(sha ? { sha } : {})
           })
         });
 
-        return json(res, 200, { ok: true, settings });
+        return json(res, 200, { ok: true, settings: mergedSettings });
       } catch (error) {
         if (error.message.includes("409") && attempt < maxRetries) {
           console.warn(`Settings GitHub 409 conflict (attempt ${attempt}/${maxRetries}), retrying with fresh SHA...`);
