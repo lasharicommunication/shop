@@ -1556,6 +1556,40 @@
               </div>
             </div>
 
+            <!-- Telegram Order Notifications Settings (Editable & Testable) -->
+            <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 4px; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-brands fa-telegram" style="color:#29b6f6; font-size:16px;"></i> Telegram Instant Order Notifications
+                  </h4>
+                  <p style="font-size:11px; color:#879b8a; margin:0;">Naye order aane par aapke mobile par instant ringtone aur message aayega.</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <button type="button" class="admin-btn admin-btn-sm" onclick="AdminController.testTelegramAlert(this)" style="background:#0e466b; border:1px solid #29b6f6; color:#fff; padding:6px 14px; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+                    <i class="fa-solid fa-paper-plane"></i> Test Alert
+                  </button>
+                  <label style="display:inline-flex; align-items:center; gap:8px; cursor:pointer; background:#1b221d; padding:6px 14px; border-radius:999px; border:1px solid #334437;">
+                    <input type="checkbox" id="setTelegramEnabled" checked style="width:16px; height:16px; accent-color:var(--lime);">
+                    <span style="font-size:12px; font-weight:700; color:#fff;">Active</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="settings-grid-2col">
+                <div class="order-field">
+                  <label class="admin-field-label">Telegram Bot Token</label>
+                  <input type="text" id="setTelegramBotToken" placeholder="9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go" class="admin-input">
+                  <span class="admin-field-hint">Aapka BotFather API token.</span>
+                </div>
+                <div class="order-field">
+                  <label class="admin-field-label">Telegram Chat ID</label>
+                  <input type="text" id="setTelegramChatId" placeholder="8893027663" class="admin-input">
+                  <span class="admin-field-hint">Aapki personal Telegram user / chat ID.</span>
+                </div>
+              </div>
+            </div>
+
             <!-- Special Offer Settings -->
             <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
               <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 6px;">Special Promo Offer Settings (Editable)</h4>
@@ -1605,8 +1639,8 @@
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <!-- CORE SCRIPTS -->
-  <script src="js/data.js?v=7.5"></script>
-  <script src="js/admin.js?v=7.5"></script>
+  <script src="js/data.js?v=7.6"></script>
+  <script src="js/admin.js?v=7.6"></script>
   <script>
     // Cryptographic SHA-256 Authentication Gatekeeper
     const PortalAuth = {

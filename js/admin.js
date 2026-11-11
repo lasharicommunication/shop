@@ -1646,6 +1646,49 @@ const AdminController = {
     if (waEnabled) waEnabled.checked = waFloat.enabled !== false;
     setVal("setWhatsappFloatUrl", waFloat.url || "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e");
     setVal("setWhatsappFloatTooltip", waFloat.tooltip || "Follow The Lashari Communication on WhatsApp");
+
+    // Telegram Notifications
+    const tg = s.telegramNotification || {
+      enabled: true,
+      botToken: "9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go",
+      chatId: "8893027663"
+    };
+    const tgEnabled = document.getElementById("setTelegramEnabled");
+    if (tgEnabled) tgEnabled.checked = tg.enabled !== false;
+    setVal("setTelegramBotToken", tg.botToken || "9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go");
+    setVal("setTelegramChatId", tg.chatId || "8893027663");
+  },
+
+  async testTelegramAlert(btn) {
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+    const botToken = document.getElementById("setTelegramBotToken")?.value.trim();
+    const chatId = document.getElementById("setTelegramChatId")?.value.trim();
+
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "test_telegram",
+          botToken,
+          chatId
+        })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showToast("Telegram test notification sent! Check your Telegram app 📲", "success");
+      } else {
+        showToast(data.message || "Failed to send Telegram test message", "error");
+      }
+    } catch (e) {
+      showToast("Error testing Telegram: " + e.message, "error");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
   },
 
   saveSettings(e) {
@@ -1742,6 +1785,11 @@ const AdminController = {
         enabled: document.getElementById("setWhatsappFloatEnabled") ? document.getElementById("setWhatsappFloatEnabled").checked : (current.whatsappFloat?.enabled ?? true),
         url: document.getElementById("setWhatsappFloatUrl")?.value.trim() || current.whatsappFloat?.url || "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e",
         tooltip: document.getElementById("setWhatsappFloatTooltip")?.value.trim() || current.whatsappFloat?.tooltip || "Follow The Lashari Communication on WhatsApp"
+      },
+      telegramNotification: {
+        enabled: document.getElementById("setTelegramEnabled") ? document.getElementById("setTelegramEnabled").checked : (current.telegramNotification?.enabled ?? true),
+        botToken: document.getElementById("setTelegramBotToken")?.value.trim() || current.telegramNotification?.botToken || "9163122969:AAFJKgDkTRIJ1lL0O8OYCK-iANnwUiUe9go",
+        chatId: document.getElementById("setTelegramChatId")?.value.trim() || current.telegramNotification?.chatId || "8893027663"
       }
     };
 
