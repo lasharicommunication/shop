@@ -62,7 +62,7 @@
   ],
   "announcementText": "THE EVERYDAY TECH EDIT · FLAT RS. 200 TCS & LEOPARDS DELIVERY",
   "showAnnouncement": true,
-  "adminPin": "Speed150",
+  "adminPin": "janlashari",
   "specialOffer": {
     "tag": "🔥 LIMITED TIME MEGA DROP",
     "title": "FLAT 25% OFF · WEEKEND EDIT",
@@ -90,7 +90,7 @@
     "chatId": "8893027663"
   },
   "supabase": {
-    "enabled": true,
+    "enabled": false,
     "url": "https://wnsiodlajtaskdmeklyp.supabase.co",
     "anonKey": "sb_publishable__ZIM0haTjBKXxyMpdt97mw_petf88lr",
     "ordersTable": "orders",
