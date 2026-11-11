@@ -5676,12 +5676,15 @@ html:has(dialog.order-dialog[open]) {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--color-lime, #d6f32f);
-  box-shadow: 0 0 8px rgba(214, 243, 47, 0.8);
+  background: #000000;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+.account-active-dot[hidden] {
+  display: none !important;
 }
 
 .account-button.is-logged-in {
-  color: var(--color-lime, #d6f32f);
+  color: var(--ink, #111827);
 }
 
 .nav-track-link {
