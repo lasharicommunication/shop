@@ -93,6 +93,11 @@ const DEFAULT_SETTINGS = {
     closing: false,
     brands: true,
     location: true
+  },
+  whatsappFloat: {
+    enabled: true,
+    url: "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e",
+    tooltip: "Follow The Lashari Communication on WhatsApp"
   }
 };
 
@@ -995,6 +1000,10 @@ const Storage = {
       }
       if (!parsed.googleMapsUrl) {
         parsed.googleMapsUrl = "https://share.google/iiBvxUjHqCga5PFY1";
+        changed = true;
+      }
+      if (!parsed.whatsappFloat) {
+        parsed.whatsappFloat = DEFAULT_SETTINGS.whatsappFloat;
         changed = true;
       }
       if (changed) {

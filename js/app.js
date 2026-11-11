@@ -450,11 +450,39 @@ function renderStoreSettings() {
   // Render payment accounts in checkout modal
   renderCustomerPaymentAccounts();
 
+  // Floating WhatsApp Button
+  renderFloatingWhatsapp();
+
   // Special Offer & Section Visibility
   renderSpecialOffer();
   applySectionVisibility();
 }
 window.renderStoreInfo = renderStoreSettings;
+
+// Floating WhatsApp Button Handler
+function renderFloatingWhatsapp() {
+  const btn = document.getElementById("floatingWhatsappBtn");
+  if (!btn) return;
+
+  const waFloat = AppState.settings?.whatsappFloat || {
+    enabled: true,
+    url: "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e",
+    tooltip: "Follow The Lashari Communication on WhatsApp"
+  };
+
+  if (waFloat.enabled === false) {
+    btn.style.display = "none";
+    return;
+  }
+
+  btn.style.display = "inline-flex";
+  btn.href = waFloat.url || "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e";
+
+  const tooltip = document.getElementById("floatingWhatsappTooltip");
+  if (tooltip) {
+    tooltip.textContent = waFloat.tooltip || "Follow on WhatsApp";
+  }
+}
 
 // Section Visibility Controller (Tick to show, Untick to hide)
 function applySectionVisibility() {

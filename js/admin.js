@@ -1635,6 +1635,17 @@ const AdminController = {
     setVal("setLocHeading", s.locationHeading || "Find us in person.");
     setVal("setLocDesc", s.locationDesc || "Experience our premium tech essentials, live checking warranty, and free precision mobile cover fitting at our official outlet.");
     setVal("setGoogleMapsUrl", s.googleMapsUrl || "https://share.google/iiBvxUjHqCga5PFY1");
+
+    // Floating WhatsApp Button
+    const waFloat = s.whatsappFloat || {
+      enabled: true,
+      url: "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e",
+      tooltip: "Follow The Lashari Communication on WhatsApp"
+    };
+    const waEnabled = document.getElementById("setWhatsappFloatEnabled");
+    if (waEnabled) waEnabled.checked = waFloat.enabled !== false;
+    setVal("setWhatsappFloatUrl", waFloat.url || "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e");
+    setVal("setWhatsappFloatTooltip", waFloat.tooltip || "Follow The Lashari Communication on WhatsApp");
   },
 
   saveSettings(e) {
@@ -1726,7 +1737,12 @@ const AdminController = {
       adminPin: adminPin,
       announcementText: announcementText,
       sectionVisibility: sectionVisibility,
-      specialOffer: specialOffer
+      specialOffer: specialOffer,
+      whatsappFloat: {
+        enabled: document.getElementById("setWhatsappFloatEnabled") ? document.getElementById("setWhatsappFloatEnabled").checked : (current.whatsappFloat?.enabled ?? true),
+        url: document.getElementById("setWhatsappFloatUrl")?.value.trim() || current.whatsappFloat?.url || "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e",
+        tooltip: document.getElementById("setWhatsappFloatTooltip")?.value.trim() || current.whatsappFloat?.tooltip || "Follow The Lashari Communication on WhatsApp"
+      }
     };
 
     if (window.AppState) AppState.settings = updated;

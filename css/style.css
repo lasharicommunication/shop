@@ -5427,5 +5427,116 @@ html:has(dialog.order-dialog[open]) {
   }
 }
 
+/* ==========================================================================
+   FLOATING WHATSAPP BUTTON (BOTTOM-RIGHT)
+   ========================================================================== */
+.floating-whatsapp-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 990;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-whatsapp-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.42), 0 2px 8px rgba(0, 0, 0, 0.18);
+  position: relative;
+  z-index: 2;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.floating-whatsapp-btn:hover .floating-whatsapp-icon {
+  transform: scale(1.08) rotate(4deg);
+  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.6), 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.floating-whatsapp-tooltip {
+  background: #171a18;
+  color: #f2f5eb;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font, 'DM Sans', sans-serif);
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(139, 171, 21, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  order: -1;
+}
+
+.floating-whatsapp-btn:hover .floating-whatsapp-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.floating-whatsapp-pulse {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  opacity: 0.6;
+  z-index: 1;
+  animation: waFloatingPulse 2.2s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+  pointer-events: none;
+}
+
+@keyframes waFloatingPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .floating-whatsapp-btn {
+    bottom: 20px;
+    right: 20px;
+  }
+  .floating-whatsapp-icon {
+    width: 52px;
+    height: 52px;
+    font-size: 28px;
+  }
+  .floating-whatsapp-pulse {
+    width: 52px;
+    height: 52px;
+  }
+  .floating-whatsapp-tooltip {
+    display: none;
+  }
+}
+
+
 
 

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=5.0">
+  <link rel="stylesheet" href="css/style.css?v=7.5">
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -1530,6 +1530,32 @@
               </div>
             </div>
 
+            <!-- Floating WhatsApp Button Settings (Editable & Toggleable) -->
+            <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 4px; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-brands fa-whatsapp" style="color:#25d366; font-size:16px;"></i> Floating WhatsApp Button (Bottom-Right)
+                  </h4>
+                  <p style="font-size:11px; color:#879b8a; margin:0;">Storefront ke bottom-right corner par floating WhatsApp button aur channel link control karein.</p>
+                </div>
+                <label style="display:inline-flex; align-items:center; gap:8px; cursor:pointer; background:#1b221d; padding:6px 14px; border-radius:999px; border:1px solid #334437;">
+                  <input type="checkbox" id="setWhatsappFloatEnabled" checked style="width:16px; height:16px; accent-color:var(--lime);">
+                  <span style="font-size:12px; font-weight:700; color:#fff;">Enable Button</span>
+                </label>
+              </div>
+
+              <div class="order-field">
+                <label class="admin-field-label">WhatsApp Channel / Direct Link</label>
+                <input type="url" id="setWhatsappFloatUrl" placeholder="https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e" class="admin-input">
+                <span class="admin-field-hint">Aapka WhatsApp Channel ya chat link (e.g. <code>https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e</code>). Click karne par yeh naye tab me open hoga.</span>
+              </div>
+              <div class="order-field" style="margin-top:10px;">
+                <label class="admin-field-label">Button Tooltip / Hover Text</label>
+                <input type="text" id="setWhatsappFloatTooltip" placeholder="Follow The Lashari Communication on WhatsApp" class="admin-input">
+              </div>
+            </div>
+
             <!-- Special Offer Settings -->
             <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
               <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 6px;">Special Promo Offer Settings (Editable)</h4>
@@ -1579,8 +1605,8 @@
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <!-- CORE SCRIPTS -->
-  <script src="js/data.js?v=7.4"></script>
-  <script src="js/admin.js?v=7.4"></script>
+  <script src="js/data.js?v=7.5"></script>
+  <script src="js/admin.js?v=7.5"></script>
   <script>
     // Cryptographic SHA-256 Authentication Gatekeeper
     const PortalAuth = {

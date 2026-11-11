@@ -84,6 +84,11 @@
     "brands": true,
     "location": true
   },
+  "whatsappFloat": {
+    "enabled": true,
+    "url": "https://whatsapp.com/channel/0029Vb8kVBP2ZjCnQE2l1q1e",
+    "tooltip": "Follow The Lashari Communication on WhatsApp"
+  },
   "_brand_lashari_sync_v1": true,
   "_sec_defaults_v2": true,
   "_phone_update_914": true,
