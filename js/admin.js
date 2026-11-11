@@ -1895,6 +1895,21 @@ const AdminController = {
 // Initialize Admin Controller
 document.addEventListener("DOMContentLoaded", () => {
   AdminController.init();
+
+  // Scroll to Top Button (Admin)
+  const scrollBtn = document.getElementById("scrollToTopBtn");
+  if (scrollBtn) {
+    const checkScroll = () => {
+      const pos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (pos > 280) {
+        scrollBtn.classList.add("show");
+      } else {
+        scrollBtn.classList.remove("show");
+      }
+    };
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    checkScroll();
+  }
 });
 
 
