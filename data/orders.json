@@ -390,30 +390,5 @@
     "status": "Shipped",
     "trackingNumber": "TCS-839210492",
     "date": "2026-10-28 14:32"
-  },
-  {
-    "id": "ORD-94820",
-    "customerName": "Kashif Lashari",
-    "phone": "0300-9876543",
-    "email": "kashif.lashari@gmail.com",
-    "address": "B-12 Defence Phase 5",
-    "city": "Lahore",
-    "items": [
-      {
-        "title": "Heavy Duty Rugged Kickstand Defense Case",
-        "model": "S24 Ultra",
-        "qty": 2,
-        "price": 1250
-      }
-    ],
-    "subtotal": 2500,
-    "deliveryFee": 200,
-    "total": 2700,
-    "paymentMethod": "Advance Payment (EasyPaisa)",
-    "transactionRef": "EP-981240182",
-    "courierPartner": "Leopards Courier",
-    "status": "Confirmed",
-    "trackingNumber": "LEO-40192019",
-    "date": "2026-10-27 18:15"
   }
 ]
