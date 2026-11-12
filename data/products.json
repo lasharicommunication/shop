@@ -1,5 +1,44 @@
 [
   {
+    "id": "prod-1794508133834",
+    "title": "M10 TWS Wireless Bluetooth 5.1 Earbuds with Digital LED Display & Power Bank Charging Case – Touch Control Stereo Gaming Headset with Mic",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 999,
+    "oldPrice": 1499,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 34,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Black",
+        "price": 999,
+        "regularPrice": 1499,
+        "specialPrice": 999,
+        "oldPrice": 1499
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/MHc6WswM/images.jpg",
+    "images": [
+      "https://i.postimg.cc/MHc6WswM/images.jpg",
+      "https://i.postimg.cc/85cDHyj9/images.jpg"
+    ],
+    "description": "Experience seamless wireless audio and emergency backup power with the M10 TWS Wireless Bluetooth 5.1 Earbuds. Equipped with a high-capacity charging case featuring a real-time digital LED battery indicator, you can easily monitor the exact remaining battery percentage of both the case and individual earbuds."
+  },
+  {
     "id": "prod-1794507706360",
     "title": "Pro 2 Wireless Earbuds with ANC – Touch Control TWS Bluetooth Earphones with Charging Case (Compatible with iOS & Android)",
     "category": "Earbuds",
