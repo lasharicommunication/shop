@@ -182,28 +182,5 @@
     "paymentMethod": "Cash on Delivery",
     "status": "Confirmed",
     "date": "2026-11-11 09:40"
-  },
-  {
-    "id": "ORD-719189",
-    "customerName": "Faizan Yaqoob",
-    "phone": "+923212920914",
-    "email": "abdulqabir.369@gmail.com",
-    "address": "Gulshan E Areesha Cooperative Housing Society, R1/31",
-    "items": [
-      {
-        "title": "Apple USB-C to Lightning Cable (1m) – Fast Charging & High-Speed Data Sync Wire",
-        "qty": 1,
-        "price": 799,
-        "size": null,
-        "color": null
-      }
-    ],
-    "subtotal": 799,
-    "deliveryFee": 200,
-    "total": 999,
-    "courierPartner": "TCS Express & Leopards Delivery (Standard Express)",
-    "paymentMethod": "Cash on Delivery",
-    "status": "Confirmed",
-    "date": "2026-11-11 08:28"
   }
 ]
