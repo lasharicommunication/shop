@@ -537,29 +537,6 @@
     "description": "Upgrade your charging and data transfer setup with this USB Type-C to Type-C Fast Charging & Sync Cable. Designed for dual-way Type-C connectivity, this cable supports high-speed power delivery and fast data transmission across a wide variety of modern devices, including smartphones, tablets, laptops, and accessories. Built with durable TPE jacketing and reinforced connector strain reliefs to prevent fraying and ensure long-lasting daily performance."
   },
   {
-    "id": "prod-1793903566247",
-    "title": "Samsung 45W PD Power Adapter – Super Fast Charging Wall Charger with 5A/1.8m USB Type-C to C Cable",
-    "category": "Charger",
-    "brand": "samsung",
-    "brandName": "Samsung",
-    "compatibleModels": [
-      "Universal Device Compatibility"
-    ],
-    "price": 1999,
-    "oldPrice": 3849,
-    "isOnSale": true,
-    "rating": 4.9,
-    "reviewsCount": 104,
-    "stock": 2500,
-    "isFeatured": true,
-    "badge": "Sale Item",
-    "image": "https://i.postimg.cc/QtZPvsjL/Samsung-45W-PD-Power-Adapter-Qmart-2.jpg",
-    "images": [
-      "https://i.postimg.cc/QtZPvsjL/Samsung-45W-PD-Power-Adapter-Qmart-2.jpg"
-    ],
-    "description": "Power up your devices in no time with the Samsung 45W PD Power Adapter Set. Designed with a sleek, compact profile, this super-fast wall charger features a USB-C port and comes bundled with a high-capacity 5A USB Type-C to C cable (1.8 meters) for maximum charging efficiency. Perfect for charging smartphones, tablets, and compatible USB-C laptops reliably and quickly."
-  },
-  {
     "id": "prod-1793903332920",
     "title": "Infinix XPOS XPOWER GO 5000mAh Power Bank – 12W Fast Charger Portable External Battery Pack",
     "category": "Power Bank",
