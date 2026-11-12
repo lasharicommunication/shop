@@ -1,5 +1,39 @@
 [
   {
+    "id": "prod-1794507706360",
+    "title": "Pro 2 Wireless Earbuds with ANC – Touch Control TWS Bluetooth Earphones with Charging Case (Compatible with iOS & Android)",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1499,
+    "oldPrice": 2400,
+    "isOnSale": true,
+    "rating": 4.7,
+    "reviewsCount": 96,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "White",
+        "price": 1499,
+        "regularPrice": 2400,
+        "specialPrice": 1499,
+        "oldPrice": 2400
+      }
+    ],
+    "colors": [],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/xC4pS5gs/images.jpg",
+    "images": [
+      "https://i.postimg.cc/xC4pS5gs/images.jpg",
+      "https://i.postimg.cc/jqJYSnNf/images.jpg"
+    ],
+    "description": "Premium authentic tech accessory backed with official checking warranty."
+  },
+  {
     "id": "prod-1794492621545",
     "title": "Lenovo Wireless Bluetooth Neckband Earphones with Magnetic Earbuds (Black & Red)",
     "category": "Handsfree",
