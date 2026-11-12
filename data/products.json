@@ -1,5 +1,39 @@
 [
   {
+    "id": "prod-1794482818135",
+    "title": "Universal Waterproof Phone Pouch Case with Lanyard (IPX8 Certified, Clear Touch-Friendly Cover)",
+    "category": "Mobile Cover",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 199,
+    "oldPrice": 349,
+    "isOnSale": true,
+    "rating": 4.9,
+    "reviewsCount": 23,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Multicolor",
+        "price": 199,
+        "regularPrice": 349,
+        "specialPrice": 199,
+        "oldPrice": 349
+      }
+    ],
+    "colors": [],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/66CY4V6r/images-(1).jpg",
+    "images": [
+      "https://i.postimg.cc/66CY4V6r/images-(1).jpg",
+      "https://i.postimg.cc/HWJj638V/images.jpg"
+    ],
+    "description": "Keep your smartphone safe and dry during beach trips, swimming, boating, snorkeling, or rainy days with this reliable waterproof phone pouch."
+  },
+  {
     "id": "prod-1794421222155",
     "title": "26 cm LED Ring Light with 7 Feet Tripod Stand & Metal Mobile Holder (3 Color Shades)",
     "category": "Ring Light & Tripod",
