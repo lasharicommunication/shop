@@ -297,29 +297,5 @@
     "paymentMethod": "Cash on Delivery",
     "status": "Confirmed",
     "date": "2026-11-11 08:26"
-  },
-  {
-    "id": "ORD-94821",
-    "customerName": "Muhammad Farhan",
-    "phone": "0312-3456789",
-    "email": "farhan.pk@gmail.com",
-    "address": "House 24, Street 5, Gulshan-e-Iqbal Block 13-D",
-    "city": "Karachi",
-    "items": [
-      {
-        "title": "Luxury MagSafe Frosted Matte Armor Case",
-        "model": "iPhone 15 Pro",
-        "qty": 1,
-        "price": 1450
-      }
-    ],
-    "subtotal": 1450,
-    "deliveryFee": 200,
-    "total": 1650,
-    "paymentMethod": "Cash on Delivery",
-    "courierPartner": "TCS Express",
-    "status": "Shipped",
-    "trackingNumber": "TCS-839210492",
-    "date": "2026-10-28 14:32"
   }
 ]
