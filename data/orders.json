@@ -21,28 +21,5 @@
     "paymentMethod": "Cash on Delivery",
     "status": "Confirmed",
     "date": "2026-11-12 17:42"
-  },
-  {
-    "id": "268915",
-    "customerName": "Faizan Yaqoob",
-    "phone": "+923212920914",
-    "email": "abdulqabir.369@gmail.com",
-    "address": "Gulshan E Areesha Cooperative Housing Society, R1/31",
-    "items": [
-      {
-        "title": "Lenovo Wireless Bluetooth Neckband Earphones with Magnetic Earbuds (Black & Red)",
-        "qty": 1,
-        "price": 1099,
-        "size": "Black",
-        "color": "Black"
-      }
-    ],
-    "subtotal": 1099,
-    "deliveryFee": 200,
-    "total": 1299,
-    "courierPartner": "TCS Express & Leopards Delivery (Standard Express)",
-    "paymentMethod": "Cash on Delivery",
-    "status": "Confirmed",
-    "date": "2026-11-12 14:25"
   }
 ]
