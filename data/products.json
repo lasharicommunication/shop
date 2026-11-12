@@ -21,9 +21,25 @@
         "regularPrice": 2400,
         "specialPrice": 1499,
         "oldPrice": 2400
+      },
+      {
+        "name": "Black",
+        "price": 1499,
+        "regularPrice": 2400,
+        "specialPrice": 1499,
+        "oldPrice": 2400
       }
     ],
-    "colors": [],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "White",
+        "hex": "#ffffff"
+      }
+    ],
     "isFeatured": true,
     "badge": "Sale Item",
     "image": "https://i.postimg.cc/xC4pS5gs/images.jpg",
@@ -31,7 +47,7 @@
       "https://i.postimg.cc/xC4pS5gs/images.jpg",
       "https://i.postimg.cc/jqJYSnNf/images.jpg"
     ],
-    "description": "Premium authentic tech accessory backed with official checking warranty."
+    "description": "Elevate your audio style with the Pro 2 Matte Black Edition Wireless Earbuds. Finished in a sleek, stealthy matte black coating, these TWS Bluetooth earphones deliver powerful deep bass, crisp vocals, and Active Noise Cancellation (ANC) for an uninterrupted listening experience."
   },
   {
     "id": "prod-1794492621545",
