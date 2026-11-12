@@ -1,5 +1,56 @@
 [
   {
+    "id": "prod-1794508815996",
+    "title": "Buds Pro 13 ANC/ENC Wireless Earbuds – RGB Breathing Light Charging Case, Double Noise Reduction, Touch Control TWS Gaming Headset",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1649,
+    "oldPrice": 2999,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 95,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Black",
+        "price": 1649,
+        "regularPrice": 2999,
+        "specialPrice": 1649,
+        "oldPrice": 2999
+      },
+      {
+        "name": "Red",
+        "price": 1649,
+        "regularPrice": 2999,
+        "specialPrice": 1649,
+        "oldPrice": 2999
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "Red",
+        "hex": "#dc2626"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/GmRjsV5W/buds-pro-13-tws-wireless-earbuds-pakistan-priceoye-zbufm-100x100.webp",
+    "images": [
+      "https://i.postimg.cc/GmRjsV5W/buds-pro-13-tws-wireless-earbuds-pakistan-priceoye-zbufm-100x100.webp",
+      "https://i.postimg.cc/rmDGkkDr/images.jpg",
+      "https://i.postimg.cc/6pBdQR75/Airbuds13-1.webp"
+    ],
+    "description": "Stand out with futuristic style and immersive sound with the Buds Pro 13 ANC/ENC Wireless Earbuds. Featuring a sleek, eye-catching metallic charging case accented with a vibrant RGB breathing light ring, these TWS earbuds combine bold aesthetics with high-performance audio."
+  },
+  {
     "id": "prod-1794508438192",
     "title": "Mini USB 2.0 Micro SD / TF Memory Card Reader Adapter – High Speed Portable Flash Drive Converter for Laptop & PC",
     "category": "Adapters & OTG",
