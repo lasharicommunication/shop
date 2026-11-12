@@ -1,5 +1,44 @@
 [
   {
+    "id": "prod-1794508438192",
+    "title": "Mini USB 2.0 Micro SD / TF Memory Card Reader Adapter – High Speed Portable Flash Drive Converter for Laptop & PC",
+    "category": "Adapters & OTG",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 199,
+    "oldPrice": 249,
+    "isOnSale": true,
+    "rating": 4.7,
+    "reviewsCount": 51,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "blue",
+        "price": 199,
+        "regularPrice": 249,
+        "specialPrice": 199,
+        "oldPrice": 249
+      }
+    ],
+    "colors": [
+      {
+        "name": "Navy Blue",
+        "hex": "#1e3a8a"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/L62SQ6Y8/images.jpg",
+    "images": [
+      "https://i.postimg.cc/L62SQ6Y8/images.jpg",
+      "https://i.postimg.cc/g2BP0VMj/b0646c7434c0fd627876f3fa9689c429.jpg"
+    ],
+    "description": "Transfer photos, videos, music, and documents effortlessly between your memory card and computer with this Mini USB 2.0 Micro SD / TF Card Reader. Designed to be ultra-compact and lightweight, this adapter turns any Micro SD or TF card into a portable USB flash drive in seconds."
+  },
+  {
     "id": "prod-1794508133834",
     "title": "M10 TWS Wireless Bluetooth 5.1 Earbuds with Digital LED Display & Power Bank Charging Case – Touch Control Stereo Gaming Headset with Mic",
     "category": "Earbuds",
