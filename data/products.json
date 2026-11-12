@@ -1,5 +1,44 @@
 [
   {
+    "id": "prod-1794509995672",
+    "title": "Gold Shining Edition Wireless Pro Earbuds – Luxury Metallic Glossy Gold TWS Bluetooth Earphones with Charging Case (Compatible with iOS & Android)",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1499,
+    "oldPrice": 2599,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 62,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Golden",
+        "price": 1499,
+        "regularPrice": 2599,
+        "specialPrice": 1499,
+        "oldPrice": 2599
+      }
+    ],
+    "colors": [
+      {
+        "name": "Golden",
+        "hex": "#3b82f6"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/R0d9zkj2/820d4bc403314dc67d793a298fdcb9aa.png",
+    "images": [
+      "https://i.postimg.cc/R0d9zkj2/820d4bc403314dc67d793a298fdcb9aa.png",
+      "https://i.postimg.cc/YqFHSG5X/57e6d0f57ab5c1533bc985e729dba75c-jpg-720x720q80.jpg"
+    ],
+    "description": "Make a bold luxury statement with the Gold Shining Edition Wireless Pro Earbuds. Featuring an eye-catching, high-gloss metallic gold finish on both the earbuds and the compact charging case, these TWS Bluetooth earphones deliver a sleek, premium aesthetic paired with impressive wireless audio performance."
+  },
+  {
     "id": "prod-1794508815996",
     "title": "Buds Pro 13 ANC/ENC Wireless Earbuds – RGB Breathing Light Charging Case, Double Noise Reduction, Touch Control TWS Gaming Headset",
     "category": "Earbuds",
