@@ -1,5 +1,44 @@
 [
   {
+    "id": "prod-1794511309899",
+    "title": "Universal Foldable Desktop Mobile & Tablet Stand – Adjustable Height & Angle Telescopic Phone Holder with Weighted Round Base (Classic Black)",
+    "category": "Holders",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 599,
+    "oldPrice": 749,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 60,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Black",
+        "price": 599,
+        "regularPrice": 749,
+        "specialPrice": 599,
+        "oldPrice": 749
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/QtrsLpxV/ce8c93c5c6ac3faff55200fb9c07821d.png",
+    "images": [
+      "https://i.postimg.cc/QtrsLpxV/ce8c93c5c6ac3faff55200fb9c07821d.png",
+      "https://i.postimg.cc/PJrghyg3/S8df241c25f8d49c5bf90ccf15f0d13ec-W.jpg"
+    ],
+    "description": "Keep your hands free and your posture comfortable with this Universal Foldable Desktop Mobile & Tablet Stand. Designed with a sleek, carbon-textured backrest and a sturdy circular base, this telescopic stand securely holds both smartphones and tablets at your ideal eye level."
+  },
+  {
     "id": "prod-1794509995672",
     "title": "Gold Shining Edition Wireless Pro Earbuds – Luxury Metallic Glossy Gold TWS Bluetooth Earphones with Charging Case (Compatible with iOS & Android)",
     "category": "Earbuds",
