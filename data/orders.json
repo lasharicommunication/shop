@@ -299,29 +299,6 @@
     "date": "2026-11-11 08:26"
   },
   {
-    "id": "ORD-606291",
-    "customerName": "Faizan Yaqoob",
-    "phone": "+923212920914",
-    "email": "abdulqabir.369@gmail.com",
-    "address": "Gulshan E Areesha Cooperative Housing Society, R1/31",
-    "items": [
-      {
-        "title": "Type-C to Type-C Fast Charging Cable – High-Speed Data Sync & Power Delivery USB-C Wire",
-        "qty": 1,
-        "price": 499,
-        "size": null,
-        "color": null
-      }
-    ],
-    "subtotal": 499,
-    "deliveryFee": 200,
-    "total": 699,
-    "courierPartner": "TCS Express & Leopards Delivery (Standard Express)",
-    "paymentMethod": "Cash on Delivery",
-    "status": "Confirmed",
-    "date": "2026-11-11 08:26"
-  },
-  {
     "id": "ORD-498907",
     "customerName": "The Lashari Communication",
     "phone": "03212920914",
