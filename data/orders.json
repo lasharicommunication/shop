@@ -415,29 +415,5 @@
     "status": "Confirmed",
     "trackingNumber": "LEO-40192019",
     "date": "2026-10-27 18:15"
-  },
-  {
-    "id": "ORD-94819",
-    "customerName": "Noman Siddiqui",
-    "phone": "0333-1122334",
-    "email": "noman.siddiqui@yahoo.com",
-    "address": "Flat 402, Al-Razi Heights, F-10/3",
-    "city": "Islamabad",
-    "items": [
-      {
-        "title": "Slide Camera Shutter Armor Shockproof Case",
-        "model": "Realme 12 Pro+",
-        "qty": 1,
-        "price": 1100
-      }
-    ],
-    "subtotal": 1100,
-    "deliveryFee": 200,
-    "total": 1300,
-    "paymentMethod": "Cash on Delivery",
-    "courierPartner": "TCS Express",
-    "status": "Delivered",
-    "trackingNumber": "TCS-10928374",
-    "date": "2026-10-25 11:20"
   }
 ]
