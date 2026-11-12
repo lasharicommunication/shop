@@ -1,5 +1,45 @@
 [
   {
+    "id": "prod-1794492621545",
+    "title": "Lenovo Wireless Bluetooth Neckband Earphones with Magnetic Earbuds (Black & Red)",
+    "category": "Handsfree",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1099,
+    "oldPrice": 2100,
+    "isOnSale": true,
+    "rating": 4.9,
+    "reviewsCount": 58,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Black",
+        "price": 1099,
+        "regularPrice": 2100,
+        "specialPrice": 1099,
+        "oldPrice": 2100
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/Dymfg3Bz/images-(33).jpg",
+    "images": [
+      "https://i.postimg.cc/Dymfg3Bz/images-(33).jpg",
+      "https://i.postimg.cc/QMZXh9sG/images-(34).jpg",
+      "https://i.postimg.cc/Y9pML5hX/images-(35).jpg"
+    ],
+    "description": "Enjoy convenient, hands-free audio on the go with the Lenovo Wireless Bluetooth Neckband Earphones. Featuring a sleek black finish with sporty red accents, this lightweight neckband is designed for comfortable all-day wear during workouts, commutes, or everyday calls."
+  },
+  {
     "id": "prod-1794482818135",
     "title": "Universal Waterproof Phone Pouch Case with Lanyard (IPX8 Certified, Clear Touch-Friendly Cover)",
     "category": "Mobile Cover",
