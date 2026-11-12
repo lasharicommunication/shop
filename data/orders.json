@@ -90,28 +90,5 @@
     "paymentMethod": "Cash on Delivery",
     "status": "Confirmed",
     "date": "2026-11-11 21:01"
-  },
-  {
-    "id": "ORD-530772",
-    "customerName": "gds",
-    "phone": "037876778",
-    "email": "gdf",
-    "address": "sdfg",
-    "items": [
-      {
-        "title": "Ultra Smartwatch Combo Box – Premium Smart Watch with 7 Different Straps (Silicone, Alpine Loop, Stainless Steel, Sport) & Wireless Magnetic Charger",
-        "qty": 1,
-        "price": 1499,
-        "size": "smartwatch",
-        "color": "Black"
-      }
-    ],
-    "subtotal": 1499,
-    "deliveryFee": 200,
-    "total": 1699,
-    "courierPartner": "TCS Express & Leopards Delivery (Standard Express)",
-    "paymentMethod": "Advance Payment",
-    "status": "Confirmed",
-    "date": "2026-11-11 09:48"
   }
 ]
