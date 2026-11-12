@@ -662,32 +662,5 @@
       "https://i.postimg.cc/wjP1d4t0/8b9ab8b89dd38c76a14fc637dd79137a.jpg"
     ],
     "description": "Experience big sound on the go with the M3 Mini Portable Bluetooth Speaker. Designed to fit in the palm of your hand or pocket, this compact wireless speaker delivers surprisingly loud volume and crisp audio clarity, making it perfect for travel, outdoor activities, or daily indoor use."
-  },
-  {
-    "id": "prod-1793561560126",
-    "title": "Futuristic Red Gaming Wireless Earbuds with Breathing LED Charging Case",
-    "category": "Earbuds",
-    "brand": "general",
-    "brandName": "Universal Tech",
-    "compatibleModels": [
-      "Universal Device Compatibility"
-    ],
-    "price": 1749,
-    "oldPrice": 2499,
-    "isOnSale": true,
-    "rating": 4.9,
-    "reviewsCount": 83,
-    "stock": 2500,
-    "isFeatured": true,
-    "badge": "Sale Item",
-    "image": "https://i.postimg.cc/rwDc6ptv/61v-Pt-Py4c-L-jpg-BO30-255-255-255-UF750-750-SR1910-1000-0-C-QL100.jpg",
-    "images": [
-      "https://i.postimg.cc/rwDc6ptv/61v-Pt-Py4c-L-jpg-BO30-255-255-255-UF750-750-SR1910-1000-0-C-QL100.jpg"
-    ],
-    "description": "Elevate your audio and gaming setup with these futuristic red wireless earbuds. Featuring a stylish metallic-finish charging case highlighted by a vibrant circular LED ring, this pair offers sleek modern aesthetics along with powerful dynamic sound performance.",
-    "colors": [
-      "Cyber Red",
-      "Stealth Black"
-    ]
   }
 ]
