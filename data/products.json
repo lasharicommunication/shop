@@ -21,6 +21,13 @@
         "regularPrice": 899,
         "specialPrice": 449,
         "oldPrice": 899
+      },
+      {
+        "name": "Black",
+        "price": 449,
+        "regularPrice": 899,
+        "specialPrice": 449,
+        "oldPrice": 899
       }
     ],
     "colors": [
@@ -41,7 +48,7 @@
       "https://i.postimg.cc/76SgDfd2/221347def20ecd060c73835969bdda1b-jpg-960x960q80-jpg.webp",
       "https://i.postimg.cc/fyKmt1w0/2948-419-758471-product-1.webp"
     ],
-    "description": "Premium authentic tech accessory backed with official checking warranty."
+    "description": "Enjoy crisp stereo audio and reliable everyday durability with the Blue Spectrum M-5 Universal Music Headset. Engineered for music lovers, commuters, and students, these wired in-ear earphones deliver clear vocals, balanced midranges, and punchy bass across all your favorite playlists, videos, and podcasts."
   },
   {
     "id": "prod-1794650097447",
