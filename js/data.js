@@ -73,6 +73,10 @@ const DEFAULT_SETTINGS = {
   announcementText: "THE EVERYDAY TECH EDIT · FLAT RS. 200 TCS & LEOPARDS DELIVERY",
   showAnnouncement: true,
   adminPin: "Speed150",
+  adminEmails: [
+    "thelasharicommunication@gmail.com",
+    "abdulqabir.369@gmail.com"
+  ],
   specialOffer: {
     tag: "🔥 LIMITED TIME MEGA DROP",
     title: "FLAT 25% OFF · WEEKEND EDIT",
@@ -1010,6 +1014,10 @@ const Storage = {
         parsed._pin_speed150 = true;
         changed = true;
       }
+      if (!parsed.adminEmails || !Array.isArray(parsed.adminEmails) || parsed.adminEmails.length === 0) {
+        parsed.adminEmails = DEFAULT_SETTINGS.adminEmails;
+        changed = true;
+      }
       if (!parsed.googleMapsUrl) {
         parsed.googleMapsUrl = "https://share.google/iiBvxUjHqCga5PFY1";
         changed = true;
@@ -1317,6 +1325,84 @@ const Storage = {
   },
   saveCoupons: (coupons) => {
     localStorage.setItem("lashari_coupons", JSON.stringify(coupons));
+  },
+  // 7-Day Product Recycle Bin / Trash
+  TRASH_RETENTION_MS: 7 * 24 * 60 * 60 * 1000,
+  getTrash: () => {
+    try {
+      const saved = localStorage.getItem("lashari_products_trash");
+      if (!saved) return [];
+      let trash = JSON.parse(saved);
+      if (!Array.isArray(trash)) return [];
+
+      const now = Date.now();
+      const retention = Storage.TRASH_RETENTION_MS;
+      // Auto-purge products older than 7 days
+      const activeTrash = trash.filter(item => {
+        const deletedTime = item.deletedAt ? new Date(item.deletedAt).getTime() : 0;
+        return (now - deletedTime) <= retention;
+      });
+
+      if (activeTrash.length !== trash.length) {
+        localStorage.setItem("lashari_products_trash", JSON.stringify(activeTrash));
+        window.dispatchEvent(new CustomEvent("lashari:trash-updated", { detail: activeTrash }));
+      }
+      return activeTrash;
+    } catch (_) {
+      return [];
+    }
+  },
+  saveTrash: (trash) => {
+    try {
+      localStorage.setItem("lashari_products_trash", JSON.stringify(trash || []));
+      window.dispatchEvent(new CustomEvent("lashari:trash-updated", { detail: trash }));
+    } catch (_) {}
+  },
+  moveToTrash: async (productId) => {
+    let products = Storage.getProducts();
+    const idx = products.findIndex(p => p.id === productId);
+    if (idx === -1) return null;
+
+    const [removed] = products.splice(idx, 1);
+    const trashItem = {
+      ...removed,
+      deletedAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + Storage.TRASH_RETENTION_MS).toISOString()
+    };
+
+    const trash = Storage.getTrash();
+    trash.unshift(trashItem);
+    Storage.saveTrash(trash);
+
+    await Storage.saveProducts(products);
+    if (window.AppState) window.AppState.products = products;
+    return trashItem;
+  },
+  restoreFromTrash: async (productId) => {
+    let trash = Storage.getTrash();
+    const idx = trash.findIndex(p => p.id === productId);
+    if (idx === -1) return null;
+
+    const [restored] = trash.splice(idx, 1);
+    delete restored.deletedAt;
+    delete restored.expiresAt;
+
+    let products = Storage.getProducts();
+    products.unshift(restored);
+
+    Storage.saveTrash(trash);
+    await Storage.saveProducts(products);
+    if (window.AppState) window.AppState.products = products;
+    return restored;
+  },
+  deletePermanentlyFromTrash: (productId) => {
+    let trash = Storage.getTrash();
+    const filtered = trash.filter(p => p.id !== productId);
+    Storage.saveTrash(filtered);
+    return filtered;
+  },
+  emptyTrash: () => {
+    Storage.saveTrash([]);
   },
   resetDemoData: () => {
     localStorage.setItem("lashari_settings", JSON.stringify(DEFAULT_SETTINGS));

@@ -110,6 +110,61 @@ const CustomerAuth = {
     } catch (_) {}
   },
 
+  getAdminEmails() {
+    const s = (typeof Storage !== "undefined" && Storage.getSettings) ? Storage.getSettings() : {};
+    const defaultAdmins = [
+      "abdulqabir.369@gmail.com",
+      "thelasharicommunication@gmail.com"
+    ];
+    let customAdmins = [];
+    if (Array.isArray(s.adminEmails)) {
+      customAdmins = s.adminEmails;
+    } else if (typeof s.adminEmails === "string") {
+      customAdmins = s.adminEmails.split(",").map(e => e.trim());
+    }
+    if (s.email && typeof s.email === "string") {
+      customAdmins.push(s.email.trim());
+    }
+    const set = new Set([...defaultAdmins, ...customAdmins].map(e => (e || "").toLowerCase().trim()).filter(Boolean));
+    return Array.from(set);
+  },
+
+  async checkIsAdmin(user = null) {
+    if (!user) user = this.getCurrentUser();
+    if (!user) return false;
+
+    const email = (user.email || "").toLowerCase().trim();
+    if (email) {
+      const adminEmails = this.getAdminEmails();
+      if (adminEmails.includes(email)) return true;
+    }
+
+    if (user.role === "admin" || user.is_admin === true) return true;
+    if (user.user_metadata && (user.user_metadata.role === "admin" || user.user_metadata.is_admin === true)) return true;
+    if (user.app_metadata && (user.app_metadata.role === "admin" || user.app_metadata.is_admin === true)) return true;
+
+    // Check profiles table in Supabase
+    const client = LashariSupabase.getClient();
+    if (client && (user.id || email)) {
+      try {
+        let query = client.from("profiles").select("id, email, role, is_admin");
+        if (user.id) {
+          query = query.eq("id", user.id);
+        } else {
+          query = query.eq("email", email);
+        }
+        const { data, error } = await query.maybeSingle();
+        if (!error && data) {
+          if (data.role === "admin" || data.is_admin === true) return true;
+        }
+      } catch (_) {
+        // Non-blocking if columns don't exist yet
+      }
+    }
+
+    return false;
+  },
+
   async signUp({ name, phone, email, password }) {
     name = (name || "").trim();
     phone = (phone || "").trim();

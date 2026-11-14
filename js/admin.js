@@ -77,6 +77,7 @@ const AdminController = {
 
   init() {
     this.bindEvents();
+    this.updateTrashBadge();
   },
 
   // Check PIN and Open Admin Panel
@@ -153,7 +154,10 @@ const AdminController = {
         Storage.loadOrders().then(() => this.renderOrdersTable()).catch(() => {});
       }
     }
-    if (tabName === "products") this.renderProductsTable();
+    if (tabName === "products") {
+      this.renderProductsTable();
+      this.updateTrashBadge();
+    }
     if (tabName === "coupons") this.renderCouponsTab();
     if (tabName === "accounts") this.renderAccountsTab();
     if (tabName === "settings") this.renderSettingsForm();
@@ -495,7 +499,7 @@ const AdminController = {
     if (!p) return;
     p.stock = Math.max(0, (p.stock || 0) + change);
     await Storage.saveProducts(products);
-    if (window.AppState) AppState.products = products;
+    if (window.AppState) window.AppState.products = products;
     if (typeof renderProducts === "function") renderProducts();
     this.renderProductsTable();
     showToast(`Stock for "${p.title}" updated to ${p.stock}`, "success");
@@ -993,10 +997,15 @@ const AdminController = {
     const formStock = document.getElementById("prodFormStock");
     const formDesc = document.getElementById("prodFormDescription");
     const imgList = document.getElementById("productImagesList");
+    const draftNotice = document.getElementById("adminProductDraftNotice");
+    const draftStatus = document.getElementById("adminDraftAutoSaveStatus");
 
     if (!box) return;
+    sessionStorage.setItem("lashari_admin_product_form_open", "true");
 
     if (imgList) imgList.innerHTML = "";
+    if (draftStatus) draftStatus.innerHTML = "";
+    if (draftNotice) draftNotice.style.display = "none";
 
     // Sync categories into dropdown including any existing custom categories
     const products = Storage.getProducts();
@@ -1053,59 +1062,126 @@ const AdminController = {
       }).join("") + `<option value="__custom__">➕ + Custom Category / Add New...</option>`;
     }
 
+    const draft = this.getProductDraft();
+    let isDraftRestored = false;
+
     if (productId) {
       const prod = products.find(p => p.id === productId);
       if (prod) {
         if (titleEl) titleEl.textContent = `Edit Product: ${prod.title}`;
         if (editIdInput) editIdInput.value = prod.id;
-        if (formTitle) formTitle.value = prod.title || "";
 
-        // Handle category selection
-        if (formCat) {
-          const hasOption = Array.from(formCat.options).some(o => o.value.toLowerCase() === (prod.category || "").toLowerCase());
-          if (hasOption) {
-            formCat.value = prod.category;
-            if (customBox) customBox.style.display = "none";
-            if (customInput) customInput.value = "";
-          } else {
-            formCat.value = "__custom__";
-            if (customBox) customBox.style.display = "block";
-            if (customInput) customInput.value = prod.category || "";
+        // Check if there is an unsaved draft specifically for this product
+        if (draft && draft.editProductId === productId && this.hasMeaningfulDraftContent(draft)) {
+          isDraftRestored = true;
+          if (formTitle) formTitle.value = draft.title ?? prod.title ?? "";
+          if (formCat) {
+            if (draft.category === "__custom__") {
+              formCat.value = "__custom__";
+              if (customBox) customBox.style.display = "block";
+              if (customInput) customInput.value = draft.customCategory || "";
+            } else {
+              formCat.value = draft.category || prod.category || "Smartwatch";
+              if (customBox) customBox.style.display = "none";
+            }
           }
-        }
+          if (formBrand) formBrand.value = draft.brand || prod.brand || "infinix";
+          if (formPrice) formPrice.value = draft.price || prod.price || "";
+          if (formOldPrice) formOldPrice.value = draft.oldPrice || prod.oldPrice || "";
+          if (formIsOnSale) formIsOnSale.checked = draft.isOnSale !== false;
+          if (formStock) formStock.value = draft.stock ?? prod.stock ?? 25;
+          if (formDesc) formDesc.value = draft.description || prod.description || "";
 
-        if (formBrand) formBrand.value = prod.brand || "infinix";
-        if (formPrice) formPrice.value = prod.price || "";
-        if (formOldPrice) formOldPrice.value = prod.oldPrice || "";
-        if (formIsOnSale) formIsOnSale.checked = prod.isOnSale !== false;
-        if (formStock) formStock.value = prod.stock ?? 25;
-        if (formDesc) formDesc.value = prod.description || "";
-
-        // Render saved varieties (sizes & colors)
-        this.renderAdminVarieties(prod.sizes || [], prod.colors || [], prod.price);
-
-        const existingImages = Array.isArray(prod.images) && prod.images.length > 0 
-          ? prod.images 
-          : (prod.image ? [prod.image] : []);
-
-        if (existingImages.length > 0) {
-          existingImages.forEach(u => this.addImageUrlField(u));
+          this.renderAdminVarieties(draft.sizes || prod.sizes || [], draft.colors || prod.colors || [], draft.price || prod.price);
+          const images = (draft.images && draft.images.length > 0) ? draft.images : (prod.images || (prod.image ? [prod.image] : []));
+          if (images.length > 0) {
+            images.forEach(u => this.addImageUrlField(u));
+          } else {
+            this.addImageUrlField("");
+          }
         } else {
-          this.addImageUrlField("");
+          if (formTitle) formTitle.value = prod.title || "";
+          // Handle category selection
+          if (formCat) {
+            const hasOption = Array.from(formCat.options).some(o => o.value.toLowerCase() === (prod.category || "").toLowerCase());
+            if (hasOption) {
+              formCat.value = prod.category;
+              if (customBox) customBox.style.display = "none";
+              if (customInput) customInput.value = "";
+            } else {
+              formCat.value = "__custom__";
+              if (customBox) customBox.style.display = "block";
+              if (customInput) customInput.value = prod.category || "";
+            }
+          }
+
+          if (formBrand) formBrand.value = prod.brand || "infinix";
+          if (formPrice) formPrice.value = prod.price || "";
+          if (formOldPrice) formOldPrice.value = prod.oldPrice || "";
+          if (formIsOnSale) formIsOnSale.checked = prod.isOnSale !== false;
+          if (formStock) formStock.value = prod.stock ?? 25;
+          if (formDesc) formDesc.value = prod.description || "";
+
+          // Render saved varieties (sizes & colors)
+          this.renderAdminVarieties(prod.sizes || [], prod.colors || [], prod.price);
+
+          const existingImages = Array.isArray(prod.images) && prod.images.length > 0 
+            ? prod.images 
+            : (prod.image ? [prod.image] : []);
+
+          if (existingImages.length > 0) {
+            existingImages.forEach(u => this.addImageUrlField(u));
+          } else {
+            this.addImageUrlField("");
+          }
         }
       }
     } else {
       if (titleEl) titleEl.textContent = "Add New Product";
       if (editIdInput) editIdInput.value = "";
-      const form = document.getElementById("adminProductForm");
-      if (form) form.reset();
-      if (formCat) formCat.value = "Smartwatch";
-      if (customBox) customBox.style.display = "none";
-      if (customInput) customInput.value = "";
-      if (formIsOnSale) formIsOnSale.checked = true;
-      if (formStock) formStock.value = 25;
-      this.addImageUrlField("");
-      this.renderAdminVarieties([], []);
+
+      // Check if there is an unsaved draft for a new product
+      if (draft && !draft.editProductId && this.hasMeaningfulDraftContent(draft)) {
+        isDraftRestored = true;
+        if (formTitle) formTitle.value = draft.title || "";
+        if (formCat) {
+          if (draft.category === "__custom__") {
+            formCat.value = "__custom__";
+            if (customBox) customBox.style.display = "block";
+            if (customInput) customInput.value = draft.customCategory || "";
+          } else {
+            formCat.value = draft.category || "Smartwatch";
+            if (customBox) customBox.style.display = "none";
+          }
+        }
+        if (formBrand) formBrand.value = draft.brand || "infinix";
+        if (formPrice) formPrice.value = draft.price || "";
+        if (formOldPrice) formOldPrice.value = draft.oldPrice || "";
+        if (formIsOnSale) formIsOnSale.checked = draft.isOnSale !== false;
+        if (formStock) formStock.value = draft.stock ?? 25;
+        if (formDesc) formDesc.value = draft.description || "";
+
+        this.renderAdminVarieties(draft.sizes || [], draft.colors || [], draft.price);
+        if (draft.images && draft.images.length > 0) {
+          draft.images.forEach(u => this.addImageUrlField(u));
+        } else {
+          this.addImageUrlField("");
+        }
+      } else {
+        const form = document.getElementById("adminProductForm");
+        if (form) form.reset();
+        if (formCat) formCat.value = "Smartwatch";
+        if (customBox) customBox.style.display = "none";
+        if (customInput) customInput.value = "";
+        if (formIsOnSale) formIsOnSale.checked = true;
+        if (formStock) formStock.value = 25;
+        this.addImageUrlField("");
+        this.renderAdminVarieties([], []);
+      }
+    }
+
+    if (isDraftRestored && draftNotice) {
+      draftNotice.style.display = "flex";
     }
 
     this.updateSizePresetsForCategory(formCat?.value || "");
@@ -1115,6 +1191,7 @@ const AdminController = {
   },
 
   closeProductForm() {
+    sessionStorage.removeItem("lashari_admin_product_form_open");
     const box = document.getElementById("adminProductFormBox");
     if (box) box.style.display = "none";
     const form = document.getElementById("adminProductForm");
@@ -1123,6 +1200,8 @@ const AdminController = {
     if (imgList) imgList.innerHTML = "";
     const customBox = document.getElementById("customCategoryBox");
     if (customBox) customBox.style.display = "none";
+    const draftNotice = document.getElementById("adminProductDraftNotice");
+    if (draftNotice) draftNotice.style.display = "none";
   },
 
   async saveProduct(e) {
@@ -1247,8 +1326,9 @@ const AdminController = {
       }
 
       await Storage.saveProducts(products);
-      if (window.AppState) AppState.products = products;
+      if (window.AppState) window.AppState.products = products;
 
+      this.clearProductDraft();
       this.renderProductsTable();
       this.closeProductForm();
       if (typeof renderProducts === "function") renderProducts();
@@ -1258,21 +1338,314 @@ const AdminController = {
     }
   },
 
+  // 7-Day Product Recycle Bin / Trash
   async deleteProduct(productId) {
     let products = Storage.getProducts();
     const prod = products.find(p => p.id === productId);
-    const title = prod ? prod.title : "product";
+    const title = prod ? prod.title : "this product";
 
-    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
+    if (!confirm(`Are you sure you want to move "${title}" to the Recycle Bin?\n\nIt will be safely retained in the Trash for 7 days where you can restore it anytime.`)) {
+      return;
+    }
 
-    products = products.filter(p => p.id !== productId);
-    await Storage.saveProducts(products);
-    if (window.AppState) AppState.products = products;
+    const trashedItem = await Storage.moveToTrash(productId);
+    if (trashedItem) {
+      showToast(`Product moved to Recycle Bin (recoverable for 7 days)`, "info");
+    }
 
-    showToast(`Product "${title}" deleted from store`, "info");
     this.renderProductsTable();
-    if (typeof renderProducts === "function") renderProducts();
+    this.updateTrashBadge();
     this.renderOverview();
+    if (typeof renderProducts === "function") renderProducts();
+  },
+
+  openTrashModal() {
+    const modal = document.getElementById("adminTrashModal");
+    if (modal) {
+      modal.style.display = "grid";
+      document.body.style.overflow = "hidden";
+      this.renderTrashTable();
+    }
+  },
+
+  closeTrashModal() {
+    const modal = document.getElementById("adminTrashModal");
+    if (modal) {
+      modal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+  },
+
+  updateTrashBadge() {
+    const badge = document.getElementById("adminTrashCountBadge");
+    if (!badge) return;
+    const trash = (typeof Storage !== "undefined" && Storage.getTrash) ? Storage.getTrash() : [];
+    if (trash.length > 0) {
+      badge.textContent = trash.length;
+      badge.style.display = "inline-flex";
+    } else {
+      badge.style.display = "none";
+    }
+  },
+
+  renderTrashTable() {
+    const container = document.getElementById("adminTrashTableContainer");
+    const countBadge = document.getElementById("adminTrashModalCount");
+    if (!container) return;
+
+    const trash = Storage.getTrash();
+    if (countBadge) countBadge.textContent = `${trash.length} ${trash.length === 1 ? 'item' : 'items'}`;
+    this.updateTrashBadge();
+
+    if (trash.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center; padding:48px 20px; color:#7d8f80;">
+          <div style="font-size:36px; margin-bottom:12px; color:#49574b;"><i class="fa-solid fa-trash-can"></i></div>
+          <h4 style="color:#f2f5eb; margin:0 0 6px; font-size:16px;">Recycle Bin is Empty</h4>
+          <p style="font-size:12.5px; margin:0; max-width:380px; margin:0 auto; line-height:1.5;">
+            Jab aap kisi product ko delete karenge to wo 7 din tak yahan save rahega ta ke aap galti se delete hone par foran restore kar sakein.
+          </p>
+        </div>
+      `;
+      return;
+    }
+
+    const now = Date.now();
+    let rowsHtml = "";
+
+    trash.forEach(item => {
+      const deletedAtDate = item.deletedAt ? new Date(item.deletedAt) : new Date();
+      const expiresAtMs = deletedAtDate.getTime() + (7 * 24 * 60 * 60 * 1000);
+      const remainingMs = Math.max(0, expiresAtMs - now);
+      const daysLeft = Math.ceil(remainingMs / (24 * 60 * 60 * 1000));
+      const hoursLeft = Math.ceil(remainingMs / (60 * 60 * 1000));
+
+      let countdownBadgeHtml = "";
+      if (daysLeft > 1) {
+        countdownBadgeHtml = `<span class="admin-badge" style="background:#262d28; color:#d8ff55; border:1px solid #3c4c3e;"><i class="fa-solid fa-clock"></i> Auto-deletes in ${daysLeft} days</span>`;
+      } else if (hoursLeft > 0) {
+        countdownBadgeHtml = `<span class="admin-badge" style="background:#3b1f1f; color:#f87171; border:1px solid #5a2e2e;"><i class="fa-solid fa-hourglass-end"></i> Auto-deletes in ${hoursLeft} hours</span>`;
+      } else {
+        countdownBadgeHtml = `<span class="admin-badge" style="background:#3b1f1f; color:#f87171; border:1px solid #5a2e2e;"><i class="fa-solid fa-triangle-exclamation"></i> Purging today</span>`;
+      }
+
+      const img = (item.images && item.images[0]) || item.image || "images/logo.png";
+      const formattedDate = deletedAtDate.toLocaleDateString("en-PK", {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+      rowsHtml += `
+        <tr style="border-bottom:1px solid #232d25;">
+          <td style="padding:12px 10px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <img src="${img}" alt="${item.title}" style="width:42px; height:42px; border-radius:8px; object-fit:cover; background:#1b231d; border:1px solid #2d3b2f;" onerror="this.src='images/logo.png'">
+              <div>
+                <div style="font-weight:700; color:#fff; font-size:13.5px;">${item.title}</div>
+                <div style="font-size:11px; color:#879b8a;">${item.category || 'General'} · ${item.brandName || item.brand || 'Lashari'}</div>
+              </div>
+            </div>
+          </td>
+          <td style="padding:12px 10px; font-weight:700; color:var(--lime,#d8ff55); white-space:nowrap;">
+            Rs. ${Number(item.price || 0).toLocaleString()}
+          </td>
+          <td style="padding:12px 10px; font-size:12px; color:#adb5a8; white-space:nowrap;">
+            ${formattedDate}
+          </td>
+          <td style="padding:12px 10px; white-space:nowrap;">
+            ${countdownBadgeHtml}
+          </td>
+          <td style="padding:12px 10px; text-align:right; white-space:nowrap;">
+            <div style="display:inline-flex; gap:8px;">
+              <button type="button" class="admin-btn admin-btn-lime" style="padding:6px 12px; font-size:12px;" onclick="AdminController.restoreProduct('${item.id}')" title="Restore to active store">
+                <i class="fa-solid fa-rotate-left"></i> Restore
+              </button>
+              <button type="button" class="admin-btn admin-btn-danger" style="padding:6px 10px; font-size:12px;" onclick="AdminController.deletePermanently('${item.id}')" title="Delete forever">
+                <i class="fa-solid fa-trash-can"></i> Delete Forever
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    });
+
+    container.innerHTML = `
+      <div class="admin-table-container">
+        <table class="admin-table" style="min-width:680px;">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Deleted On</th>
+              <th>Retention Period</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      </div>
+    `;
+  },
+
+  async restoreProduct(productId) {
+    const restored = await Storage.restoreFromTrash(productId);
+    if (restored) {
+      showToast(`Product "${restored.title}" restored to store inventory!`, "success");
+    }
+    this.renderTrashTable();
+    this.renderProductsTable();
+    this.updateTrashBadge();
+    this.renderOverview();
+    if (typeof renderProducts === "function") renderProducts();
+  },
+
+  deletePermanently(productId) {
+    if (!confirm("Are you sure you want to permanently delete this product? This action cannot be undone.")) return;
+    Storage.deletePermanentlyFromTrash(productId);
+    showToast("Product deleted permanently.", "info");
+    this.renderTrashTable();
+    this.updateTrashBadge();
+  },
+
+  emptyAllTrash() {
+    const trash = Storage.getTrash();
+    if (trash.length === 0) return;
+    if (!confirm(`Are you sure you want to permanently delete all ${trash.length} items from the Recycle Bin? This cannot be undone.`)) return;
+    Storage.emptyTrash();
+    showToast("Recycle Bin emptied.", "info");
+    this.renderTrashTable();
+    this.updateTrashBadge();
+  },
+
+  // Product Draft Auto-Save & Recovery System (accidental refresh / close protection)
+  DRAFT_KEY: "lashari_admin_product_draft",
+  _draftSaveTimeout: null,
+
+  initProductDraftAutoSave() {
+    const form = document.getElementById("adminProductForm");
+    if (!form) return;
+
+    const onFormInput = () => {
+      clearTimeout(this._draftSaveTimeout);
+      this._draftSaveTimeout = setTimeout(() => {
+        this.saveProductDraft();
+      }, 300);
+    };
+
+    form.addEventListener("input", onFormInput);
+    form.addEventListener("change", onFormInput);
+
+    // Check if there was an active draft before reload / refresh
+    this.checkDraftRecoveryOnLoad();
+  },
+
+  checkDraftRecoveryOnLoad() {
+    const draft = this.getProductDraft();
+    if (!draft) return;
+
+    const wasOpen = sessionStorage.getItem("lashari_admin_product_form_open") === "true";
+    if (wasOpen && this.hasMeaningfulDraftContent(draft)) {
+      setTimeout(() => {
+        this.openProductForm(draft.editProductId || null);
+      }, 300);
+    }
+  },
+
+  hasMeaningfulDraftContent(draft) {
+    if (!draft) return false;
+    return Boolean(
+      (draft.title && draft.title.trim()) ||
+      (draft.description && draft.description.trim()) ||
+      (draft.price && Number(draft.price) > 0) ||
+      (draft.images && draft.images.length > 0 && draft.images.some(u => u && u.trim())) ||
+      (draft.sizes && draft.sizes.length > 0) ||
+      (draft.colors && draft.colors.length > 0)
+    );
+  },
+
+  saveProductDraft() {
+    const box = document.getElementById("adminProductFormBox");
+    if (!box || box.style.display === "none") return;
+
+    const editProductId = document.getElementById("editProductId")?.value.trim() || "";
+    const title = document.getElementById("prodFormTitle")?.value || "";
+    const formCat = document.getElementById("prodFormCategory");
+    const category = formCat ? formCat.value : "Smartwatch";
+    const customCategory = document.getElementById("prodFormCustomCategory")?.value || "";
+    const brand = document.getElementById("prodFormBrand")?.value || "infinix";
+    const price = document.getElementById("prodFormPrice")?.value || "";
+    const oldPrice = document.getElementById("prodFormOldPrice")?.value || "";
+    const isOnSale = document.getElementById("prodFormIsOnSale")?.checked ?? true;
+    const stock = document.getElementById("prodFormStock")?.value || 25;
+    const description = document.getElementById("prodFormDescription")?.value || "";
+
+    const images = this.getProductImagesFromForm ? this.getProductImagesFromForm() : [];
+    const sizes = this.getSelectedSizesFromForm ? this.getSelectedSizesFromForm() : [];
+    const colors = this.getSelectedColorsFromForm ? this.getSelectedColorsFromForm() : [];
+
+    const draft = {
+      editProductId,
+      title,
+      category,
+      customCategory,
+      brand,
+      price,
+      oldPrice,
+      isOnSale,
+      stock,
+      description,
+      images,
+      sizes,
+      colors,
+      savedAt: Date.now()
+    };
+
+    if (this.hasMeaningfulDraftContent(draft)) {
+      try {
+        localStorage.setItem(this.DRAFT_KEY, JSON.stringify(draft));
+        const statusEl = document.getElementById("adminDraftAutoSaveStatus");
+        if (statusEl) {
+          const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          statusEl.innerHTML = `<i class="fa-solid fa-cloud-arrow-up" style="color:#4ade80;"></i> <span style="color:#4ade80;">Auto-saved</span> <span style="color:#6c7a6e; font-size:10px;">(${time})</span>`;
+        }
+      } catch (_) {}
+    }
+  },
+
+  getProductDraft() {
+    try {
+      const saved = localStorage.getItem(this.DRAFT_KEY);
+      return saved ? JSON.parse(saved) : null;
+    } catch (_) {
+      return null;
+    }
+  },
+
+  clearProductDraft() {
+    try {
+      localStorage.removeItem(this.DRAFT_KEY);
+      sessionStorage.removeItem("lashari_admin_product_form_open");
+      const notice = document.getElementById("adminProductDraftNotice");
+      if (notice) notice.style.display = "none";
+      const statusEl = document.getElementById("adminDraftAutoSaveStatus");
+      if (statusEl) statusEl.innerHTML = "";
+    } catch (_) {}
+  },
+
+  discardProductDraft() {
+    if (!confirm("Are you sure you want to discard this unsaved product draft?")) return;
+    this.clearProductDraft();
+    const editId = document.getElementById("editProductId")?.value.trim();
+    if (editId) {
+      this.openProductForm(editId);
+    } else {
+      this.openProductForm(null);
+    }
+    showToast("Unsaved draft discarded.", "info");
   },
 
   // Coupons Tab Management
@@ -1596,6 +1969,12 @@ const AdminController = {
     const sPin = document.getElementById("setAdminPin");
     if (sPin) sPin.value = s.adminPin || "Speed150";
 
+    const adminEmailsInp = document.getElementById("setAdminEmails");
+    if (adminEmailsInp) {
+      const list = Array.isArray(s.adminEmails) ? s.adminEmails.join(", ") : (s.adminEmails || "");
+      adminEmailsInp.value = list;
+    }
+
     const sAnn = document.getElementById("setAnnouncementText");
     if (sAnn) sAnn.value = s.announcementText || "";
 
@@ -1811,6 +2190,11 @@ const AdminController = {
     const rawPhone = document.getElementById("setShopPhone")?.value.trim() || current.phone || "+92 321 2920914";
     const deliveryFee = parseInt(document.getElementById("setDeliveryFee")?.value, 10) || current.deliveryFee || 200;
     const adminPin = document.getElementById("setAdminPin")?.value.trim() || current.adminPin || "Speed150";
+    const adminEmailsRaw = document.getElementById("setAdminEmails")?.value || "";
+    const adminEmails = adminEmailsRaw
+      .split(",")
+      .map(e => e.trim().toLowerCase())
+      .filter(Boolean);
     const announcementText = document.getElementById("setAnnouncementText")?.value.trim() || "";
     const storeTimings = document.getElementById("setShopTimings")?.value.trim() || "Monday – Sunday: 11:00 AM – 11:00 PM (Friday Break: 1:00 PM – 2:30 PM)";
     const locationHeading = document.getElementById("setLocHeading")?.value.trim() || "Find us in person.";
@@ -1879,6 +2263,7 @@ const AdminController = {
       locationDesc: locationDesc,
       deliveryFee: deliveryFee,
       adminPin: adminPin,
+      adminEmails: adminEmails.length > 0 ? adminEmails : (current.adminEmails || ["thelasharicommunication@gmail.com", "abdulqabir.369@gmail.com"]),
       announcementText: announcementText,
       sectionVisibility: sectionVisibility,
       specialOffer: specialOffer,
@@ -1946,7 +2331,19 @@ const AdminController = {
     }
   },
 
+  copyAdminSqlSnippet() {
+    const code = document.getElementById("adminSqlSnippetCode")?.innerText;
+    if (code && navigator.clipboard) {
+      navigator.clipboard.writeText(code).then(() => {
+        showToast("Supabase RBAC SQL commands copied to clipboard!", "success");
+      }).catch(() => {
+        showToast("Select and copy code manually.", "info");
+      });
+    }
+  },
+
   bindEvents() {
+    this.initProductDraftAutoSave();
     document.querySelectorAll(".admin-nav-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         this.switchTab(btn.dataset.tab);

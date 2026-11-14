@@ -892,44 +892,160 @@
       transform: translateY(-3px) scale(1.06);
       box-shadow: 0 12px 28px rgba(214, 243, 47, 0.4);
     }
+    /* PRODUCT RECYCLE BIN (TRASH) MODAL */
+    .admin-trash-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 18px 12px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    .admin-trash-modal-card {
+      background: #141a16;
+      border: 1px solid #2d3e30;
+      border-radius: 18px;
+      padding: 24px;
+      width: 100%;
+      max-width: 900px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+      box-sizing: border-box;
+      color: #f2f5eb;
+    }
+    /* DRAFT RECOVERY ALERT BANNER */
+    .admin-draft-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #18231c;
+      border: 1px solid #2d4533;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
 
   <!-- PORTAL GATEWAY AUTHENTICATION SCREEN -->
   <div class="portal-lock-wrap" id="portalLockScreen">
-    <div class="portal-card">
+    
+    <!-- STATE 1: CHECKING ACCESS / SECURITY GATEWAY -->
+    <div class="portal-card" id="portalCheckingCard" style="display:none;">
+      <div class="portal-badge">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        Security Check
+      </div>
+      <h2 class="portal-title">Verifying Access...</h2>
+      <p class="portal-desc">Checking administrative permissions and Supabase session credentials.</p>
+    </div>
+
+    <!-- STATE 2: ACCESS DENIED (CUSTOMER ACCOUNT LOGGED IN) -->
+    <div class="portal-card" id="portalAccessDeniedCard" style="display:none; border-color:#7f1d1d;">
+      <div class="portal-badge" style="background:#3b1818; color:#f87171; border-color:#7f1d1d;">
+        <i class="fa-solid fa-shield-halved"></i>
+        Access Denied · Admin Only
+      </div>
+      <h2 class="portal-title" style="color:#f87171;">Admin Privileges Required</h2>
+      <p class="portal-desc" style="margin-bottom:14px;">
+        Aap website par customer account se logged in hain:<br>
+        <span id="portalDeniedUserEmail" style="display:inline-block; font-weight:700; color:#fff; background:#221515; border:1px solid #4a1f1f; padding:6px 14px; border-radius:8px; margin-top:8px; word-break:break-all;">...</span>
+      </p>
+      <div style="background:#191212; border:1px dashed #4d2323; border-radius:10px; padding:12px; margin-bottom:20px; font-size:12px; color:#c78d8d; text-align:left; line-height:1.5;">
+        <i class="fa-solid fa-triangle-exclamation" style="color:#f87171; margin-right:4px;"></i>
+        Aam customer accounts ko store admin portal ka access nahi hota. Agar aap store ke owner ya admin hain to verified admin account se sign in karein.
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button type="button" class="portal-submit-btn" onclick="PortalAuth.showAdminLoginForm(true)">
+          Sign In with Admin Account ↗
+        </button>
+        <button type="button" class="admin-btn admin-btn-secondary" style="justify-content:center; padding:12px;" onclick="PortalAuth.customerLogout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out of Customer Account
+        </button>
+        <a href="index.html" class="portal-back-link" style="margin-top:12px;">
+          ← Return to Storefront
+        </a>
+      </div>
+    </div>
+
+    <!-- STATE 3: ADMIN LOGIN CARD (SUPABASE AUTH + EMERGENCY MASTER PIN) -->
+    <div class="portal-card" id="portalLoginCard">
       <img src="images/logo.png" alt="Lashari Communication" style="width:68px; height:68px; border-radius:14px; margin:0 auto 16px; display:block; box-shadow:0 6px 20px rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.1);">
       <div class="portal-badge">
         <i class="fa-solid fa-shield-halved"></i>
         Authorized Access Only
       </div>
       <h1 class="portal-title">Lashari Portal Gateway</h1>
-      <p class="portal-desc">Enter your administrative master access key to manage orders, inventory, and storefront settings.</p>
+      <p class="portal-desc" id="portalLoginSubtitle">
+        Apne verified Supabase Admin account se sign in karein ta ke orders, inventory aur store settings manage kar sakein.
+      </p>
 
-      <form id="portalLoginForm" onsubmit="PortalAuth.handleLogin(event)">
-        <div class="portal-input-box">
+      <!-- Supabase Admin Email/Password Login Form -->
+      <form id="portalAdminLoginForm" onsubmit="PortalAuth.handleSupabaseLogin(event)">
+        <div class="portal-input-box" style="margin-bottom:12px;">
           <input 
-            type="password" 
-            id="portalPassInput" 
+            type="email" 
+            id="portalAdminEmailInput" 
             class="portal-input" 
-            placeholder="Enter Master Password..." 
-            autocomplete="current-password" 
+            placeholder="Admin Email (e.g. admin@lashari.com)" 
+            autocomplete="email" 
             required 
             autofocus
           >
         </div>
-        <button type="submit" class="portal-submit-btn" id="portalSubmitBtn">
-          Unlock Gateway ↗
+        <div class="portal-input-box" style="margin-bottom:18px;">
+          <input 
+            type="password" 
+            id="portalAdminPassInput" 
+            class="portal-input" 
+            placeholder="Admin Password" 
+            autocomplete="current-password" 
+            required
+          >
+        </div>
+        <button type="submit" class="portal-submit-btn" id="portalAdminSubmitBtn">
+          Sign In as Admin ↗
+        </button>
+      </form>
+
+      <!-- Emergency Master Key Fallback Form (Hidden by default) -->
+      <form id="portalMasterPinForm" onsubmit="PortalAuth.handleMasterPin(event)" style="display:none;">
+        <div class="portal-input-box" style="margin-bottom:18px;">
+          <input 
+            type="password" 
+            id="portalPassInput" 
+            class="portal-input" 
+            placeholder="Enter Emergency Master PIN..." 
+            autocomplete="current-password"
+          >
+        </div>
+        <button type="submit" class="portal-submit-btn" id="portalMasterSubmitBtn">
+          Unlock with Master Key ↗
         </button>
       </form>
 
       <div class="portal-msg" id="portalMsg"></div>
 
+      <!-- Mode Switch Toggle -->
+      <div style="margin-top:18px; font-size:12px;">
+        <a href="javascript:void(0)" id="portalModeToggleBtn" onclick="PortalAuth.toggleMasterPinMode()" style="color:#8c988e; text-decoration:underline;">
+          🔑 Emergency Master PIN Override
+        </a>
+      </div>
+
       <a href="index.html" class="portal-back-link">
         ← Return to Storefront
       </a>
     </div>
+
   </div>
 
   <!-- ==========================================================================
@@ -950,6 +1066,10 @@
           </div>
         </div>
         <div class="admin-header-actions">
+          <div id="adminUserBadge" style="display:inline-flex; align-items:center; gap:8px; background:#18211b; border:1px solid #28362a; padding:6px 14px; border-radius:999px; font-size:12px; color:#cdd7c8;">
+            <i class="fa-solid fa-user-shield" style="color:var(--lime,#d8ff55);"></i>
+            <span id="adminUserEmailDisplay">Admin</span>
+          </div>
           <a href="index.html" target="_blank" class="admin-btn admin-btn-secondary" style="text-decoration:none;">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
             <span>Storefront ↗</span>
@@ -1112,6 +1232,9 @@
             </div>
             <div class="admin-search-filter-group">
               <input type="text" id="adminProductSearch" oninput="AdminController.searchProducts(this.value)" placeholder="Search products..." class="admin-search-input">
+              <button type="button" class="admin-btn admin-btn-secondary" id="adminTrashBtn" onclick="AdminController.openTrashModal()" title="View deleted products">
+                <i class="fa-solid fa-trash-can"></i> Recycle Bin <span id="adminTrashCountBadge" class="admin-badge" style="background:#ef4444; color:#fff; display:none; margin-left:4px;">0</span>
+              </button>
               <button type="button" class="admin-btn admin-btn-lime" onclick="AdminController.openProductForm()">+ Add New Product</button>
             </div>
           </div>
@@ -1119,8 +1242,20 @@
           <!-- Add / Edit Product Form Box -->
           <div id="adminProductFormBox" class="admin-form-popup-card" style="display:none;">
             <div class="admin-popup-title-row">
-              <h4 id="adminProductFormTitle" class="admin-popup-title">Add New Product</h4>
+              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <h4 id="adminProductFormTitle" class="admin-popup-title">Add New Product</h4>
+                <span id="adminDraftAutoSaveStatus" style="font-size:11px; font-weight:600; color:#879b8a;"></span>
+              </div>
               <button type="button" onclick="AdminController.closeProductForm()" class="admin-close-btn">&times;</button>
+            </div>
+
+            <!-- Draft Restored Recovery Banner -->
+            <div id="adminProductDraftNotice" class="admin-draft-banner" style="display:none;">
+              <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; color:#cde3d1;">
+                <i class="fa-solid fa-clock-rotate-left" style="color:var(--lime,#d8ff55);"></i>
+                <span><strong>Unsaved Draft Restored:</strong> Pichli session ka data recover ho gaya hai (refresh se mehfooz raha).</span>
+              </div>
+              <button type="button" class="admin-btn admin-btn-danger" style="padding:4px 10px; font-size:11px;" onclick="AdminController.discardProductDraft()">Discard Draft ✕</button>
             </div>
             <form id="adminProductForm" class="admin-form-grid-products" onsubmit="AdminController.saveProduct(event)">
               <input type="hidden" id="editProductId" value="">
@@ -1337,6 +1472,30 @@
               </thead>
               <tbody id="adminProductsTbody"></tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- Product Recycle Bin (7-Day Trash) Modal -->
+        <div id="adminTrashModal" class="admin-trash-modal-backdrop" style="display:none;" onclick="if(event.target === this) AdminController.closeTrashModal()">
+          <div class="admin-trash-modal-card">
+            <div class="admin-popup-title-row" style="margin-bottom:14px; border-bottom:1px solid #28362a; padding-bottom:12px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:38px; height:38px; border-radius:10px; background:#291e1e; color:#f87171; display:flex; align-items:center; justify-content:center; font-size:16px;">
+                  <i class="fa-solid fa-trash-can"></i>
+                </div>
+                <div>
+                  <h3 class="admin-popup-title" style="color:#fff; font-size:17px; margin:0;">Product Recycle Bin (Trash)</h3>
+                  <p style="font-size:11.5px; color:#879b8a; margin:2px 0 0;">
+                    Deleted products 7 din tak mehfooz rehte hain. <span id="adminTrashModalCount" class="admin-badge" style="background:#262d28; color:#d8ff55; margin-left:4px;">0 items</span>
+                  </p>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" class="admin-btn admin-btn-secondary" style="font-size:11px; padding:6px 10px;" onclick="AdminController.emptyAllTrash()">Empty Bin ✕</button>
+                <button type="button" onclick="AdminController.closeTrashModal()" class="admin-close-btn">&times;</button>
+              </div>
+            </div>
+            <div id="adminTrashTableContainer"></div>
           </div>
         </div>
       </div>
@@ -1707,8 +1866,49 @@ create table if not exists profiles (
   full_name text,
   phone text,
   email text,
+  role text default 'user',
+  is_admin boolean default false,
   updated_at timestamp with time zone default timezone('utc'::text, now())
 );</code></pre>
+              </div>
+            </div>
+
+            <!-- Admin Access & Supabase Roles (RBAC) -->
+            <div style="background:#111412; border:1px solid #28332a; border-radius:14px; padding:18px; margin-top:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                <div>
+                  <h4 style="font:800 14px var(--display); color:var(--lime); margin:0 0 4px; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-user-shield"></i> Admin Access &amp; Supabase Roles
+                  </h4>
+                  <p style="font-size:11px; color:#879b8a; margin:0;">
+                    Admin portal ka access sirf authorized admin accounts ko milta hai. Aam customer accounts login karke access nahi kar sakte.
+                  </p>
+                </div>
+              </div>
+
+              <div class="order-field" style="margin-top:12px;">
+                <label class="admin-field-label">Authorized Admin Emails (Comma separated)</label>
+                <input type="text" id="setAdminEmails" placeholder="thelasharicommunication@gmail.com, abdulqabir.369@gmail.com" class="admin-input">
+                <span class="admin-field-hint">In emails wale accounts ko Supabase login par foran full Admin access milega. Multiple emails ko comma se separate karein.</span>
+              </div>
+
+              <div style="margin-top:14px; background:#0c0e0d; border:1px solid #1f2721; border-radius:8px; padding:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+                  <span style="font-size:11.5px; font-weight:700; color:#cdd7c8;">Supabase SQL Editor Commands for Role-Based Access (RBAC)</span>
+                  <button type="button" class="admin-btn admin-btn-secondary" style="font-size:10px; padding:3px 8px;" onclick="AdminController.copyAdminSqlSnippet()">Copy SQL 📋</button>
+                </div>
+                <p style="font-size:11px; color:#879b8a; margin:0 0 8px;">
+                  Supabase Dashboard &gt; <b>SQL Editor</b> mein yeh code run karein ta ke profiles table mein <code>role</code> aur <code>is_admin</code> columns create ho jayein:
+                </p>
+                <pre id="adminSqlSnippetCode" style="color:#22c55e; font-size:10.5px; overflow-x:auto; margin:0; padding:8px; background:#141715; border-radius:6px;"><code>-- 1. Profiles table mein role &amp; is_admin columns add karein:
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'user';
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS is_admin BOOLEAN DEFAULT false;
+
+-- 2. Kisi bhi account ko Admin banane ke liye:
+UPDATE profiles SET role = 'admin', is_admin = true WHERE email = 'your-admin@email.com';
+
+-- 3. Kisi account se admin access wapas lene ke liye:
+UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@email.com';</code></pre>
               </div>
             </div>
 
@@ -1771,20 +1971,126 @@ create table if not exists profiles (
   </button>
 
   <!-- CORE SCRIPTS -->
-  <script src="js/data.js?v=8.0"></script>
-  <script src="js/admin.js?v=8.0"></script>
+  <script src="js/data.js?v=9.0"></script>
+  <script src="js/auth-tracking.js?v=9.0"></script>
+  <script src="js/admin.js?v=9.0"></script>
   <script>
-    // Cryptographic SHA-256 Authentication Gatekeeper
+    // Supabase + Role-Based Admin Access Gatekeeper
     const PortalAuth = {
-      // SHA-256 hash of "Speed150"
       HASH: "89e6bef936ed08f74f07379656bc2bbae77c4372a449b34ce20fdd6b38d0579d",
+      isMasterPinMode: false,
 
       async sha256(str) {
         const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
         return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
       },
 
-      async handleLogin(e) {
+      toggleMasterPinMode() {
+        this.isMasterPinMode = !this.isMasterPinMode;
+        const adminForm = document.getElementById("portalAdminLoginForm");
+        const masterForm = document.getElementById("portalMasterPinForm");
+        const subtitle = document.getElementById("portalLoginSubtitle");
+        const toggleBtn = document.getElementById("portalModeToggleBtn");
+        const msg = document.getElementById("portalMsg");
+        if (msg) msg.textContent = "";
+
+        if (this.isMasterPinMode) {
+          if (adminForm) adminForm.style.display = "none";
+          if (masterForm) masterForm.style.display = "block";
+          if (subtitle) subtitle.textContent = "Enter your administrative master access key / PIN (Emergency recovery).";
+          if (toggleBtn) toggleBtn.textContent = "← Back to Supabase Admin Login";
+          document.getElementById("portalPassInput")?.focus();
+        } else {
+          if (adminForm) adminForm.style.display = "block";
+          if (masterForm) masterForm.style.display = "none";
+          if (subtitle) subtitle.textContent = "Apne verified Supabase Admin account se sign in karein ta ke orders, inventory aur store settings manage kar sakein.";
+          if (toggleBtn) toggleBtn.textContent = "🔑 Emergency Master PIN Override";
+          document.getElementById("portalAdminEmailInput")?.focus();
+        }
+      },
+
+      async handleSupabaseLogin(e) {
+        if (e && e.preventDefault) e.preventDefault();
+        const emailInp = document.getElementById("portalAdminEmailInput");
+        const passInp = document.getElementById("portalAdminPassInput");
+        const msg = document.getElementById("portalMsg");
+        const btn = document.getElementById("portalAdminSubmitBtn");
+
+        const email = emailInp?.value.trim().toLowerCase();
+        const password = passInp?.value || "";
+
+        if (!email || !password) return;
+
+        if (msg) {
+          msg.className = "portal-msg";
+          msg.style.color = "var(--lime, #d8ff55)";
+          msg.textContent = "Authenticating admin credentials...";
+        }
+        if (btn) btn.disabled = true;
+
+        try {
+          const client = (typeof LashariSupabase !== "undefined") ? LashariSupabase.getClient() : null;
+          let authedUser = null;
+
+          if (client) {
+            const { data, error } = await client.auth.signInWithPassword({ email, password });
+            if (error) throw error;
+            if (data && data.user) {
+              authedUser = {
+                id: data.user.id,
+                email: data.user.email,
+                name: data.user.user_metadata?.full_name || data.user.email,
+                app_metadata: data.user.app_metadata,
+                user_metadata: data.user.user_metadata
+              };
+            }
+          }
+
+          if (!authedUser && typeof CustomerAuth !== "undefined") {
+            authedUser = await CustomerAuth.signIn({ identifier: email, password });
+          }
+
+          if (!authedUser) {
+            throw new Error("Unable to authenticate with Supabase. Please check your credentials.");
+          }
+
+          // Check if user has Admin privileges
+          const isAdmin = await CustomerAuth.checkIsAdmin(authedUser);
+          if (!isAdmin) {
+            if (client) {
+              try { await client.auth.signOut(); } catch (_) {}
+            }
+            if (typeof CustomerAuth !== "undefined") {
+              CustomerAuth.setSession(null);
+            }
+            throw new Error(`Access Denied: Account "${email}" does not have Admin privileges. Sirf authorized store admins ko is portal ka access hai.`);
+          }
+
+          // Authorized Admin Verified
+          sessionStorage.setItem("lashari_admin_session", "authenticated_sb_" + Date.now());
+          sessionStorage.setItem("lashari_admin_email", authedUser.email || email);
+          sessionStorage.setItem("lashari_admin_name", authedUser.name || "Admin");
+
+          if (msg) {
+            msg.className = "portal-msg success";
+            msg.textContent = "Admin privileges verified! Opening portal dashboard...";
+          }
+
+          setTimeout(() => {
+            this.revealDashboard();
+          }, 400);
+
+        } catch (err) {
+          if (msg) {
+            msg.className = "portal-msg error";
+            msg.textContent = err.message || "Invalid credentials or unauthorized account.";
+          }
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      },
+
+      async handleMasterPin(e) {
         if (e && e.preventDefault) e.preventDefault();
         const input = document.getElementById("portalPassInput");
         const msg = document.getElementById("portalMsg");
@@ -1799,20 +2105,57 @@ create table if not exists profiles (
         if (hashed === this.HASH || hashed === storedHashed || val === storedPin) {
           if (msg) {
             msg.className = "portal-msg success";
-            msg.textContent = "Access verified. Initializing master dashboard...";
+            msg.textContent = "Master PIN verified. Initializing master dashboard...";
           }
-          sessionStorage.setItem("lashari_admin_session", "authenticated_" + Date.now());
+          sessionStorage.setItem("lashari_admin_session", "authenticated_pin_" + Date.now());
+          sessionStorage.setItem("lashari_admin_email", "Master Administrator (PIN)");
           setTimeout(() => {
             this.revealDashboard();
           }, 400);
         } else {
           if (msg) {
             msg.className = "portal-msg error";
-            msg.textContent = "Access Denied: Invalid master credentials.";
+            msg.textContent = "Access Denied: Invalid master PIN.";
           }
           input.value = "";
           input.focus();
         }
+      },
+
+      showAccessDenied(user) {
+        const checkCard = document.getElementById("portalCheckingCard");
+        const loginCard = document.getElementById("portalLoginCard");
+        const deniedCard = document.getElementById("portalAccessDeniedCard");
+        const userEmailEl = document.getElementById("portalDeniedUserEmail");
+
+        if (checkCard) checkCard.style.display = "none";
+        if (loginCard) loginCard.style.display = "none";
+        if (deniedCard) deniedCard.style.display = "block";
+        if (userEmailEl) userEmailEl.textContent = user.email || user.name || "Customer Account";
+      },
+
+      showAdminLoginForm(force = false) {
+        const checkCard = document.getElementById("portalCheckingCard");
+        const deniedCard = document.getElementById("portalAccessDeniedCard");
+        const loginCard = document.getElementById("portalLoginCard");
+
+        if (checkCard) checkCard.style.display = "none";
+        if (deniedCard) deniedCard.style.display = "none";
+        if (loginCard) loginCard.style.display = "block";
+
+        if (force) {
+          document.getElementById("portalAdminEmailInput")?.focus();
+        }
+      },
+
+      customerLogout() {
+        if (typeof CustomerAuth !== "undefined") {
+          CustomerAuth.signOut();
+        }
+        sessionStorage.removeItem("lashari_admin_session");
+        sessionStorage.removeItem("lashari_admin_email");
+        sessionStorage.removeItem("lashari_admin_name");
+        this.showAdminLoginForm(true);
       },
 
       revealDashboard() {
@@ -1822,21 +2165,74 @@ create table if not exists profiles (
         if (dash) {
           dash.style.display = "block";
           AdminController.isAdminLoggedIn = true;
+
+          // Update header email
+          const adminEmail = sessionStorage.getItem("lashari_admin_email") || "Admin";
+          const emailDisplay = document.getElementById("adminUserEmailDisplay");
+          if (emailDisplay) emailDisplay.textContent = adminEmail;
+
           if (typeof Storage !== "undefined" && typeof Storage.loadOrders === "function") Storage.loadOrders();
           AdminController.switchTab("overview");
+          if (AdminController.updateTrashBadge) AdminController.updateTrashBadge();
         }
       },
 
       logout() {
         sessionStorage.removeItem("lashari_admin_session");
+        sessionStorage.removeItem("lashari_admin_email");
+        sessionStorage.removeItem("lashari_admin_name");
         window.location.reload();
       },
 
-      init() {
+      async init() {
         const session = sessionStorage.getItem("lashari_admin_session");
         if (session && session.startsWith("authenticated_")) {
           this.revealDashboard();
+          return;
         }
+
+        // Show checking state while we verify Supabase credentials
+        const checkCard = document.getElementById("portalCheckingCard");
+        const loginCard = document.getElementById("portalLoginCard");
+        if (checkCard) checkCard.style.display = "block";
+        if (loginCard) loginCard.style.display = "none";
+
+        // Check active customer session from Supabase / Local storage
+        let user = (typeof CustomerAuth !== "undefined") ? CustomerAuth.getCurrentUser() : null;
+        const client = (typeof LashariSupabase !== "undefined") ? LashariSupabase.getClient() : null;
+
+        if (!user && client) {
+          try {
+            const { data } = await client.auth.getUser();
+            if (data && data.user) {
+              user = {
+                id: data.user.id,
+                email: data.user.email,
+                name: data.user.user_metadata?.full_name || data.user.email,
+                app_metadata: data.user.app_metadata,
+                user_metadata: data.user.user_metadata
+              };
+            }
+          } catch (_) {}
+        }
+
+        if (user && user.email) {
+          const isAdmin = await CustomerAuth.checkIsAdmin(user);
+          if (isAdmin) {
+            sessionStorage.setItem("lashari_admin_session", "authenticated_sb_" + Date.now());
+            sessionStorage.setItem("lashari_admin_email", user.email);
+            sessionStorage.setItem("lashari_admin_name", user.name || "Admin");
+            this.revealDashboard();
+            return;
+          } else {
+            // User is logged in as a normal customer - BLOCK ACCESS!
+            this.showAccessDenied(user);
+            return;
+          }
+        }
+
+        // Not logged in -> show admin login form
+        this.showAdminLoginForm();
       }
     };
 
