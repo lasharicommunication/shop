@@ -81,7 +81,7 @@
     "offer": true,
     "editorial": false,
     "closing": false,
-    "brands": true,
+    "brands": false,
     "location": true
   },
   "telegramNotification": {
