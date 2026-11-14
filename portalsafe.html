@@ -934,70 +934,11 @@
 </head>
 <body>
 
-  <!-- PORTAL GATEWAY AUTHENTICATION SCREEN -->
-  <div class="portal-lock-wrap" id="portalLockScreen">
-    
-    <!-- STATE 1: CHECKING ACCESS / SECURITY GATEWAY -->
-    <div class="portal-card" id="portalCheckingCard">
-      <div class="portal-badge">
-        <i class="fa-solid fa-circle-notch fa-spin"></i>
-        Security Verification
-      </div>
-      <h2 class="portal-title">Verifying Access...</h2>
-      <p class="portal-desc">Checking administrative permissions and Supabase session credentials.</p>
+  <!-- SILENT SECURITY GATEWAY (REDIRECTS NON-ADMINS TO HOME) -->
+  <div class="portal-lock-wrap" id="portalLockScreen" style="display:flex; align-items:center; justify-content:center; min-height:100vh; background:#0c0e0d;">
+    <div style="text-align:center; color:#879b8a; font-family:var(--sans, system-ui);">
+      <i class="fa-solid fa-circle-notch fa-spin" style="font-size:26px; color:var(--lime, #d8ff55); display:inline-block;"></i>
     </div>
-
-    <!-- STATE 2: ACCESS DENIED (CUSTOMER ACCOUNT LOGGED IN) -->
-    <div class="portal-card" id="portalAccessDeniedCard" style="display:none; border-color:#7f1d1d;">
-      <div class="portal-badge" style="background:#3b1818; color:#f87171; border-color:#7f1d1d;">
-        <i class="fa-solid fa-shield-halved"></i>
-        Access Denied · Admin Only
-      </div>
-      <h2 class="portal-title" style="color:#f87171;">Admin Privileges Required</h2>
-      <p class="portal-desc" style="margin-bottom:14px;">
-        Aap website par customer account se logged in hain:<br>
-        <span id="portalDeniedUserEmail" style="display:inline-block; font-weight:700; color:#fff; background:#221515; border:1px solid #4a1f1f; padding:6px 14px; border-radius:8px; margin-top:8px; word-break:break-all;">...</span>
-      </p>
-      <div style="background:#191212; border:1px dashed #4d2323; border-radius:10px; padding:12px; margin-bottom:20px; font-size:12px; color:#c78d8d; text-align:left; line-height:1.5;">
-        <i class="fa-solid fa-triangle-exclamation" style="color:#f87171; margin-right:4px;"></i>
-        Aam customer accounts ko store admin portal ka access nahi hota. Yeh account Supabase mein Admin ke tor par register nahi hai. Agar aap store ke owner ya admin hain to verified admin account se sign in karein.
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <button type="button" class="portal-submit-btn" onclick="PortalAuth.customerLogout(true)">
-          <i class="fa-solid fa-arrow-right-to-bracket"></i> Switch to Admin Account ↗
-        </button>
-        <button type="button" class="admin-btn admin-btn-secondary" style="justify-content:center; padding:12px;" onclick="PortalAuth.customerLogout(false)">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out of Customer Account
-        </button>
-        <a href="index.html" class="portal-back-link" style="margin-top:12px;">
-          ← Return to Storefront
-        </a>
-      </div>
-    </div>
-
-    <!-- STATE 3: NOT LOGGED IN / AUTHENTICATION REQUIRED -->
-    <div class="portal-card" id="portalNotLoggedInCard" style="display:none;">
-      <img src="images/logo.png" alt="Lashari Communication" style="width:68px; height:68px; border-radius:14px; margin:0 auto 16px; display:block; box-shadow:0 6px 20px rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.1);">
-      <div class="portal-badge" style="background:#1c241e; color:var(--lime, #d8ff55); border-color:#2a3b2e;">
-        <i class="fa-solid fa-lock"></i>
-        Admin Access Restricted
-      </div>
-      <h1 class="portal-title">Store Admin Portal</h1>
-      <p class="portal-desc">
-        Is portal ko access karne ke liye aapka Supabase mein verified Admin account hona zaroori hai. Barah-e-karam pehle website par apne Admin account se login karein.
-      </p>
-
-      <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
-        <a href="account.html?redirect=portalsafe.html" class="portal-submit-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px;">
-          <i class="fa-solid fa-arrow-right-to-bracket"></i> Login with Admin Account ↗
-        </a>
-        <a href="index.html" class="portal-back-link">
-          ← Return to Storefront
-        </a>
-      </div>
-    </div>
-
   </div>
 
   <!-- ==========================================================================
@@ -1927,41 +1868,11 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
 
   <!-- CORE SCRIPTS -->
   <script src="js/data.js?v=9.5"></script>
-  <script src="js/auth-tracking.js?v=9.5"></script>
-  <script src="js/admin.js?v=9.5"></script>
+  <script src="js/auth-tracking.js?v=9.6"></script>
+  <script src="js/admin.js?v=9.6"></script>
   <script>
-    // Supabase Role-Based Admin Access Gatekeeper (No Master PIN, Direct Supabase RBAC)
+    // Supabase Role-Based Admin Access Gatekeeper (Silent Direct RBAC: Admin -> Open, Non-Admin -> Redirect Home)
     window.PortalAuth = {
-      showChecking() {
-        const checking = document.getElementById("portalCheckingCard");
-        const notLogged = document.getElementById("portalNotLoggedInCard");
-        const denied = document.getElementById("portalAccessDeniedCard");
-        if (checking) checking.style.display = "block";
-        if (notLogged) notLogged.style.display = "none";
-        if (denied) denied.style.display = "none";
-      },
-
-      showNotLoggedIn() {
-        const checking = document.getElementById("portalCheckingCard");
-        const notLogged = document.getElementById("portalNotLoggedInCard");
-        const denied = document.getElementById("portalAccessDeniedCard");
-        if (checking) checking.style.display = "none";
-        if (notLogged) notLogged.style.display = "block";
-        if (denied) denied.style.display = "none";
-      },
-
-      showAccessDenied(user) {
-        const checking = document.getElementById("portalCheckingCard");
-        const notLogged = document.getElementById("portalNotLoggedInCard");
-        const denied = document.getElementById("portalAccessDeniedCard");
-        const userEmailEl = document.getElementById("portalDeniedUserEmail");
-
-        if (checking) checking.style.display = "none";
-        if (notLogged) notLogged.style.display = "none";
-        if (denied) denied.style.display = "block";
-        if (userEmailEl) userEmailEl.textContent = (user && (user.email || user.name)) || "Customer Account";
-      },
-
       revealDashboard(user) {
         const lock = document.getElementById("portalLockScreen");
         const dash = document.getElementById("adminDashboard");
@@ -1981,7 +1892,14 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
         }
       },
 
-      async customerLogout(redirectToLogin = true) {
+      redirectToHome() {
+        sessionStorage.removeItem("lashari_admin_session");
+        sessionStorage.removeItem("lashari_admin_email");
+        sessionStorage.removeItem("lashari_admin_name");
+        window.location.replace("index.html");
+      },
+
+      async logout() {
         sessionStorage.removeItem("lashari_admin_session");
         sessionStorage.removeItem("lashari_admin_email");
         sessionStorage.removeItem("lashari_admin_name");
@@ -1994,20 +1912,10 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
           try { await client.auth.signOut(); } catch (_) {}
         }
 
-        if (redirectToLogin) {
-          window.location.href = "account.html?redirect=portalsafe.html";
-        } else {
-          window.location.href = "index.html";
-        }
-      },
-
-      async logout() {
-        await this.customerLogout(true);
+        window.location.replace("index.html");
       },
 
       async init() {
-        this.showChecking();
-
         // 1. Fetch user from Supabase client
         let client = (typeof LashariSupabase !== "undefined") ? LashariSupabase.getClient() : null;
         let user = null;
@@ -2037,12 +1945,9 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
           }
         }
 
-        // 3. If no user is logged in:
+        // 3. If no user is logged in at all -> redirect directly to home page (no errors or cards)
         if (!user || !user.email) {
-          sessionStorage.removeItem("lashari_admin_session");
-          sessionStorage.removeItem("lashari_admin_email");
-          sessionStorage.removeItem("lashari_admin_name");
-          this.showNotLoggedIn();
+          this.redirectToHome();
           return;
         }
 
@@ -2056,17 +1961,15 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
           isAdmin = defaultAdmins.includes(email) || user.role === "admin" || user.app_metadata?.role === "admin";
         }
 
+        // 5. Admin access granted -> open portal! Otherwise redirect directly to home page!
         if (isAdmin) {
           sessionStorage.setItem("lashari_admin_session", "sb_admin_" + Date.now());
           sessionStorage.setItem("lashari_admin_email", user.email);
           sessionStorage.setItem("lashari_admin_name", user.name || "Admin");
           this.revealDashboard(user);
         } else {
-          // Logged in, but NOT an admin in Supabase
-          sessionStorage.removeItem("lashari_admin_session");
-          sessionStorage.removeItem("lashari_admin_email");
-          sessionStorage.removeItem("lashari_admin_name");
-          this.showAccessDenied(user);
+          // Normal customer (non-admin) -> silent redirect to home page
+          this.redirectToHome();
         }
       }
     };

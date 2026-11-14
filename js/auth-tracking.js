@@ -143,22 +143,27 @@ const CustomerAuth = {
     if (user.user_metadata && (user.user_metadata.role === "admin" || user.user_metadata.is_admin === true)) return true;
     if (user.app_metadata && (user.app_metadata.role === "admin" || user.app_metadata.is_admin === true)) return true;
 
-    // Check profiles table in Supabase
+    // Check profiles table in Supabase (with 2s fast timeout)
     const client = LashariSupabase.getClient();
     if (client && (user.id || email)) {
       try {
-        let query = client.from("profiles").select("id, email, role, is_admin");
-        if (user.id) {
-          query = query.eq("id", user.id);
-        } else {
-          query = query.eq("email", email);
-        }
-        const { data, error } = await query.maybeSingle();
-        if (!error && data) {
-          if (data.role === "admin" || data.is_admin === true) return true;
+        const queryPromise = (async () => {
+          let query = client.from("profiles").select("id, email, role, is_admin");
+          if (user.id) {
+            query = query.eq("id", user.id);
+          } else {
+            query = query.eq("email", email);
+          }
+          return await query.maybeSingle();
+        })();
+
+        const timeoutPromise = new Promise(resolve => setTimeout(() => resolve({ timeout: true }), 2000));
+        const res = await Promise.race([queryPromise, timeoutPromise]);
+        if (res && !res.timeout && !res.error && res.data) {
+          if (res.data.role === "admin" || res.data.is_admin === true) return true;
         }
       } catch (_) {
-        // Non-blocking if columns don't exist yet
+        // Non-blocking if table or network unavailable
       }
     }
 
