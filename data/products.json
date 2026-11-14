@@ -1,5 +1,56 @@
 [
   {
+    "id": "prod-1794650097447",
+    "title": "M3 Mini Portable Wireless Bluetooth Speaker – Pocket-Sized Metallic Sound Box with Extra Deep Bass, Built-in Mic & Selfie Remote Button",
+    "category": "Speaker",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 999,
+    "oldPrice": 1499,
+    "isOnSale": true,
+    "rating": 4.9,
+    "reviewsCount": 90,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "with sd card",
+        "price": 999,
+        "regularPrice": 1499,
+        "specialPrice": 999,
+        "oldPrice": 1499
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "Silver / Grey",
+        "hex": "#9ca3af"
+      },
+      {
+        "name": "Rose Gold",
+        "hex": "#b76e79"
+      },
+      {
+        "name": "Red",
+        "hex": "#dc2626"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/NfCQsb1n/jbl-m3-mini-portable-speaker-900x.webp",
+    "images": [
+      "https://i.postimg.cc/NfCQsb1n/jbl-m3-mini-portable-speaker-900x.webp",
+      "https://i.postimg.cc/x8TSYbqY/portable-bluetooth-speaker-m3-mini-multicolor-speaker-in-pakistan-28640943014083-2048x2048.webp"
+    ],
+    "description": "Premium authentic tech accessory backed with official checking warranty."
+  },
+  {
     "id": "prod-1794511309899",
     "title": "Universal Foldable Desktop Mobile & Tablet Stand – Adjustable Height & Angle Telescopic Phone Holder with Weighted Round Base (Classic Black)",
     "category": "Holders",
