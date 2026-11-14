@@ -369,7 +369,13 @@ function renderStoreSettings() {
   const bDot = brandDot !== undefined ? brandDot : ".";
   document.querySelectorAll(".brand").forEach(el => {
     el.setAttribute("aria-label", `${bName} home`);
-    el.innerHTML = `${bName}<span class="brand-dot">${bDot}</span>`;
+    const isFooter = el.classList.contains("footer-brand");
+    const logoClass = isFooter ? "brand-logo footer-logo" : "brand-logo";
+    const logoSize = isFooter ? 36 : 40;
+    el.innerHTML = `
+      <img src="images/logo.png" alt="${bName} Logo" class="${logoClass}" width="${logoSize}" height="${logoSize}" loading="eager">
+      <span>${bName}<span class="brand-dot">${bDot}</span></span>
+    `;
   });
 
   const formattedPhone = phone || "+92 321 2920914";

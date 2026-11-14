@@ -163,6 +163,7 @@ svg {
   white-space: nowrap;
   flex: 0 1 auto;
 }
+.brand .brand-logo,
 .brand-logo {
   width: 40px;
   height: 40px;
@@ -1915,7 +1916,7 @@ svg {
   background: #f4fae5;
   border-color: #8bab15;
 }
-.brand-logo {
+.brand-card .brand-logo {
   width: 46px;
   height: 46px;
   border-radius: 12px;
@@ -3704,10 +3705,12 @@ html:has(dialog.order-dialog[open]) {
     flex: 1 1 auto !important;
   }
   .site-header .brand .brand-logo {
-    width: 28px;
-    height: 28px;
-    border-radius: 7px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    object-fit: cover;
     flex-shrink: 0;
+    display: block;
   }
   .header-actions {
     gap: 2px;
@@ -3869,7 +3872,7 @@ html:has(dialog.order-dialog[open]) {
   /* Brands */
   .brand-grid { grid-template-columns: repeat(4, 1fr); gap: 7px; }
   .brand-card { padding: 10px 4px 8px; border-radius: 12px; min-height: 100px; overflow: hidden; }
-  .brand-logo { width: 34px; height: 34px; border-radius: 9px; font-size: 14px; }
+  .brand-card .brand-logo { width: 34px; height: 34px; border-radius: 9px; font-size: 14px; }
   .brand-name { font-size: 10px; }
   .brand-models { font-size: 8px; line-height: 1.15; margin-top: 2px; }
 
@@ -3991,10 +3994,12 @@ html:has(dialog.order-dialog[open]) {
     flex: 1 1 auto !important;
   }
   .site-header .brand .brand-logo {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     border-radius: 6px;
+    object-fit: cover;
     flex-shrink: 0;
+    display: block;
   }
   .header-actions { gap: 1px; flex-shrink: 0 !important; margin-left: auto; }
   .icon-button { width: 29px; height: 29px; }
