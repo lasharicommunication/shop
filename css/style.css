@@ -153,18 +153,15 @@ svg {
 }
 .brand {
   font-family: var(--display);
-  font-size: clamp(22px, 2.4vw, 38px);
+  font-size: clamp(26px, 2.6vw, 40px);
   font-weight: 800;
-  letter-spacing: -.04em;
+  letter-spacing: -.035em;
   line-height: 1.05;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   white-space: nowrap;
-  max-width: 52%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex-shrink: 1;
+  flex: 0 1 auto;
 }
 .brand-logo {
   width: 40px;
@@ -188,7 +185,7 @@ svg {
   display: inline-block;
 }
 .brand-dot { color: #90bd00; }
-.desktop-nav { display: flex; align-items: center; gap: 36px; margin-left: 6%; }
+.desktop-nav { display: flex; align-items: center; gap: 30px; margin-left: auto; margin-right: 20px; }
 .desktop-nav a {
   font-size: 13px;
   font-weight: 700;
@@ -3547,7 +3544,8 @@ html:has(dialog.order-dialog[open]) {
 
 /* ─── TABLET / SMALL DESKTOP (lg) ───────────────────────────────────────── */
 @media (max-width: 1150px) {
-  .desktop-nav { margin-left: 0; gap: 20px; }
+  .desktop-nav { margin-left: auto; margin-right: 16px; gap: 18px; }
+  .brand { font-size: clamp(23px, 2.5vw, 32px); }
   .hero-grid { grid-template-columns: 52% 48%; min-height: 600px; }
   .hero h1 { font-size: clamp(55px, 6.5vw, 85px); }
   .hero-disc { width: 540px; height: 540px; }
@@ -3568,8 +3566,9 @@ html:has(dialog.order-dialog[open]) {
   .desktop-nav { display: none; }
   .topbar-right { display: none; }
   .menu-button { display: flex; }
-  .header-inner { height: 78px; }
-  .brand { font-size: clamp(24px, 3.4vw, 32px); max-width: calc(100vw - 170px); }
+  .header-inner { height: 78px; justify-content: space-between; gap: 12px; }
+  .brand { font-size: clamp(24px, 3.4vw, 30px); max-width: none; flex: 1 1 auto; min-width: 0; white-space: nowrap; }
+  .header-actions { flex-shrink: 0; margin-left: auto; }
 
   /* Hero */
   .hero-grid { display: flex; flex-direction: column; min-height: auto; }
@@ -3619,8 +3618,18 @@ html:has(dialog.order-dialog[open]) {
 /* ─── PORTRAIT TABLET / LARGE MOBILE (sm) ───────────────────────────────── */
 @media (max-width: 768px) {
   .wrap { width: min(100% - 36px, 720px); margin-inline: auto; }
-  .header-inner { height: 74px; }
-  .brand { font-size: clamp(22px, 4vw, 28px); max-width: calc(100vw - 160px); }
+  .header-inner { height: 74px; justify-content: space-between; gap: 10px; }
+  .site-header .brand,
+  .brand {
+    font-size: clamp(21px, 3.8vw, 27px) !important;
+    letter-spacing: -0.035em !important;
+    line-height: 1.15 !important;
+    max-width: none !important;
+    flex: 1 1 auto !important;
+    min-width: 0;
+    white-space: nowrap !important;
+  }
+  .header-actions { flex-shrink: 0; margin-left: auto; }
 
   /* Hero */
   .hero h1 { font-size: clamp(44px, 9vw, 70px); }
@@ -3671,12 +3680,19 @@ html:has(dialog.order-dialog[open]) {
   .topbar-right { display: none; }
 
   /* Header */
-  .header-inner { height: auto; min-height: 64px; gap: 6px; padding: 6px 0; justify-content: space-between; }
+  .header-inner {
+    height: auto;
+    min-height: 64px;
+    gap: 8px;
+    padding: 6px 0;
+    justify-content: space-between;
+    align-items: center;
+  }
   .site-header .brand,
   .brand {
-    font-size: clamp(14px, 4.1vw, 17px) !important;
-    letter-spacing: -0.03em !important;
-    line-height: 1.2 !important;
+    font-size: clamp(17.5px, 4.9vw, 21.5px) !important;
+    letter-spacing: -0.035em !important;
+    line-height: 1.15 !important;
     max-width: none !important;
     min-width: 0;
     white-space: nowrap !important;
@@ -3684,8 +3700,8 @@ html:has(dialog.order-dialog[open]) {
     text-overflow: clip !important;
     display: inline-flex !important;
     align-items: center;
-    gap: 7px;
-    flex-shrink: 0 !important;
+    gap: 6px;
+    flex: 1 1 auto !important;
   }
   .site-header .brand .brand-logo {
     width: 28px;
@@ -3693,7 +3709,11 @@ html:has(dialog.order-dialog[open]) {
     border-radius: 7px;
     flex-shrink: 0;
   }
-  .header-actions { gap: 2px; flex-shrink: 0; }
+  .header-actions {
+    gap: 2px;
+    flex-shrink: 0 !important;
+    margin-left: auto;
+  }
   .icon-button { width: 32px; height: 32px; }
   .icon-button svg { width: 17px; height: 17px; }
   .bag-button { height: 32px; padding: 0 8px; font-size: 11px; gap: 4px; }
@@ -3954,12 +3974,12 @@ html:has(dialog.order-dialog[open]) {
 /* ─── SMALL MOBILE / iPhone SE (xxs) ────────────────────────────────────── */
 @media (max-width: 400px) {
   .wrap { width: calc(100% - 14px); }
-  .header-inner { gap: 4px; }
+  .header-inner { gap: 6px; }
   .site-header .brand,
   .brand {
-    font-size: clamp(13px, 3.8vw, 15px) !important;
+    font-size: clamp(15.5px, 4.5vw, 18.5px) !important;
     letter-spacing: -0.035em !important;
-    line-height: 1.2 !important;
+    line-height: 1.15 !important;
     max-width: none !important;
     min-width: 0;
     white-space: nowrap !important;
@@ -3967,8 +3987,8 @@ html:has(dialog.order-dialog[open]) {
     text-overflow: clip !important;
     display: inline-flex !important;
     align-items: center;
-    gap: 6px;
-    flex-shrink: 0 !important;
+    gap: 4px;
+    flex: 1 1 auto !important;
   }
   .site-header .brand .brand-logo {
     width: 24px;
@@ -3976,7 +3996,7 @@ html:has(dialog.order-dialog[open]) {
     border-radius: 6px;
     flex-shrink: 0;
   }
-  .header-actions { gap: 1px; flex-shrink: 0; }
+  .header-actions { gap: 1px; flex-shrink: 0 !important; margin-left: auto; }
   .icon-button { width: 29px; height: 29px; }
   .icon-button svg { width: 15px; height: 15px; }
   .bag-button { height: 29px; padding: 0 6px; font-size: 10px; gap: 3px; }
