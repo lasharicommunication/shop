@@ -1,5 +1,49 @@
 [
   {
+    "id": "prod-1794650393541",
+    "title": "Blue Spectrum M-5 Universal Music Headset – 3.5mm Wired In-Ear Handsfree Earphones with Built-in Mic & Deep Bass",
+    "category": "Handsfree",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 449,
+    "oldPrice": 899,
+    "isOnSale": true,
+    "rating": 4.9,
+    "reviewsCount": 106,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "White",
+        "price": 449,
+        "regularPrice": 899,
+        "specialPrice": 449,
+        "oldPrice": 899
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "White",
+        "hex": "#ffffff"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/pXCJp5TY/2551-419-744142-product-1.webp",
+    "images": [
+      "https://i.postimg.cc/pXCJp5TY/2551-419-744142-product-1.webp",
+      "https://i.postimg.cc/76SgDfd2/221347def20ecd060c73835969bdda1b-jpg-960x960q80-jpg.webp",
+      "https://i.postimg.cc/fyKmt1w0/2948-419-758471-product-1.webp"
+    ],
+    "description": "Premium authentic tech accessory backed with official checking warranty."
+  },
+  {
     "id": "prod-1794650097447",
     "title": "M3 Mini Portable Wireless Bluetooth Speaker – Pocket-Sized Metallic Sound Box with Extra Deep Bass, Built-in Mic & Selfie Remote Button",
     "category": "Speaker",
