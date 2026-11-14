@@ -368,6 +368,19 @@ const CustomerAuth = {
     if (user) {
       const myOrders = this.getCustomerOrders();
       container.innerHTML = `
+        <div id="accountAdminBanner" style="display:none; margin-bottom:14px; background:#111a13; border:1px solid #27452d; border-radius:12px; padding:12px 14px; align-items:center; justify-content:space-between; gap:10px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <i class="fa-solid fa-shield-halved" style="color:var(--lime, #90bd00); font-size:18px;"></i>
+            <div>
+              <div style="font-weight:700; font-size:13px; color:#fff;">Store Administrator</div>
+              <div style="font-size:11px; color:#879b8a;">Verified Supabase Admin Access</div>
+            </div>
+          </div>
+          <a href="portalsafe.html" class="auth-primary-btn" style="text-decoration:none; width:auto; padding:6px 14px; font-size:12px; margin:0; display:inline-flex; align-items:center; gap:6px;">
+            <span>Open Portal ↗</span>
+          </a>
+        </div>
+
         <div class="auth-clean-account-header">
           <div class="auth-clean-avatar">
             ${(user.name || "U").slice(0, 1).toUpperCase()}
@@ -421,6 +434,14 @@ const CustomerAuth = {
           <i class="fa-solid fa-right-from-bracket"></i> Log out
         </button>
       `;
+
+      // Check if logged in user is admin, if so reveal admin portal banner
+      this.checkIsAdmin(user).then(isAdmin => {
+        const banner = document.getElementById("accountAdminBanner");
+        if (banner && isAdmin) {
+          banner.style.display = "flex";
+        }
+      });
       return;
     }
 
@@ -520,6 +541,15 @@ const CustomerAuth = {
     try {
       const user = await this.signIn({ identifier, password });
       if (typeof showToast === "function") showToast(`Welcome back, ${user.name}! 👋`, "success");
+
+      // Check for redirect query parameter (e.g. account.html?redirect=portalsafe.html)
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectUrl = urlParams.get("redirect");
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+        return;
+      }
+
       this.renderAuthModalContent();
     } catch (err) {
       if (notice) {

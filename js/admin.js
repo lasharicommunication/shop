@@ -80,19 +80,9 @@ const AdminController = {
     this.updateTrashBadge();
   },
 
-  // Check PIN and Open Admin Panel
+  // Open Admin Portal
   promptLogin() {
-    const settings = Storage.getSettings();
-    const pin = prompt("Enter Admin Access PIN:", "");
-    if (pin === null) return;
-
-    if (pin.trim() === (settings.adminPin || "Speed150") || pin.trim() === "Speed150") {
-      this.isAdminLoggedIn = true;
-      this.showAdminPanel();
-      showToast("Welcome to Lashari Admin Panel", "success");
-    } else {
-      showToast("Incorrect Admin PIN! Access denied.", "error");
-    }
+    window.location.href = "portalsafe.html";
   },
 
   showAdminPanel() {

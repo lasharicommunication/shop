@@ -938,10 +938,10 @@
   <div class="portal-lock-wrap" id="portalLockScreen">
     
     <!-- STATE 1: CHECKING ACCESS / SECURITY GATEWAY -->
-    <div class="portal-card" id="portalCheckingCard" style="display:none;">
+    <div class="portal-card" id="portalCheckingCard">
       <div class="portal-badge">
         <i class="fa-solid fa-circle-notch fa-spin"></i>
-        Security Check
+        Security Verification
       </div>
       <h2 class="portal-title">Verifying Access...</h2>
       <p class="portal-desc">Checking administrative permissions and Supabase session credentials.</p>
@@ -960,14 +960,14 @@
       </p>
       <div style="background:#191212; border:1px dashed #4d2323; border-radius:10px; padding:12px; margin-bottom:20px; font-size:12px; color:#c78d8d; text-align:left; line-height:1.5;">
         <i class="fa-solid fa-triangle-exclamation" style="color:#f87171; margin-right:4px;"></i>
-        Aam customer accounts ko store admin portal ka access nahi hota. Agar aap store ke owner ya admin hain to verified admin account se sign in karein.
+        Aam customer accounts ko store admin portal ka access nahi hota. Yeh account Supabase mein Admin ke tor par register nahi hai. Agar aap store ke owner ya admin hain to verified admin account se sign in karein.
       </div>
 
       <div style="display:flex; flex-direction:column; gap:10px;">
-        <button type="button" class="portal-submit-btn" onclick="PortalAuth.showAdminLoginForm(true)">
-          Sign In with Admin Account ↗
+        <button type="button" class="portal-submit-btn" onclick="PortalAuth.customerLogout(true)">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Switch to Admin Account ↗
         </button>
-        <button type="button" class="admin-btn admin-btn-secondary" style="justify-content:center; padding:12px;" onclick="PortalAuth.customerLogout()">
+        <button type="button" class="admin-btn admin-btn-secondary" style="justify-content:center; padding:12px;" onclick="PortalAuth.customerLogout(false)">
           <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out of Customer Account
         </button>
         <a href="index.html" class="portal-back-link" style="margin-top:12px;">
@@ -976,74 +976,26 @@
       </div>
     </div>
 
-    <!-- STATE 3: ADMIN LOGIN CARD (SUPABASE AUTH + EMERGENCY MASTER PIN) -->
-    <div class="portal-card" id="portalLoginCard">
+    <!-- STATE 3: NOT LOGGED IN / AUTHENTICATION REQUIRED -->
+    <div class="portal-card" id="portalNotLoggedInCard" style="display:none;">
       <img src="images/logo.png" alt="Lashari Communication" style="width:68px; height:68px; border-radius:14px; margin:0 auto 16px; display:block; box-shadow:0 6px 20px rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.1);">
-      <div class="portal-badge">
-        <i class="fa-solid fa-shield-halved"></i>
-        Authorized Access Only
+      <div class="portal-badge" style="background:#1c241e; color:var(--lime, #d8ff55); border-color:#2a3b2e;">
+        <i class="fa-solid fa-lock"></i>
+        Admin Access Restricted
       </div>
-      <h1 class="portal-title">Lashari Portal Gateway</h1>
-      <p class="portal-desc" id="portalLoginSubtitle">
-        Apne verified Supabase Admin account se sign in karein ta ke orders, inventory aur store settings manage kar sakein.
+      <h1 class="portal-title">Store Admin Portal</h1>
+      <p class="portal-desc">
+        Is portal ko access karne ke liye aapka Supabase mein verified Admin account hona zaroori hai. Barah-e-karam pehle website par apne Admin account se login karein.
       </p>
 
-      <!-- Supabase Admin Email/Password Login Form -->
-      <form id="portalAdminLoginForm" onsubmit="PortalAuth.handleSupabaseLogin(event)">
-        <div class="portal-input-box" style="margin-bottom:12px;">
-          <input 
-            type="email" 
-            id="portalAdminEmailInput" 
-            class="portal-input" 
-            placeholder="Admin Email (e.g. admin@lashari.com)" 
-            autocomplete="email" 
-            required 
-            autofocus
-          >
-        </div>
-        <div class="portal-input-box" style="margin-bottom:18px;">
-          <input 
-            type="password" 
-            id="portalAdminPassInput" 
-            class="portal-input" 
-            placeholder="Admin Password" 
-            autocomplete="current-password" 
-            required
-          >
-        </div>
-        <button type="submit" class="portal-submit-btn" id="portalAdminSubmitBtn">
-          Sign In as Admin ↗
-        </button>
-      </form>
-
-      <!-- Emergency Master Key Fallback Form (Hidden by default) -->
-      <form id="portalMasterPinForm" onsubmit="PortalAuth.handleMasterPin(event)" style="display:none;">
-        <div class="portal-input-box" style="margin-bottom:18px;">
-          <input 
-            type="password" 
-            id="portalPassInput" 
-            class="portal-input" 
-            placeholder="Enter Emergency Master PIN..." 
-            autocomplete="current-password"
-          >
-        </div>
-        <button type="submit" class="portal-submit-btn" id="portalMasterSubmitBtn">
-          Unlock with Master Key ↗
-        </button>
-      </form>
-
-      <div class="portal-msg" id="portalMsg"></div>
-
-      <!-- Mode Switch Toggle -->
-      <div style="margin-top:18px; font-size:12px;">
-        <a href="javascript:void(0)" id="portalModeToggleBtn" onclick="PortalAuth.toggleMasterPinMode()" style="color:#8c988e; text-decoration:underline;">
-          🔑 Emergency Master PIN Override
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+        <a href="account.html?redirect=portalsafe.html" class="portal-submit-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Login with Admin Account ↗
+        </a>
+        <a href="index.html" class="portal-back-link">
+          ← Return to Storefront
         </a>
       </div>
-
-      <a href="index.html" class="portal-back-link">
-        ← Return to Storefront
-      </a>
     </div>
 
   </div>
@@ -1060,7 +1012,7 @@
           <div>
             <div class="admin-brand-title-wrap">
               <h2 class="admin-title">Lashari Store Admin</h2>
-              <span class="admin-master-badge">MASTER CONTROL</span>
+              <span class="admin-master-badge">VERIFIED ADMIN</span>
             </div>
             <p class="admin-subtitle">Live Store Management &amp; Analytics Portal</p>
           </div>
@@ -1659,8 +1611,11 @@
                 <input type="number" id="setDeliveryFee" value="200" class="admin-input">
               </div>
               <div class="order-field">
-                <label class="admin-field-label">Admin Master Access Password</label>
-                <input type="password" id="setAdminPin" value="Speed150" class="admin-input">
+                <label class="admin-field-label">Admin Security &amp; Access Mode</label>
+                <div style="background:#111613; border:1px solid #233025; border-radius:10px; padding:10px 14px; font-size:12px; color:var(--lime, #d8ff55); display:flex; align-items:center; gap:8px;">
+                  <i class="fa-solid fa-shield-halved"></i>
+                  <span>Supabase RBAC (Role-Based Admin Access Only)</span>
+                </div>
               </div>
             </div>
             <div class="order-field">
@@ -1971,194 +1926,43 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
   </button>
 
   <!-- CORE SCRIPTS -->
-  <script src="js/data.js?v=9.0"></script>
-  <script src="js/auth-tracking.js?v=9.0"></script>
-  <script src="js/admin.js?v=9.0"></script>
+  <script src="js/data.js?v=9.5"></script>
+  <script src="js/auth-tracking.js?v=9.5"></script>
+  <script src="js/admin.js?v=9.5"></script>
   <script>
-    // Supabase + Role-Based Admin Access Gatekeeper
-    const PortalAuth = {
-      HASH: "89e6bef936ed08f74f07379656bc2bbae77c4372a449b34ce20fdd6b38d0579d",
-      isMasterPinMode: false,
-
-      async sha256(str) {
-        const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+    // Supabase Role-Based Admin Access Gatekeeper (No Master PIN, Direct Supabase RBAC)
+    window.PortalAuth = {
+      showChecking() {
+        const checking = document.getElementById("portalCheckingCard");
+        const notLogged = document.getElementById("portalNotLoggedInCard");
+        const denied = document.getElementById("portalAccessDeniedCard");
+        if (checking) checking.style.display = "block";
+        if (notLogged) notLogged.style.display = "none";
+        if (denied) denied.style.display = "none";
       },
 
-      toggleMasterPinMode() {
-        this.isMasterPinMode = !this.isMasterPinMode;
-        const adminForm = document.getElementById("portalAdminLoginForm");
-        const masterForm = document.getElementById("portalMasterPinForm");
-        const subtitle = document.getElementById("portalLoginSubtitle");
-        const toggleBtn = document.getElementById("portalModeToggleBtn");
-        const msg = document.getElementById("portalMsg");
-        if (msg) msg.textContent = "";
-
-        if (this.isMasterPinMode) {
-          if (adminForm) adminForm.style.display = "none";
-          if (masterForm) masterForm.style.display = "block";
-          if (subtitle) subtitle.textContent = "Enter your administrative master access key / PIN (Emergency recovery).";
-          if (toggleBtn) toggleBtn.textContent = "← Back to Supabase Admin Login";
-          document.getElementById("portalPassInput")?.focus();
-        } else {
-          if (adminForm) adminForm.style.display = "block";
-          if (masterForm) masterForm.style.display = "none";
-          if (subtitle) subtitle.textContent = "Apne verified Supabase Admin account se sign in karein ta ke orders, inventory aur store settings manage kar sakein.";
-          if (toggleBtn) toggleBtn.textContent = "🔑 Emergency Master PIN Override";
-          document.getElementById("portalAdminEmailInput")?.focus();
-        }
-      },
-
-      async handleSupabaseLogin(e) {
-        if (e && e.preventDefault) e.preventDefault();
-        const emailInp = document.getElementById("portalAdminEmailInput");
-        const passInp = document.getElementById("portalAdminPassInput");
-        const msg = document.getElementById("portalMsg");
-        const btn = document.getElementById("portalAdminSubmitBtn");
-
-        const email = emailInp?.value.trim().toLowerCase();
-        const password = passInp?.value || "";
-
-        if (!email || !password) return;
-
-        if (msg) {
-          msg.className = "portal-msg";
-          msg.style.color = "var(--lime, #d8ff55)";
-          msg.textContent = "Authenticating admin credentials...";
-        }
-        if (btn) btn.disabled = true;
-
-        try {
-          const client = (typeof LashariSupabase !== "undefined") ? LashariSupabase.getClient() : null;
-          let authedUser = null;
-
-          if (client) {
-            const { data, error } = await client.auth.signInWithPassword({ email, password });
-            if (error) throw error;
-            if (data && data.user) {
-              authedUser = {
-                id: data.user.id,
-                email: data.user.email,
-                name: data.user.user_metadata?.full_name || data.user.email,
-                app_metadata: data.user.app_metadata,
-                user_metadata: data.user.user_metadata
-              };
-            }
-          }
-
-          if (!authedUser && typeof CustomerAuth !== "undefined") {
-            authedUser = await CustomerAuth.signIn({ identifier: email, password });
-          }
-
-          if (!authedUser) {
-            throw new Error("Unable to authenticate with Supabase. Please check your credentials.");
-          }
-
-          // Check if user has Admin privileges
-          const isAdmin = await CustomerAuth.checkIsAdmin(authedUser);
-          if (!isAdmin) {
-            if (client) {
-              try { await client.auth.signOut(); } catch (_) {}
-            }
-            if (typeof CustomerAuth !== "undefined") {
-              CustomerAuth.setSession(null);
-            }
-            throw new Error(`Access Denied: Account "${email}" does not have Admin privileges. Sirf authorized store admins ko is portal ka access hai.`);
-          }
-
-          // Authorized Admin Verified
-          sessionStorage.setItem("lashari_admin_session", "authenticated_sb_" + Date.now());
-          sessionStorage.setItem("lashari_admin_email", authedUser.email || email);
-          sessionStorage.setItem("lashari_admin_name", authedUser.name || "Admin");
-
-          if (msg) {
-            msg.className = "portal-msg success";
-            msg.textContent = "Admin privileges verified! Opening portal dashboard...";
-          }
-
-          setTimeout(() => {
-            this.revealDashboard();
-          }, 400);
-
-        } catch (err) {
-          if (msg) {
-            msg.className = "portal-msg error";
-            msg.textContent = err.message || "Invalid credentials or unauthorized account.";
-          }
-        } finally {
-          if (btn) btn.disabled = false;
-        }
-      },
-
-      async handleMasterPin(e) {
-        if (e && e.preventDefault) e.preventDefault();
-        const input = document.getElementById("portalPassInput");
-        const msg = document.getElementById("portalMsg");
-        const val = input.value.trim();
-
-        if (!val) return;
-
-        const hashed = await this.sha256(val);
-        const storedPin = Storage.getSettings().adminPin || "Speed150";
-        const storedHashed = await this.sha256(storedPin);
-
-        if (hashed === this.HASH || hashed === storedHashed || val === storedPin) {
-          if (msg) {
-            msg.className = "portal-msg success";
-            msg.textContent = "Master PIN verified. Initializing master dashboard...";
-          }
-          sessionStorage.setItem("lashari_admin_session", "authenticated_pin_" + Date.now());
-          sessionStorage.setItem("lashari_admin_email", "Master Administrator (PIN)");
-          setTimeout(() => {
-            this.revealDashboard();
-          }, 400);
-        } else {
-          if (msg) {
-            msg.className = "portal-msg error";
-            msg.textContent = "Access Denied: Invalid master PIN.";
-          }
-          input.value = "";
-          input.focus();
-        }
+      showNotLoggedIn() {
+        const checking = document.getElementById("portalCheckingCard");
+        const notLogged = document.getElementById("portalNotLoggedInCard");
+        const denied = document.getElementById("portalAccessDeniedCard");
+        if (checking) checking.style.display = "none";
+        if (notLogged) notLogged.style.display = "block";
+        if (denied) denied.style.display = "none";
       },
 
       showAccessDenied(user) {
-        const checkCard = document.getElementById("portalCheckingCard");
-        const loginCard = document.getElementById("portalLoginCard");
-        const deniedCard = document.getElementById("portalAccessDeniedCard");
+        const checking = document.getElementById("portalCheckingCard");
+        const notLogged = document.getElementById("portalNotLoggedInCard");
+        const denied = document.getElementById("portalAccessDeniedCard");
         const userEmailEl = document.getElementById("portalDeniedUserEmail");
 
-        if (checkCard) checkCard.style.display = "none";
-        if (loginCard) loginCard.style.display = "none";
-        if (deniedCard) deniedCard.style.display = "block";
-        if (userEmailEl) userEmailEl.textContent = user.email || user.name || "Customer Account";
+        if (checking) checking.style.display = "none";
+        if (notLogged) notLogged.style.display = "none";
+        if (denied) denied.style.display = "block";
+        if (userEmailEl) userEmailEl.textContent = (user && (user.email || user.name)) || "Customer Account";
       },
 
-      showAdminLoginForm(force = false) {
-        const checkCard = document.getElementById("portalCheckingCard");
-        const deniedCard = document.getElementById("portalAccessDeniedCard");
-        const loginCard = document.getElementById("portalLoginCard");
-
-        if (checkCard) checkCard.style.display = "none";
-        if (deniedCard) deniedCard.style.display = "none";
-        if (loginCard) loginCard.style.display = "block";
-
-        if (force) {
-          document.getElementById("portalAdminEmailInput")?.focus();
-        }
-      },
-
-      customerLogout() {
-        if (typeof CustomerAuth !== "undefined") {
-          CustomerAuth.signOut();
-        }
-        sessionStorage.removeItem("lashari_admin_session");
-        sessionStorage.removeItem("lashari_admin_email");
-        sessionStorage.removeItem("lashari_admin_name");
-        this.showAdminLoginForm(true);
-      },
-
-      revealDashboard() {
+      revealDashboard(user) {
         const lock = document.getElementById("portalLockScreen");
         const dash = document.getElementById("adminDashboard");
         if (lock) lock.style.display = "none";
@@ -2167,7 +1971,7 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
           AdminController.isAdminLoggedIn = true;
 
           // Update header email
-          const adminEmail = sessionStorage.getItem("lashari_admin_email") || "Admin";
+          const adminEmail = (user && user.email) || sessionStorage.getItem("lashari_admin_email") || "Admin";
           const emailDisplay = document.getElementById("adminUserEmailDisplay");
           if (emailDisplay) emailDisplay.textContent = adminEmail;
 
@@ -2177,62 +1981,93 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
         }
       },
 
-      logout() {
+      async customerLogout(redirectToLogin = true) {
         sessionStorage.removeItem("lashari_admin_session");
         sessionStorage.removeItem("lashari_admin_email");
         sessionStorage.removeItem("lashari_admin_name");
-        window.location.reload();
+
+        if (typeof CustomerAuth !== "undefined") {
+          try { await CustomerAuth.signOut(); } catch (_) {}
+        }
+        const client = (typeof LashariSupabase !== "undefined") ? LashariSupabase.getClient() : null;
+        if (client) {
+          try { await client.auth.signOut(); } catch (_) {}
+        }
+
+        if (redirectToLogin) {
+          window.location.href = "account.html?redirect=portalsafe.html";
+        } else {
+          window.location.href = "index.html";
+        }
+      },
+
+      async logout() {
+        await this.customerLogout(true);
       },
 
       async init() {
-        const session = sessionStorage.getItem("lashari_admin_session");
-        if (session && session.startsWith("authenticated_")) {
-          this.revealDashboard();
-          return;
-        }
+        this.showChecking();
 
-        // Show checking state while we verify Supabase credentials
-        const checkCard = document.getElementById("portalCheckingCard");
-        const loginCard = document.getElementById("portalLoginCard");
-        if (checkCard) checkCard.style.display = "block";
-        if (loginCard) loginCard.style.display = "none";
+        // 1. Fetch user from Supabase client
+        let client = (typeof LashariSupabase !== "undefined") ? LashariSupabase.getClient() : null;
+        let user = null;
 
-        // Check active customer session from Supabase / Local storage
-        let user = (typeof CustomerAuth !== "undefined") ? CustomerAuth.getCurrentUser() : null;
-        const client = (typeof LashariSupabase !== "undefined") ? LashariSupabase.getClient() : null;
-
-        if (!user && client) {
+        if (client) {
           try {
-            const { data } = await client.auth.getUser();
-            if (data && data.user) {
+            const { data, error } = await client.auth.getUser();
+            if (!error && data && data.user) {
               user = {
                 id: data.user.id,
-                email: data.user.email,
-                name: data.user.user_metadata?.full_name || data.user.email,
-                app_metadata: data.user.app_metadata,
-                user_metadata: data.user.user_metadata
+                email: (data.user.email || "").toLowerCase().trim(),
+                name: data.user.user_metadata?.full_name || data.user.email?.split("@")[0] || "Admin",
+                app_metadata: data.user.app_metadata || {},
+                user_metadata: data.user.user_metadata || {}
               };
             }
-          } catch (_) {}
-        }
-
-        if (user && user.email) {
-          const isAdmin = await CustomerAuth.checkIsAdmin(user);
-          if (isAdmin) {
-            sessionStorage.setItem("lashari_admin_session", "authenticated_sb_" + Date.now());
-            sessionStorage.setItem("lashari_admin_email", user.email);
-            sessionStorage.setItem("lashari_admin_name", user.name || "Admin");
-            this.revealDashboard();
-            return;
-          } else {
-            // User is logged in as a normal customer - BLOCK ACCESS!
-            this.showAccessDenied(user);
-            return;
+          } catch (err) {
+            console.warn("Supabase auth check notice:", err);
           }
         }
 
-        // Not logged in -> show admin login form
-        this.showAdminLoginForm();
+        // 2. Check local CustomerAuth session if Supabase direct call didn't return
+        if (!user && typeof CustomerAuth !== "undefined") {
+          const localUser = CustomerAuth.getCurrentUser();
+          if (localUser && localUser.email) {
+            user = localUser;
+          }
+        }
+
+        // 3. If no user is logged in:
+        if (!user || !user.email) {
+          sessionStorage.removeItem("lashari_admin_session");
+          sessionStorage.removeItem("lashari_admin_email");
+          sessionStorage.removeItem("lashari_admin_name");
+          this.showNotLoggedIn();
+          return;
+        }
+
+        // 4. Verify whether this user is an Admin in Supabase
+        let isAdmin = false;
+        if (typeof CustomerAuth !== "undefined" && typeof CustomerAuth.checkIsAdmin === "function") {
+          isAdmin = await CustomerAuth.checkIsAdmin(user);
+        } else {
+          const email = (user.email || "").toLowerCase().trim();
+          const defaultAdmins = ["thelasharicommunication@gmail.com", "abdulqabir.369@gmail.com"];
+          isAdmin = defaultAdmins.includes(email) || user.role === "admin" || user.app_metadata?.role === "admin";
+        }
+
+        if (isAdmin) {
+          sessionStorage.setItem("lashari_admin_session", "sb_admin_" + Date.now());
+          sessionStorage.setItem("lashari_admin_email", user.email);
+          sessionStorage.setItem("lashari_admin_name", user.name || "Admin");
+          this.revealDashboard(user);
+        } else {
+          // Logged in, but NOT an admin in Supabase
+          sessionStorage.removeItem("lashari_admin_session");
+          sessionStorage.removeItem("lashari_admin_email");
+          sessionStorage.removeItem("lashari_admin_name");
+          this.showAccessDenied(user);
+        }
       }
     };
 
