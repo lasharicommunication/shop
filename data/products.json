@@ -1,5 +1,53 @@
 [
   {
+    "id": "prod-1794650941855",
+    "title": "K8 Wireless Lavalier Collar Microphone for Android Type-C – Plug & Play Noise Reduction Clip-On Mic for Vlogging, TikTok, YouTube & Live Streaming",
+    "category": "Mic",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 1050,
+    "oldPrice": 1499,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 42,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "K8 Mic",
+        "price": 1050,
+        "regularPrice": 1499,
+        "specialPrice": 1050,
+        "oldPrice": 1499
+      },
+      {
+        "name": "K9 Dual Mic",
+        "price": 1499,
+        "regularPrice": 1999,
+        "specialPrice": 1499,
+        "oldPrice": 1999
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/pdJWHvkX/b3bf4a3a07c47e2cb916d2281773f3eb.jpg",
+    "images": [
+      "https://i.postimg.cc/pdJWHvkX/b3bf4a3a07c47e2cb916d2281773f3eb.jpg",
+      "https://i.postimg.cc/D0HFgwfX/48a22e56ffeb8a53b068ff28d1795b41-jpg-960x960q80-jpg.webp",
+      "https://i.postimg.cc/fknpytTB/2266-86-732883-product-2.webp",
+      "https://i.postimg.cc/3r4wkswQ/b1e04f04d0b6f67add5e7c2def6a0cff.jpg"
+    ],
+    "description": "Capture crisp, studio-quality audio without messy wires using the K8 Single & K9 Dual Wireless Lavalier Microphone Series. Whether you are a solo content creator filming reels or conducting two-person interviews and podcasts, you can select the exact setup you need—the K8 Single Mic for solo recording or the K9 Dual Mic with two wireless transmitters syncing simultaneously to a single receiver."
+  },
+  {
     "id": "prod-1794650393541",
     "title": "Blue Spectrum M-5 Universal Music Headset – 3.5mm Wired In-Ear Handsfree Earphones with Built-in Mic & Deep Bass",
     "category": "Handsfree",
