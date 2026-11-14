@@ -963,7 +963,7 @@
             <i class="fa-solid fa-user-shield" style="color:var(--lime,#d8ff55);"></i>
             <span id="adminUserEmailDisplay">Admin</span>
           </div>
-          <a href="index.html" target="_blank" class="admin-btn admin-btn-secondary" style="text-decoration:none;">
+          <a href="https://www.lasharicommunication.com/" target="_blank" class="admin-btn admin-btn-secondary" style="text-decoration:none;">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
             <span>Storefront ↗</span>
           </a>
@@ -1896,7 +1896,7 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
         sessionStorage.removeItem("lashari_admin_session");
         sessionStorage.removeItem("lashari_admin_email");
         sessionStorage.removeItem("lashari_admin_name");
-        window.location.replace("index.html");
+        window.location.replace("https://www.lasharicommunication.com/");
       },
 
       async logout() {
@@ -1912,7 +1912,7 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
           try { await client.auth.signOut(); } catch (_) {}
         }
 
-        window.location.replace("index.html");
+        window.location.replace("https://www.lasharicommunication.com/");
       },
 
       async init() {
