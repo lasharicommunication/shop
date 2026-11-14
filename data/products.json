@@ -21,6 +21,13 @@
         "regularPrice": 1499,
         "specialPrice": 999,
         "oldPrice": 1499
+      },
+      {
+        "name": "without sd card",
+        "price": 849,
+        "regularPrice": 1349,
+        "specialPrice": 849,
+        "oldPrice": 1349
       }
     ],
     "colors": [
@@ -48,7 +55,7 @@
       "https://i.postimg.cc/NfCQsb1n/jbl-m3-mini-portable-speaker-900x.webp",
       "https://i.postimg.cc/x8TSYbqY/portable-bluetooth-speaker-m3-mini-multicolor-speaker-in-pakistan-28640943014083-2048x2048.webp"
     ],
-    "description": "Premium authentic tech accessory backed with official checking warranty."
+    "description": "Take big, room-filling sound anywhere you go with the M3 Mini Portable Wireless Bluetooth Speaker. Crafted with a sleek, durable metallic shell and a top-firing acoustic mesh grille, this ultra-compact pocket speaker punches well above its size to deliver crisp highs and impressive deep bass."
   },
   {
     "id": "prod-1794511309899",
