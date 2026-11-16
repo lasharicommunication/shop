@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "id": "357366",
+    "customerName": "Faizan Yaqoob",
+    "phone": "+923212920914",
+    "email": "abdulqabir.369@gmail.com",
+    "address": "Gulshan E Areesha Cooperative Housing Society, R1/31",
+    "items": [
+      {
+        "title": "Mini USB 2.0 Micro SD / TF Memory Card Reader Adapter – High Speed Portable Flash Drive Converter for Laptop & PC",
+        "qty": 1,
+        "price": 199,
+        "size": "blue",
+        "color": "Navy Blue"
+      }
+    ],
+    "subtotal": 199,
+    "deliveryFee": 200,
+    "total": 399,
+    "courierPartner": "TCS Express & Leopards Delivery (Standard Express)",
+    "paymentMethod": "Advance Payment",
+    "status": "Confirmed",
+    "date": "2026-11-16 18:43"
+  }
+]
