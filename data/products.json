@@ -1,5 +1,44 @@
 [
   {
+    "id": "prod-1794945336653",
+    "title": "Watch 11 Max Series 11 Smart Watch – AMOLED Display, Dual Straps & Magnetic Wireless Charger (Black & Silver)",
+    "category": "Smartwatch",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 2099,
+    "oldPrice": 4999,
+    "isOnSale": true,
+    "rating": 4.9,
+    "reviewsCount": 23,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Smart Watch",
+        "price": 2099,
+        "regularPrice": 4999,
+        "specialPrice": 2099,
+        "oldPrice": 4999
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/ZnFDDRbn/images-(39).jpg",
+    "images": [
+      "https://i.postimg.cc/ZnFDDRbn/images-(39).jpg",
+      "https://i.postimg.cc/90pJYnbC/1794945097152.jpg"
+    ],
+    "description": "Upgrade your everyday tech and fitness routine with the BBRJ Watch 11 Max (Series 11). Designed with a sleek edge-to-edge AMOLED display, this smartwatch delivers vibrant colors, crisp icons, and smooth touch navigation for effortless daily use.\nAvailable in classic Matte Black and Silver, the package includes two stylish silicone straps—a smooth black sport strap and a textured beige/cream chevron strap—giving you the versatility to switch between casual, workout, and formal looks."
+  },
+  {
     "id": "prod-1794904203372",
     "title": "MOREKA 18W Fast Charger with Cable (Micro USB or Type-C) - 3.0A Rapid Wall Charger Kit for Android, Smartphones, and Tablets",
     "category": "Cables",
