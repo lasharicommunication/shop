@@ -1113,32 +1113,62 @@
         <div class="section-kicker">
           CUSTOMER EXPERIENCES
         </div>
-        <div class="section-heading-row" style="margin-bottom:30px;">
-          <div>
-            <h2 style="font-size:clamp(36px, 5.5vw, 60px); margin:0;">
+        <div class="reviews-heading-row">
+          <div class="reviews-heading-left">
+            <h2>
               Loved across<br>
               <span class="muted">Pakistan.</span>
             </h2>
             <div class="reviews-rating-banner">
-              <div class="reviews-stars" aria-label="5 star rating">★★★★★</div>
-              <strong>4.9 / 5.0</strong>
-              <span>(1,850+ Verified Orders Nationwide)</span>
+              <div class="reviews-stars-wrap" aria-label="5 out of 5 stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <strong class="reviews-rating-score">4.9 / 5.0</strong>
+              <span class="reviews-rating-count">(1,850+ Verified Orders Nationwide)</span>
             </div>
           </div>
-          <p style="max-width:440px;">
-            Genuine feedback from customers in Karachi, Lahore, Islamabad, Multan, and Rawalpindi. Flat Rs. 200 delivery via TCS &amp; Leopards.
-          </p>
+          <div class="reviews-heading-right">
+            <p>
+              Genuine feedback from verified customers in Karachi, Lahore, Islamabad, Multan, Rawalpindi, and 100+ cities. Flat Rs. 200 delivery via TCS &amp; Leopards.
+            </p>
+            <div class="reviews-trust-chips" aria-label="Delivery and store highlights">
+              <span class="reviews-trust-chip"><i class="fa-solid fa-truck-fast"></i> Flat Rs. 200 Delivery</span>
+              <span class="reviews-trust-chip"><i class="fa-solid fa-shield-halved"></i> 7-Day Checking Warranty</span>
+              <span class="reviews-trust-chip"><i class="fa-solid fa-money-bill-wave"></i> COD Available</span>
+            </div>
+          </div>
         </div>
 
         <!-- CAROUSEL CONTROLS & REVIEWS CARDS (Auto-shuffled periodically) -->
-        <div class="reviews-carousel-wrap">
-          <button type="button" class="reviews-nav-btn prev-btn" id="prevReviewsBtn" aria-label="Previous reviews" title="Previous reviews">‹</button>
+        <div class="reviews-carousel-wrap" id="reviewsCarouselWrap">
+          <button type="button" class="reviews-nav-btn prev-btn" id="prevReviewsBtn" aria-label="Previous reviews" title="Previous reviews">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13l-5-5 5-5"/></svg>
+          </button>
           <div class="reviews-grid" id="reviewsGrid"></div>
-          <button type="button" class="reviews-nav-btn next-btn" id="nextReviewsBtn" aria-label="Next reviews" title="Next reviews">›</button>
+          <button type="button" class="reviews-nav-btn next-btn" id="nextReviewsBtn" aria-label="Next reviews" title="Next reviews">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
+          </button>
         </div>
 
-        <!-- INDICATOR DOTS -->
-        <div class="reviews-dots" id="reviewsDots"></div>
+        <!-- INDICATOR DOTS & MOBILE CONTROLS -->
+        <div class="reviews-bottom-bar">
+          <div class="reviews-page-counter" id="reviewsPageCounter" aria-live="polite">
+            <span id="reviewsCurrentPageNum">01</span> / <span id="reviewsTotalPagesNum">05</span>
+          </div>
+          <div class="reviews-dots" id="reviewsDots" role="tablist" aria-label="Review page selectors"></div>
+          <div class="reviews-mobile-nav">
+            <button type="button" class="reviews-mobile-btn" id="prevReviewsMobileBtn" aria-label="Previous reviews" title="Previous reviews">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13l-5-5 5-5"/></svg>
+            </button>
+            <button type="button" class="reviews-mobile-btn" id="nextReviewsMobileBtn" aria-label="Next reviews" title="Next reviews">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 

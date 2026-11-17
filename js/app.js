@@ -1044,19 +1044,56 @@ function initReviews() {
     nextBtn.addEventListener("click", () => nextReviews());
   }
 
+  const prevMobileBtn = document.getElementById("prevReviewsMobileBtn");
+  if (prevMobileBtn) {
+    prevMobileBtn.addEventListener("click", () => prevReviews());
+  }
+
+  const nextMobileBtn = document.getElementById("nextReviewsMobileBtn");
+  if (nextMobileBtn) {
+    nextMobileBtn.addEventListener("click", () => nextReviews());
+  }
+
   const reviewsSection = document.getElementById("reviewsSection");
   if (reviewsSection) {
     reviewsSection.addEventListener("mouseenter", () => isReviewHovered = true);
     reviewsSection.addEventListener("mouseleave", () => isReviewHovered = false);
+    reviewsSection.addEventListener("touchstart", () => isReviewHovered = true, { passive: true });
+    reviewsSection.addEventListener("touchend", () => {
+      setTimeout(() => { isReviewHovered = false; }, 3000);
+    }, { passive: true });
   }
 
-  // Auto shuffle every 4.5 seconds
+  // Touch Swipe Gesture Support
+  const carouselWrap = document.getElementById("reviewsCarouselWrap");
+  if (carouselWrap) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+    carouselWrap.addEventListener("touchstart", (e) => {
+      if (e.changedTouches && e.changedTouches[0]) {
+        touchStartX = e.changedTouches[0].screenX;
+      }
+    }, { passive: true });
+    carouselWrap.addEventListener("touchend", (e) => {
+      if (e.changedTouches && e.changedTouches[0]) {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+        if (diff < -45) {
+          nextReviews();
+        } else if (diff > 45) {
+          prevReviews();
+        }
+      }
+    }, { passive: true });
+  }
+
+  // Auto shuffle every 5 seconds
   if (reviewShuffleInterval) clearInterval(reviewShuffleInterval);
   reviewShuffleInterval = setInterval(() => {
     if (!isReviewHovered) {
       nextReviews(true);
     }
-  }, 4500);
+  }, 5000);
 
   window.addEventListener("resize", () => {
     renderReviews();
@@ -1088,25 +1125,49 @@ function renderReviews() {
   const pageReviews = AppState.reviews.slice(startIdx, startIdx + perPage);
 
   grid.innerHTML = pageReviews.map(rev => `
-    <div class="review-card">
+    <article class="review-card">
+      <div class="review-card-glow" aria-hidden="true"></div>
       <div class="review-head">
-        <div class="review-stars">★★★★★</div>
-        <span class="review-verified-badge">✓ Verified Buyer 🇵🇰</span>
+        <div class="review-stars-row" aria-label="${rev.rating || 5} out of 5 stars">
+          ${Array.from({ length: rev.rating || 5 }).map(() => '<i class="fa-solid fa-star"></i>').join('')}
+        </div>
+        <span class="review-verified-badge">
+          <i class="fa-solid fa-circle-check"></i> Verified Buyer 🇵🇰
+        </span>
+        <span class="review-quote-watermark" aria-hidden="true">
+          <i class="fa-solid fa-quote-right"></i>
+        </span>
       </div>
       <p class="review-text">"${rev.review}"</p>
-      <div class="review-item-tag">📦 ${rev.item}</div>
+      <div class="review-item-tag">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>${rev.item}</span>
+      </div>
       <div class="review-user-row">
-        <img class="review-avatar" src="${rev.avatar}" alt="${rev.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80'">
+        <div class="review-avatar-wrap">
+          <img class="review-avatar" src="${rev.avatar}" alt="${rev.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80'">
+          <span class="review-avatar-badge" title="Verified Buyer"><i class="fa-solid fa-check"></i></span>
+        </div>
         <div class="review-user-info">
-          <span class="review-name">${rev.name}</span>
+          <strong class="review-name">${rev.name}</strong>
+          <span class="review-city-time">
+            <i class="fa-solid fa-location-dot"></i> ${rev.city || 'Pakistan'} &bull; ${rev.date || 'Recent Order'}
+          </span>
         </div>
       </div>
-    </div>
+    </article>
   `).join("");
 
+  // Update Page Counter
+  const currentEl = document.getElementById("reviewsCurrentPageNum");
+  const totalEl = document.getElementById("reviewsTotalPagesNum");
+  if (currentEl) currentEl.textContent = String(AppState.currentReviewPage + 1).padStart(2, '0');
+  if (totalEl) totalEl.textContent = String(totalPages).padStart(2, '0');
+
+  // Update Indicator Dots
   if (dotsContainer) {
     dotsContainer.innerHTML = Array.from({ length: totalPages }).map((_, idx) => `
-      <button type="button" class="reviews-dot ${idx === AppState.currentReviewPage ? 'active' : ''}" onclick="jumpToReviewPage(${idx})" aria-label="Review page ${idx + 1}"></button>
+      <button type="button" class="reviews-dot ${idx === AppState.currentReviewPage ? 'active' : ''}" onclick="jumpToReviewPage(${idx})" aria-label="Review page ${idx + 1}" role="tab" aria-selected="${idx === AppState.currentReviewPage}"></button>
     `).join("");
   }
 }
