@@ -241,6 +241,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
   initCursorGlow();
+  initTicker();
   renderCategoryStrip();
   renderFilterTabs();
   renderBrands();
@@ -669,6 +670,38 @@ function getProductArtHtml(prod) {
   }
   // Mobile Case Artwork
   return `<div class="art-root"><div class="art-object cover-object"><div class="cover-shell"><div class="cover-camera"><i></i><i></i></div></div></div></div>`;
+}
+
+// Runway Ticker Click & Touch Setup
+function initTicker() {
+  const ticker = document.getElementById("categoryTicker");
+  if (!ticker) return;
+
+  ticker.querySelectorAll(".ticker-item").forEach(item => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      const catKey = item.dataset.category;
+      if (!catKey) return;
+
+      const targetTile = document.querySelector(`#categoryStrip .category-tile[data-category="${catKey}"]`);
+      if (targetTile) {
+        targetTile.click();
+      } else {
+        const col = document.getElementById("collection");
+        if (col) col.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+
+  // Touch pause on mobile
+  ticker.addEventListener("touchstart", () => {
+    ticker.querySelectorAll(".ticker-track").forEach(t => t.style.animationPlayState = "paused");
+  }, { passive: true });
+  ticker.addEventListener("touchend", () => {
+    setTimeout(() => {
+      ticker.querySelectorAll(".ticker-track").forEach(t => t.style.animationPlayState = "running");
+    }, 2000);
+  }, { passive: true });
 }
 
 // Category Strip Setup

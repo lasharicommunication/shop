@@ -501,9 +501,10 @@ svg {
   color: #6d716b;
 }
 
-/* TICKER */
+/* TICKER — Runway Marquee with Interactive Capsules */
 .ticker {
-  height: 62px;
+  position: relative;
+  height: 58px;
   background: var(--lime);
   color: var(--ink);
   display: flex;
@@ -511,22 +512,98 @@ svg {
   overflow: hidden;
   white-space: nowrap;
   user-select: none;
+  border-top: 1.5px solid rgba(23, 26, 24, 0.12);
+  border-bottom: 1.5px solid rgba(23, 26, 24, 0.12);
+  mask-image: linear-gradient(to right, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%);
 }
 .ticker-track {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: .07em;
-  animation: marquee 35s linear infinite;
-  min-width: max-content;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+  min-width: 100%;
+  animation: tickerScroll 34s linear infinite;
+  will-change: transform;
 }
 .ticker:hover .ticker-track {
   animation-play-state: paused;
 }
-.ticker-track span { font-size: 20px; margin: 0 30px; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes tickerScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  margin: 0 3px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #171a18;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.ticker-item i {
+  font-size: 12.5px;
+  color: #354b11;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.ticker-badge {
+  font-size: 9px;
+  font-weight: 900;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: #171a18;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.ticker-sep {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #4b6319;
+  margin: 0 10px;
+  opacity: 0.75;
+}
+.ticker-item:hover {
+  background: #171a18;
+  color: #ffffff;
+  border-color: #171a18;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(23, 26, 24, 0.22);
+}
+.ticker-item:hover i {
+  color: #d8ff55;
+  transform: scale(1.15);
+}
+.ticker-item:hover .ticker-badge {
+  background: #d8ff55;
+  color: #171a18;
+}
+.ticker-item:active {
+  transform: translateY(0) scale(0.97);
+}
 @keyframes floaty {
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -14px; }
@@ -4026,9 +4103,20 @@ html:has(dialog.order-dialog[open]) {
   .hero-index { font-size: 8px; }
 
   /* Ticker */
-  .ticker { height: 42px; overflow: hidden; }
-  .ticker-track { font-size: 10px; }
-  .ticker-track span { margin: 0 12px; font-size: 15px; }
+  .ticker {
+    height: 48px;
+    mask-image: linear-gradient(to right, transparent 0%, black 24px, black calc(100% - 24px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 24px, black calc(100% - 24px), transparent 100%);
+  }
+  .ticker-item {
+    font-size: 11px;
+    padding: 5px 10px;
+    gap: 6px;
+    margin: 0 2px;
+  }
+  .ticker-item i { font-size: 11px; }
+  .ticker-badge { font-size: 7.5px; padding: 1.5px 4px; }
+  .ticker-sep { font-size: 10px; margin: 0 6px; }
 
   /* Sections */
   .section-space { padding-block: 48px; }

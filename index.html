@@ -861,34 +861,133 @@
     </section>
 
     <!-- SCROLLING CATEGORY TICKER -->
-    <div class="ticker" aria-label="Product categories">
-      <div class="ticker-track" aria-hidden="true">
-        SMARTWATCHES <span>✳</span>
-        EARBUDS <span>✳</span>
-        POWER BANKS <span>✳</span>
-        CHARGERS <span>✳</span>
-        SPEAKERS <span>✳</span>
-        MOBILE COVERS <span>✳</span>
-        SMARTWATCHES <span>✳</span>
-        EARBUDS <span>✳</span>
-        POWER BANKS <span>✳</span>
-        CHARGERS <span>✳</span>
-        SPEAKERS <span>✳</span>
-        MOBILE COVERS <span>✳</span>
+    <div class="ticker" id="categoryTicker" aria-label="Trending product categories">
+      <div class="ticker-track">
+        <button type="button" class="ticker-item" data-category="smartwatches" aria-label="Smartwatches">
+          <i class="fa-solid fa-clock"></i>
+          <span>SMARTWATCHES</span>
+          <span class="ticker-badge">HOT</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="earbuds" aria-label="Earbuds">
+          <i class="fa-solid fa-headphones"></i>
+          <span>EARBUDS</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="powerbanks" aria-label="Power Banks">
+          <i class="fa-solid fa-bolt-lightning"></i>
+          <span>POWER BANKS</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="wirelesschargers" aria-label="Wireless Chargers">
+          <i class="fa-solid fa-charging-station"></i>
+          <span>WIRELESS CHARGERS</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="cableschargers" aria-label="Fast Chargers and Cables">
+          <i class="fa-solid fa-plug-circle-bolt"></i>
+          <span>FAST CHARGERS</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="covers" aria-label="Mobile Covers">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>MOBILE COVERS</span>
+          <span class="ticker-badge">TRENDING</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="speakers" aria-label="Speakers">
+          <i class="fa-solid fa-volume-high"></i>
+          <span>SPEAKERS</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="ringlight" aria-label="LED Ring Lights">
+          <i class="fa-solid fa-sun"></i>
+          <span>LED RING LIGHTS</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="mobileholder" aria-label="Mobile Holders">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <span>PHONE HOLDERS</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
+
+        <button type="button" class="ticker-item" data-category="adapters" aria-label="Adapters and OTG">
+          <i class="fa-solid fa-microchip"></i>
+          <span>OTG &amp; ADAPTERS</span>
+        </button>
+        <span class="ticker-sep" aria-hidden="true">✳</span>
       </div>
+
       <div class="ticker-track" aria-hidden="true">
-        SMARTWATCHES <span>✳</span>
-        EARBUDS <span>✳</span>
-        POWER BANKS <span>✳</span>
-        CHARGERS <span>✳</span>
-        SPEAKERS <span>✳</span>
-        MOBILE COVERS <span>✳</span>
-        SMARTWATCHES <span>✳</span>
-        EARBUDS <span>✳</span>
-        POWER BANKS <span>✳</span>
-        CHARGERS <span>✳</span>
-        SPEAKERS <span>✳</span>
-        MOBILE COVERS <span>✳</span>
+        <button type="button" class="ticker-item" data-category="smartwatches" tabindex="-1">
+          <i class="fa-solid fa-clock"></i>
+          <span>SMARTWATCHES</span>
+          <span class="ticker-badge">HOT</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="earbuds" tabindex="-1">
+          <i class="fa-solid fa-headphones"></i>
+          <span>EARBUDS</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="powerbanks" tabindex="-1">
+          <i class="fa-solid fa-bolt-lightning"></i>
+          <span>POWER BANKS</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="wirelesschargers" tabindex="-1">
+          <i class="fa-solid fa-charging-station"></i>
+          <span>WIRELESS CHARGERS</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="cableschargers" tabindex="-1">
+          <i class="fa-solid fa-plug-circle-bolt"></i>
+          <span>FAST CHARGERS</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="covers" tabindex="-1">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>MOBILE COVERS</span>
+          <span class="ticker-badge">TRENDING</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="speakers" tabindex="-1">
+          <i class="fa-solid fa-volume-high"></i>
+          <span>SPEAKERS</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="ringlight" tabindex="-1">
+          <i class="fa-solid fa-sun"></i>
+          <span>LED RING LIGHTS</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="mobileholder" tabindex="-1">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <span>PHONE HOLDERS</span>
+        </button>
+        <span class="ticker-sep">✳</span>
+
+        <button type="button" class="ticker-item" data-category="adapters" tabindex="-1">
+          <i class="fa-solid fa-microchip"></i>
+          <span>OTG &amp; ADAPTERS</span>
+        </button>
+        <span class="ticker-sep">✳</span>
       </div>
     </div>
 
