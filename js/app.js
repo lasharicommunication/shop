@@ -680,29 +680,33 @@ function renderCategoryStrip() {
     smartwatches: "Smartwatch",
     earbuds: "Earbud",
     powerbanks: "Power Bank",
-    wirelesschargers: "Wireless Charger",
-    cableschargers: "Charger",
+    wirelesschargers: "Charger",
+    cableschargers: "Cable",
     adapters: "Adapter",
     speakers: "Speaker",
     ringlight: "Ring Light",
     mobileholder: "Holder",
-    deskholder: "Holder",
-    carholder: "Holder",
-    bikeholder: "Holder",
-    covers: "all"
+    covers: "Cover"
   };
 
   strip.querySelectorAll(".category-tile").forEach(tile => {
-    tile.addEventListener("click", () => {
+    tile.onclick = () => {
       const catKey = tile.dataset.category;
       const targetQuery = categoryMap[catKey] || "";
+      const isAlreadyActive = tile.classList.contains("is-active");
 
-      strip.querySelectorAll(".category-tile").forEach(t => t.classList.remove("is-active"));
-      tile.classList.add("is-active");
+      if (isAlreadyActive) {
+        tile.classList.remove("is-active");
+        AppState.activeCategory = "all";
+      } else {
+        strip.querySelectorAll(".category-tile").forEach(t => t.classList.remove("is-active"));
+        tile.classList.add("is-active");
+        AppState.activeCategory = targetQuery;
+      }
 
-      AppState.activeCategory = targetQuery === "all" ? "all" : targetQuery;
       AppState.activeBrand = "all";
       AppState.activeFilter = "all";
+      document.querySelectorAll(".brand-card").forEach(c => c.classList.remove("is-active"));
 
       updateFilterTabsActiveState();
       resetCollectionVisibleCount();
@@ -710,7 +714,7 @@ function renderCategoryStrip() {
 
       const col = document.getElementById("collection");
       if (col) col.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    };
   });
 }
 
@@ -754,8 +758,13 @@ function renderFilterTabs() {
 }
 
 function updateFilterTabsActiveState() {
+  const isFilteredOutsideTabs = AppState.activeCategory !== "all" || AppState.activeBrand !== "all";
   document.querySelectorAll(".filter-button").forEach(b => {
-    b.classList.toggle("is-active", b.dataset.filter === AppState.activeFilter);
+    if (isFilteredOutsideTabs && b.dataset.filter === "all") {
+      b.classList.remove("is-active");
+    } else {
+      b.classList.toggle("is-active", b.dataset.filter === AppState.activeFilter);
+    }
   });
 }
 
