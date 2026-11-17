@@ -1994,7 +1994,7 @@ const AdminController = {
     setVal("setOfferTag", offer.tag || "🔥 LIMITED TIME MEGA DROP");
     setVal("setOfferTitle", offer.title || "FLAT 10% OFF · WEEKEND EDIT");
     setVal("setOfferDesc", offer.desc || "");
-    setVal("setOfferCode", offer.code || "FLASH25");
+    setVal("setOfferCode", offer.code || "FLASH10");
     setVal("setOfferDiscount", offer.discountPercent || 10);
     setVal("setOfferBtnText", offer.btnText || "Shop Weekend Deals");
     setVal("setOfferBtnLink", offer.btnLink || "#collection");
@@ -2233,7 +2233,7 @@ const AdminController = {
       tag: document.getElementById("setOfferTag")?.value.trim() || "🔥 LIMITED TIME MEGA DROP",
       title: document.getElementById("setOfferTitle")?.value.trim() || "FLAT 10% OFF · WEEKEND EDIT",
       desc: document.getElementById("setOfferDesc")?.value.trim() || "",
-      code: document.getElementById("setOfferCode")?.value.trim() || "FLASH25",
+      code: document.getElementById("setOfferCode")?.value.trim() || "FLASH10",
       discountPercent: parseInt(document.getElementById("setOfferDiscount")?.value, 10) || 10,
       btnText: document.getElementById("setOfferBtnText")?.value.trim() || "Shop Weekend Deals",
       btnLink: document.getElementById("setOfferBtnLink")?.value.trim() || "#collection",

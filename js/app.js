@@ -552,7 +552,7 @@ function renderSpecialOffer() {
 }
 
 function copyOfferPromoCode() {
-  const code = AppState.settings.specialOffer?.code || "FLASH25";
+  const code = AppState.settings.specialOffer?.code || "FLASH10";
   copyAccountNumber(code, document.getElementById("btnCopyOfferCode"));
   const promoInput = document.getElementById("orderPromoInput");
   if (promoInput) promoInput.value = code;
@@ -1229,14 +1229,14 @@ function applyOrderPromoCode(inputCode) {
     return;
   }
 
-  // 1. Check special offer code (default: FLASH25 with 10% off)
+  // 1. Check special offer code (default: FLASH10 with 10% off)
   const specialOffer = AppState.settings?.specialOffer || {};
-  const specialCode = (specialOffer.code || "FLASH25").trim().toUpperCase();
+  const specialCode = (specialOffer.code || "FLASH10").trim().toUpperCase();
   const specialDiscount = specialOffer.discountPercent || 10;
 
   let matchedCoupon = null;
 
-  if (code === specialCode || code === "FLASH25" || code === "FLASH10") {
+  if (code === specialCode || code === "FLASH10") {
     matchedCoupon = {
       code: code,
       discountType: "percent",
