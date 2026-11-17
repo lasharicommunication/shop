@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Main Storefront Home & Catalog -->
   <url>
     <loc>https://www.lasharicommunication.com/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -13,13 +15,47 @@
     </image:image>
     <image:image>
       <image:loc>https://www.lasharicommunication.com/images/og-image.jpg</image:loc>
-      <image:title>Lashari Communication Store Banner</image:title>
+      <image:title>Lashari Communication Tech Store Pakistan</image:title>
+      <image:caption>Smartwatches, Wireless Earbuds, Power Banks &amp; Mobile Covers</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.postimg.cc/pdJWHvkX/b3bf4a3a07c47e2cb916d2281773f3eb.jpg</image:loc>
+      <image:title>K8 Wireless Lavalier Collar Microphone for Android Type-C</image:title>
+      <image:caption>Noise reduction wireless mic for vlogging, TikTok &amp; YouTube</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.postimg.cc/pXCJp5TY/2551-419-744142-product-1.webp</image:loc>
+      <image:title>Blue Spectrum M-5 Universal Music Headset In-Ear Handsfree</image:title>
+      <image:caption>Wired earphones with microphone and deep bass</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.postimg.cc/NfCQsb1n/jbl-m3-mini-portable-speaker-900x.webp</image:loc>
+      <image:title>M3 Mini Portable Wireless Bluetooth Speaker Metallic Sound Box</image:title>
+      <image:caption>Pocket-sized metallic sound box with extra deep bass</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.postimg.cc/QtrsLpxV/ce8c93c5c6ac3faff55200fb9c07821d.png</image:loc>
+      <image:title>Universal Foldable Desktop Mobile &amp; Tablet Stand</image:title>
+      <image:caption>Adjustable telescopic phone holder with weighted round base</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.postimg.cc/R0d9zkj2/820d4bc403314dc67d793a298fdcb9aa.png</image:loc>
+      <image:title>Gold Shining Edition Luxury Wireless Pro Earbuds</image:title>
+      <image:caption>Glossy metallic gold Bluetooth TWS earphones with charging case</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.postimg.cc/6pBdQR75/Airbuds13-1.webp</image:loc>
+      <image:title>Buds Pro 13 ANC/ENC Wireless Earbuds</image:title>
+      <image:caption>Double noise reduction gaming earbuds with RGB breathing light case</image:caption>
     </image:image>
   </url>
+
+  <!-- Customer Account & Order Tracking -->
   <url>
     <loc>https://www.lasharicommunication.com/account</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
 </urlset>

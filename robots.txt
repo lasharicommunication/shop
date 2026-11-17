@@ -1,4 +1,8 @@
-User-agent: *
+# Lashari Communication Robots.txt
+# Official Storefront & Search Engine Crawler Policy
+# Website: https://www.lasharicommunication.com/
+
+User-agent: Googlebot
 Allow: /
 Allow: /images/
 Allow: /css/
@@ -7,4 +11,21 @@ Disallow: /portalsafe.html
 Disallow: /api/
 Disallow: /data/
 
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Disallow: /portalsafe.html
+Disallow: /api/
+Disallow: /data/
+
+User-agent: *
+Allow: /
+Disallow: /portalsafe.html
+Disallow: /api/
+Disallow: /data/
+
+# XML Sitemap Index
 Sitemap: https://www.lasharicommunication.com/sitemap.xml
