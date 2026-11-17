@@ -138,3 +138,4 @@ Array of product objects:
 2. **Execute Single-Block Edits**: Use `edit_file` with precise `Target` and `Replacement` strings.
 3. **Verify Tag Balance & Syntax**: Run `node` syntax check in `scratch/` before committing.
 4. **Maintain Responsive Integrity**: Whenever changing desktop styles, verify or update the corresponding media query in `css/style.css` (`L3963` for 768px, `L4020` for 550px).
+

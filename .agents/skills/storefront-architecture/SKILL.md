@@ -77,3 +77,4 @@ This skill provides an instant, pre-compiled mental model of the Lashari Communi
 2. **Surgical Edits**: Use `edit_file` directly with exact target context from the index.
 3. **Responsive Verification**: When editing a section's CSS, check its base styles AND corresponding mobile media queries at `L3963` (768px) and `L4020` (550px).
 4. **Validation**: Test JS syntax using `node` on `js/app.js` before concluding turns.
+

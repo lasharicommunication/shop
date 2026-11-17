@@ -1437,12 +1437,14 @@
     <section class="location-section section-space" id="locationSection">
       <div class="wrap">
         <div class="section-kicker">
-          VISIT OUR STORE
+          <span class="kicker-dot"></span> VISIT OUR STORE
         </div>
-        <div class="section-heading-row">
-          <h2>
-            <span id="displayLocationHeading">Find us in<br><span class="muted">person.</span></span>
-          </h2>
+        <div class="location-heading-row">
+          <div>
+            <h2>
+              <span id="displayLocationHeading">Find us in<br><span class="muted">person.</span></span>
+            </h2>
+          </div>
           <p id="displayLocationDesc">
             Experience our premium tech essentials, live checking warranty, and free precision mobile cover fitting at our official outlet.
           </p>
@@ -1451,36 +1453,42 @@
         <div class="location-grid">
           <!-- Left: Store Information Card -->
           <div class="location-info-card">
+            <div class="location-card-glow" aria-hidden="true"></div>
+
             <div class="location-badge">
-              <span class="location-pulse"></span>
-              Official Physical Outlet · Pakistan
+              <span class="location-pulse" aria-hidden="true"></span>
+              <span>Official Physical Outlet · Karachi, Pakistan</span>
             </div>
 
             <h3 class="location-store-title" id="displayLocationStoreTitle">The Lashari Communication</h3>
             
             <div class="location-detail-item">
-              <div class="location-icon-box">📍</div>
+              <div class="location-icon-box" aria-hidden="true">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
               <div>
                 <span class="location-detail-label">Store Address</span>
-                <p class="location-detail-val shop-address-text" id="displayLocationAddress">
-                  Shop #14, Ground Floor, Lashari Mobile Plaza, Pakistan
-                </p>
+                <p class="location-detail-val shop-address-text" id="displayLocationAddress">Shop #3, Plot no. B-34, Lashari Communication, baloch goth, near subhan allah resturant, scheme 33, gulzar-e-hijri, karachi.</p>
               </div>
             </div>
 
             <div class="location-detail-item">
-              <div class="location-icon-box">🕒</div>
+              <div class="location-icon-box" aria-hidden="true">
+                <i class="fa-solid fa-clock"></i>
+              </div>
               <div>
                 <span class="location-detail-label">Store Timings</span>
                 <p class="location-detail-val" id="displayLocationTimings">
                   <strong>Monday – Sunday:</strong> 11:00 AM – 11:00 PM<br>
-                  <span style="color:var(--muted); font-size:12px;">(Friday Break: 1:00 PM – 2:30 PM)</span>
+                  <span style="color:#727e6e; font-size:12px;">(Friday Break: 1:00 PM – 2:30 PM)</span>
                 </p>
               </div>
             </div>
 
             <div class="location-detail-item">
-              <div class="location-icon-box">📞</div>
+              <div class="location-icon-box" aria-hidden="true">
+                <i class="fa-solid fa-phone-volume"></i>
+              </div>
               <div>
                 <span class="location-detail-label">Direct Contact &amp; Support</span>
                 <p class="location-detail-val">
@@ -1490,19 +1498,19 @@
               </div>
             </div>
 
-            <div class="location-perks-row">
-              <span class="location-perk-tag">🛡️ Free Case Fitting</span>
-              <span class="location-perk-tag">⚡ Live Product Demo</span>
-              <span class="location-perk-tag">💳 Cash &amp; Online Transfer</span>
-              <span class="location-perk-tag">📦 Instant In-Store Pickup</span>
+            <div class="location-perks-row" aria-label="In-store benefits">
+              <span class="location-perk-tag"><i class="fa-solid fa-shield-halved"></i> Free Case Fitting</span>
+              <span class="location-perk-tag"><i class="fa-solid fa-bolt"></i> Live Product Demo</span>
+              <span class="location-perk-tag"><i class="fa-solid fa-money-bill-wave"></i> Cash &amp; Online Transfer</span>
+              <span class="location-perk-tag"><i class="fa-solid fa-box-open"></i> Instant Store Pickup</span>
             </div>
 
             <div class="location-actions">
               <a id="shopMapLink" class="button button-lime" href="https://share.google/iiBvxUjHqCga5PFY1" target="_blank" rel="noopener">
-                Get Directions on Maps ↗
+                <i class="fa-solid fa-diamond-turn-right"></i> Get Directions on Maps ↗
               </a>
-              <a class="button button-ghost shop-whatsapp-link" href="https://wa.me/923212920914" target="_blank" rel="noopener">
-                Chat on WhatsApp 💬
+              <a class="button button-ghost shop-whatsapp-link" href="https://wa.me/923212920914?text=Hello%20Lashari%20Communication%2C%20I%20want%20to%20visit%20your%20store." target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp 💬
               </a>
             </div>
           </div>
@@ -1511,15 +1519,15 @@
           <div class="location-map-card">
             <div class="location-map-header">
               <div class="location-map-title">
-                <span class="map-dot"></span>
+                <span class="map-dot" aria-hidden="true"></span>
                 <span>Google Maps Live Location</span>
               </div>
-              <span class="location-map-badge">Verified Location</span>
+              <span class="location-map-badge"><i class="fa-solid fa-circle-check"></i> Verified Outlet</span>
             </div>
             <div class="location-iframe-wrapper">
               <iframe 
                 id="shopMapIframe"
-                src="https://maps.google.com/maps?q=Shop%20%2314%2C%20Ground%20Floor%2C%20Lashari%20Mobile%20Plaza%2C%20Pakistan&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                src="https://maps.google.com/maps?q=Shop%20%233%2C%20Plot%20no.%20B-34%2C%20Lashari%20Communication%2C%20baloch%20goth%2C%20near%20subhan%20allah%20resturant%2C%20scheme%2033%2C%20gulzar-e-hijri%2C%20karachi.&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" 
                 width="100%" 
                 height="100%" 
                 style="border:0;" 
@@ -1530,8 +1538,8 @@
               </iframe>
             </div>
             <div class="location-map-footer">
-              <span>📍 <strong class="shop-address-text">Shop #14, Ground Floor, Lashari Mobile Plaza, Pakistan</strong></span>
-              <a class="location-open-link" href="https://share.google/iiBvxUjHqCga5PFY1" target="_blank" rel="noopener">
+              <span><i class="fa-solid fa-location-dot"></i> <strong class="shop-address-text">Shop #3, Plot no. B-34, Lashari Communication, baloch goth, near subhan allah resturant, scheme 33, gulzar-e-hijri, karachi.</strong></span>
+              <a class="location-open-link" id="shopMapFooterLink" href="https://share.google/iiBvxUjHqCga5PFY1" target="_blank" rel="noopener">
                 View Full Map ↗
               </a>
             </div>

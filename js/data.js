@@ -31,11 +31,11 @@ const DEFAULT_SETTINGS = {
   email: "thelasharicommunication@gmail.com",
   phone: "+92 321 2920914",
   whatsapp: "923212920914",
-  shopAddress: "Shop #14, Ground Floor, Lashari Mobile Plaza, Pakistan",
+  shopAddress: "Shop #3, Plot no. B-34, Lashari Communication, baloch goth, near subhan allah resturant, scheme 33, gulzar-e-hijri, karachi.",
   storeTimings: "Monday – Sunday: 11:00 AM – 11:00 PM (Friday Break: 1:00 PM – 2:30 PM)",
   locationHeading: "Find us in person.",
   locationDesc: "Experience our premium tech essentials, live checking warranty, and free precision mobile cover fitting at our official outlet.",
-  googleMapsQuery: "Lashari Mobile Plaza, Pakistan",
+  googleMapsQuery: "Shop #3, Plot no. B-34, Lashari Communication, baloch goth, near subhan allah resturant, scheme 33, gulzar-e-hijri, karachi",
   googleMapsUrl: "https://share.google/iiBvxUjHqCga5PFY1",
   socials: {
     instagram: "https://instagram.com/thelasharicommunication",
