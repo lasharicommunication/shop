@@ -38,6 +38,7 @@ async function sendTelegramOrderAlert(order, customConfig = {}) {
     `💳 <b>Payment:</b> ${escapeHtml(order.paymentMethod || "Advance Payment")}\n\n` +
     `📦 <b>Order Items:</b>\n${itemsList || "• No items specified"}\n\n` +
     `💵 <b>Subtotal:</b> Rs. ${(order.subtotal || 0).toLocaleString()}\n` +
+    (order.discount ? `🏷️ <b>Promo Discount (${escapeHtml(order.promoCode || "PROMO")}):</b> -Rs. ${Number(order.discount).toLocaleString()}\n` : "") +
     `🛵 <b>Delivery Fee:</b> Rs. ${(order.deliveryFee || 200).toLocaleString()}\n` +
     `💰 <b>Total Payable:</b> <b>Rs. ${(order.total || 0).toLocaleString()}</b>\n` +
     `━━━━━━━━━━━━━━━━━━━━\n` +

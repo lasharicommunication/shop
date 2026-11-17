@@ -1090,8 +1090,8 @@
         <div class="offer-glow" aria-hidden="true"></div>
         <div class="offer-content">
           <span class="offer-badge" id="displayOfferTag">🔥 LIMITED TIME MEGA DROP</span>
-          <h2 id="displayOfferTitle">FLAT 25% OFF · WEEKEND EDIT</h2>
-          <p id="displayOfferDesc">Use promo code FLASH25 at checkout or claim flat Rs. 200 delivery nationwide with TCS &amp; Leopards Express courier dispatch.</p>
+          <h2 id="displayOfferTitle">FLAT 10% OFF · WEEKEND EDIT</h2>
+          <p id="displayOfferDesc">Use promo code FLASH25 at checkout to get flat 10% OFF or claim flat Rs. 200 delivery nationwide with TCS &amp; Leopards Express courier dispatch.</p>
           
           <div class="offer-code-box">
             <span class="offer-code-label">PROMO VOUCHER:</span>
@@ -1757,6 +1757,18 @@
             <div class="order-total-caption">TOTAL</div>
             <div class="order-total-number" id="orderTotalDisplay">Rs. 1,699</div>
             <div class="order-total-breakdown" id="orderSubtotalBreakdown">Subtotal: Rs. 1,499 + Rs. 200 fee</div>
+          </div>
+
+          <!-- PROMO CODE INPUT (Total Ke Neche) -->
+          <div class="order-promo-box" id="orderPromoBox">
+            <div class="order-promo-row">
+              <div class="order-promo-input-group">
+                <i class="fa-solid fa-tag order-promo-tag-icon"></i>
+                <input type="text" id="orderPromoInput" class="order-promo-input" placeholder="Promo code (e.g. FLASH25)" autocomplete="off" autocapitalize="characters" aria-label="Enter Promo Code">
+              </div>
+              <button type="button" id="btnApplyPromo" class="order-promo-apply-btn" onclick="applyOrderPromoCode()">Apply</button>
+            </div>
+            <div id="orderPromoMsg" class="order-promo-msg" style="display:none;"></div>
           </div>
         </div>
 

@@ -1822,9 +1822,15 @@ UPDATE profiles SET role = 'user', is_admin = false WHERE email = 'customer@emai
                   <input type="text" id="setOfferCode" placeholder="FLASH25" class="admin-input">
                 </div>
               </div>
-              <div class="order-field" style="margin-top:10px;">
-                <label class="admin-field-label">Offer Main Title / Heading</label>
-                <input type="text" id="setOfferTitle" placeholder="FLAT 25% OFF · WEEKEND EDIT" class="admin-input">
+              <div class="settings-grid-2col" style="margin-top:10px;">
+                <div class="order-field">
+                  <label class="admin-field-label">Offer Main Title / Heading</label>
+                  <input type="text" id="setOfferTitle" placeholder="FLAT 10% OFF · WEEKEND EDIT" class="admin-input">
+                </div>
+                <div class="order-field">
+                  <label class="admin-field-label">Discount Percentage (%)</label>
+                  <input type="number" id="setOfferDiscount" placeholder="10" min="1" max="100" class="admin-input">
+                </div>
               </div>
               <div class="order-field" style="margin-top:10px;">
                 <label class="admin-field-label">Offer Subtitle / Description</label>

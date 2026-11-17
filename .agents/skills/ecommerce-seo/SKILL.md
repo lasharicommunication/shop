@@ -112,3 +112,4 @@ console.log('Valid JSON-LD with', data['@graph'].length, 'graph entities');
 - [ ] Images have descriptive alt text and explicit aspect ratios.
 - [ ] `sitemap.xml` updated without fragment hashes (`#`).
 - [ ] No `index.html` occurrences in public canonical links.
+

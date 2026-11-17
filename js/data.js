@@ -79,9 +79,10 @@ const DEFAULT_SETTINGS = {
   ],
   specialOffer: {
     tag: "🔥 LIMITED TIME MEGA DROP",
-    title: "FLAT 25% OFF · WEEKEND EDIT",
-    desc: "Use promo code FLASH25 at checkout or claim flat Rs. 200 delivery nationwide with TCS & Leopards Express courier dispatch.",
+    title: "FLAT 10% OFF · WEEKEND EDIT",
+    desc: "Use promo code FLASH25 at checkout to get flat 10% OFF or claim flat Rs. 200 delivery nationwide with TCS & Leopards Express courier dispatch.",
     code: "FLASH25",
+    discountPercent: 10,
     btnText: "Shop Weekend Deals",
     btnLink: "#collection",
     note: "⚡ Valid for all orders across Pakistan · Limited Stock"
@@ -286,6 +287,7 @@ const DEFAULT_REVIEWS = [
 ];
 
 const DEFAULT_COUPONS = [
+  { code: "FLASH25", discountType: "percent", value: 10, label: "10% Off Special Flash Promo" },
   { code: "LASHARI10", discountType: "percent", value: 10, label: "10% Off Storewide" },
   { code: "FIRSTBUY", discountType: "fixed", value: 100, label: "Rs. 100 Off Welcome Gift" },
   { code: "VIP50", discountType: "fixed", value: 50, label: "Rs. 50 VIP Voucher" }

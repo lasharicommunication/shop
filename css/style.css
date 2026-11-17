@@ -2572,6 +2572,7 @@ html:has(dialog.order-dialog[open]) {
 .order-card-product {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
 }
 .order-product-art-glow {
@@ -2655,6 +2656,107 @@ html:has(dialog.order-dialog[open]) {
   font-size: 10px;
   color: #7f8a78;
   font-weight: 500;
+}
+
+/* ── PROMO CODE BOX (Below Total) ── */
+.order-promo-box {
+  width: 100%;
+  border-top: 1px dashed #d5decb;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.order-promo-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.order-promo-input-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1.5px solid #d5decb;
+  border-radius: 10px;
+  padding: 8px 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.order-promo-input-group:focus-within {
+  border-color: #8bab15;
+  box-shadow: 0 0 0 3px rgba(139, 171, 21, 0.15);
+}
+.order-promo-tag-icon {
+  color: #72826a;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.order-promo-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font: 700 13px var(--display);
+  color: #111412;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0;
+  outline: none;
+}
+.order-promo-input::placeholder {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #8c9785;
+  font-size: 12px;
+}
+.order-promo-apply-btn {
+  background: #171a18;
+  color: #d8ff55;
+  border: none;
+  font: 800 12px var(--display);
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.order-promo-apply-btn:hover {
+  background: #8bab15;
+  color: #ffffff;
+}
+.order-promo-apply-btn.is-applied {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+.order-promo-msg {
+  margin-top: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.order-promo-msg.success {
+  background: #edf8e8;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+.order-promo-msg.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+.order-promo-remove-link {
+  color: #dc2626;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 /* ── CARD 2: Variety & Quantity ── */

@@ -554,6 +554,8 @@ function renderSpecialOffer() {
 function copyOfferPromoCode() {
   const code = AppState.settings.specialOffer?.code || "FLASH25";
   copyAccountNumber(code, document.getElementById("btnCopyOfferCode"));
+  const promoInput = document.getElementById("orderPromoInput");
+  if (promoInput) promoInput.value = code;
 }
 window.copyOfferPromoCode = copyOfferPromoCode;
 window.copyAccountNumber = copyAccountNumber;
@@ -1155,16 +1157,157 @@ function adjustOrderModalQty(delta) {
       : `Rs. ${curPrice.toLocaleString()} each`;
   }
 
-  const deliveryFee = AppState.settings.deliveryFee || 200;
-  const grandTotal = subtotal + deliveryFee;
+  renderOrderTotals();
+}
+
+// ── PROMO CODE MANAGEMENT (Total Ke Neche) ──
+AppState.appliedPromo = null;
+
+function renderOrderTotals() {
+  const prod = AppState.currentOrderProduct;
+  if (!prod) return;
+  const qty = AppState.currentOrderQty || 1;
+  const selectedVariety = (prod && prod.id !== "cart-order") ? getSelectedProductVariety(prod) : {};
+  const curPrice = (prod && prod.id !== "cart-order") ? getProductPrice(prod, selectedVariety.size) : (prod ? prod.price : 0);
+  const subtotal = curPrice * qty;
+
+  let discountAmount = 0;
+  if (AppState.appliedPromo) {
+    if (AppState.appliedPromo.type === "percent") {
+      discountAmount = Math.round(subtotal * (AppState.appliedPromo.value / 100));
+    } else {
+      discountAmount = Math.min(AppState.appliedPromo.value, subtotal);
+    }
+    AppState.appliedPromo.discountAmount = discountAmount;
+  }
+
+  const deliveryFee = AppState.settings?.deliveryFee || 200;
+  const grandTotal = Math.max(0, subtotal - discountAmount) + deliveryFee;
+
   const totalEl = document.getElementById("orderTotalDisplay");
   if (totalEl) totalEl.textContent = `Rs. ${grandTotal.toLocaleString()}`;
 
   const breakdownEl = document.getElementById("orderSubtotalBreakdown");
   if (breakdownEl) {
-    breakdownEl.textContent = `Subtotal: Rs. ${subtotal.toLocaleString()} + Rs. ${deliveryFee} fee`;
+    if (discountAmount > 0) {
+      breakdownEl.innerHTML = `Subtotal: Rs. ${subtotal.toLocaleString()} <span style="color:#16a34a; font-weight:700;">- Rs. ${discountAmount.toLocaleString()} (${escapeAttr(AppState.appliedPromo.code)} · ${AppState.appliedPromo.value}% OFF)</span> + Rs. ${deliveryFee} fee`;
+    } else {
+      breakdownEl.textContent = prod.id === "cart-order"
+        ? `Bag Total: Rs. ${subtotal.toLocaleString()} + Rs. ${deliveryFee} fee`
+        : `Subtotal: Rs. ${subtotal.toLocaleString()} + Rs. ${deliveryFee} fee`;
+    }
+  }
+
+  // Update promo feedback UI if active
+  const feedbackEl = document.getElementById("orderPromoMsg");
+  const applyBtn = document.getElementById("btnApplyPromo");
+  if (AppState.appliedPromo && feedbackEl) {
+    feedbackEl.className = "order-promo-msg success";
+    feedbackEl.style.display = "flex";
+    feedbackEl.innerHTML = `
+      <span><i class="fa-solid fa-circle-check"></i> Code <strong>${escapeAttr(AppState.appliedPromo.code)}</strong> applied! <strong>${AppState.appliedPromo.type === 'percent' ? `${AppState.appliedPromo.value}% OFF` : `Rs. ${AppState.appliedPromo.value} OFF`}</strong> (-Rs. ${discountAmount.toLocaleString()})</span>
+      <span class="order-promo-remove-link" onclick="removeOrderPromoCode()">Remove ✕</span>
+    `;
+    if (applyBtn) {
+      applyBtn.textContent = "Applied ✓";
+      applyBtn.classList.add("is-applied");
+    }
   }
 }
+
+function applyOrderPromoCode(inputCode) {
+  const code = (inputCode || document.getElementById("orderPromoInput")?.value || "").trim().toUpperCase();
+  const feedbackEl = document.getElementById("orderPromoMsg");
+  const applyBtn = document.getElementById("btnApplyPromo");
+
+  if (!code) {
+    if (feedbackEl) {
+      feedbackEl.className = "order-promo-msg error";
+      feedbackEl.style.display = "flex";
+      feedbackEl.innerHTML = `<span><i class="fa-solid fa-circle-exclamation"></i> Please enter a promo code!</span>`;
+    }
+    return;
+  }
+
+  // 1. Check special offer code (default: FLASH25 with 10% off)
+  const specialOffer = AppState.settings?.specialOffer || {};
+  const specialCode = (specialOffer.code || "FLASH25").trim().toUpperCase();
+  const specialDiscount = specialOffer.discountPercent || 10;
+
+  let matchedCoupon = null;
+
+  if (code === specialCode || code === "FLASH25" || code === "FLASH10") {
+    matchedCoupon = {
+      code: code,
+      discountType: "percent",
+      value: specialDiscount,
+      label: `${specialDiscount}% Off Special Flash Promo`
+    };
+  } else {
+    // 2. Check coupons in Storage
+    const coupons = (typeof Storage !== "undefined" && Storage.getCoupons) ? Storage.getCoupons() : [];
+    matchedCoupon = coupons.find(c => c.code.toUpperCase() === code);
+  }
+
+  if (!matchedCoupon) {
+    if (feedbackEl) {
+      feedbackEl.className = "order-promo-msg error";
+      feedbackEl.style.display = "flex";
+      feedbackEl.innerHTML = `<span><i class="fa-solid fa-circle-xmark"></i> Invalid or expired promo code "${escapeAttr(code)}"</span>`;
+    }
+    return;
+  }
+
+  // Calculate current subtotal
+  const prod = AppState.currentOrderProduct;
+  const qty = AppState.currentOrderQty || 1;
+  const selectedVariety = (prod && prod.id !== "cart-order") ? getSelectedProductVariety(prod) : {};
+  const curPrice = (prod && prod.id !== "cart-order") ? getProductPrice(prod, selectedVariety.size) : (prod ? prod.price : 0);
+  const subtotal = prod ? (curPrice * qty) : 0;
+
+  let discountAmount = 0;
+  if (matchedCoupon.discountType === "percent") {
+    discountAmount = Math.round(subtotal * (matchedCoupon.value / 100));
+  } else {
+    discountAmount = Math.min(matchedCoupon.value, subtotal);
+  }
+
+  AppState.appliedPromo = {
+    code: matchedCoupon.code,
+    type: matchedCoupon.discountType,
+    value: matchedCoupon.value,
+    discountAmount: discountAmount,
+    label: matchedCoupon.label
+  };
+
+  renderOrderTotals();
+
+  showToast(`Promo code "${matchedCoupon.code}" applied! -Rs. ${discountAmount.toLocaleString()}`);
+}
+
+function removeOrderPromoCode() {
+  AppState.appliedPromo = null;
+  const inputEl = document.getElementById("orderPromoInput");
+  const feedbackEl = document.getElementById("orderPromoMsg");
+  const applyBtn = document.getElementById("btnApplyPromo");
+
+  if (inputEl) inputEl.value = "";
+  if (feedbackEl) {
+    feedbackEl.style.display = "none";
+    feedbackEl.innerHTML = "";
+  }
+  if (applyBtn) {
+    applyBtn.textContent = "Apply";
+    applyBtn.classList.remove("is-applied");
+  }
+
+  renderOrderTotals();
+  showToast("Promo code removed.");
+}
+
+window.applyOrderPromoCode = applyOrderPromoCode;
+window.removeOrderPromoCode = removeOrderPromoCode;
+window.renderOrderTotals = renderOrderTotals;
 
 function toggleWishlist() {}
 function updateWishlistBadge() {}
@@ -1758,13 +1901,23 @@ function openOrderModalForProduct(prodId, preserveQty = false, explicitQty = nul
       : `Rs. ${curPrice.toLocaleString()} each`;
   }
 
-  const deliveryFee = AppState.settings.deliveryFee || 200;
-  const grandTotal = subtotal + deliveryFee;
-  if (totalEl) totalEl.textContent = `Rs. ${grandTotal.toLocaleString()}`;
-  if (breakdownEl) {
-    breakdownEl.style.display = "block";
-    breakdownEl.textContent = `Subtotal: Rs. ${subtotal.toLocaleString()} + Rs. ${deliveryFee} fee`;
+  if (!preserveQty) {
+    AppState.appliedPromo = null;
+    const promoInput = document.getElementById("orderPromoInput");
+    const promoMsg = document.getElementById("orderPromoMsg");
+    const applyBtn = document.getElementById("btnApplyPromo");
+    if (promoInput) promoInput.value = "";
+    if (promoMsg) {
+      promoMsg.style.display = "none";
+      promoMsg.innerHTML = "";
+    }
+    if (applyBtn) {
+      applyBtn.textContent = "Apply";
+      applyBtn.classList.remove("is-applied");
+    }
   }
+
+  renderOrderTotals();
 
   if (dialog) {
     dialog.showModal();
@@ -1834,13 +1987,21 @@ function openOrderModalFromBag() {
     qtyEl.textContent = `Subtotal: Rs. ${cartSubtotal.toLocaleString()}`;
   }
 
-  const deliveryFee = AppState.settings.deliveryFee || 200;
-  const grandTotal = cartSubtotal + deliveryFee;
-  if (totalEl) totalEl.textContent = `Rs. ${grandTotal.toLocaleString()}`;
-  if (breakdownEl) {
-    breakdownEl.style.display = "block";
-    breakdownEl.textContent = `Bag Total + Rs. ${deliveryFee} fee`;
+  AppState.appliedPromo = null;
+  const promoInput = document.getElementById("orderPromoInput");
+  const promoMsg = document.getElementById("orderPromoMsg");
+  const applyBtn = document.getElementById("btnApplyPromo");
+  if (promoInput) promoInput.value = "";
+  if (promoMsg) {
+    promoMsg.style.display = "none";
+    promoMsg.innerHTML = "";
   }
+  if (applyBtn) {
+    applyBtn.textContent = "Apply";
+    applyBtn.classList.remove("is-applied");
+  }
+
+  renderOrderTotals();
 
   if (dialog) {
     dialog.showModal();
@@ -1881,7 +2042,9 @@ function handleOrderFormSubmit(e) {
   const selectedVariety = prod && prod.id !== "cart-order" ? getSelectedProductVariety(prod) : {};
   const curPrice = prod && prod.id !== "cart-order" ? getProductPrice(prod, selectedVariety.size) : (prod ? prod.price : 0);
   const subtotal = prod ? (curPrice * qty) : 0;
-  const total = subtotal + deliveryFee;
+  const appliedDiscount = AppState.appliedPromo ? AppState.appliedPromo.discountAmount : 0;
+  const appliedCode = AppState.appliedPromo ? AppState.appliedPromo.code : null;
+  const total = Math.max(0, subtotal - appliedDiscount) + deliveryFee;
 
   const orderItems = prod.id === "cart-order" 
     ? AppState.cart.map(c => ({ title: c.title, qty: c.qty, price: c.price, size: c.size || null, color: c.color || null }))
@@ -1895,6 +2058,8 @@ function handleOrderFormSubmit(e) {
     address: address,
     items: orderItems,
     subtotal: subtotal,
+    discount: appliedDiscount,
+    promoCode: appliedCode,
     deliveryFee: deliveryFee,
     total: total,
     courierPartner: courier,
@@ -2138,6 +2303,17 @@ function setupEventListeners() {
   const orderForm = document.getElementById("orderForm");
   if (orderForm) {
     orderForm.addEventListener("submit", handleOrderFormSubmit);
+  }
+
+  // Promo Code Enter Key Trigger
+  const orderPromoInput = document.getElementById("orderPromoInput");
+  if (orderPromoInput) {
+    orderPromoInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        applyOrderPromoCode();
+      }
+    });
   }
 
   // Scroll to Top Button
