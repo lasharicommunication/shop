@@ -1,5 +1,52 @@
 [
   {
+    "id": "prod-1794904203372",
+    "title": "MOREKA 18W Fast Charger with Cable (Micro USB or Type-C) - 3.0A Rapid Wall Charger Kit for Android, Smartphones, and Tablets",
+    "category": "Cables",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 799,
+    "oldPrice": 1999,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 73,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Type c",
+        "price": 799,
+        "regularPrice": 1999,
+        "specialPrice": 799,
+        "oldPrice": 1999
+      },
+      {
+        "name": "Micro (Android)",
+        "price": 799,
+        "regularPrice": 1999,
+        "specialPrice": 799,
+        "oldPrice": 1999
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/vH9J1mGd/1794901957206.jpg",
+    "images": [
+      "https://i.postimg.cc/vH9J1mGd/1794901957206.jpg",
+      "https://i.postimg.cc/tJdzj8G5/1794903937297.jpg",
+      "https://i.postimg.cc/44rCNckV/1794901849414.jpg"
+    ],
+    "description": "Keep your smartphones, tablets, and accessories powered up and ready to go with the MOREKA 18W Fast Charging Kit. Featuring a high-performance 18W wall adapter and your choice of a durable high-speed cable (Micro USB or Type-C), this kit is the ultimate everyday charging solution."
+  },
+  {
     "id": "prod-1794650941855",
     "title": "K8 Wireless Lavalier Collar Microphone for Android Type-C – Plug & Play Noise Reduction Clip-On Mic for Vlogging, TikTok, YouTube & Live Streaming",
     "category": "Mic",
