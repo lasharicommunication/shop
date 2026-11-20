@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "id": "172279",
+    "customerName": "Faizan Yaqoob",
+    "phone": "+923212920914",
+    "email": "abdulqabir.369@gmail.com",
+    "address": "Gulshan E Areesha Cooperative Housing Society, R1/31",
+    "items": [
+      {
+        "title": "K8 Wireless Lavalier Collar Microphone for Android Type-C – Plug & Play Noise Reduction Clip-On Mic for Vlogging, TikTok, YouTube & Live Streaming",
+        "qty": 1,
+        "price": 1050,
+        "size": "K8 Mic",
+        "color": "Black"
+      }
+    ],
+    "subtotal": 1050,
+    "discount": 0,
+    "promoCode": null,
+    "deliveryFee": 200,
+    "total": 1250,
+    "courierPartner": "TCS Express & Leopards Delivery (Standard Express)",
+    "paymentMethod": "Cash on Delivery",
+    "status": "Confirmed",
+    "date": "2026-11-20 16:20"
+  }
+]
