@@ -220,87 +220,211 @@
 
 
   <!-- FOOTER -->
-  <footer class="site-footer" style="background:#0e110f; border-top:1px solid rgba(255,255,255,0.08); padding:60px 0 30px; color:#9ca3af; margin-top:80px;">
+  <footer class="site-footer" id="siteFooter">
     <div class="wrap">
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:40px; margin-bottom:40px;">
-        <!-- Col 1: Brand Info -->
-        <div>
-          <a class="brand" href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:#f5f5f7; margin-bottom:14px;">
-            <img src="/images/logo.png" alt="Lashari Communication Logo" width="36" height="36">
-            <span style="font-family:'Manrope',sans-serif; font-weight:800; font-size:17px;">Lashari Communication<span style="color:#22c55e;">.</span></span>
+      <!-- 4-Column Luxury Grid -->
+      <div class="footer-grid">
+        <!-- Col 1: Brand Info & Physical Outlet -->
+        <div class="footer-col footer-col-brand">
+          <a class="brand footer-brand" href="/" aria-label="Lashari Communication home">
+            <img src="/images/logo.png" alt="Lashari Communication Logo" class="brand-logo footer-logo" width="38" height="38" loading="eager">
+            <span>Lashari Communication<span class="brand-dot">.</span></span>
           </a>
-          <p style="font-size:14px; line-height:1.6; color:#9ca3af; margin-bottom:16px;">
-            Pakistan's trusted destination for genuine smartwatches, TWS earbuds, fast charging gear, and precision mobile back covers.
+          <div class="footer-brand-line" aria-hidden="true"></div>
+          <p class="footer-brand-desc">
+            Pakistan's trusted destination for genuine smartwatches, wireless earbuds, fast charging gear, and precision mobile back covers.
           </p>
-          <div style="font-size:13px; line-height:1.5; color:#d1d5db; background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
-            📍 <strong>Official Physical Outlet:</strong><br>
-            Shop #3, Plot no. B-34, Lashari Communication, Baloch Goth, Near Subhan Allah Restaurant, Scheme 33, Gulzar-e-Hijri, Karachi, Pakistan.
+
+          <div class="footer-outlet-card">
+            <div class="outlet-status-badge">
+              <span class="status-pulse-dot"></span>
+              <span>Official Physical Outlet · Karachi</span>
+            </div>
+            <div class="footer-location-block">
+              <span class="footer-loc-pin" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              </span>
+              <div class="footer-loc-details">
+                <span class="footer-loc-name">The Lashari Communication</span>
+                <span class="shop-address-text">Shop #3, Plot no. B-34, Lashari Communication, Baloch Goth, Near Subhan Allah Restaurant, Scheme 33, Gulzar-e-Hijri, Karachi, Pakistan.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-social-wrap">
+            <span class="footer-social-label">Follow Us</span>
+            <div class="footer-social-row">
+              <a href="https://instagram.com/thelasharicommunication" id="footerInstaLink" target="_blank" rel="noopener" aria-label="Instagram" title="Follow on Instagram">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://facebook.com/thelasharicommunication" id="footerFbLink" target="_blank" rel="noopener" aria-label="Facebook" title="Follow on Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="https://tiktok.com/@thelasharicommunication" id="footerTiktokLink" target="_blank" rel="noopener" aria-label="TikTok" title="Follow on TikTok">
+                <i class="fa-brands fa-tiktok"></i>
+              </a>
+              <a href="https://wa.me/923212920914" target="_blank" rel="noopener" aria-label="WhatsApp Channel" title="WhatsApp Channel">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- Col 2: Categories -->
-        <div>
-          <h4 style="font-size:15px; color:#fff; font-weight:700; margin-bottom:14px; text-transform:uppercase; letter-spacing:0.05em;">Categories</h4>
-          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; font-size:14px;">
-            <li><a href="/category/smartwatches" style="color:#9ca3af; text-decoration:none;">Smartwatches &amp; Wearables</a></li>
-            <li><a href="/category/earbuds" style="color:#9ca3af; text-decoration:none;">Wireless Earbuds &amp; TWS</a></li>
-            <li><a href="/category/power-banks" style="color:#9ca3af; text-decoration:none;">Fast Power Banks</a></li>
-            <li><a href="/category/cables" style="color:#9ca3af; text-decoration:none;">Charging Cables</a></li>
-            <li><a href="/category/microphones" style="color:#9ca3af; text-decoration:none;">Wireless Microphones</a></li>
-            <li><a href="/category/mobile-covers" style="color:#9ca3af; text-decoration:none;">Mobile Back Covers</a></li>
-          </ul>
+        <!-- Col 2: Shop Categories -->
+        <div class="footer-col footer-col-links">
+          <h4 class="footer-col-title">
+            <span class="footer-title-icon" aria-hidden="true"><i class="fa-solid fa-layer-group"></i></span>
+            Categories
+          </h4>
+          <nav class="footer-nav-menu" aria-label="Footer Categories">
+            <a href="/category/smartwatches" class="footer-nav-item"><span>Smartwatches</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/category/earbuds" class="footer-nav-item"><span>Wireless Earbuds</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/category/power-banks" class="footer-nav-item"><span>Power Banks</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/category/cables" class="footer-nav-item"><span>Charging Cables</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/category/microphones" class="footer-nav-item"><span>Wireless Mics</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/category/mobile-covers" class="footer-nav-item"><span>Mobile Covers</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/category/headphones-handsfree" class="footer-nav-item"><span>Headphones</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/category/speakers" class="footer-nav-item"><span>Speakers</span> <i class="fa-solid fa-chevron-right"></i></a>
+          </nav>
         </div>
 
         <!-- Col 3: Customer Care & Policies -->
-        <div>
-          <h4 style="font-size:15px; color:#fff; font-weight:700; margin-bottom:14px; text-transform:uppercase; letter-spacing:0.05em;">Customer Service</h4>
-          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; font-size:14px;">
-            <li><a href="/account" style="color:#9ca3af; text-decoration:none;">Track Your Order</a></li>
-            <li><a href="/shipping-policy" style="color:#9ca3af; text-decoration:none;">Shipping Policy (Flat Rs. 200)</a></li>
-            <li><a href="/return-refund-policy" style="color:#9ca3af; text-decoration:none;">7-Day Checking Warranty</a></li>
-            <li><a href="/about" style="color:#9ca3af; text-decoration:none;">About Our Store</a></li>
-            <li><a href="/contact" style="color:#9ca3af; text-decoration:none;">Contact &amp; Store Timings</a></li>
-            <li><a href="/terms" style="color:#9ca3af; text-decoration:none;">Terms of Service</a></li>
-            <li><a href="/privacy" style="color:#9ca3af; text-decoration:none;">Privacy Policy</a></li>
-          </ul>
+        <div class="footer-col footer-col-policies">
+          <h4 class="footer-col-title">
+            <span class="footer-title-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+            Customer Care
+          </h4>
+          <nav class="footer-nav-menu" aria-label="Footer Customer Care">
+            <a href="/account" class="footer-nav-item"><span>Track Your Order</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/shipping-policy" class="footer-nav-item"><span>Shipping Policy (Flat Rs. 200)</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/return-refund-policy" class="footer-nav-item"><span>7-Day Warranty</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/about" class="footer-nav-item"><span>About Our Store</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/contact" class="footer-nav-item"><span>Karachi Store &amp; Timings</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/terms" class="footer-nav-item"><span>Terms &amp; Conditions</span> <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="/privacy" class="footer-nav-item"><span>Privacy Policy</span> <i class="fa-solid fa-chevron-right"></i></a>
+          </nav>
         </div>
 
-        <!-- Col 4: Contact & Socials -->
-        <div>
-          <h4 style="font-size:15px; color:#fff; font-weight:700; margin-bottom:14px; text-transform:uppercase; letter-spacing:0.05em;">Get in Touch</h4>
-          <div style="font-size:14px; line-height:1.6; margin-bottom:14px;">
-            📞 <strong>Direct Contact:</strong> <a href="tel:+923212920914" style="color:#22c55e; text-decoration:none;">+92 321 2920914</a><br>
-            💬 <strong>WhatsApp Support:</strong> <a href="https://wa.me/923212920914" target="_blank" rel="noopener" style="color:#22c55e; text-decoration:none;">Chat on WhatsApp</a><br>
-            📧 <strong>Email:</strong> <a href="mailto:thelasharicommunication@gmail.com" style="color:#9ca3af; text-decoration:none;">thelasharicommunication@gmail.com</a><br>
-            🕒 <strong>Timings:</strong> Mon–Sun: 11:00 AM – 11:00 PM
-          </div>
-          <div style="display:flex; gap:12px; font-size:18px;">
-            <a href="https://instagram.com/thelasharicommunication" target="_blank" rel="noopener" style="color:#9ca3af;" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://facebook.com/thelasharicommunication" target="_blank" rel="noopener" style="color:#9ca3af;" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://tiktok.com/@thelasharicommunication" target="_blank" rel="noopener" style="color:#9ca3af;" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://wa.me/923212920914" target="_blank" rel="noopener" style="color:#22c55e;" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <!-- Col 4: Get in Touch & Live Support -->
+        <div class="footer-col footer-col-contact">
+          <h4 class="footer-col-title">
+            <span class="footer-title-icon" aria-hidden="true"><i class="fa-solid fa-headset"></i></span>
+            Get in Touch
+          </h4>
+          <div class="footer-contact-list">
+            <a class="footer-contact-card shop-whatsapp-link" href="https://wa.me/923212920914?text=Hello%20Lashari%20Communication%2C%20I%20want%20to%20place%20an%20order." target="_blank" rel="noopener">
+              <span class="contact-pill-icon wa-pill" aria-hidden="true">
+                <i class="fa-brands fa-whatsapp"></i>
+              </span>
+              <div class="contact-card-text">
+                <span class="contact-sublabel">Instant WhatsApp</span>
+                <span class="contact-main-val shop-phone-text">+92 321 2920914</span>
+                <span class="contact-status-chip"><span class="chip-dot"></span> Online · Fast Reply</span>
+              </div>
+            </a>
+
+            <a class="footer-contact-card shop-email-link" href="mailto:thelasharicommunication@gmail.com">
+              <span class="contact-pill-icon email-pill" aria-hidden="true">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <div class="contact-card-text">
+                <span class="contact-sublabel">Email Support</span>
+                <span class="contact-main-val shop-email-text">thelasharicommunication@gmail.com</span>
+                <span class="contact-note">Inquiry &amp; Bulk Orders</span>
+              </div>
+            </a>
+
+            <div class="footer-timing-badge">
+              <i class="fa-regular fa-clock"></i>
+              <div>
+                <strong>Store Timings:</strong> 11:00 AM – 11:00 PM<br>
+                <span>Mon – Sun · Walk-ins Welcome</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Perks strip -->
-      <div style="border-top:1px solid rgba(255,255,255,0.06); padding:20px 0; display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; font-size:13px; color:#d1d5db;">
-        <span>🛡️ <strong>7-Day Checking Warranty</strong> on all gadgets</span>
-        <span>🚚 <strong>Flat Rs. 200 Express Delivery</strong> via TCS &amp; Leopards</span>
-        <span>💵 <strong>100% Cash on Delivery (COD)</strong> nationwide</span>
-        <span>📍 <strong>Live Product Checking</strong> at Karachi Outlet</span>
+      <!-- Feature Guarantees Box (4 items with subtle borders & micro-interactions) -->
+      <div class="footer-perks-box">
+        <div class="footer-perk-item">
+          <div class="perk-icon" aria-hidden="true">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="perk-text-wrap">
+            <span class="perk-title">7-Day Warranty</span>
+            <span class="perk-sub">Checking &amp; Replacement</span>
+          </div>
+        </div>
+
+        <div class="footer-perk-item">
+          <div class="perk-icon" aria-hidden="true">
+            <i class="fa-solid fa-money-bill-wave"></i>
+          </div>
+          <div class="perk-text-wrap">
+            <span class="perk-title">Cash on Delivery</span>
+            <span class="perk-sub">100% COD Nationwide</span>
+          </div>
+        </div>
+
+        <div class="footer-perk-item">
+          <div class="perk-icon" aria-hidden="true">
+            <i class="fa-solid fa-truck-fast"></i>
+          </div>
+          <div class="perk-text-wrap">
+            <span class="perk-title">Flat Rs. 200 Delivery</span>
+            <span class="perk-sub">TCS &amp; Leopards Courier</span>
+          </div>
+        </div>
+
+        <div class="footer-perk-item">
+          <div class="perk-icon" aria-hidden="true">
+            <i class="fa-solid fa-store"></i>
+          </div>
+          <div class="perk-text-wrap">
+            <span class="perk-title">Karachi Store Demo</span>
+            <span class="perk-sub">Live Inspection &amp; Fitting</span>
+          </div>
+        </div>
       </div>
 
-      <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:20px; text-align:center; font-size:13px; color:#6b7280;">
-        &copy; 2026 The Lashari Communication. All rights reserved. Registered Physical Tech Outlet in Karachi, Pakistan.
+      <!-- Trust, Delivery & Payment Strip -->
+      <div class="footer-assurance-strip">
+        <div class="footer-delivery-pill">
+          <span class="delivery-pill-icon" aria-hidden="true">
+            <i class="fa-solid fa-truck-fast"></i>
+          </span>
+          <span class="delivery-pill-text">
+            Express Nationwide Dispatch via TCS &amp; Leopards · Flat <strong class="delivery-pill-price">Rs. 200 PKR</strong> (2–4 Days)
+          </span>
+        </div>
+
+        <div class="footer-payment-methods">
+          <span class="payment-methods-label">Accepted Payments:</span>
+          <div class="payment-badges-row">
+            <span class="pay-badge"><i class="fa-solid fa-hand-holding-dollar"></i> Cash on Delivery</span>
+            <span class="pay-badge"><i class="fa-solid fa-mobile-screen"></i> JazzCash</span>
+            <span class="pay-badge"><i class="fa-solid fa-wallet"></i> EasyPaisa</span>
+            <span class="pay-badge"><i class="fa-solid fa-building-columns"></i> Bank Transfer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar with Copyright & Back to Top -->
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright">
+          <span>&copy; <span id="year">2026</span> Lashari Communication. All Rights Reserved.</span>
+          <span class="footer-sep">·</span>
+          <span>Registered Physical Tech Outlet in Karachi, Pakistan 🇵🇰</span>
+        </div>
+
+        <button type="button" class="footer-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+          <span>Back to Top</span>
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
       </div>
     </div>
   </footer>
-
-  <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/923212920914" target="_blank" rel="noopener" class="floating-whatsapp-btn" aria-label="Chat on WhatsApp" style="position:fixed; bottom:24px; right:24px; width:54px; height:54px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; color:#fff; font-size:26px; box-shadow:0 6px 20px rgba(37,211,102,0.4); z-index:999; text-decoration:none;">
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
 
 </body>
 </html>
