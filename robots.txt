@@ -4,6 +4,14 @@
 
 User-agent: Googlebot
 Allow: /
+Allow: /products/
+Allow: /category/
+Allow: /about
+Allow: /contact
+Allow: /shipping-policy
+Allow: /return-refund-policy
+Allow: /terms
+Allow: /privacy
 Allow: /favicon.ico
 Allow: /images/
 Allow: /css/
@@ -19,6 +27,8 @@ Allow: /
 
 User-agent: Bingbot
 Allow: /
+Allow: /products/
+Allow: /category/
 Allow: /favicon.ico
 Allow: /images/
 Disallow: /portalsafe.html
@@ -27,6 +37,8 @@ Disallow: /data/
 
 User-agent: *
 Allow: /
+Allow: /products/
+Allow: /category/
 Allow: /favicon.ico
 Allow: /images/
 Disallow: /portalsafe.html

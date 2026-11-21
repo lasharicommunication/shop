@@ -26,7 +26,7 @@ Lashari Communication ranks for commercial, transactional, and local mobile acce
 - **Cash on Delivery (COD)** nationwide across 250+ cities and towns.
 - **Flat Rs. 200 Express Delivery** via TCS Express & Leopards Courier (2 to 4 business days).
 - **7-Day Checking Warranty** and live product checking.
-- **Physical Outlet Presence:** Ground Floor, Lashari Mobile Plaza, Station Road, Shahdadkot, Sindh.
+- **Physical Outlet Presence:** Shop #3, Plot no. B-34, Lashari Communication, Baloch Goth, Near Subhan Allah Restaurant, Scheme 33, Gulzar-e-Hijri, Karachi, Sindh, Pakistan.
 
 ### 1.2 Multi-Surface Google Search Optimization
 Our SEO architecture targets 4 distinct Google search surfaces:

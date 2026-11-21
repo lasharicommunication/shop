@@ -17,6 +17,38 @@
     {
       "source": "/login",
       "destination": "/account.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/shipping-policy",
+      "destination": "/shipping-policy.html"
+    },
+    {
+      "source": "/return-refund-policy",
+      "destination": "/return-refund-policy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/category/:slug",
+      "destination": "/category/:slug.html"
+    },
+    {
+      "source": "/products/:slug",
+      "destination": "/products/:slug.html"
     }
   ],
   "headers": [
