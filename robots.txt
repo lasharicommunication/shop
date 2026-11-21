@@ -4,6 +4,7 @@
 
 User-agent: Googlebot
 Allow: /
+Allow: /favicon.ico
 Allow: /images/
 Allow: /css/
 Allow: /js/
@@ -13,16 +14,21 @@ Disallow: /data/
 
 User-agent: Googlebot-Image
 Allow: /images/
+Allow: /favicon.ico
 Allow: /
 
 User-agent: Bingbot
 Allow: /
+Allow: /favicon.ico
+Allow: /images/
 Disallow: /portalsafe.html
 Disallow: /api/
 Disallow: /data/
 
 User-agent: *
 Allow: /
+Allow: /favicon.ico
+Allow: /images/
 Disallow: /portalsafe.html
 Disallow: /api/
 Disallow: /data/

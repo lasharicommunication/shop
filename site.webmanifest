@@ -1,10 +1,10 @@
 {
   "name": "Lashari Communication",
   "short_name": "Lashari Comm",
-  "description": "Premium Smartwatches, Wireless Earbuds, Power Banks & Mobile Accessories in Pakistan.",
+  "description": "Premium Smartwatches, Wireless Earbuds, Fast Power Banks & Mobile Covers in Pakistan.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#111412",
+  "background_color": "#171a18",
   "theme_color": "#171a18",
   "orientation": "portrait-primary",
   "icons": [
@@ -19,8 +19,24 @@
       "type": "image/png"
     },
     {
+      "src": "/images/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
       "src": "/images/apple-touch-icon.png",
       "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/favicon-192x192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
@@ -32,4 +48,3 @@
     }
   ]
 }
-
