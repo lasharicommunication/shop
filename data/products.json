@@ -1,5 +1,67 @@
 [
   {
+    "id": "prod-1795373693697",
+    "title": "A11 Pro TWS Earbuds – Smart LED Battery Display Case & In-Ear Wireless Headphones (White)",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 2199,
+    "oldPrice": 4599,
+    "isOnSale": false,
+    "rating": 4.7,
+    "reviewsCount": 15,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Blue",
+        "price": 2199,
+        "regularPrice": 4599,
+        "specialPrice": 2199,
+        "oldPrice": 4599
+      },
+      {
+        "name": "White",
+        "price": 2199,
+        "regularPrice": 4599,
+        "specialPrice": 2199,
+        "oldPrice": 4599
+      },
+      {
+        "name": "Black",
+        "price": 2199,
+        "regularPrice": 4599,
+        "specialPrice": 2199,
+        "oldPrice": 4599
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      },
+      {
+        "name": "White",
+        "hex": "#ffffff"
+      },
+      {
+        "name": "Navy Blue",
+        "hex": "#1e3a8a"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "New Arrival",
+    "image": "https://i.postimg.cc/Sx50j0g4/310pub8dz-BL-AC-UF894-1000-QL80.jpg",
+    "images": [
+      "https://i.postimg.cc/Sx50j0g4/310pub8dz-BL-AC-UF894-1000-QL80.jpg",
+      "https://i.postimg.cc/Gp1QXq2h/a611650fbeafbe606a8d896d642c2975-jpg-960x960q80-jpg.webp",
+      "https://i.postimg.cc/cHxcSCf3/H829db6a7fbb24ca4b96784bc18844741p.webp"
+    ],
+    "description": "Upgrade your everyday listening with the A11 Pro Wireless Earbuds, designed with a sleek white finish and a built-in smart display on the charging case. Featuring an ergonomic in-ear fit and a vibrant front screen showing real-time battery status alongside playful space graphics, these earbuds combine practical convenience with eye-catching style."
+  },
+  {
     "id": "prod-1794945336653",
     "title": "Watch 11 Max Series 11 Smart Watch – AMOLED Display, Dual Straps & Magnetic Wireless Charger (Black & Silver)",
     "category": "Smartwatch",
@@ -36,8 +98,7 @@
       "https://i.postimg.cc/ZnFDDRbn/images-(39).jpg",
       "https://i.postimg.cc/90pJYnbC/1794945097152.jpg"
     ],
-    "description": "Upgrade your everyday tech and fitness routine with the BBRJ Watch 11 Max (Series 11). Designed with a sleek edge-to-edge AMOLED display, this smartwatch delivers vibrant colors, crisp icons, and smooth touch navigation for effortless daily use.\nAvailable in classic Matte Black and Silver, the package includes two stylish silicone straps—a smooth black sport strap and a textured beige/cream chevron strap—giving you the versatility to switch between casual, workout, and formal looks.",
-    "slug": "watch-11-max-series-11-smart-watch-amoled-display-dual-strap"
+    "description": "Upgrade your everyday tech and fitness routine with the BBRJ Watch 11 Max (Series 11). Designed with a sleek edge-to-edge AMOLED display, this smartwatch delivers vibrant colors, crisp icons, and smooth touch navigation for effortless daily use.\nAvailable in classic Matte Black and Silver, the package includes two stylish silicone straps—a smooth black sport strap and a textured beige/cream chevron strap—giving you the versatility to switch between casual, workout, and formal looks."
   },
   {
     "id": "prod-1794904203372",
@@ -84,8 +145,7 @@
       "https://i.postimg.cc/tJdzj8G5/1794903937297.jpg",
       "https://i.postimg.cc/44rCNckV/1794901849414.jpg"
     ],
-    "description": "Keep your smartphones, tablets, and accessories powered up and ready to go with the MOREKA 18W Fast Charging Kit. Featuring a high-performance 18W wall adapter and your choice of a durable high-speed cable (Micro USB or Type-C), this kit is the ultimate everyday charging solution.",
-    "slug": "moreka-18w-fast-charger-with-cable-micro-usb-or-type-c-3-0a"
+    "description": "Keep your smartphones, tablets, and accessories powered up and ready to go with the MOREKA 18W Fast Charging Kit. Featuring a high-performance 18W wall adapter and your choice of a durable high-speed cable (Micro USB or Type-C), this kit is the ultimate everyday charging solution."
   },
   {
     "id": "prod-1794650941855",
@@ -133,8 +193,7 @@
       "https://i.postimg.cc/fknpytTB/2266-86-732883-product-2.webp",
       "https://i.postimg.cc/3r4wkswQ/b1e04f04d0b6f67add5e7c2def6a0cff.jpg"
     ],
-    "description": "Capture crisp, studio-quality audio without messy wires using the K8 Single & K9 Dual Wireless Lavalier Microphone Series. Whether you are a solo content creator filming reels or conducting two-person interviews and podcasts, you can select the exact setup you need—the K8 Single Mic for solo recording or the K9 Dual Mic with two wireless transmitters syncing simultaneously to a single receiver.",
-    "slug": "k8-wireless-lavalier-collar-microphone-for-android-type-c-pl"
+    "description": "Capture crisp, studio-quality audio without messy wires using the K8 Single & K9 Dual Wireless Lavalier Microphone Series. Whether you are a solo content creator filming reels or conducting two-person interviews and podcasts, you can select the exact setup you need—the K8 Single Mic for solo recording or the K9 Dual Mic with two wireless transmitters syncing simultaneously to a single receiver."
   },
   {
     "id": "prod-1794650393541",
@@ -185,8 +244,7 @@
       "https://i.postimg.cc/76SgDfd2/221347def20ecd060c73835969bdda1b-jpg-960x960q80-jpg.webp",
       "https://i.postimg.cc/fyKmt1w0/2948-419-758471-product-1.webp"
     ],
-    "description": "Enjoy crisp stereo audio and reliable everyday durability with the Blue Spectrum M-5 Universal Music Headset. Engineered for music lovers, commuters, and students, these wired in-ear earphones deliver clear vocals, balanced midranges, and punchy bass across all your favorite playlists, videos, and podcasts.",
-    "slug": "blue-spectrum-m-5-universal-music-headset-3-5mm-wired-in-ear"
+    "description": "Enjoy crisp stereo audio and reliable everyday durability with the Blue Spectrum M-5 Universal Music Headset. Engineered for music lovers, commuters, and students, these wired in-ear earphones deliver clear vocals, balanced midranges, and punchy bass across all your favorite playlists, videos, and podcasts."
   },
   {
     "id": "prod-1794650097447",
@@ -244,8 +302,7 @@
       "https://i.postimg.cc/NfCQsb1n/jbl-m3-mini-portable-speaker-900x.webp",
       "https://i.postimg.cc/x8TSYbqY/portable-bluetooth-speaker-m3-mini-multicolor-speaker-in-pakistan-28640943014083-2048x2048.webp"
     ],
-    "description": "Take big, room-filling sound anywhere you go with the M3 Mini Portable Wireless Bluetooth Speaker. Crafted with a sleek, durable metallic shell and a top-firing acoustic mesh grille, this ultra-compact pocket speaker punches well above its size to deliver crisp highs and impressive deep bass.",
-    "slug": "m3-mini-portable-wireless-bluetooth-speaker-pocket-sized-met"
+    "description": "Take big, room-filling sound anywhere you go with the M3 Mini Portable Wireless Bluetooth Speaker. Crafted with a sleek, durable metallic shell and a top-firing acoustic mesh grille, this ultra-compact pocket speaker punches well above its size to deliver crisp highs and impressive deep bass."
   },
   {
     "id": "prod-1794511309899",
@@ -284,8 +341,7 @@
       "https://i.postimg.cc/QtrsLpxV/ce8c93c5c6ac3faff55200fb9c07821d.png",
       "https://i.postimg.cc/PJrghyg3/S8df241c25f8d49c5bf90ccf15f0d13ec-W.jpg"
     ],
-    "description": "Keep your hands free and your posture comfortable with this Universal Foldable Desktop Mobile & Tablet Stand. Designed with a sleek, carbon-textured backrest and a sturdy circular base, this telescopic stand securely holds both smartphones and tablets at your ideal eye level.",
-    "slug": "universal-foldable-desktop-mobile-tablet-stand-adjustable-he"
+    "description": "Keep your hands free and your posture comfortable with this Universal Foldable Desktop Mobile & Tablet Stand. Designed with a sleek, carbon-textured backrest and a sturdy circular base, this telescopic stand securely holds both smartphones and tablets at your ideal eye level."
   },
   {
     "id": "prod-1794509995672",
@@ -324,8 +380,7 @@
       "https://i.postimg.cc/R0d9zkj2/820d4bc403314dc67d793a298fdcb9aa.png",
       "https://i.postimg.cc/YqFHSG5X/57e6d0f57ab5c1533bc985e729dba75c-jpg-720x720q80.jpg"
     ],
-    "description": "Make a bold luxury statement with the Gold Shining Edition Wireless Pro Earbuds. Featuring an eye-catching, high-gloss metallic gold finish on both the earbuds and the compact charging case, these TWS Bluetooth earphones deliver a sleek, premium aesthetic paired with impressive wireless audio performance.",
-    "slug": "gold-shining-edition-wireless-pro-earbuds-luxury-metallic-gl"
+    "description": "Make a bold luxury statement with the Gold Shining Edition Wireless Pro Earbuds. Featuring an eye-catching, high-gloss metallic gold finish on both the earbuds and the compact charging case, these TWS Bluetooth earphones deliver a sleek, premium aesthetic paired with impressive wireless audio performance."
   },
   {
     "id": "prod-1794508815996",
@@ -376,8 +431,7 @@
       "https://i.postimg.cc/rmDGkkDr/images.jpg",
       "https://i.postimg.cc/GmRjsV5W/buds-pro-13-tws-wireless-earbuds-pakistan-priceoye-zbufm-100x100.webp"
     ],
-    "description": "Stand out with futuristic style and immersive sound with the Buds Pro 13 ANC/ENC Wireless Earbuds. Featuring a sleek, eye-catching metallic charging case accented with a vibrant RGB breathing light ring, these TWS earbuds combine bold aesthetics with high-performance audio.",
-    "slug": "buds-pro-13-anc-enc-wireless-earbuds-rgb-breathing-light-cha"
+    "description": "Stand out with futuristic style and immersive sound with the Buds Pro 13 ANC/ENC Wireless Earbuds. Featuring a sleek, eye-catching metallic charging case accented with a vibrant RGB breathing light ring, these TWS earbuds combine bold aesthetics with high-performance audio."
   },
   {
     "id": "prod-1794508438192",
@@ -416,8 +470,7 @@
       "https://i.postimg.cc/L62SQ6Y8/images.jpg",
       "https://i.postimg.cc/g2BP0VMj/b0646c7434c0fd627876f3fa9689c429.jpg"
     ],
-    "description": "Transfer photos, videos, music, and documents effortlessly between your memory card and computer with this Mini USB 2.0 Micro SD / TF Card Reader. Designed to be ultra-compact and lightweight, this adapter turns any Micro SD or TF card into a portable USB flash drive in seconds.",
-    "slug": "mini-usb-2-0-micro-sd-tf-memory-card-reader-adapter-high-spe"
+    "description": "Transfer photos, videos, music, and documents effortlessly between your memory card and computer with this Mini USB 2.0 Micro SD / TF Card Reader. Designed to be ultra-compact and lightweight, this adapter turns any Micro SD or TF card into a portable USB flash drive in seconds."
   },
   {
     "id": "prod-1794508133834",
@@ -456,8 +509,7 @@
       "https://i.postimg.cc/MHc6WswM/images.jpg",
       "https://i.postimg.cc/85cDHyj9/images.jpg"
     ],
-    "description": "Experience seamless wireless audio and emergency backup power with the M10 TWS Wireless Bluetooth 5.1 Earbuds. Equipped with a high-capacity charging case featuring a real-time digital LED battery indicator, you can easily monitor the exact remaining battery percentage of both the case and individual earbuds.",
-    "slug": "m10-tws-wireless-bluetooth-5-1-earbuds-with-digital-led-disp"
+    "description": "Experience seamless wireless audio and emergency backup power with the M10 TWS Wireless Bluetooth 5.1 Earbuds. Equipped with a high-capacity charging case featuring a real-time digital LED battery indicator, you can easily monitor the exact remaining battery percentage of both the case and individual earbuds."
   },
   {
     "id": "prod-1794507706360",
@@ -507,8 +559,7 @@
       "https://i.postimg.cc/xC4pS5gs/images.jpg",
       "https://i.postimg.cc/jqJYSnNf/images.jpg"
     ],
-    "description": "Elevate your audio style with the Pro 2 Matte Black Edition Wireless Earbuds. Finished in a sleek, stealthy matte black coating, these TWS Bluetooth earphones deliver powerful deep bass, crisp vocals, and Active Noise Cancellation (ANC) for an uninterrupted listening experience.",
-    "slug": "pro-2-wireless-earbuds-with-anc-touch-control-tws-bluetooth"
+    "description": "Elevate your audio style with the Pro 2 Matte Black Edition Wireless Earbuds. Finished in a sleek, stealthy matte black coating, these TWS Bluetooth earphones deliver powerful deep bass, crisp vocals, and Active Noise Cancellation (ANC) for an uninterrupted listening experience."
   },
   {
     "id": "prod-1794492621545",
@@ -548,8 +599,7 @@
       "https://i.postimg.cc/QMZXh9sG/images-(34).jpg",
       "https://i.postimg.cc/Y9pML5hX/images-(35).jpg"
     ],
-    "description": "Enjoy convenient, hands-free audio on the go with the Lenovo Wireless Bluetooth Neckband Earphones. Featuring a sleek black finish with sporty red accents, this lightweight neckband is designed for comfortable all-day wear during workouts, commutes, or everyday calls.",
-    "slug": "lenovo-wireless-bluetooth-neckband-earphones-with-magnetic-e"
+    "description": "Enjoy convenient, hands-free audio on the go with the Lenovo Wireless Bluetooth Neckband Earphones. Featuring a sleek black finish with sporty red accents, this lightweight neckband is designed for comfortable all-day wear during workouts, commutes, or everyday calls."
   },
   {
     "id": "prod-1794482818135",
@@ -583,8 +633,7 @@
       "https://i.postimg.cc/66CY4V6r/images-(1).jpg",
       "https://i.postimg.cc/HWJj638V/images.jpg"
     ],
-    "description": "Keep your smartphone safe and dry during beach trips, swimming, boating, snorkeling, or rainy days with this reliable waterproof phone pouch.",
-    "slug": "universal-waterproof-phone-pouch-case-with-lanyard-ipx8-cert"
+    "description": "Keep your smartphone safe and dry during beach trips, swimming, boating, snorkeling, or rainy days with this reliable waterproof phone pouch."
   },
   {
     "id": "prod-1794421222155",
@@ -638,8 +687,7 @@
       "https://i.postimg.cc/MGQjDVPg/images-(31).jpg",
       "https://i.postimg.cc/Fsr34fzn/light-26cm.webp"
     ],
-    "description": "Elevate your lighting setup for photography, video streaming, makeup tutorials, and content creation with this 26 cm LED Ring Light Kit. Paired with an adjustable height stand and dynamic lighting options, it delivers professional-level illumination right at home.",
-    "slug": "26-cm-led-ring-light-with-7-feet-tripod-stand-metal-mobile-h"
+    "description": "Elevate your lighting setup for photography, video streaming, makeup tutorials, and content creation with this 26 cm LED Ring Light Kit. Paired with an adjustable height stand and dynamic lighting options, it delivers professional-level illumination right at home."
   },
   {
     "id": "prod-1794414375207",
@@ -677,8 +725,7 @@
     "images": [
       "https://i.postimg.cc/GmMHxHhV/027770fd96f9617a2413ae14142dee7a.jpg"
     ],
-    "description": "Upgrade your daily charging experience with the DOLPHIN Fast Charging USB to Type-C Cable, manufactured by DL-HOOR. Designed for reliability, safety, and performance, this sleek white cable is built to handle your everyday power and data sync needs.",
-    "slug": "dolphin-fast-charging-usb-to-type-c-cable-white-2-4a-output"
+    "description": "Upgrade your daily charging experience with the DOLPHIN Fast Charging USB to Type-C Cable, manufactured by DL-HOOR. Designed for reliability, safety, and performance, this sleek white cable is built to handle your everyday power and data sync needs."
   },
   {
     "id": "prod-1794248453507",
@@ -717,8 +764,7 @@
       "https://i.postimg.cc/Sxhj0DqP/images.jpg",
       "https://i.postimg.cc/hjkcLttr/b58a854abf2d3d80fb3367a9c697d32d.png"
     ],
-    "description": "Upgrade your wristwear versatility with the Ultra Smart Watch 7-in-1 Strap Gift Box Set. Designed for those who love options, this premium smartwatch bundle includes 7 interchangeable straps ranging from sport silicone to elegant metallic and fabric loops—allowing you to switch up your look for work, workouts, formal events, or daily casual wear in seconds.",
-    "slug": "ultra-smartwatch-combo-box-premium-smart-watch-with-7-differ"
+    "description": "Upgrade your wristwear versatility with the Ultra Smart Watch 7-in-1 Strap Gift Box Set. Designed for those who love options, this premium smartwatch bundle includes 7 interchangeable straps ranging from sport silicone to elegant metallic and fabric loops—allowing you to switch up your look for work, workouts, formal events, or daily casual wear in seconds."
   },
   {
     "id": "prod-1794126572312",
@@ -788,8 +834,7 @@
       "https://i.postimg.cc/Vk3622bY/f52ca03b9c6a80f593aa871649e53403.jpg",
       "https://i.postimg.cc/X7P7ytLT/510146f712b091e0ed0850c32992da1e.jpg"
     ],
-    "description": "Store, transfer, and share your files effortlessly with the Kingston DataTraveler 50 (DT50) USB Flash Drive. Designed with a sleek, capless metal casing and a colorful accent clip, this compact and lightweight pen drive is built for daily durability and style. Featuring fast USB 3.0 performance, it allows quick transfer of photos, videos, documents, and music files across PCs, laptops, and compatible devices.",
-    "slug": "kingston-datatraveler-50-usb-3-0-flash-drive-4gb-8gb-16gb-32"
+    "description": "Store, transfer, and share your files effortlessly with the Kingston DataTraveler 50 (DT50) USB Flash Drive. Designed with a sleek, capless metal casing and a colorful accent clip, this compact and lightweight pen drive is built for daily durability and style. Featuring fast USB 3.0 performance, it allows quick transfer of photos, videos, documents, and music files across PCs, laptops, and compatible devices."
   },
   {
     "id": "prod-1794072150273",
@@ -837,8 +882,7 @@
       "https://i.postimg.cc/GpCbhMNd/images.jpg",
       "https://i.postimg.cc/Bbk0WNDR/images.jpg"
     ],
-    "description": "Enjoy wireless freedom and crisp stereo sound with the P47 Wireless Bluetooth Headphones. Featuring an advanced Bluetooth 4.2+EDR chipset, these lightweight, foldable headphones deliver reliable connectivity and powerful audio performance for your daily commute, workouts, or relaxing at home. Designed with plush on-ear cushions and a collapsible frame, they combine portability with all-day comfort.",
-    "slug": "p47-wireless-bluetooth-headphones-foldable-over-ear-stereo-h"
+    "description": "Enjoy wireless freedom and crisp stereo sound with the P47 Wireless Bluetooth Headphones. Featuring an advanced Bluetooth 4.2+EDR chipset, these lightweight, foldable headphones deliver reliable connectivity and powerful audio performance for your daily commute, workouts, or relaxing at home. Designed with plush on-ear cushions and a collapsible frame, they combine portability with all-day comfort."
   },
   {
     "id": "prod-1794070609966",
@@ -889,8 +933,7 @@
       "https://i.postimg.cc/qR66VD6L/images.jpg",
       "https://i.postimg.cc/ZKtpZmcw/images.jpg"
     ],
-    "description": "Experience high-fidelity audio and all-day comfort with the P9 Wireless Over-Ear Bluetooth Headphones. Designed with a stylish breathable mesh headband and soft memory-foam ear cushions, these headphones deliver deep bass, clear highs, and passive noise isolation for immersive music listening, gaming, and calls.",
-    "slug": "p9-wireless-bluetooth-over-ear-headphones-premium-deep-bass"
+    "description": "Experience high-fidelity audio and all-day comfort with the P9 Wireless Over-Ear Bluetooth Headphones. Designed with a stylish breathable mesh headband and soft memory-foam ear cushions, these headphones deliver deep bass, clear highs, and passive noise isolation for immersive music listening, gaming, and calls."
   },
   {
     "id": "prod-1793905297002",
@@ -929,8 +972,7 @@
         "specialPrice": 3899,
         "oldPrice": 4999
       }
-    ],
-    "slug": "3g-plus-enjoyhome-g-18-10000mah-power-bank-10w-fast-charging"
+    ]
   },
   {
     "id": "prod-1793904841319",
@@ -982,8 +1024,7 @@
         "name": "White",
         "hex": "#ffffff"
       }
-    ],
-    "slug": "ven-dens-10000mah-and-20000mah-22-5w-fast-charging-power-ban"
+    ]
   },
   {
     "id": "prod-1793904452863",
@@ -1008,8 +1049,7 @@
     ],
     "description": "Keep your devices charged and synced with this USB to Lightning Fast Charging Cable. Featuring a standard USB-A connector on one end and an 8-pin Lightning connector on the other, this cable provides reliable power delivery and fast data transfer for iPhones, iPads, and iPods. Its flexible, tangle-free design and reinforced strain relief ensure durable performance for everyday home, office, or travel use.",
     "sizes": [],
-    "colors": [],
-    "slug": "usb-to-lightning-fast-charging-cable-high-speed-data-sync-ch"
+    "colors": []
   },
   {
     "id": "prod-1793904338351",
@@ -1032,8 +1072,7 @@
     "images": [
       "https://i.postimg.cc/BZmsyhwB/iphone-e1747148396709.jpg"
     ],
-    "description": "Connect your iPhone, iPad, or iPod with a Lightning connector to your USB-C or Thunderbolt 3 (USB-C) enabled Mac, iPad, or Power Adapter for seamless charging and syncing. The Apple USB-C to Lightning Cable (1m) supports Power Delivery fast charging, allowing you to quickly charge compatible iPhone models when paired with an Apple USB-C Power Adapter.",
-    "slug": "apple-usb-c-to-lightning-cable-1m-fast-charging-high-speed-d"
+    "description": "Connect your iPhone, iPad, or iPod with a Lightning connector to your USB-C or Thunderbolt 3 (USB-C) enabled Mac, iPad, or Power Adapter for seamless charging and syncing. The Apple USB-C to Lightning Cable (1m) supports Power Delivery fast charging, allowing you to quickly charge compatible iPhone models when paired with an Apple USB-C Power Adapter."
   },
   {
     "id": "prod-1793904116099",
@@ -1057,8 +1096,7 @@
       "https://i.postimg.cc/N0nmp7vF/2948-90-758288-product-1.webp",
       "https://i.postimg.cc/nr2Lwp9B/60W-USB-C-Charge-Cable-1-m.jpg"
     ],
-    "description": "Upgrade your charging and data transfer setup with this USB Type-C to Type-C Fast Charging & Sync Cable. Designed for dual-way Type-C connectivity, this cable supports high-speed power delivery and fast data transmission across a wide variety of modern devices, including smartphones, tablets, laptops, and accessories. Built with durable TPE jacketing and reinforced connector strain reliefs to prevent fraying and ensure long-lasting daily performance.",
-    "slug": "type-c-to-type-c-fast-charging-cable-high-speed-data-sync-po"
+    "description": "Upgrade your charging and data transfer setup with this USB Type-C to Type-C Fast Charging & Sync Cable. Designed for dual-way Type-C connectivity, this cable supports high-speed power delivery and fast data transmission across a wide variety of modern devices, including smartphones, tablets, laptops, and accessories. Built with durable TPE jacketing and reinforced connector strain reliefs to prevent fraying and ensure long-lasting daily performance."
   },
   {
     "id": "prod-1793903332920",
@@ -1114,7 +1152,6 @@
         "name": "Light Purple",
         "hex": "#3b82f6"
       }
-    ],
-    "slug": "infinix-xpos-xpower-go-5000mah-power-bank-12w-fast-charger-p"
+    ]
   }
 ]
