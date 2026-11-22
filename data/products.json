@@ -609,7 +609,7 @@
     "compatibleModels": [
       "Universal Device Compatibility"
     ],
-    "price": 1099,
+    "price": 1199,
     "oldPrice": 2100,
     "isOnSale": true,
     "rating": 4.9,
@@ -618,9 +618,9 @@
     "sizes": [
       {
         "name": "Black",
-        "price": 1099,
+        "price": 1199,
         "regularPrice": 2100,
-        "specialPrice": 1099,
+        "specialPrice": 1199,
         "oldPrice": 2100
       }
     ],
