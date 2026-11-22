@@ -1,5 +1,44 @@
 [
   {
+    "id": "prod-1795374798192",
+    "title": "AIR 6 ANC/ENC Wireless Earbuds with Lanyard Charging Case (Black)",
+    "category": "Earbuds",
+    "brand": "general",
+    "brandName": "Universal Tech",
+    "compatibleModels": [
+      "Universal Device Compatibility"
+    ],
+    "price": 3199,
+    "oldPrice": 6999,
+    "isOnSale": true,
+    "rating": 4.8,
+    "reviewsCount": 106,
+    "stock": 250,
+    "sizes": [
+      {
+        "name": "Black",
+        "price": 3199,
+        "regularPrice": 6999,
+        "specialPrice": 3199,
+        "oldPrice": 6999
+      }
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#111111"
+      }
+    ],
+    "isFeatured": true,
+    "badge": "Sale Item",
+    "image": "https://i.postimg.cc/k4WFK89B/air-6-tws-wireless-earbuds-pakistan-priceoye-ickop-500x500.webp",
+    "images": [
+      "https://i.postimg.cc/k4WFK89B/air-6-tws-wireless-earbuds-pakistan-priceoye-ickop-500x500.webp",
+      "https://i.postimg.cc/nrk4wJXV/air-6-tws-wireless-earbuds-pakistan-priceoye-vkhjh-500x500.webp"
+    ],
+    "description": "Experience immersive audio and distraction-free calls with the AIR 6 Wireless Earbuds. Engineered with ANC/ENC (Active Noise Cancelling / Environmental Noise Cancellation) and responsive Touch Control, these sleek matte-black earbuds deliver clear sound wherever you go. The compact square charging case features a distinctive silver dial accent and an attached wrist lanyard, making it effortless to carry in your pocket, bag, or hand."
+  },
+  {
     "id": "prod-1795373693697",
     "title": "A11 Pro TWS Earbuds – Smart LED Battery Display Case & In-Ear Wireless Headphones (White)",
     "category": "Earbuds",
